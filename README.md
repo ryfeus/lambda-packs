@@ -1,4 +1,4 @@
-# lambdapacks 
+# lambda-packs 
 
 Precompiled packages for AWS lambda
 
