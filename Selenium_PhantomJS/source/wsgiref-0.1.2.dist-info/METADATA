@@ -1,0 +1,22 @@
+Metadata-Version: 2.0
+Name: wsgiref
+Version: 0.1.2
+Summary: WSGI (PEP 333) Reference Library
+Home-page: http://cheeseshop.python.org/pypi/wsgiref
+Author: Phillip J. Eby
+Author-email: web-sig@python.org
+License: PSF or ZPL
+Platform: UNKNOWN
+
+This is a standalone release of the ``wsgiref`` library to be included in
+Python 2.5.  For the standalone version's documentation, see:
+
+HTML
+  http://peak.telecommunity.com/wsgiref_docs/
+
+PDF
+  http://peak.telecommunity.com/wsgiref.pdf
+
+
+
+
