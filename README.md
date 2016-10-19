@@ -35,4 +35,8 @@ Useful for web testing and scraping.
 
 #### Demo
 
-Current demo opens random page from wiki (https://en.wikipedia.org/wiki/Special:Random) and prints title
+Current demo opens random page from wiki (https://en.wikipedia.org/wiki/Special:Random) and prints title.
+
+#### Documentation
+
+https://selenium-python.readthedocs.io/
