@@ -1,0 +1,28 @@
+Metadata-Version: 2.0
+Name: tensorflow
+Version: 1.0.0
+Summary: TensorFlow helps the tensors flow
+Home-page: http://tensorflow.org/
+Author: Google Inc.
+Author-email: opensource@google.com
+License: Apache 2.0
+Keywords: tensorflow tensor machine learning
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Libraries
+Requires-Dist: mock (>=2.0.0)
+Requires-Dist: numpy (>=1.11.0)
+Requires-Dist: protobuf (>=3.1.0)
+Requires-Dist: six (>=1.10.0)
+Requires-Dist: wheel
+
+UNKNOWN
+
+
