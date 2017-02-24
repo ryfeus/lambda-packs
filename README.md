@@ -40,3 +40,13 @@ Current demo opens random page from wiki (https://en.wikipedia.org/wiki/Special:
 #### Documentation
 
 https://selenium-python.readthedocs.io/
+
+### Tensorflow
+
+#### Demo
+
+Current demo downloads image from link 'imagelink' from event source ( if empty - then downloads https://s3.amazonaws.com/ryfeuslambda/tensorflow/imagenet/cropped_panda.jpg)
+
+#### Documentation
+
+https://www.tensorflow.org/tutorials/image_recognition
