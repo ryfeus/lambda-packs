@@ -1,0 +1,23 @@
+Metadata-Version: 1.1
+Name: pyresttest
+Version: 1.7.1
+Summary: Python RESTful API Testing & Microbenchmarking Tool
+Home-page: https://github.com/svanoort/pyresttest
+Author: Sam Van Oort
+Author-email: samvanoort@gmail.com
+License: Apache License, Version 2.0
+Description: Python RESTful API Testing & Microbenchmarking Tool 
+         Documentation at https://github.com/svanoort/pyresttest
+Keywords: rest,web,http,testing
+Platform: UNKNOWN
+Classifier: Environment :: Console
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Software Development :: Quality Assurance
+Classifier: Topic :: Utilities
+Provides: pyresttest

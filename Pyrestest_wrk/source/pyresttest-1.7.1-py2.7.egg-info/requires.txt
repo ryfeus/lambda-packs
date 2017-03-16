@@ -1,0 +1,8 @@
+pyyaml
+pycurl
+
+[JMESPath]
+jmespath
+
+[JSONSchema]
+jsonschema
