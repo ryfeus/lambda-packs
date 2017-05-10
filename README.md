@@ -11,7 +11,7 @@ Precompiled packages for AWS lambda
 5. Configure function
   - Runtime - Python 2.7
 6. Lambda function handler and role
-  - Handler - service.lambda_handler
+  - Handler - service.handler
   - Role - Create new role from template(s)
   - Role name - test
   - Policy templates - Simple Microservice Permissions
