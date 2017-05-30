@@ -128,15 +128,9 @@ import warnings
 from glob import glob
 from functools import reduce
 if sys.version_info[0] < 3:
-    from ConfigParser import NoOptionError
-    from ConfigParser import RawConfigParser as ConfigParser
+    from ConfigParser import NoOptionError, ConfigParser
 else:
-    from configparser import NoOptionError
-    from configparser import RawConfigParser as ConfigParser
-# It seems that some people are importing ConfigParser from here so is
-# good to keep its class name. Use of RawConfigParser is needed in
-# order to be able to load path names with percent in them, like
-# `feature%2Fcool` which is common on git flow branch names.
+    from configparser import NoOptionError, ConfigParser
 
 from distutils.errors import DistutilsError
 from distutils.dist import Distribution
@@ -960,8 +954,8 @@ class djbfft_info(system_info):
 
 class mkl_info(system_info):
     section = 'mkl'
-    dir_env_var = 'MKLROOT'
-    _lib_mkl = ['mkl_rt']
+    dir_env_var = 'MKL'
+    _lib_mkl = ['mkl', 'vml', 'guide']
 
     def get_mkl_rootdir(self):
         mklroot = os.environ.get('MKLROOT', None)
@@ -996,12 +990,15 @@ class mkl_info(system_info):
             system_info.__init__(self)
         else:
             from .cpuinfo import cpu
+            l = 'mkl'  # use shared library
             if cpu.is_Itanium():
                 plt = '64'
-            elif cpu.is_Intel() and cpu.is_64bit():
+            elif cpu.is_Xeon():
                 plt = 'intel64'
             else:
                 plt = '32'
+            if l not in self._lib_mkl:
+                self._lib_mkl.insert(0, l)
             system_info.__init__(
                 self,
                 default_lib_dirs=[os.path.join(mklroot, 'lib', plt)],
@@ -1026,7 +1023,20 @@ class mkl_info(system_info):
 
 
 class lapack_mkl_info(mkl_info):
-    pass
+
+    def calc_info(self):
+        mkl = get_info('mkl')
+        if not mkl:
+            return
+        if sys.platform == 'win32':
+            lapack_libs = self.get_libs('lapack_libs', ['mkl_lapack'])
+        else:
+            lapack_libs = self.get_libs('lapack_libs',
+                                        ['mkl_lapack32', 'mkl_lapack64'])
+
+        info = {'libraries': lapack_libs}
+        dict_append(info, **mkl)
+        self.set_info(**info)
 
 
 class blas_mkl_info(mkl_info):
@@ -1678,7 +1688,6 @@ class blas_info(system_info):
         # cblas or blas
         res = False
         c = distutils.ccompiler.new_compiler()
-        c.customize('')
         tmpdir = tempfile.mkdtemp()
         s = """#include <cblas.h>
         int main(int argc, const char *argv[])
@@ -1759,7 +1768,6 @@ class openblas_lapack_info(openblas_info):
     def check_embedded_lapack(self, info):
         res = False
         c = distutils.ccompiler.new_compiler()
-        c.customize('')
         tmpdir = tempfile.mkdtemp()
         s = """void zungqr();
         int main(int argc, const char *argv[])

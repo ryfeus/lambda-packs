@@ -27,7 +27,7 @@ import warnings
 
 from . import core as ma
 from .core import (
-    MaskedArray, MAError, add, array, asarray, concatenate, filled, count,
+    MaskedArray, MAError, add, array, asarray, concatenate, filled,
     getmask, getmaskarray, make_mask_descr, masked, masked_array, mask_or,
     nomask, ones, sort, zeros, getdata, get_masked_subclass, dot,
     mask_rowcols
@@ -36,7 +36,6 @@ from .core import (
 import numpy as np
 from numpy import ndarray, array as nxarray
 import numpy.core.umath as umath
-from numpy.lib.function_base import _ureduce
 from numpy.lib.index_tricks import AxisConcatenator
 
 
@@ -472,8 +471,8 @@ def average(a, axis=None, weights=None, returned=False):
         Data to be averaged.
         Masked entries are not taken into account in the computation.
     axis : int, optional
-        Axis along which to average `a`. If `None`, averaging is done over
-        the flattened array.
+        Axis along which the average is computed. The default is to compute
+        the average of the flattened array.
     weights : array_like, optional
         The importance that each element has in the computation of the average.
         The weights array can either be 1-D (in which case its length must be
@@ -514,53 +513,97 @@ def average(a, axis=None, weights=None, returned=False):
 
     """
     a = asarray(a)
-    m = getmask(a)
-
-    # inspired by 'average' in numpy/lib/function_base.py
-
-    if weights is None:
-        avg = a.mean(axis)
-        scl = avg.dtype.type(a.count(axis))
-    else:
-        wgt = np.asanyarray(weights)
-
-        if issubclass(a.dtype.type, (np.integer, np.bool_)):
-            result_dtype = np.result_type(a.dtype, wgt.dtype, 'f8')
+    mask = a.mask
+    ash = a.shape
+    if ash == ():
+        ash = (1,)
+    if axis is None:
+        if mask is nomask:
+            if weights is None:
+                n = a.sum(axis=None)
+                d = float(a.size)
+            else:
+                w = filled(weights, 0.0).ravel()
+                n = umath.add.reduce(a._data.ravel() * w)
+                d = umath.add.reduce(w)
+                del w
         else:
-            result_dtype = np.result_type(a.dtype, wgt.dtype)
-
-        # Sanity checks
-        if a.shape != wgt.shape:
-            if axis is None:
-                raise TypeError(
-                    "Axis must be specified when shapes of a and weights "
-                    "differ.")
-            if wgt.ndim != 1:
-                raise TypeError(
-                    "1D weights expected when shapes of a and weights differ.")
-            if wgt.shape[0] != a.shape[axis]:
-                raise ValueError(
-                    "Length of weights not compatible with specified axis.")
-
-            # setup wgt to broadcast along axis
-            wgt = np.broadcast_to(wgt, (a.ndim-1)*(1,) + wgt.shape)
-            wgt = wgt.swapaxes(-1, axis)
-
-        if m is not nomask:
-            wgt = wgt*(~a.mask)
-
-        scl = wgt.sum(axis=axis, dtype=result_dtype)
-        avg = np.multiply(a, wgt, dtype=result_dtype).sum(axis)/scl
-
-    if returned:
-        if scl.shape != avg.shape:
-            scl = np.broadcast_to(scl, avg.shape).copy()
-        return avg, scl
+            if weights is None:
+                n = a.filled(0).sum(axis=None)
+                d = float(umath.add.reduce((~mask).ravel()))
+            else:
+                w = array(filled(weights, 0.0), float, mask=mask).ravel()
+                n = add.reduce(a.ravel() * w)
+                d = add.reduce(w)
+                del w
     else:
-        return avg
+        if mask is nomask:
+            if weights is None:
+                d = ash[axis] * 1.0
+                n = add.reduce(a._data, axis)
+            else:
+                w = filled(weights, 0.0)
+                wsh = w.shape
+                if wsh == ():
+                    wsh = (1,)
+                if wsh == ash:
+                    w = np.array(w, float, copy=0)
+                    n = add.reduce(a * w, axis)
+                    d = add.reduce(w, axis)
+                    del w
+                elif wsh == (ash[axis],):
+                    r = [None] * len(ash)
+                    r[axis] = slice(None, None, 1)
+                    w = eval("w[" + repr(tuple(r)) + "] * ones(ash, float)")
+                    n = add.reduce(a * w, axis)
+                    d = add.reduce(w, axis, dtype=float)
+                    del w, r
+                else:
+                    raise ValueError('average: weights wrong shape.')
+        else:
+            if weights is None:
+                n = add.reduce(a, axis)
+                d = umath.add.reduce((~mask), axis=axis, dtype=float)
+            else:
+                w = filled(weights, 0.0)
+                wsh = w.shape
+                if wsh == ():
+                    wsh = (1,)
+                if wsh == ash:
+                    w = array(w, dtype=float, mask=mask, copy=0)
+                    n = add.reduce(a * w, axis)
+                    d = add.reduce(w, axis, dtype=float)
+                elif wsh == (ash[axis],):
+                    r = [None] * len(ash)
+                    r[axis] = slice(None, None, 1)
+                    w = eval("w[" + repr(tuple(r)) +
+                             "] * masked_array(ones(ash, float), mask)")
+                    n = add.reduce(a * w, axis)
+                    d = add.reduce(w, axis, dtype=float)
+                else:
+                    raise ValueError('average: weights wrong shape.')
+                del w
+    if n is masked or d is masked:
+        return masked
+    result = n / d
+    del n
+
+    if isinstance(result, MaskedArray):
+        if ((axis is None) or (axis == 0 and a.ndim == 1)) and \
+           (result.mask is nomask):
+            result = result._data
+        if returned:
+            if not isinstance(d, MaskedArray):
+                d = masked_array(d)
+            if isinstance(d, ndarray) and (not d.shape == result.shape):
+                d = ones(result.shape, dtype=float) * d
+    if returned:
+        return result, d
+    else:
+        return result
 
 
-def median(a, axis=None, out=None, overwrite_input=False, keepdims=False):
+def median(a, axis=None, out=None, overwrite_input=False):
     """
     Compute the median along the specified axis.
 
@@ -585,12 +628,6 @@ def median(a, axis=None, out=None, overwrite_input=False, keepdims=False):
         but it will probably be fully or partially sorted. Default is
         False. Note that, if `overwrite_input` is True, and the input
         is not already an `ndarray`, an error will be raised.
-    keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the input array.
-
-        .. versionadded:: 1.10.0
 
     Returns
     -------
@@ -626,23 +663,9 @@ def median(a, axis=None, out=None, overwrite_input=False, keepdims=False):
            fill_value = 1e+20)
 
     """
-    if not hasattr(a, 'mask'):
-        m = np.median(getdata(a, subok=True), axis=axis,
-                      out=out, overwrite_input=overwrite_input,
-                      keepdims=keepdims)
-        if isinstance(m, np.ndarray) and 1 <= m.ndim:
-            return masked_array(m, copy=False)
-        else:
-            return m
-
-    r, k = _ureduce(a, func=_median, axis=axis, out=out,
-                    overwrite_input=overwrite_input)
-    if keepdims:
-        return r.reshape(k)
-    else:
-        return r
-
-def _median(a, axis=None, out=None, overwrite_input=False):
+    if not hasattr(a, 'mask') or np.count_nonzero(a.mask) == 0:
+        return masked_array(np.median(getdata(a, subok=True), axis=axis,
+                      out=out, overwrite_input=overwrite_input), copy=False)
     if overwrite_input:
         if axis is None:
             asorted = a.ravel()
@@ -652,36 +675,30 @@ def _median(a, axis=None, out=None, overwrite_input=False):
             asorted = a
     else:
         asorted = sort(a, axis=axis)
-
     if axis is None:
         axis = 0
     elif axis < 0:
-        axis += asorted.ndim
+        axis += a.ndim
 
-    if asorted.ndim == 1:
-        idx, odd = divmod(count(asorted), 2)
-        return asorted[idx + odd - 1 : idx + 1].mean(out=out)
-
-    counts = count(asorted, axis=axis)
+    counts = asorted.shape[axis] - (asorted.mask).sum(axis=axis)
     h = counts // 2
-
     # create indexing mesh grid for all but reduced axis
     axes_grid = [np.arange(x) for i, x in enumerate(asorted.shape)
                  if i != axis]
     ind = np.meshgrid(*axes_grid, sparse=True, indexing='ij')
-
     # insert indices of low and high median
-    ind.insert(axis, np.maximum(0, h - 1))
-    low = asorted[tuple(ind)]
+    ind.insert(axis, h - 1)
+    low = asorted[ind]
+    low._sharedmask = False
     ind[axis] = h
-    high = asorted[tuple(ind)]
-
+    high = asorted[ind]
     # duplicate high if odd number of elements so mean does nothing
     odd = counts % 2 == 1
-    if asorted.ndim > 1:
-        np.copyto(low, high, where=odd)
-    elif odd:
-        low = high
+    if asorted.ndim == 1:
+        if odd:
+            low = high
+    else:
+        low[odd] = high[odd]
 
     if np.issubdtype(asorted.dtype, np.inexact):
         # avoid inf / x = masked

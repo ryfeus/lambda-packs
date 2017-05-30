@@ -107,10 +107,46 @@ Exceptions to this rule are documented.
 from __future__ import division, absolute_import, print_function
 
 import sys
-import warnings
 
-from ._globals import ModuleDeprecationWarning, VisibleDeprecationWarning
-from ._globals import _NoValue
+
+class ModuleDeprecationWarning(DeprecationWarning):
+    """Module deprecation warning.
+
+    The nose tester turns ordinary Deprecation warnings into test failures.
+    That makes it hard to deprecate whole modules, because they get
+    imported by default. So this is a special Deprecation warning that the
+    nose tester will let pass without making tests fail.
+
+    """
+    pass
+
+
+class VisibleDeprecationWarning(UserWarning):
+    """Visible deprecation warning.
+
+    By default, python will not show deprecation warnings, so this class
+    can be used when a very visible warning is helpful, for example because
+    the usage is most likely a user bug.
+
+    """
+    pass
+
+
+class _NoValue:
+    """Special keyword value.
+
+    This class may be used as the default value assigned to a
+    deprecated keyword in order to check if it has been given a user
+    defined value.
+    """
+    pass
+
+
+# oldnumeric and numarray were removed in 1.9. In case some packages import
+# but do not use them, we define them here for backward compatibility.
+oldnumeric = 'removed'
+numarray = 'removed'
+
 
 # We first need to detect if we're being called as part of the numpy setup
 # procedure itself in a reliable manner.
@@ -119,8 +155,11 @@ try:
 except NameError:
     __NUMPY_SETUP__ = False
 
+
 if __NUMPY_SETUP__:
-    sys.stderr.write('Running from numpy source directory.\n')
+    import sys as _sys
+    _sys.stderr.write('Running from numpy source directory.\n')
+    del _sys
 else:
     try:
         from numpy.__config__ import show as show_config
@@ -129,7 +168,6 @@ else:
         its source directory; please exit the numpy source tree, and relaunch
         your python interpreter from there."""
         raise ImportError(msg)
-
     from .version import git_revision as __git_revision__
     from .version import version as __version__
 
@@ -168,7 +206,7 @@ else:
     from .compat import long
 
     # Make these accessible from numpy name-space
-    # but not imported in from numpy import *
+    #  but not imported in from numpy import *
     if sys.version_info[0] >= 3:
         from builtins import bool, int, float, complex, object, str
         unicode = str
@@ -184,13 +222,8 @@ else:
     __all__.extend(lib.__all__)
     __all__.extend(['linalg', 'fft', 'random', 'ctypeslib', 'ma'])
 
-
     # Filter annoying Cython warnings that serve no good purpose.
+    import warnings
     warnings.filterwarnings("ignore", message="numpy.dtype size changed")
     warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
     warnings.filterwarnings("ignore", message="numpy.ndarray size changed")
-
-    # oldnumeric and numarray were removed in 1.9. In case some packages import
-    # but do not use them, we define them here for backward compatibility.
-    oldnumeric = 'removed'
-    numarray = 'removed'

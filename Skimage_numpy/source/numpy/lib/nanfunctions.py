@@ -23,7 +23,6 @@ import warnings
 import numpy as np
 from numpy.lib.function_base import _ureduce as _ureduce
 
-
 __all__ = [
     'nansum', 'nanmax', 'nanmin', 'nanargmax', 'nanargmin', 'nanmean',
     'nanmedian', 'nanpercentile', 'nanvar', 'nanstd', 'nanprod',
@@ -142,7 +141,7 @@ def _divide_by_count(a, b, out=None):
                 return np.divide(a, b, out=out, casting='unsafe')
 
 
-def nanmin(a, axis=None, out=None, keepdims=np._NoValue):
+def nanmin(a, axis=None, out=None, keepdims=False):
     """
     Return minimum of an array or minimum along an axis, ignoring any NaNs.
     When all-NaN slices are encountered a ``RuntimeWarning`` is raised and
@@ -164,14 +163,9 @@ def nanmin(a, axis=None, out=None, keepdims=np._NoValue):
 
         .. versionadded:: 1.8.0
     keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-        If the value is anything but the default, then
-        `keepdims` will be passed through to the `min` method
-        of sub-classes of `ndarray`.  If the sub-classes methods
-        does not implement `keepdims` any exceptions will be raised.
+        If this is set to True, the axes which are reduced are left in the
+        result as dimensions with size one. With this option, the result
+        will broadcast correctly against the original `a`.
 
         .. versionadded:: 1.8.0
 
@@ -226,30 +220,27 @@ def nanmin(a, axis=None, out=None, keepdims=np._NoValue):
     -inf
 
     """
-    kwargs = {}
-    if keepdims is not np._NoValue:
-        kwargs['keepdims'] = keepdims
     if not isinstance(a, np.ndarray) or type(a) is np.ndarray:
         # Fast, but not safe for subclasses of ndarray
-        res = np.fmin.reduce(a, axis=axis, out=out, **kwargs)
+        res = np.fmin.reduce(a, axis=axis, out=out, keepdims=keepdims)
         if np.isnan(res).any():
             warnings.warn("All-NaN axis encountered", RuntimeWarning)
     else:
         # Slow, but safe for subclasses of ndarray
         a, mask = _replace_nan(a, +np.inf)
-        res = np.amin(a, axis=axis, out=out, **kwargs)
+        res = np.amin(a, axis=axis, out=out, keepdims=keepdims)
         if mask is None:
             return res
 
         # Check for all-NaN axis
-        mask = np.all(mask, axis=axis, **kwargs)
+        mask = np.all(mask, axis=axis, keepdims=keepdims)
         if np.any(mask):
             res = _copyto(res, np.nan, mask)
             warnings.warn("All-NaN axis encountered", RuntimeWarning)
     return res
 
 
-def nanmax(a, axis=None, out=None, keepdims=np._NoValue):
+def nanmax(a, axis=None, out=None, keepdims=False):
     """
     Return the maximum of an array or maximum along an axis, ignoring any
     NaNs.  When all-NaN slices are encountered a ``RuntimeWarning`` is
@@ -271,14 +262,9 @@ def nanmax(a, axis=None, out=None, keepdims=np._NoValue):
 
         .. versionadded:: 1.8.0
     keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-        If the value is anything but the default, then
-        `keepdims` will be passed through to the `max` method
-        of sub-classes of `ndarray`.  If the sub-classes methods
-        does not implement `keepdims` any exceptions will be raised.
+        If this is set to True, the axes which are reduced are left in the
+        result as dimensions with size one. With this option, the result
+        will broadcast correctly against the original `a`.
 
         .. versionadded:: 1.8.0
 
@@ -333,23 +319,20 @@ def nanmax(a, axis=None, out=None, keepdims=np._NoValue):
     inf
 
     """
-    kwargs = {}
-    if keepdims is not np._NoValue:
-        kwargs['keepdims'] = keepdims
     if not isinstance(a, np.ndarray) or type(a) is np.ndarray:
         # Fast, but not safe for subclasses of ndarray
-        res = np.fmax.reduce(a, axis=axis, out=out, **kwargs)
+        res = np.fmax.reduce(a, axis=axis, out=out, keepdims=keepdims)
         if np.isnan(res).any():
             warnings.warn("All-NaN slice encountered", RuntimeWarning)
     else:
         # Slow, but safe for subclasses of ndarray
         a, mask = _replace_nan(a, -np.inf)
-        res = np.amax(a, axis=axis, out=out, **kwargs)
+        res = np.amax(a, axis=axis, out=out, keepdims=keepdims)
         if mask is None:
             return res
 
         # Check for all-NaN axis
-        mask = np.all(mask, axis=axis, **kwargs)
+        mask = np.all(mask, axis=axis, keepdims=keepdims)
         if np.any(mask):
             res = _copyto(res, np.nan, mask)
             warnings.warn("All-NaN axis encountered", RuntimeWarning)
@@ -445,7 +428,7 @@ def nanargmax(a, axis=None):
     return res
 
 
-def nansum(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
+def nansum(a, axis=None, dtype=None, out=None, keepdims=0):
     """
     Return the sum of array elements over a given axis treating Not a
     Numbers (NaNs) as zero.
@@ -479,15 +462,9 @@ def nansum(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
 
         .. versionadded:: 1.8.0
     keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-
-        If the value is anything but the default, then
-        `keepdims` will be passed through to the `mean` or `sum` methods
-        of sub-classes of `ndarray`.  If the sub-classes methods
-        does not implement `keepdims` any exceptions will be raised.
+        If True, the axes which are reduced are left in the result as
+        dimensions with size one. With this option, the result will
+        broadcast correctly against the original `arr`.
 
         .. versionadded:: 1.8.0
 
@@ -536,7 +513,7 @@ def nansum(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
     return np.sum(a, axis=axis, dtype=dtype, out=out, keepdims=keepdims)
 
 
-def nanprod(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
+def nanprod(a, axis=None, dtype=None, out=None, keepdims=0):
     """
     Return the product of array elements over a given axis treating Not a
     Numbers (NaNs) as zero.
@@ -606,7 +583,7 @@ def nanprod(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
     return np.prod(a, axis=axis, dtype=dtype, out=out, keepdims=keepdims)
 
 
-def nanmean(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
+def nanmean(a, axis=None, dtype=None, out=None, keepdims=False):
     """
     Compute the arithmetic mean along the specified axis, ignoring NaNs.
 
@@ -636,14 +613,9 @@ def nanmean(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
         expected output, but the type will be cast if necessary.  See
         `doc.ufuncs` for details.
     keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-        If the value is anything but the default, then
-        `keepdims` will be passed through to the `mean` or `sum` methods
-        of sub-classes of `ndarray`.  If the sub-classes methods
-        does not implement `keepdims` any exceptions will be raised.
+        If this is set to True, the axes which are reduced are left in the
+        result as dimensions with size one. With this option, the result
+        will broadcast correctly against the original `arr`.
 
     Returns
     -------
@@ -755,7 +727,6 @@ def _nanmedian(a, axis=None, out=None, overwrite_input=False):
             out[...] = result
         return result
 
-
 def _nanmedian_small(a, axis=None, out=None, overwrite_input=False):
     """
     sort + indexing median, faster for small medians along multiple
@@ -772,8 +743,7 @@ def _nanmedian_small(a, axis=None, out=None, overwrite_input=False):
         return out
     return m.filled(np.nan)
 
-
-def nanmedian(a, axis=None, out=None, overwrite_input=False, keepdims=np._NoValue):
+def nanmedian(a, axis=None, out=None, overwrite_input=False, keepdims=False):
     """
     Compute the median along the specified axis, while ignoring NaNs.
 
@@ -802,15 +772,9 @@ def nanmedian(a, axis=None, out=None, overwrite_input=False, keepdims=np._NoValu
        False. If `overwrite_input` is ``True`` and `a` is not already an
        `ndarray`, an error will be raised.
     keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-        If this is anything but the default value it will be passed
-        through (in the special case of an empty array) to the
-        `mean` function of the underlying array.  If the array is
-        a sub-class and `mean` does not have the kwarg `keepdims` this
-        will raise a RuntimeError.
+        If this is set to True, the axes which are reduced are left in
+        the result as dimensions with size one. With this option, the
+        result will broadcast correctly against the original `arr`.
 
     Returns
     -------
@@ -865,14 +829,14 @@ def nanmedian(a, axis=None, out=None, overwrite_input=False, keepdims=np._NoValu
 
     r, k = _ureduce(a, func=_nanmedian, axis=axis, out=out,
                     overwrite_input=overwrite_input)
-    if keepdims and keepdims is not np._NoValue:
+    if keepdims:
         return r.reshape(k)
     else:
         return r
 
 
 def nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
-                  interpolation='linear', keepdims=np._NoValue):
+                  interpolation='linear', keepdims=False):
     """
     Compute the qth percentile of the data along the specified axis,
     while ignoring nan values.
@@ -919,15 +883,9 @@ def nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
             * nearest: ``i`` or ``j``, whichever is nearest.
             * midpoint: ``(i + j) / 2``.
     keepdims : bool, optional
-        If this is set to True, the axes which are reduced are left
-        in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-        If this is anything but the default value it will be passed
-        through (in the special case of an empty array) to the
-        `mean` function of the underlying array.  If the array is
-        a sub-class and `mean` does not have the kwarg `keepdims` this
-        will raise a RuntimeError.
+        If this is set to True, the axes which are reduced are left in
+        the result as dimensions with size one. With this option, the
+        result will broadcast correctly against the original array `a`.
 
     Returns
     -------
@@ -935,7 +893,7 @@ def nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
         If `q` is a single percentile and `axis=None`, then the result
         is a scalar. If multiple percentiles are given, first axis of
         the result corresponds to the percentiles. The other axes are
-        the axes that remain after the reduction of `a`. If the input
+        the axes that remain after the reduction of `a`. If the input 
         contains integers or floats smaller than ``float64``, the output
         data-type is ``float64``. Otherwise, the output data-type is the
         same as that of the input. If `out` is specified, that array is
@@ -996,7 +954,7 @@ def nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
     r, k = _ureduce(a, func=_nanpercentile, q=q, axis=axis, out=out,
                     overwrite_input=overwrite_input,
                     interpolation=interpolation)
-    if keepdims and keepdims is not np._NoValue:
+    if keepdims:
         if q.ndim == 0:
             return r.reshape(k)
         else:
@@ -1006,7 +964,7 @@ def nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
 
 
 def _nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
-                   interpolation='linear'):
+                   interpolation='linear', keepdims=False):
     """
     Private function that doesn't support extended axis or keepdims.
     These methods are extended to this function using _ureduce
@@ -1023,7 +981,7 @@ def _nanpercentile(a, q, axis=None, out=None, overwrite_input=False,
         # Move that axis to the beginning to match percentile's
         # convention.
         if q.ndim != 0:
-            result = np.rollaxis(result, axis)
+            result = np.rollaxis(result, axis)   
 
     if out is not None:
         out[...] = result
@@ -1062,7 +1020,7 @@ def _nanpercentile1d(arr1d, q, overwrite_input=False, interpolation='linear'):
                              interpolation=interpolation)
 
 
-def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
+def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=False):
     """
     Compute the variance along the specified axis, while ignoring NaNs.
 
@@ -1098,8 +1056,7 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
     keepdims : bool, optional
         If this is set to True, the axes which are reduced are left
         in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
+        the result will broadcast correctly against the original `arr`.
 
     Returns
     -------
@@ -1138,9 +1095,6 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
     below).  Specifying a higher-accuracy accumulator using the ``dtype``
     keyword can alleviate this issue.
 
-    For this function to work on sub-classes of ndarray, they must define
-    `sum` with the kwarg `keepdims`
-
     Examples
     --------
     >>> a = np.array([[1, np.nan], [3, 4]])
@@ -1168,17 +1122,8 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
         warnings.simplefilter('ignore')
 
         # Compute mean
-        if type(arr) is np.matrix:
-            _keepdims = np._NoValue
-        else:
-            _keepdims = True
-        # we need to special case matrix for reverse compatibility
-        # in order for this to work, these sums need to be called with
-        # keepdims=True, however matrix now raises an error in this case, but
-        # the reason that it drops the keepdims kwarg is to force keepdims=True
-        # so this used to work by serendipity.
-        cnt = np.sum(~mask, axis=axis, dtype=np.intp, keepdims=_keepdims)
-        avg = np.sum(arr, axis=axis, dtype=dtype, keepdims=_keepdims)
+        cnt = np.sum(~mask, axis=axis, dtype=np.intp, keepdims=True)
+        avg = np.sum(arr, axis=axis, dtype=dtype, keepdims=True)
         avg = _divide_by_count(avg, cnt)
 
         # Compute squared deviation from mean.
@@ -1206,7 +1151,7 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
     return var
 
 
-def nanstd(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
+def nanstd(a, axis=None, dtype=None, out=None, ddof=0, keepdims=False):
     """
     Compute the standard deviation along the specified axis, while
     ignoring NaNs.
@@ -1240,16 +1185,10 @@ def nanstd(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
         Means Delta Degrees of Freedom.  The divisor used in calculations
         is ``N - ddof``, where ``N`` represents the number of non-NaN
         elements.  By default `ddof` is zero.
-
     keepdims : bool, optional
         If this is set to True, the axes which are reduced are left
         in the result as dimensions with size one. With this option,
-        the result will broadcast correctly against the original `a`.
-
-        If this value is anything but the default it is passed through
-        as-is to the relevant functions of the sub-classes.  If these
-        functions do not have a `keepdims` kwarg, a RuntimeError will
-        be raised.
+        the result will broadcast correctly against the original `arr`.
 
     Returns
     -------

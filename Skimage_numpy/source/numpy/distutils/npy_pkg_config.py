@@ -5,9 +5,9 @@ import re
 import os
 
 if sys.version_info[0] < 3:
-    from ConfigParser import RawConfigParser, NoOptionError
+    from ConfigParser import SafeConfigParser, NoOptionError
 else:
-    from configparser import RawConfigParser, NoOptionError
+    from configparser import ConfigParser, SafeConfigParser, NoOptionError
 
 __all__ = ['FormatError', 'PkgNotFound', 'LibraryInfo', 'VariableSet',
         'read_config', 'parse_flags']
@@ -259,7 +259,11 @@ def parse_config(filename, dirs=None):
     else:
         filenames = [filename]
 
-    config = RawConfigParser()
+    if sys.version[:3] > '3.1':
+        # SafeConfigParser is deprecated in py-3.2 and renamed to ConfigParser
+        config = ConfigParser()
+    else:
+        config = SafeConfigParser()
 
     n = config.read(filenames)
     if not len(n) >= 1:

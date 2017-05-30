@@ -52,7 +52,7 @@ class PackageLoader(object):
     def _init_info_modules(self, packages=None):
         """Initialize info_modules = {<package_name>: <package info.py module>}.
         """
-        from numpy.compat import npy_load_module
+        import imp
         info_files = []
         info_modules = self.info_modules
 
@@ -86,7 +86,8 @@ class PackageLoader(object):
                 filedescriptor = ('.py', 'U', 1)
 
             try:
-                info_module = npy_load_module(fullname + '.info',
+                info_module = imp.load_module(fullname+'.info',
+                                              open(info_file, filedescriptor[1]),
                                               info_file,
                                               filedescriptor)
             except Exception as msg:

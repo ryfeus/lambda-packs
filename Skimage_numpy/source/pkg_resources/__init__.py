@@ -45,8 +45,8 @@ except ImportError:
     # Python 3.2 compatibility
     import imp as _imp
 
-from pkg_resources.extern import six
-from pkg_resources.extern.six.moves import urllib, map, filter
+import six
+from six.moves import urllib, map, filter
 
 # capture these to bypass sandboxing
 from os import utime
@@ -67,12 +67,11 @@ try:
 except ImportError:
     importlib_machinery = None
 
-from pkg_resources.extern import appdirs
-from pkg_resources.extern import packaging
-__import__('pkg_resources.extern.packaging.version')
-__import__('pkg_resources.extern.packaging.specifiers')
-__import__('pkg_resources.extern.packaging.requirements')
-__import__('pkg_resources.extern.packaging.markers')
+import packaging.version
+import packaging.specifiers
+import packaging.requirements
+import packaging.markers
+import appdirs
 
 if (3, 0) < sys.version_info < (3, 3):
     raise RuntimeError("Python 3.3 or later is required")
@@ -786,7 +785,7 @@ class WorkingSet(object):
         self._added_new(dist)
 
     def resolve(self, requirements, env=None, installer=None,
-            replace_conflicting=False):
+                replace_conflicting=False, extras=None):
         """List all distributions needed to (recursively) meet `requirements`
 
         `requirements` must be a sequence of ``Requirement`` objects.  `env`,
@@ -802,6 +801,12 @@ class WorkingSet(object):
         the wrong version.  Otherwise, if an `installer` is supplied it will be
         invoked to obtain the correct version of the requirement and activate
         it.
+
+        `extras` is a list of the extras to be used with these requirements.
+        This is important because extra requirements may look like `my_req;
+        extra = "my_extra"`, which would otherwise be interpreted as a purely
+        optional requirement.  Instead, we want to be able to assert that these
+        requirements are truly required.
         """
 
         # set up the stack
@@ -825,7 +830,7 @@ class WorkingSet(object):
                 # Ignore cyclic or redundant dependencies
                 continue
 
-            if not req_extras.markers_pass(req):
+            if not req_extras.markers_pass(req, extras):
                 continue
 
             dist = best.get(req.key)
@@ -1004,7 +1009,7 @@ class _ReqExtras(dict):
     Map each requirement to the extras that demanded it.
     """
 
-    def markers_pass(self, req):
+    def markers_pass(self, req, extras=None):
         """
         Evaluate markers for req against each extra that
         demanded it.
@@ -1014,7 +1019,7 @@ class _ReqExtras(dict):
         """
         extra_evals = (
             req.marker.evaluate({'extra': extra})
-            for extra in self.get(req, ()) + (None,)
+            for extra in self.get(req, ()) + (extras or (None,))
         )
         return not req.marker or any(extra_evals)
 
@@ -1951,6 +1956,12 @@ def find_eggs_in_zip(importer, path_item, only=False):
             subpath = os.path.join(path_item, subitem)
             for dist in find_eggs_in_zip(zipimport.zipimporter(subpath), subpath):
                 yield dist
+        elif subitem.lower().endswith('.dist-info'):
+            subpath = os.path.join(path_item, subitem)
+            submeta = EggMetadata(zipimport.zipimporter(subpath))
+            submeta.egg_info = subpath
+            yield Distribution.from_location(path_item, subitem, submeta)
+
 
 
 register_finder(zipimport.zipimporter, find_eggs_in_zip)
@@ -2112,6 +2123,10 @@ def _rebuild_mod_path(orig_path, package_name, module):
         module_parts = package_name.count('.') + 1
         parts = path_parts[:-module_parts]
         return safe_sys_path_index(_normalize_cached(os.sep.join(parts)))
+
+    if not isinstance(orig_path, list):
+        # Is this behavior useful when module.__path__ is not a list?
+        return
 
     orig_path.sort(key=position_in_sys_path)
     module.__path__[:] = [_normalize_cached(p) for p in orig_path]
@@ -2299,8 +2314,14 @@ class EntryPoint(object):
     def require(self, env=None, installer=None):
         if self.extras and not self.dist:
             raise UnknownExtra("Can't require() without a distribution", self)
+
+        # Get the requirements for this entry point with all its extras and
+        # then resolve them. We have to pass `extras` along when resolving so
+        # that the working set knows what extras we want. Otherwise, for
+        # dist-info distributions, the working set will assume that the
+        # requirements for that extra are purely optional and skip over them.
         reqs = self.dist.requires(self.extras)
-        items = working_set.resolve(reqs, env, installer)
+        items = working_set.resolve(reqs, env, installer, extras=self.extras)
         list(map(working_set.add, items))
 
     pattern = re.compile(

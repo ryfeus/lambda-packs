@@ -3,6 +3,7 @@ from __future__ import division, absolute_import, print_function
 import os
 import re
 import sys
+import imp
 import copy
 import glob
 import atexit
@@ -38,7 +39,6 @@ except NameError:
 
 from numpy.distutils.compat import get_exception
 from numpy.compat import basestring
-from numpy.compat import npy_load_module
 
 __all__ = ['Configuration', 'get_numpy_include_dirs', 'default_config_dict',
            'dict_append', 'appendpath', 'generate_config_py',
@@ -126,13 +126,13 @@ def allpath(name):
     return os.path.join(*splitted)
 
 def rel_path(path, parent_path):
-    """Return path relative to parent_path."""
-    # Use realpath to avoid issues with symlinked dirs (see gh-7707)
-    pd = os.path.realpath(os.path.abspath(parent_path))
-    apath = os.path.realpath(os.path.abspath(path))
-    if len(apath) < len(pd):
+    """Return path relative to parent_path.
+    """
+    pd = os.path.abspath(parent_path)
+    apath = os.path.abspath(path)
+    if len(apath)<len(pd):
         return path
-    if apath == pd:
+    if apath==pd:
         return ''
     if pd == apath[:len(pd)]:
         assert apath[len(pd)] in [os.sep], repr((path, apath[len(pd)]))
@@ -875,11 +875,14 @@ class Configuration(object):
         # In case setup_py imports local modules:
         sys.path.insert(0, os.path.dirname(setup_py))
         try:
+            fo_setup_py = open(setup_py, 'U')
             setup_name = os.path.splitext(os.path.basename(setup_py))[0]
             n = dot_join(self.name, subpackage_name, setup_name)
-            setup_module = npy_load_module('_'.join(n.split('.')),
+            setup_module = imp.load_module('_'.join(n.split('.')),
+                                           fo_setup_py,
                                            setup_py,
                                            ('.py', 'U', 1))
+            fo_setup_py.close()
             if not hasattr(setup_module, 'configuration'):
                 if not self.options['assume_default_configuration']:
                     self.warn('Assuming default configuration '\
@@ -1909,12 +1912,11 @@ class Configuration(object):
         for f in files:
             fn = njoin(self.local_path, f)
             if os.path.isfile(fn):
-                info = ('.py', 'U', 1)
+                info = (open(fn), fn, ('.py', 'U', 1))
                 name = os.path.splitext(os.path.basename(fn))[0]
                 n = dot_join(self.name, name)
                 try:
-                    version_module = npy_load_module('_'.join(n.split('.')),
-                                                     fn, info)
+                    version_module = imp.load_module('_'.join(n.split('.')),*info)
                 except ImportError:
                     msg = get_exception()
                     self.warn(str(msg))

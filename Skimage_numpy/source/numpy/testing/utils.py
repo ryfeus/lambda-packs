@@ -47,14 +47,8 @@ try:
     from unittest.case import SkipTest
 except ImportError:
     # on py2.6 unittest.case is not available. Ask nose for a replacement.
-    try:
-        import nose
-        SkipTest = nose.SkipTest
-    except (ImportError, AttributeError):
-        # If nose is not available, testing won't work anyway,
-        # but we need something to import in numpy/testing/decorators.py.
-        # See gh-7498.
-        SkipTest = None
+    SkipTest = import_nose().SkipTest
+
 
 verbose = 0
 
@@ -1084,13 +1078,18 @@ def rundocs(filename=None, raise_on_error=True):
 
     >>> np.lib.test(doctests=True) #doctest: +SKIP
     """
-    from numpy.compat import npy_load_module
     import doctest
+    import imp
     if filename is None:
         f = sys._getframe(1)
         filename = f.f_globals['__file__']
     name = os.path.splitext(os.path.basename(filename))[0]
-    m = npy_load_module(name, filename)
+    path = [os.path.dirname(filename)]
+    file, pathname, description = imp.find_module(name, path)
+    try:
+        m = imp.load_module(name, file, pathname, description)
+    finally:
+        file.close()
 
     tests = doctest.DocTestFinder().find(m)
     runner = doctest.DocTestRunner(verbose=False)

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import numpy
-import skimage
-
+from skimage import io
+import urllib
 
 def handler(event, context):
-
-	
-	return 0
+    urllib.urlretrieve("https://upload.wikimedia.org/wikipedia/commons/3/38/JPEG_example_JPG_RIP_001.jpg", "/tmp/hi.jpg")
+    img = io.imread('/tmp/hi.jpg')    
+    print(img)
+    return 0
