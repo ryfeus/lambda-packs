@@ -8,14 +8,17 @@ from PIL import Image,ImageFont,ImageDraw
 from boto3.session import Session as boto3_session
 
 def uploadToS3(strFolder,strFile,awsCred):
-	print('Uploading '+strFile+' to bucket '+awsCred['bucket']+'/'+strFolder)
-	session = boto3_session(
-				aws_access_key_id=awsCred['accessKeyId'],
-				aws_secret_access_key=awsCred['secretAccessKey'],
-				region_name="us-east-1")
-	s3 = session.resource('s3')
-	file_handle = open(strFile, 'rb')
-	s3.Bucket(awsCred['bucket']).upload_file(file_handle.name, strFolder+'/'+strFile.split('/')[-1])
+	if (awsCred['accessKeyId'] != ''):
+		print('Uploading '+strFile+' to bucket '+awsCred['bucket']+'/'+strFolder)
+		session = boto3_session(
+					aws_access_key_id=awsCred['accessKeyId'],
+					aws_secret_access_key=awsCred['secretAccessKey'],
+					region_name="us-east-1")
+		s3 = session.resource('s3')
+		file_handle = open(strFile, 'rb')
+		s3.Bucket(awsCred['bucket']).upload_file(file_handle.name, strFolder+'/'+strFile.split('/')[-1])
+	else:
+		print('Empty credentials, cannot upload')
 
 def handler(event, context):
 
