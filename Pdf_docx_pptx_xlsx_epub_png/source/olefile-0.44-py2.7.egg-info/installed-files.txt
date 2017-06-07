@@ -1,0 +1,15 @@
+../OleFileIO_PL.py
+../olefile/olefile.py
+../olefile/__init__.py
+../olefile/README.rst
+../olefile/README.html
+../olefile/LICENSE.txt
+../olefile/CONTRIBUTORS.txt
+../OleFileIO_PL.pyc
+../olefile/olefile.pyc
+../olefile/__init__.pyc
+./
+dependency_links.txt
+SOURCES.txt
+top_level.txt
+PKG-INFO

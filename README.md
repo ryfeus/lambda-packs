@@ -169,3 +169,11 @@ http://pandas.pydata.org/
 
 ---
 ### Tesseract
+
+
+---
+
+### PDF generator + Microsoft office file generator (docx, xlsx, pptx) + image generator (jpg, png) + book generator (epub)
+
+
+
