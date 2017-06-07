@@ -5,8 +5,25 @@ from docx import Document
 from docx.shared import Inches
 from ebooklib import epub
 from PIL import Image,ImageFont,ImageDraw
+from boto3.session import Session as boto3_session
+
+def uploadToS3(strFolder,strFile,awsCred):
+	print('Uploading '+strFile+' to bucket '+awsCred['bucket']+'/'+strFolder)
+	session = boto3_session(
+				aws_access_key_id=awsCred['accessKeyId'],
+				aws_secret_access_key=awsCred['secretAccessKey'],
+				region_name="us-east-1")
+	s3 = session.resource('s3')
+	file_handle = open(strFile, 'rb')
+	s3.Bucket(awsCred['bucket']).upload_file(file_handle.name, strFolder+'/'+strFile.split('/')[-1])
 
 def handler(event, context):
+
+	awsCred = {}
+	awsCred['accessKeyId'] = ''
+	awsCred['secretAccessKey'] = ''
+	awsCred['bucket'] = ''
+	strFolder = 'docs'
 
 	strFolderPath = '/tmp/'
 
@@ -14,21 +31,25 @@ def handler(event, context):
 	draw = ImageDraw.Draw(img)
 	draw.text((10,10),"Hello world!",(0,0,0))
 	img.save(strFolderPath+'demo.jpg')
+	uploadToS3(strFolder,strFolderPath+'demo.jpg',awsCred)
 
 	c = canvas.Canvas(strFolderPath+"demo.pdf")
 	c.drawString(100,750,"Hello world!")
 	c.save()
+	uploadToS3(strFolder,strFolderPath+'demo.pdf',awsCred)
 
 	document = Document()
 	document.add_heading('Hello world!', level=1)
 	document.add_page_break()
 	document.save(strFolderPath+'demo.docx')
+	uploadToS3(strFolder,strFolderPath+'demo.docx',awsCred)
 
 	workbook = xlsxwriter.Workbook(strFolderPath+'demo.xlsx')
 	worksheet = workbook.add_worksheet()
 	worksheet.write('A1', 'Hello')
 	worksheet.write('A2', 'World!')
 	workbook.close()
+	uploadToS3(strFolder,strFolderPath+'demo.xlsx',awsCred)
 
 	prs = Presentation()
 	title_slide_layout = prs.slide_layouts[0]
@@ -36,6 +57,7 @@ def handler(event, context):
 	title = slide.shapes.title
 	title.text = "Hello, World!"
 	prs.save(strFolderPath+'demo.pptx')
+	uploadToS3(strFolder,strFolderPath+'demo.pptx',awsCred)
 
 	book = epub.EpubBook()
 	book.set_identifier('id123456')
@@ -50,4 +72,5 @@ def handler(event, context):
 	             (c1, ))
 	            )
 	epub.write_epub(strFolderPath+'demo.epub', book, {})
+	uploadToS3(strFolder,strFolderPath+'demo.epub',awsCred)
 
