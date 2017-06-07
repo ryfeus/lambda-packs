@@ -175,5 +175,18 @@ http://pandas.pydata.org/
 
 ### PDF generator + Microsoft office file generator (docx, xlsx, pptx) + image generator (jpg, png) + book generator (epub)
 
+#### Intro
+
+"Hello world" code in package creates example of every document. Basically these libs are low memory (less than 128MB) and high speed (less than 0.5 seconds) so it's something like ~1m documents generated per 1$ in terms of AWS Lambda pricing.
+
+#### Tools
+
+- docx (python-docx - https://pypi.python.org/pypi/python-docx)
+ - xlsx (XlsxWriter - https://pypi.python.org/pypi/XlsxWriter)
+ - pptx (python-pptx - https://pypi.python.org/pypi/python-pptx)
+ - pdf (Reportlab - https://pypi.python.org/pypi/reportlab)
+ - epub (EbookLib - https://pypi.python.org/pypi/EbookLib)
+ - png/jpg/... (Pillow - https://pypi.python.org/pypi/Pillow)
+
 
 
