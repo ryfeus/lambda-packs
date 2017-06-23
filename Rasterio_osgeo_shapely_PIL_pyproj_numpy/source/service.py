@@ -1,0 +1,536 @@
+import os
+from ctypes import cdll
+import json
+import sys
+import urllib
+import boto3
+from boto3.session import Session as boto3_session
+path = os.path.dirname(os.path.realpath(__file__))
+os.environ['GDAL_DATA'] = os.path.join(path, "local/share/gdal")
+os.environ['PROJ_DIR'] = os.path.join(path, "local/share/proj")
+lib1 = cdll.LoadLibrary(os.path.join(path, 'local/lib/libproj.so.9'))
+lib2 = cdll.LoadLibrary(os.path.join(path, 'local/lib/libgdal.so'))
+lib3 = cdll.LoadLibrary(os.path.join(path, 'local/lib/libgdal.so.1'))
+
+import numpy as np
+from osgeo import gdal, gdal_array, osr
+import gdal2tiles
+import rasterio
+from rasterio.crs import CRS
+from affine import Affine
+import PIL
+import pyproj
+
+
+__all__ = ['img_as_float', 'img_as_int', 'img_as_uint', 'img_as_ubyte',
+           'img_as_bool', 'dtype_limits']
+
+dtype_range = {np.bool_: (False, True),
+               np.bool8: (False, True),
+               np.uint8: (0, 255),
+               np.uint16: (0, 65535),
+               np.uint32: (0, 2**32 - 1),
+               np.uint64: (0, 2**64 - 1),
+               np.int8: (-128, 127),
+               np.int16: (-32768, 32767),
+               np.int32: (-2**31, 2**31 - 1),
+               np.int64: (-2**63, 2**63 - 1),
+               np.float16: (-1, 1),
+               np.float32: (-1, 1),
+               np.float64: (-1, 1)}
+
+_supported_types = (np.bool_, np.bool8,
+                    np.uint8, np.uint16, np.uint32, np.uint64,
+                    np.int8, np.int16, np.int32, np.int64,
+                    np.float16, np.float32, np.float64)
+
+def uploadToS3(strFile):
+    print('Uploading '+strFile)
+    resp = {}
+    resp['accessKeyId'] = 'accessKeyId'
+    resp['secretAccessKey'] = 'accessKeyId/DzruWcccJckAhNK'
+    resp['bucket'] = 'bucket'
+    resp['key'] = strFile
+
+    uploadfile = strFile
+    session = boto3_session(
+                aws_access_key_id=resp['accessKeyId'],
+                aws_secret_access_key=resp['secretAccessKey'],
+                region_name="us-east-1")
+    s3 = session.resource('s3')
+    file_handle = open(uploadfile, 'rb')
+    s3.Bucket(resp['bucket']).upload_file(file_handle.name, resp['key'])
+
+def downloadFromS3(strBucket,strKey,strFile):
+    s3_client = boto3.client('s3')
+    s3_client.download_file(strBucket, strKey, strFile)
+
+def processToTiles(strInputFile,strFolder):
+    src_ds = gdal.Open(strInputFile)
+
+    # Define target SRS
+    dst_srs = osr.SpatialReference()
+    dst_srs.ImportFromEPSG(3857)
+    dst_wkt = dst_srs.ExportToWkt()
+
+    error_threshold = 0.125  # error threshold --> use same value as in gdalwarp
+    resampling = gdal.GRA_NearestNeighbour
+
+    # Call AutoCreateWarpedVRT() to fetch default values for target raster dimensions and geotransform
+    tmp_ds = gdal.AutoCreateWarpedVRT( src_ds,
+                                       None, # src_wkt : left to default value --> will use the one from source
+                                       dst_wkt,
+                                       resampling,
+                                       error_threshold )
+
+    dst_ds = gdal.GetDriverByName('GTiff').CreateCopy(strInputFile[0:-4]+"_t.tif", tmp_ds)
+    dst_ds = None
+    objgdal2tiles = gdal2tiles.GDAL2Tiles([(strInputFile[0:-4]+"_t.tif"),strFolder,'-z','8-10'])
+    objgdal2tiles.process()
+
+def handler(event, context):
+    imgfilepathout = '/tmp/LC80440342016275LGN00_B432.tif'
+
+    strBucket = 'landsat-pds'
+    strKey = 'L8/044/034/LC80440342016275LGN00/LC80440342016275LGN00_B4.TIF'
+    strFile1 = '/tmp/LC80440342016275LGN00_B4.TIF'
+    downloadFromS3(strBucket,strKey,strFile1)
+
+    strBucket = 'landsat-pds'
+    strKey = 'L8/044/034/LC80440342016275LGN00/LC80440342016275LGN00_B3.TIF'
+    strFile2 = '/tmp/LC80440342016275LGN00_B3.TIF'
+    downloadFromS3(strBucket,strKey,strFile2)
+
+    strBucket = 'landsat-pds'
+    strKey = 'L8/044/034/LC80440342016275LGN00/LC80440342016275LGN00_B2.TIF'
+    strFile3 = '/tmp/LC80440342016275LGN00_B2.TIF'
+    downloadFromS3(strBucket,strKey,strFile3)
+
+    src1 = rasterio.open(strFile1)
+    img = src1.read(1)
+    arrFloatBand = img/256
+    arrFloatBand[arrFloatBand>255] = 255
+    arrUint8Band1 = np.uint8(arrFloatBand)
+
+    src2 = rasterio.open(strFile2)
+    img = src2.read(1)
+    arrFloatBand = img/256
+    arrFloatBand[arrFloatBand>255] = 255
+    arrUint8Band2 = np.uint8(arrFloatBand)
+
+    src3 = rasterio.open(strFile3)
+    img = src3.read(1)
+    arrFloatBand = img/256
+    arrFloatBand[arrFloatBand>255] = 255
+    arrUint8Band3 = np.uint8(arrFloatBand)    
+
+    profile = src1.meta
+    profile.update(nodata=0,dtype='uint8',driver='GTiff',count=3,compress='lzw')
+
+    with rasterio.open(imgfilepathout, 'w', **profile) as output:
+        output.write_band(1,img_as_ubyte(arrUint8Band1))
+        output.write_band(2,img_as_ubyte(arrUint8Band2))
+        output.write_band(3,img_as_ubyte(arrUint8Band3))
+
+    uploadToS3(imgfilepathout)
+
+    return []
+
+def dtype_limits(image, clip_negative=None):
+    """Return intensity limits, i.e. (min, max) tuple, of the image's dtype.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    clip_negative : bool, optional
+        If True, clip the negative range (i.e. return 0 for min intensity)
+        even if the image dtype allows negative values.
+        The default behavior (None) is equivalent to True.
+
+    Returns
+    -------
+    imin, imax : tuple
+        Lower and upper intensity limits.
+    """
+    if clip_negative is None:
+        clip_negative = True
+        print('The default of `clip_negative` in `skimage.util.dtype_limits` '
+             'will change to `False` in version 0.15.')
+    imin, imax = dtype_range[image.dtype.type]
+    if clip_negative:
+        imin = 0
+    return imin, imax
+
+def convert(image, dtype, force_copy=False, uniform=False):
+    """
+    Convert an image to the requested data-type.
+
+    Warnings are issued in case of precision loss, or when negative values
+    are clipped during conversion to unsigned integer types (sign loss).
+
+    Floating point values are expected to be normalized and will be clipped
+    to the range [0.0, 1.0] or [-1.0, 1.0] when converting to unsigned or
+    signed integers respectively.
+
+    Numbers are not shifted to the negative side when converting from
+    unsigned to signed integer types. Negative values will be clipped when
+    converting to unsigned integers.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    dtype : dtype
+        Target data-type.
+    force_copy : bool, optional
+        Force a copy of the data, irrespective of its current dtype.
+    uniform : bool, optional
+        Uniformly quantize the floating point range to the integer range.
+        By default (uniform=False) floating point values are scaled and
+        rounded to the nearest integers, which minimizes back and forth
+        conversion errors.
+
+    References
+    ----------
+    .. [1] DirectX data conversion rules.
+           http://msdn.microsoft.com/en-us/library/windows/desktop/dd607323%28v=vs.85%29.aspx
+    .. [2] Data Conversions. In "OpenGL ES 2.0 Specification v2.0.25",
+           pp 7-8. Khronos Group, 2010.
+    .. [3] Proper treatment of pixels as integers. A.W. Paeth.
+           In "Graphics Gems I", pp 249-256. Morgan Kaufmann, 1990.
+    .. [4] Dirty Pixels. J. Blinn. In "Jim Blinn's corner: Dirty Pixels",
+           pp 47-57. Morgan Kaufmann, 1998.
+
+    """
+    image = np.asarray(image)
+    dtypeobj_in = image.dtype
+    dtypeobj_out = np.dtype(dtype)
+    dtype_in = dtypeobj_in.type
+    dtype_out = dtypeobj_out.type
+    kind_in = dtypeobj_in.kind
+    kind_out = dtypeobj_out.kind
+    itemsize_in = dtypeobj_in.itemsize
+    itemsize_out = dtypeobj_out.itemsize
+
+    if dtype_in == dtype_out:
+        if force_copy:
+            image = image.copy()
+        return image
+
+    if not (dtype_in in _supported_types and dtype_out in _supported_types):
+        raise ValueError("Can not convert from {} to {}."
+                         .format(dtypeobj_in, dtypeobj_out))
+
+    def sign_loss():
+        print("Possible sign loss when converting negative image of type "
+             "{} to positive image of type {}."
+             .format(dtypeobj_in, dtypeobj_out))
+
+    def prec_loss():
+        print("Possible precision loss when converting from {} to {}"
+             .format(dtypeobj_in, dtypeobj_out))
+
+    def _dtype_itemsize(itemsize, *dtypes):
+        # Return first of `dtypes` with itemsize greater than `itemsize`
+        return next(dt for dt in dtypes if np.dtype(dt).itemsize >= itemsize)
+
+    def _dtype_bits(kind, bits, itemsize=1):
+        # Return dtype of `kind` that can store a `bits` wide unsigned int
+        def compare(x, y, kind='u'):
+            if kind == 'u':
+                return x <= y
+            else:
+                return x < y
+
+        s = next(i for i in (itemsize, ) + (2, 4, 8) if compare(bits, i * 8,
+                                                                kind=kind))
+        return np.dtype(kind + str(s))
+
+    def _scale(a, n, m, copy=True):
+        """Scale an array of unsigned/positive integers from `n` to `m` bits.
+
+        Numbers can be represented exactly only if `m` is a multiple of `n`.
+
+        Parameters
+        ----------
+        a : ndarray
+            Input image array.
+        n : int
+            Number of bits currently used to encode the values in `a`.
+        m : int
+            Desired number of bits to encode the values in `out`.
+        copy : bool, optional
+            If True, allocates and returns new array. Otherwise, modifies
+            `a` in place.
+
+        Returns
+        -------
+        out : array
+            Output image array. Has the same kind as `a`.
+        """
+        kind = a.dtype.kind
+        if n > m and a.max() < 2 ** m:
+            mnew = int(np.ceil(m / 2) * 2)
+            if mnew > m:
+                dtype = "int{}".format(mnew)
+            else:
+                dtype = "uint{}".format(mnew)
+            n = int(np.ceil(n / 2) * 2)
+            print("Downcasting {} to {} without scaling because max "
+                 "value {} fits in {}".format(a.dtype, dtype, a.max(), dtype))
+            return a.astype(_dtype_bits(kind, m))
+        elif n == m:
+            return a.copy() if copy else a
+        elif n > m:
+            # downscale with precision loss
+            prec_loss()
+            if copy:
+                b = np.empty(a.shape, _dtype_bits(kind, m))
+                np.floor_divide(a, 2**(n - m), out=b, dtype=a.dtype,
+                                casting='unsafe')
+                return b
+            else:
+                a //= 2**(n - m)
+                return a
+        elif m % n == 0:
+            # exact upscale to a multiple of `n` bits
+            if copy:
+                b = np.empty(a.shape, _dtype_bits(kind, m))
+                np.multiply(a, (2**m - 1) // (2**n - 1), out=b, dtype=b.dtype)
+                return b
+            else:
+                a = a.astype(_dtype_bits(kind, m, a.dtype.itemsize), copy=False)
+                a *= (2**m - 1) // (2**n - 1)
+                return a
+        else:
+            # upscale to a multiple of `n` bits,
+            # then downscale with precision loss
+            prec_loss()
+            o = (m // n + 1) * n
+            if copy:
+                b = np.empty(a.shape, _dtype_bits(kind, o))
+                np.multiply(a, (2**o - 1) // (2**n - 1), out=b, dtype=b.dtype)
+                b //= 2**(o - m)
+                return b
+            else:
+                a = a.astype(_dtype_bits(kind, o, a.dtype.itemsize), copy=False)
+                a *= (2**o - 1) // (2**n - 1)
+                a //= 2**(o - m)
+                return a
+
+    if kind_in in 'ui':
+        imin_in = np.iinfo(dtype_in).min
+        imax_in = np.iinfo(dtype_in).max
+    if kind_out in 'ui':
+        imin_out = np.iinfo(dtype_out).min
+        imax_out = np.iinfo(dtype_out).max
+
+    # any -> binary
+    if kind_out == 'b':
+        if kind_in in "fi":
+            sign_loss()
+        prec_loss()
+        return image > dtype_in(dtype_range[dtype_in][1] / 2)
+
+    # binary -> any
+    if kind_in == 'b':
+        result = image.astype(dtype_out)
+        if kind_out != 'f':
+            result *= dtype_out(dtype_range[dtype_out][1])
+        return result
+
+    # float -> any
+    if kind_in == 'f':
+        if np.min(image) < -1.0 or np.max(image) > 1.0:
+            raise ValueError("Images of type float must be between -1 and 1.")
+        if kind_out == 'f':
+            # float -> float
+            if itemsize_in > itemsize_out:
+                prec_loss()
+            return image.astype(dtype_out)
+
+        # floating point -> integer
+        prec_loss()
+        # use float type that can represent output integer type
+        image = image.astype(_dtype_itemsize(itemsize_out, dtype_in,
+                                             np.float32, np.float64))
+        if not uniform:
+            if kind_out == 'u':
+                image *= imax_out
+            else:
+                image *= imax_out - imin_out
+                image -= 1.0
+                image /= 2.0
+            np.rint(image, out=image)
+            np.clip(image, imin_out, imax_out, out=image)
+        elif kind_out == 'u':
+            image *= imax_out + 1
+            np.clip(image, 0, imax_out, out=image)
+        else:
+            image *= (imax_out - imin_out + 1.0) / 2.0
+            np.floor(image, out=image)
+            np.clip(image, imin_out, imax_out, out=image)
+        return image.astype(dtype_out)
+
+    # signed/unsigned int -> float
+    if kind_out == 'f':
+        if itemsize_in >= itemsize_out:
+            prec_loss()
+        # use float type that can exactly represent input integers
+        image = image.astype(_dtype_itemsize(itemsize_in, dtype_out,
+                                             np.float32, np.float64))
+        if kind_in == 'u':
+            image /= imax_in
+            # DirectX uses this conversion also for signed ints
+            # if imin_in:
+            #     np.maximum(image, -1.0, out=image)
+        else:
+            image *= 2.0
+            image += 1.0
+            image /= imax_in - imin_in
+        return image.astype(dtype_out)
+
+    # unsigned int -> signed/unsigned int
+    if kind_in == 'u':
+        if kind_out == 'i':
+            # unsigned int -> signed int
+            image = _scale(image, 8 * itemsize_in, 8 * itemsize_out - 1)
+            return image.view(dtype_out)
+        else:
+            # unsigned int -> unsigned int
+            return _scale(image, 8 * itemsize_in, 8 * itemsize_out)
+
+    # signed int -> unsigned int
+    if kind_out == 'u':
+        sign_loss()
+        image = _scale(image, 8 * itemsize_in - 1, 8 * itemsize_out)
+        result = np.empty(image.shape, dtype_out)
+        np.maximum(image, 0, out=result, dtype=image.dtype, casting='unsafe')
+        return result
+
+    # signed int -> signed int
+    if itemsize_in > itemsize_out:
+        return _scale(image, 8 * itemsize_in - 1, 8 * itemsize_out - 1)
+
+    image = image.astype(_dtype_bits('i', itemsize_out * 8))
+    image -= imin_in
+    image = _scale(image, 8 * itemsize_in, 8 * itemsize_out, copy=False)
+    image += imin_out
+    return image.astype(dtype_out)
+
+def img_as_float(image, force_copy=False):
+    """Convert an image to double-precision (64-bit) floating point format.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    force_copy : bool, optional
+        Force a copy of the data, irrespective of its current dtype.
+
+    Returns
+    -------
+    out : ndarray of float64
+        Output image.
+
+    Notes
+    -----
+    The range of a floating point image is [0.0, 1.0] or [-1.0, 1.0] when
+    converting from unsigned or signed datatypes, respectively.
+
+    """
+    return convert(image, np.float64, force_copy)
+
+def img_as_uint(image, force_copy=False):
+    """Convert an image to 16-bit unsigned integer format.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    force_copy : bool, optional
+        Force a copy of the data, irrespective of its current dtype.
+
+    Returns
+    -------
+    out : ndarray of uint16
+        Output image.
+
+    Notes
+    -----
+    Negative input values will be clipped.
+    Positive values are scaled between 0 and 65535.
+
+    """
+    return convert(image, np.uint16, force_copy)
+
+def img_as_int(image, force_copy=False):
+    """Convert an image to 16-bit signed integer format.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    force_copy : bool, optional
+        Force a copy of the data, irrespective of its current dtype.
+
+    Returns
+    -------
+    out : ndarray of uint16
+        Output image.
+
+    Notes
+    -----
+    The values are scaled between -32768 and 32767.
+    If the input data-type is positive-only (e.g., uint8), then
+    the output image will still only have positive values.
+
+    """
+    return convert(image, np.int16, force_copy)
+
+def img_as_ubyte(image, force_copy=False):
+    """Convert an image to 8-bit unsigned integer format.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    force_copy : bool, optional
+        Force a copy of the data, irrespective of its current dtype.
+
+    Returns
+    -------
+    out : ndarray of ubyte (uint8)
+        Output image.
+
+    Notes
+    -----
+    Negative input values will be clipped.
+    Positive values are scaled between 0 and 255.
+
+    """
+    return convert(image, np.uint8, force_copy)
+
+def img_as_bool(image, force_copy=False):
+    """Convert an image to boolean format.
+
+    Parameters
+    ----------
+    image : ndarray
+        Input image.
+    force_copy : bool, optional
+        Force a copy of the data, irrespective of its current dtype.
+
+    Returns
+    -------
+    out : ndarray of bool (`bool_`)
+        Output image.
+
+    Notes
+    -----
+    The upper half of the input dtype's positive range is True, and the lower
+    half is False. All negative values (if present) are False.
+
+    """
+    return convert(image, np.bool_, force_copy)

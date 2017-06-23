@@ -1,0 +1,5 @@
+osgeo/_gdalconst.so
+osgeo/_gdal.so
+osgeo/_ogr.so
+osgeo/_osr.so
+osgeo/_gdal_array.so

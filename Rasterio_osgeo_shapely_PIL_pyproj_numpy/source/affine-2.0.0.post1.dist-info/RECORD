@@ -1,0 +1,16 @@
+affine/__init__.py,sha256=wbRNJHW47ky6Kbr2YAWfEkmIyJ1hooyxf2eDnju3KpI,16540
+affine/tests/__init__.py,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+affine/tests/test_pickle.py,sha256=m8sf2s7rvoJRKA7SujlOascP-9MO-_FYadx-ZBK4i3M,744
+affine/tests/test_rotation.py,sha256=qZLQsc9V5AHRBjtd_rbzOQcBjMdvg9Eo6UgLvAGTNe4,1321
+affine/tests/test_transform.py,sha256=KDiN2LWz47ciPYzx0EbISHgQ1Us2z54NoraMLD_pMxw,16883
+affine-2.0.0.post1.dist-info/top_level.txt,sha256=iQzy0aeBb-rrq5QvrICb3iCkyyxyhP5DWyYEicmmNDQ,7
+affine-2.0.0.post1.dist-info/METADATA,sha256=g-XGDu0yRgGmJI_g8isBH5UYS4Mg3kmfDX63qA_Xjg4,3354
+affine-2.0.0.post1.dist-info/DESCRIPTION.rst,sha256=mtv68DyXBqja6ZOuX1N-A_6WDAXF2ys0amNlN_UvdaI,3006
+affine-2.0.0.post1.dist-info/metadata.json,sha256=AUzveXZOk9XC0HcEL028zbFM9JRqsGwx_tZutqrgxB4,568
+affine-2.0.0.post1.dist-info/WHEEL,sha256=54bVun1KfEBTJ68SHUmbxNPj80VxlQ0sHi4gZdGZXEY,92
+affine-2.0.0.post1.dist-info/RECORD,,
+affine/tests/test_transform.pyc,,
+affine/tests/__init__.pyc,,
+affine/__init__.pyc,,
+affine/tests/test_pickle.pyc,,
+affine/tests/test_rotation.pyc,,

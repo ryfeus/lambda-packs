@@ -1,0 +1,11 @@
+../click_plugins/core.py
+../click_plugins/__init__.py
+../click_plugins/core.pyc
+../click_plugins/__init__.pyc
+./
+dependency_links.txt
+PKG-INFO
+zip-safe
+requires.txt
+top_level.txt
+SOURCES.txt
