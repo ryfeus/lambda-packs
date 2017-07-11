@@ -182,11 +182,25 @@ http://pandas.pydata.org/
 #### Tools
 
 - docx (python-docx - https://pypi.python.org/pypi/python-docx)
- - xlsx (XlsxWriter - https://pypi.python.org/pypi/XlsxWriter)
- - pptx (python-pptx - https://pypi.python.org/pypi/python-pptx)
- - pdf (Reportlab - https://pypi.python.org/pypi/reportlab)
- - epub (EbookLib - https://pypi.python.org/pypi/EbookLib)
- - png/jpg/... (Pillow - https://pypi.python.org/pypi/Pillow)
+- xlsx (XlsxWriter - https://pypi.python.org/pypi/XlsxWriter)
+- pptx (python-pptx - https://pypi.python.org/pypi/python-pptx)
+- pdf (Reportlab - https://pypi.python.org/pypi/reportlab)
+- epub (EbookLib - https://pypi.python.org/pypi/EbookLib)
+- png/jpg/... (Pillow - https://pypi.python.org/pypi/Pillow)
 
 
+---
 
+### Satellite imagery processing (rasterio + OSGEO + pyproj + shapely + PIL)
+
+#### Intro
+
+AWS Lambda pack in Python for processing satellite imagery. Basically it enables to deploy python code in an easy and cheap way for processing satellite imagery or polygons. In “hello world” code of the pack I download red, green, blue Landsat 8 bands from AWS, make True Color image out of it and upload it to S3. It takes 35 seconds and 824MB of RAM for it so ~2500 scenes can be processed for 1$.
+
+#### Tools
+
+- Rasterio (https://github.com/mapbox/rasterio 0.36)
+- OSGEO (https://trac.osgeo.org/gdal/wiki/GdalOgrInPython)
+- Pyproj (https://github.com/jswhit/pyproj)
+- Shapely (https://github.com/Toblerity/Shapely)
+- PIL (https://pillow.readthedocs.io/)

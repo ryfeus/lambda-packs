@@ -1,0 +1,7 @@
+{
+  "name": "lxml-requests",
+  "version": "1.0.0",
+  "description": "AWS Lambda package with lxml and requests libs",
+  "author": "",
+  "license": "MIT"
+}

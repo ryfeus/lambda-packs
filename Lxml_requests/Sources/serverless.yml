@@ -1,0 +1,11 @@
+service: lxml-requests
+
+frameworkVersion: ">=1.2.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: python2.7
+
+functions:
+  currentTime:
+    handler: service.handler
