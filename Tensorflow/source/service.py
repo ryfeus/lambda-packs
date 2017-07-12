@@ -14,18 +14,8 @@ import sys
 import urllib
 
 def downloadFromS3(strBucket,strKey,strFile):
-    print(strFile)
     s3_client = boto3.client('s3')
     s3_client.download_file(strBucket, strKey, strFile)
-
-
-
-FLAGS = None
-
-# pylint: disable=line-too-long
-DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
-# pylint: enable=line-too-long
-
 
 class NodeLookup(object):
     """Converts integer node ID's to human readable labels."""
@@ -89,7 +79,6 @@ def create_graph():
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
 
-
 def run_inference_on_image(image):
     if not tf.gfile.Exists(image):
         tf.logging.fatal('File does not exist %s', image)
@@ -116,15 +105,12 @@ def run_inference_on_image(image):
         node_lookup = NodeLookup()
 
         top_k = predictions.argsort()[-5:][::-1]
+        strResult = '%s (score = %.5f)' % (node_lookup.id_to_string(top_k[0]), predictions[top_k[0]])
         for node_id in top_k:
             human_string = node_lookup.id_to_string(node_id)
             score = predictions[node_id]
             print('%s (score = %.5f)' % (human_string, score))
-
-def main(_):
-    image = os.path.join('/tmp/imagenet/', 'inputimage.jpg')
-    run_inference_on_image(image)
-    return []
+    return strResult
 
 def handler(event, context):
     print(event)
@@ -189,16 +175,6 @@ def handler(event, context):
       help='Display this many predictions.'
     )
     FLAGS, unparsed = parser.parse_known_args()
-    print(FLAGS)
-    tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
-    return []
-    # a = tf.constant(1)
-    # b = tf.constant(2)
-    # print("tf")
-    # with tf.Session() as sess:
-    #     print("tf1")
-    #     return str(sess.run(a + b))
-
-if __name__ == '__main__':
-    print("Main")
-    handler("null", "null")
+    image = os.path.join('/tmp/imagenet/', 'inputimage.jpg')
+    strResult = run_inference_on_image(image)
+    return strResult
