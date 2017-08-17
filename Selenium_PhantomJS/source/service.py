@@ -15,7 +15,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from apiclient.discovery import build
 from oauth2client.client import GoogleCredentials
 
-def lambda_handler(event, context):
+def handler(event, context):
 	# set user agent
 	user_agent = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36")
 
