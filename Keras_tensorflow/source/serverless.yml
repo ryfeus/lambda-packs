@@ -1,4 +1,4 @@
-service: lxml-requests
+service: lambda
 
 frameworkVersion: ">=1.2.0 <2.0.0"
 

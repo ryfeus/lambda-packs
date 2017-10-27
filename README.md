@@ -76,6 +76,24 @@ https://github.com/svanoort/pyresttest
 
 Package for parsing static HTML pages. Difference here is that it works faster and consumes less memory than PhantomJS but is limited in terms websites it can parse and other features.
 
+#### Serverless start
+
+```
+serverless install -u https://github.com/ryfeus/lambda-packs/tree/master/Lxml_requests/source -n lxml-requests
+cd lxml-requests
+serverless deploy
+serverless invoke --function main --log
+```
+
+#### Build pack
+
+```
+wget https://github.com/ryfeus/lambda-packs/blob/master/Lxml_requests/buildPack.sh
+docker pull amazonlinux:latest
+docker run -v $(pwd):/outputs --name lambdapackgen -d amazonlinux:latest tail -f /dev/null
+docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack.sh
+```
+
 #### Tools
 
 Lxml 3.7.1
@@ -169,7 +187,6 @@ http://pandas.pydata.org/
 
 ---
 ### Tesseract
-
 
 ---
 
