@@ -1,31 +1,33 @@
-"""Python wrappers around Brain.
+"""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
+Original C++ source file: candidate_sampling_ops.cc
 """
 
 import collections as _collections
 
-from google.protobuf import text_format as _text_format
+from tensorflow.python.eager import execute as _execute
+from tensorflow.python.eager import context as _context
+from tensorflow.python.eager import core as _core
+from tensorflow.python.framework import dtypes as _dtypes
+from tensorflow.python.framework import tensor_shape as _tensor_shape
 
 from tensorflow.core.framework import op_def_pb2 as _op_def_pb2
-
 # Needed to trigger the call to _set_call_cpp_shape_fn.
 from tensorflow.python.framework import common_shapes as _common_shapes
-
 from tensorflow.python.framework import op_def_registry as _op_def_registry
 from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import op_def_library as _op_def_library
+
+
 __all_candidate_sampler_outputs = ["sampled_candidates",
                                   "true_expected_count",
                                   "sampled_expected_count"]
+_AllCandidateSamplerOutput = _collections.namedtuple(
+    "AllCandidateSampler", __all_candidate_sampler_outputs)
 
 
-_AllCandidateSamplerOutput = _collections.namedtuple("AllCandidateSampler",
-                                                     __all_candidate_sampler_outputs)
-
-
-def _all_candidate_sampler(true_classes, num_true, num_sampled, unique,
-                           seed=None, seed2=None, name=None):
+def _all_candidate_sampler(true_classes, num_true, num_sampled, unique, seed=0, seed2=0, name=None):
   r"""Generates labels for candidate sampling with a learned unigram distribution.
 
   See explanations of candidate sampling and the data formats at
@@ -43,8 +45,7 @@ def _all_candidate_sampler(true_classes, num_true, num_sampled, unique,
       A batch_size * num_true matrix, in which each row contains the
       IDs of the num_true target_classes in the corresponding original label.
     num_true: An `int` that is `>= 1`. Number of true labels per context.
-    num_sampled: An `int` that is `>= 1`.
-      Number of candidates to produce per batch.
+    num_sampled: An `int` that is `>= 1`. Number of candidates to produce.
     unique: A `bool`.
       If unique is true, we sample with rejection, so that all sampled
       candidates in a batch are unique. This requires some approximation to
@@ -59,6 +60,7 @@ def _all_candidate_sampler(true_classes, num_true, num_sampled, unique,
 
   Returns:
     A tuple of `Tensor` objects (sampled_candidates, true_expected_count, sampled_expected_count).
+
     sampled_candidates: A `Tensor` of type `int64`. A vector of length num_sampled, in which each element is
       the ID of a sampled candidate.
     true_expected_count: A `Tensor` of type `float32`. A batch_size * num_true matrix, representing
@@ -69,22 +71,45 @@ def _all_candidate_sampler(true_classes, num_true, num_sampled, unique,
       to occur in a batch of sampled candidates.  If unique=true, then this is a
       probability.
   """
-  result = _op_def_lib.apply_op("AllCandidateSampler",
-                                true_classes=true_classes, num_true=num_true,
-                                num_sampled=num_sampled, unique=unique,
-                                seed=seed, seed2=seed2, name=name)
-  return _AllCandidateSamplerOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  num_sampled = _execute.make_int(num_sampled, "num_sampled")
+  unique = _execute.make_bool(unique, "unique")
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "AllCandidateSampler", true_classes=true_classes, num_true=num_true,
+        num_sampled=num_sampled, unique=unique, seed=seed, seed2=seed2,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "num_sampled",
+              _op.get_attr("num_sampled"), "unique", _op.get_attr("unique"),
+              "seed", _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    _inputs_flat = [true_classes]
+    _attrs = ("num_true", num_true, "num_sampled", num_sampled, "unique",
+              unique, "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"AllCandidateSampler", 3, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "AllCandidateSampler", _inputs_flat, _attrs, _result, name)
+  _result = _AllCandidateSamplerOutput._make(_result)
+  return _result
 
 
 __compute_accidental_hits_outputs = ["indices", "ids", "weights"]
+_ComputeAccidentalHitsOutput = _collections.namedtuple(
+    "ComputeAccidentalHits", __compute_accidental_hits_outputs)
 
 
-_ComputeAccidentalHitsOutput = _collections.namedtuple("ComputeAccidentalHits",
-                                                       __compute_accidental_hits_outputs)
-
-
-def _compute_accidental_hits(true_classes, sampled_candidates, num_true,
-                             seed=None, seed2=None, name=None):
+def _compute_accidental_hits(true_classes, sampled_candidates, num_true, seed=0, seed2=0, name=None):
   r"""Computes the ids of the positions in sampled_candidates that match true_labels.
 
   When doing log-odds NCE, the result of this op should be passed through a
@@ -108,35 +133,52 @@ def _compute_accidental_hits(true_classes, sampled_candidates, num_true,
 
   Returns:
     A tuple of `Tensor` objects (indices, ids, weights).
+
     indices: A `Tensor` of type `int32`. A vector of indices corresponding to rows of true_candidates.
     ids: A `Tensor` of type `int64`. A vector of IDs of positions in sampled_candidates that match a true_label
       for the row with the corresponding index in indices.
     weights: A `Tensor` of type `float32`. A vector of the same length as indices and ids, in which each element
       is -FLOAT_MAX.
   """
-  result = _op_def_lib.apply_op("ComputeAccidentalHits",
-                                true_classes=true_classes,
-                                sampled_candidates=sampled_candidates,
-                                num_true=num_true, seed=seed, seed2=seed2,
-                                name=name)
-  return _ComputeAccidentalHitsOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ComputeAccidentalHits", true_classes=true_classes,
+        sampled_candidates=sampled_candidates, num_true=num_true, seed=seed,
+        seed2=seed2, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "seed",
+              _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    sampled_candidates = _ops.convert_to_tensor(sampled_candidates, _dtypes.int64)
+    _inputs_flat = [true_classes, sampled_candidates]
+    _attrs = ("num_true", num_true, "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"ComputeAccidentalHits", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "ComputeAccidentalHits", _inputs_flat, _attrs, _result, name)
+  _result = _ComputeAccidentalHitsOutput._make(_result)
+  return _result
 
 
 __fixed_unigram_candidate_sampler_outputs = ["sampled_candidates",
                                             "true_expected_count",
                                             "sampled_expected_count"]
+_FixedUnigramCandidateSamplerOutput = _collections.namedtuple(
+    "FixedUnigramCandidateSampler", __fixed_unigram_candidate_sampler_outputs)
 
 
-_FixedUnigramCandidateSamplerOutput = _collections.namedtuple("FixedUnigramCandidateSampler",
-                                                              __fixed_unigram_candidate_sampler_outputs)
-
-
-def _fixed_unigram_candidate_sampler(true_classes, num_true, num_sampled,
-                                     unique, range_max, vocab_file=None,
-                                     distortion=None, num_reserved_ids=None,
-                                     num_shards=None, shard=None,
-                                     unigrams=None, seed=None, seed2=None,
-                                     name=None):
+def _fixed_unigram_candidate_sampler(true_classes, num_true, num_sampled, unique, range_max, vocab_file="", distortion=1, num_reserved_ids=0, num_shards=1, shard=0, unigrams=[], seed=0, seed2=0, name=None):
   r"""Generates labels for candidate sampling with a learned unigram distribution.
 
   A unigram sampler could use a fixed unigram distribution read from a
@@ -160,7 +202,7 @@ def _fixed_unigram_candidate_sampler(true_classes, num_true, num_sampled,
       IDs of the num_true target_classes in the corresponding original label.
     num_true: An `int` that is `>= 1`. Number of true labels per context.
     num_sampled: An `int` that is `>= 1`.
-      Number of candidates to randomly sample per batch.
+      Number of candidates to randomly sample.
     unique: A `bool`.
       If unique is true, we sample with rejection, so that all sampled
       candidates in a batch are unique. This requires some approximation to
@@ -206,6 +248,7 @@ def _fixed_unigram_candidate_sampler(true_classes, num_true, num_sampled,
 
   Returns:
     A tuple of `Tensor` objects (sampled_candidates, true_expected_count, sampled_expected_count).
+
     sampled_candidates: A `Tensor` of type `int64`. A vector of length num_sampled, in which each element is
       the ID of a sampled candidate.
     true_expected_count: A `Tensor` of type `float32`. A batch_size * num_true matrix, representing
@@ -216,30 +259,83 @@ def _fixed_unigram_candidate_sampler(true_classes, num_true, num_sampled,
       to occur in a batch of sampled candidates.  If unique=true, then this is a
       probability.
   """
-  result = _op_def_lib.apply_op("FixedUnigramCandidateSampler",
-                                true_classes=true_classes, num_true=num_true,
-                                num_sampled=num_sampled, unique=unique,
-                                range_max=range_max, vocab_file=vocab_file,
-                                distortion=distortion,
-                                num_reserved_ids=num_reserved_ids,
-                                num_shards=num_shards, shard=shard,
-                                unigrams=unigrams, seed=seed, seed2=seed2,
-                                name=name)
-  return _FixedUnigramCandidateSamplerOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  num_sampled = _execute.make_int(num_sampled, "num_sampled")
+  unique = _execute.make_bool(unique, "unique")
+  range_max = _execute.make_int(range_max, "range_max")
+  if vocab_file is None:
+    vocab_file = ""
+  vocab_file = _execute.make_str(vocab_file, "vocab_file")
+  if distortion is None:
+    distortion = 1
+  distortion = _execute.make_float(distortion, "distortion")
+  if num_reserved_ids is None:
+    num_reserved_ids = 0
+  num_reserved_ids = _execute.make_int(num_reserved_ids, "num_reserved_ids")
+  if num_shards is None:
+    num_shards = 1
+  num_shards = _execute.make_int(num_shards, "num_shards")
+  if shard is None:
+    shard = 0
+  shard = _execute.make_int(shard, "shard")
+  if unigrams is None:
+    unigrams = []
+  if not isinstance(unigrams, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'unigrams' argument to "
+        "'fixed_unigram_candidate_sampler' Op, not %r." % unigrams)
+  unigrams = [_execute.make_float(_f, "unigrams") for _f in unigrams]
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "FixedUnigramCandidateSampler", true_classes=true_classes,
+        num_true=num_true, num_sampled=num_sampled, unique=unique,
+        range_max=range_max, vocab_file=vocab_file, distortion=distortion,
+        num_reserved_ids=num_reserved_ids, num_shards=num_shards, shard=shard,
+        unigrams=unigrams, seed=seed, seed2=seed2, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "num_sampled",
+              _op.get_attr("num_sampled"), "unique", _op.get_attr("unique"),
+              "range_max", _op.get_attr("range_max"), "vocab_file",
+              _op.get_attr("vocab_file"), "distortion",
+              _op.get_attr("distortion"), "num_reserved_ids",
+              _op.get_attr("num_reserved_ids"), "num_shards",
+              _op.get_attr("num_shards"), "shard", _op.get_attr("shard"),
+              "unigrams", _op.get_attr("unigrams"), "seed",
+              _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    _inputs_flat = [true_classes]
+    _attrs = ("num_true", num_true, "num_sampled", num_sampled, "unique",
+              unique, "range_max", range_max, "vocab_file", vocab_file,
+              "distortion", distortion, "num_reserved_ids", num_reserved_ids,
+              "num_shards", num_shards, "shard", shard, "unigrams", unigrams,
+              "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"FixedUnigramCandidateSampler", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "FixedUnigramCandidateSampler", _inputs_flat, _attrs, _result, name)
+  _result = _FixedUnigramCandidateSamplerOutput._make(_result)
+  return _result
 
 
 __learned_unigram_candidate_sampler_outputs = ["sampled_candidates",
                                               "true_expected_count",
                                               "sampled_expected_count"]
+_LearnedUnigramCandidateSamplerOutput = _collections.namedtuple(
+    "LearnedUnigramCandidateSampler",
+    __learned_unigram_candidate_sampler_outputs)
 
 
-_LearnedUnigramCandidateSamplerOutput = _collections.namedtuple("LearnedUnigramCandidateSampler",
-                                                                __learned_unigram_candidate_sampler_outputs)
-
-
-def _learned_unigram_candidate_sampler(true_classes, num_true, num_sampled,
-                                       unique, range_max, seed=None,
-                                       seed2=None, name=None):
+def _learned_unigram_candidate_sampler(true_classes, num_true, num_sampled, unique, range_max, seed=0, seed2=0, name=None):
   r"""Generates labels for candidate sampling with a learned unigram distribution.
 
   See explanations of candidate sampling and the data formats at
@@ -258,7 +354,7 @@ def _learned_unigram_candidate_sampler(true_classes, num_true, num_sampled,
       IDs of the num_true target_classes in the corresponding original label.
     num_true: An `int` that is `>= 1`. Number of true labels per context.
     num_sampled: An `int` that is `>= 1`.
-      Number of candidates to randomly sample per batch.
+      Number of candidates to randomly sample.
     unique: A `bool`.
       If unique is true, we sample with rejection, so that all sampled
       candidates in a batch are unique. This requires some approximation to
@@ -275,6 +371,7 @@ def _learned_unigram_candidate_sampler(true_classes, num_true, num_sampled,
 
   Returns:
     A tuple of `Tensor` objects (sampled_candidates, true_expected_count, sampled_expected_count).
+
     sampled_candidates: A `Tensor` of type `int64`. A vector of length num_sampled, in which each element is
       the ID of a sampled candidate.
     true_expected_count: A `Tensor` of type `float32`. A batch_size * num_true matrix, representing
@@ -285,26 +382,50 @@ def _learned_unigram_candidate_sampler(true_classes, num_true, num_sampled,
       to occur in a batch of sampled candidates.  If unique=true, then this is a
       probability.
   """
-  result = _op_def_lib.apply_op("LearnedUnigramCandidateSampler",
-                                true_classes=true_classes, num_true=num_true,
-                                num_sampled=num_sampled, unique=unique,
-                                range_max=range_max, seed=seed, seed2=seed2,
-                                name=name)
-  return _LearnedUnigramCandidateSamplerOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  num_sampled = _execute.make_int(num_sampled, "num_sampled")
+  unique = _execute.make_bool(unique, "unique")
+  range_max = _execute.make_int(range_max, "range_max")
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "LearnedUnigramCandidateSampler", true_classes=true_classes,
+        num_true=num_true, num_sampled=num_sampled, unique=unique,
+        range_max=range_max, seed=seed, seed2=seed2, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "num_sampled",
+              _op.get_attr("num_sampled"), "unique", _op.get_attr("unique"),
+              "range_max", _op.get_attr("range_max"), "seed",
+              _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    _inputs_flat = [true_classes]
+    _attrs = ("num_true", num_true, "num_sampled", num_sampled, "unique",
+              unique, "range_max", range_max, "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"LearnedUnigramCandidateSampler", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "LearnedUnigramCandidateSampler", _inputs_flat, _attrs, _result, name)
+  _result = _LearnedUnigramCandidateSamplerOutput._make(_result)
+  return _result
 
 
 __log_uniform_candidate_sampler_outputs = ["sampled_candidates",
                                           "true_expected_count",
                                           "sampled_expected_count"]
+_LogUniformCandidateSamplerOutput = _collections.namedtuple(
+    "LogUniformCandidateSampler", __log_uniform_candidate_sampler_outputs)
 
 
-_LogUniformCandidateSamplerOutput = _collections.namedtuple("LogUniformCandidateSampler",
-                                                            __log_uniform_candidate_sampler_outputs)
-
-
-def _log_uniform_candidate_sampler(true_classes, num_true, num_sampled,
-                                   unique, range_max, seed=None, seed2=None,
-                                   name=None):
+def _log_uniform_candidate_sampler(true_classes, num_true, num_sampled, unique, range_max, seed=0, seed2=0, name=None):
   r"""Generates labels for candidate sampling with a log-uniform distribution.
 
   See explanations of candidate sampling and the data formats at
@@ -323,7 +444,7 @@ def _log_uniform_candidate_sampler(true_classes, num_true, num_sampled,
       IDs of the num_true target_classes in the corresponding original label.
     num_true: An `int` that is `>= 1`. Number of true labels per context.
     num_sampled: An `int` that is `>= 1`.
-      Number of candidates to randomly sample per batch.
+      Number of candidates to randomly sample.
     unique: A `bool`.
       If unique is true, we sample with rejection, so that all sampled
       candidates in a batch are unique. This requires some approximation to
@@ -340,6 +461,7 @@ def _log_uniform_candidate_sampler(true_classes, num_true, num_sampled,
 
   Returns:
     A tuple of `Tensor` objects (sampled_candidates, true_expected_count, sampled_expected_count).
+
     sampled_candidates: A `Tensor` of type `int64`. A vector of length num_sampled, in which each element is
       the ID of a sampled candidate.
     true_expected_count: A `Tensor` of type `float32`. A batch_size * num_true matrix, representing
@@ -350,27 +472,51 @@ def _log_uniform_candidate_sampler(true_classes, num_true, num_sampled,
       to occur in a batch of sampled candidates.  If unique=true, then this is a
       probability.
   """
-  result = _op_def_lib.apply_op("LogUniformCandidateSampler",
-                                true_classes=true_classes, num_true=num_true,
-                                num_sampled=num_sampled, unique=unique,
-                                range_max=range_max, seed=seed, seed2=seed2,
-                                name=name)
-  return _LogUniformCandidateSamplerOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  num_sampled = _execute.make_int(num_sampled, "num_sampled")
+  unique = _execute.make_bool(unique, "unique")
+  range_max = _execute.make_int(range_max, "range_max")
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "LogUniformCandidateSampler", true_classes=true_classes,
+        num_true=num_true, num_sampled=num_sampled, unique=unique,
+        range_max=range_max, seed=seed, seed2=seed2, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "num_sampled",
+              _op.get_attr("num_sampled"), "unique", _op.get_attr("unique"),
+              "range_max", _op.get_attr("range_max"), "seed",
+              _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    _inputs_flat = [true_classes]
+    _attrs = ("num_true", num_true, "num_sampled", num_sampled, "unique",
+              unique, "range_max", range_max, "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"LogUniformCandidateSampler", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "LogUniformCandidateSampler", _inputs_flat, _attrs, _result, name)
+  _result = _LogUniformCandidateSamplerOutput._make(_result)
+  return _result
 
 
 __thread_unsafe_unigram_candidate_sampler_outputs = ["sampled_candidates",
                                                     "true_expected_count",
                                                     "sampled_expected_count"]
+_ThreadUnsafeUnigramCandidateSamplerOutput = _collections.namedtuple(
+    "ThreadUnsafeUnigramCandidateSampler",
+    __thread_unsafe_unigram_candidate_sampler_outputs)
 
 
-_ThreadUnsafeUnigramCandidateSamplerOutput = _collections.namedtuple("ThreadUnsafeUnigramCandidateSampler",
-                                                                     __thread_unsafe_unigram_candidate_sampler_outputs)
-
-
-def _thread_unsafe_unigram_candidate_sampler(true_classes, num_true,
-                                             num_sampled, unique, range_max,
-                                             seed=None, seed2=None,
-                                             name=None):
+def _thread_unsafe_unigram_candidate_sampler(true_classes, num_true, num_sampled, unique, range_max, seed=0, seed2=0, name=None):
   r"""Generates labels for candidate sampling with a learned unigram distribution.
 
   See explanations of candidate sampling and the data formats at
@@ -389,7 +535,7 @@ def _thread_unsafe_unigram_candidate_sampler(true_classes, num_true,
       IDs of the num_true target_classes in the corresponding original label.
     num_true: An `int` that is `>= 1`. Number of true labels per context.
     num_sampled: An `int` that is `>= 1`.
-      Number of candidates to randomly sample per batch.
+      Number of candidates to randomly sample.
     unique: A `bool`.
       If unique is true, we sample with rejection, so that all sampled
       candidates in a batch are unique. This requires some approximation to
@@ -406,6 +552,7 @@ def _thread_unsafe_unigram_candidate_sampler(true_classes, num_true,
 
   Returns:
     A tuple of `Tensor` objects (sampled_candidates, true_expected_count, sampled_expected_count).
+
     sampled_candidates: A `Tensor` of type `int64`. A vector of length num_sampled, in which each element is
       the ID of a sampled candidate.
     true_expected_count: A `Tensor` of type `float32`. A batch_size * num_true matrix, representing
@@ -416,25 +563,50 @@ def _thread_unsafe_unigram_candidate_sampler(true_classes, num_true,
       to occur in a batch of sampled candidates.  If unique=true, then this is a
       probability.
   """
-  result = _op_def_lib.apply_op("ThreadUnsafeUnigramCandidateSampler",
-                                true_classes=true_classes, num_true=num_true,
-                                num_sampled=num_sampled, unique=unique,
-                                range_max=range_max, seed=seed, seed2=seed2,
-                                name=name)
-  return _ThreadUnsafeUnigramCandidateSamplerOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  num_sampled = _execute.make_int(num_sampled, "num_sampled")
+  unique = _execute.make_bool(unique, "unique")
+  range_max = _execute.make_int(range_max, "range_max")
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ThreadUnsafeUnigramCandidateSampler", true_classes=true_classes,
+        num_true=num_true, num_sampled=num_sampled, unique=unique,
+        range_max=range_max, seed=seed, seed2=seed2, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "num_sampled",
+              _op.get_attr("num_sampled"), "unique", _op.get_attr("unique"),
+              "range_max", _op.get_attr("range_max"), "seed",
+              _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    _inputs_flat = [true_classes]
+    _attrs = ("num_true", num_true, "num_sampled", num_sampled, "unique",
+              unique, "range_max", range_max, "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"ThreadUnsafeUnigramCandidateSampler", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "ThreadUnsafeUnigramCandidateSampler", _inputs_flat, _attrs, _result, name)
+  _result = _ThreadUnsafeUnigramCandidateSamplerOutput._make(_result)
+  return _result
 
 
 __uniform_candidate_sampler_outputs = ["sampled_candidates",
                                       "true_expected_count",
                                       "sampled_expected_count"]
+_UniformCandidateSamplerOutput = _collections.namedtuple(
+    "UniformCandidateSampler", __uniform_candidate_sampler_outputs)
 
 
-_UniformCandidateSamplerOutput = _collections.namedtuple("UniformCandidateSampler",
-                                                         __uniform_candidate_sampler_outputs)
-
-
-def _uniform_candidate_sampler(true_classes, num_true, num_sampled, unique,
-                               range_max, seed=None, seed2=None, name=None):
+def _uniform_candidate_sampler(true_classes, num_true, num_sampled, unique, range_max, seed=0, seed2=0, name=None):
   r"""Generates labels for candidate sampling with a uniform distribution.
 
   See explanations of candidate sampling and the data formats at
@@ -453,7 +625,7 @@ def _uniform_candidate_sampler(true_classes, num_true, num_sampled, unique,
       IDs of the num_true target_classes in the corresponding original label.
     num_true: An `int` that is `>= 1`. Number of true labels per context.
     num_sampled: An `int` that is `>= 1`.
-      Number of candidates to randomly sample per batch.
+      Number of candidates to randomly sample.
     unique: A `bool`.
       If unique is true, we sample with rejection, so that all sampled
       candidates in a batch are unique. This requires some approximation to
@@ -470,6 +642,7 @@ def _uniform_candidate_sampler(true_classes, num_true, num_sampled, unique,
 
   Returns:
     A tuple of `Tensor` objects (sampled_candidates, true_expected_count, sampled_expected_count).
+
     sampled_candidates: A `Tensor` of type `int64`. A vector of length num_sampled, in which each element is
       the ID of a sampled candidate.
     true_expected_count: A `Tensor` of type `float32`. A batch_size * num_true matrix, representing
@@ -480,435 +653,463 @@ def _uniform_candidate_sampler(true_classes, num_true, num_sampled, unique,
       to occur in a batch of sampled candidates.  If unique=true, then this is a
       probability.
   """
-  result = _op_def_lib.apply_op("UniformCandidateSampler",
-                                true_classes=true_classes, num_true=num_true,
-                                num_sampled=num_sampled, unique=unique,
-                                range_max=range_max, seed=seed, seed2=seed2,
-                                name=name)
-  return _UniformCandidateSamplerOutput._make(result)
+  num_true = _execute.make_int(num_true, "num_true")
+  num_sampled = _execute.make_int(num_sampled, "num_sampled")
+  unique = _execute.make_bool(unique, "unique")
+  range_max = _execute.make_int(range_max, "range_max")
+  if seed is None:
+    seed = 0
+  seed = _execute.make_int(seed, "seed")
+  if seed2 is None:
+    seed2 = 0
+  seed2 = _execute.make_int(seed2, "seed2")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "UniformCandidateSampler", true_classes=true_classes,
+        num_true=num_true, num_sampled=num_sampled, unique=unique,
+        range_max=range_max, seed=seed, seed2=seed2, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_true", _op.get_attr("num_true"), "num_sampled",
+              _op.get_attr("num_sampled"), "unique", _op.get_attr("unique"),
+              "range_max", _op.get_attr("range_max"), "seed",
+              _op.get_attr("seed"), "seed2", _op.get_attr("seed2"))
+  else:
+    true_classes = _ops.convert_to_tensor(true_classes, _dtypes.int64)
+    _inputs_flat = [true_classes]
+    _attrs = ("num_true", num_true, "num_sampled", num_sampled, "unique",
+              unique, "range_max", range_max, "seed", seed, "seed2", seed2)
+    _result = _execute.execute(b"UniformCandidateSampler", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "UniformCandidateSampler", _inputs_flat, _attrs, _result, name)
+  _result = _UniformCandidateSamplerOutput._make(_result)
+  return _result
 
-
-def _InitOpDefLibrary():
+def _InitOpDefLibrary(op_list_proto_bytes):
   op_list = _op_def_pb2.OpList()
-  _text_format.Merge(_InitOpDefLibrary.op_list_ascii, op_list)
+  op_list.ParseFromString(op_list_proto_bytes)
   _op_def_registry.register_op_list(op_list)
   op_def_lib = _op_def_library.OpDefLibrary()
   op_def_lib.add_op_list(op_list)
   return op_def_lib
-
-
-_InitOpDefLibrary.op_list_ascii = """op {
-  name: "AllCandidateSampler"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "true_expected_count"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "sampled_expected_count"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "num_sampled"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "unique"
-    type: "bool"
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-op {
-  name: "ComputeAccidentalHits"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "indices"
-    type: DT_INT32
-  }
-  output_arg {
-    name: "ids"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "weights"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-op {
-  name: "FixedUnigramCandidateSampler"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "true_expected_count"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "sampled_expected_count"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "num_sampled"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "unique"
-    type: "bool"
-  }
-  attr {
-    name: "range_max"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "vocab_file"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "distortion"
-    type: "float"
-    default_value {
-      f: 1
-    }
-  }
-  attr {
-    name: "num_reserved_ids"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "num_shards"
-    type: "int"
-    default_value {
-      i: 1
-    }
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "shard"
-    type: "int"
-    default_value {
-      i: 0
-    }
-    has_minimum: true
-  }
-  attr {
-    name: "unigrams"
-    type: "list(float)"
-    default_value {
-      list {
-      }
-    }
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-op {
-  name: "LearnedUnigramCandidateSampler"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "true_expected_count"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "sampled_expected_count"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "num_sampled"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "unique"
-    type: "bool"
-  }
-  attr {
-    name: "range_max"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-op {
-  name: "LogUniformCandidateSampler"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "true_expected_count"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "sampled_expected_count"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "num_sampled"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "unique"
-    type: "bool"
-  }
-  attr {
-    name: "range_max"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-op {
-  name: "ThreadUnsafeUnigramCandidateSampler"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "true_expected_count"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "sampled_expected_count"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "num_sampled"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "unique"
-    type: "bool"
-  }
-  attr {
-    name: "range_max"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-op {
-  name: "UniformCandidateSampler"
-  input_arg {
-    name: "true_classes"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sampled_candidates"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "true_expected_count"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "sampled_expected_count"
-    type: DT_FLOAT
-  }
-  attr {
-    name: "num_true"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "num_sampled"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "unique"
-    type: "bool"
-  }
-  attr {
-    name: "range_max"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "seed"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "seed2"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-}
-"""
-
-
-_op_def_lib = _InitOpDefLibrary()
+# op {
+#   name: "AllCandidateSampler"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "true_expected_count"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "sampled_expected_count"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "num_sampled"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "unique"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ComputeAccidentalHits"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "indices"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "ids"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "weights"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+# }
+# op {
+#   name: "FixedUnigramCandidateSampler"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "true_expected_count"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "sampled_expected_count"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "num_sampled"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "unique"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "range_max"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "vocab_file"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "distortion"
+#     type: "float"
+#     default_value {
+#       f: 1
+#     }
+#   }
+#   attr {
+#     name: "num_reserved_ids"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "num_shards"
+#     type: "int"
+#     default_value {
+#       i: 1
+#     }
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "shard"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "unigrams"
+#     type: "list(float)"
+#     default_value {
+#       list {
+#       }
+#     }
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "LearnedUnigramCandidateSampler"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "true_expected_count"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "sampled_expected_count"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "num_sampled"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "unique"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "range_max"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "LogUniformCandidateSampler"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "true_expected_count"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "sampled_expected_count"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "num_sampled"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "unique"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "range_max"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ThreadUnsafeUnigramCandidateSampler"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "true_expected_count"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "sampled_expected_count"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "num_sampled"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "unique"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "range_max"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "UniformCandidateSampler"
+#   input_arg {
+#     name: "true_classes"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sampled_candidates"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "true_expected_count"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "sampled_expected_count"
+#     type: DT_FLOAT
+#   }
+#   attr {
+#     name: "num_true"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "num_sampled"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "unique"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "range_max"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "seed"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "seed2"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   is_stateful: true
+# }
+_op_def_lib = _InitOpDefLibrary(b"\n\327\001\n\023AllCandidateSampler\022\020\n\014true_classes\030\t\032\026\n\022sampled_candidates\030\t\032\027\n\023true_expected_count\030\001\032\032\n\026sampled_expected_count\030\001\"\023\n\010num_true\022\003int(\0010\001\"\026\n\013num_sampled\022\003int(\0010\001\"\016\n\006unique\022\004bool\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\210\001\001\n\230\001\n\025ComputeAccidentalHits\022\020\n\014true_classes\030\t\022\026\n\022sampled_candidates\030\t\032\013\n\007indices\030\003\032\007\n\003ids\030\t\032\013\n\007weights\030\001\"\017\n\010num_true\022\003int\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\n\225\003\n\034FixedUnigramCandidateSampler\022\020\n\014true_classes\030\t\032\026\n\022sampled_candidates\030\t\032\027\n\023true_expected_count\030\001\032\032\n\026sampled_expected_count\030\001\"\023\n\010num_true\022\003int(\0010\001\"\026\n\013num_sampled\022\003int(\0010\001\"\016\n\006unique\022\004bool\"\024\n\trange_max\022\003int(\0010\001\"\030\n\nvocab_file\022\006string\032\002\022\000\"\032\n\ndistortion\022\005float\032\005%\000\000\200?\"\033\n\020num_reserved_ids\022\003int\032\002\030\000\"\031\n\nnum_shards\022\003int\032\002\030\001(\0010\001\"\022\n\005shard\022\003int\032\002\030\000(\001\"\033\n\010unigrams\022\013list(float)\032\002\n\000\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\210\001\001\n\370\001\n\036LearnedUnigramCandidateSampler\022\020\n\014true_classes\030\t\032\026\n\022sampled_candidates\030\t\032\027\n\023true_expected_count\030\001\032\032\n\026sampled_expected_count\030\001\"\023\n\010num_true\022\003int(\0010\001\"\026\n\013num_sampled\022\003int(\0010\001\"\016\n\006unique\022\004bool\"\024\n\trange_max\022\003int(\0010\001\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\210\001\001\n\364\001\n\032LogUniformCandidateSampler\022\020\n\014true_classes\030\t\032\026\n\022sampled_candidates\030\t\032\027\n\023true_expected_count\030\001\032\032\n\026sampled_expected_count\030\001\"\023\n\010num_true\022\003int(\0010\001\"\026\n\013num_sampled\022\003int(\0010\001\"\016\n\006unique\022\004bool\"\024\n\trange_max\022\003int(\0010\001\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\210\001\001\n\375\001\n#ThreadUnsafeUnigramCandidateSampler\022\020\n\014true_classes\030\t\032\026\n\022sampled_candidates\030\t\032\027\n\023true_expected_count\030\001\032\032\n\026sampled_expected_count\030\001\"\023\n\010num_true\022\003int(\0010\001\"\026\n\013num_sampled\022\003int(\0010\001\"\016\n\006unique\022\004bool\"\024\n\trange_max\022\003int(\0010\001\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\210\001\001\n\361\001\n\027UniformCandidateSampler\022\020\n\014true_classes\030\t\032\026\n\022sampled_candidates\030\t\032\027\n\023true_expected_count\030\001\032\032\n\026sampled_expected_count\030\001\"\023\n\010num_true\022\003int(\0010\001\"\026\n\013num_sampled\022\003int(\0010\001\"\016\n\006unique\022\004bool\"\024\n\trange_max\022\003int(\0010\001\"\017\n\004seed\022\003int\032\002\030\000\"\020\n\005seed2\022\003int\032\002\030\000\210\001\001")

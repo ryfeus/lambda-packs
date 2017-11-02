@@ -21,10 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='tensorflow/core/framework/step_stats.proto',
   package='tensorflow',
   syntax='proto3',
-  serialized_pb=_b('\n*tensorflow/core/framework/step_stats.proto\x12\ntensorflow\x1a\x36tensorflow/core/framework/allocation_description.proto\x1a\x32tensorflow/core/framework/tensor_description.proto\"V\n\x13\x41llocatorMemoryUsed\x12\x16\n\x0e\x61llocator_name\x18\x01 \x01(\t\x12\x13\n\x0btotal_bytes\x18\x02 \x01(\x03\x12\x12\n\npeak_bytes\x18\x03 \x01(\x03\"U\n\nNodeOutput\x12\x0c\n\x04slot\x18\x01 \x01(\x05\x12\x39\n\x12tensor_description\x18\x03 \x01(\x0b\x32\x1d.tensorflow.TensorDescription\"\xec\x02\n\rNodeExecStats\x12\x11\n\tnode_name\x18\x01 \x01(\t\x12\x18\n\x10\x61ll_start_micros\x18\x02 \x01(\x03\x12\x1b\n\x13op_start_rel_micros\x18\x03 \x01(\x03\x12\x19\n\x11op_end_rel_micros\x18\x04 \x01(\x03\x12\x1a\n\x12\x61ll_end_rel_micros\x18\x05 \x01(\x03\x12/\n\x06memory\x18\x06 \x03(\x0b\x32\x1f.tensorflow.AllocatorMemoryUsed\x12&\n\x06output\x18\x07 \x03(\x0b\x32\x16.tensorflow.NodeOutput\x12\x16\n\x0etimeline_label\x18\x08 \x01(\t\x12\x18\n\x10scheduled_micros\x18\t \x01(\x03\x12\x11\n\tthread_id\x18\n \x01(\r\x12<\n\x11referenced_tensor\x18\x0b \x03(\x0b\x32!.tensorflow.AllocationDescription\"P\n\x0f\x44\x65viceStepStats\x12\x0e\n\x06\x64\x65vice\x18\x01 \x01(\t\x12-\n\nnode_stats\x18\x02 \x03(\x0b\x32\x19.tensorflow.NodeExecStats\";\n\tStepStats\x12.\n\tdev_stats\x18\x01 \x03(\x0b\x32\x1b.tensorflow.DeviceStepStatsB0\n\x18org.tensorflow.frameworkB\x0fStepStatsProtosP\x01\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n*tensorflow/core/framework/step_stats.proto\x12\ntensorflow\x1a\x36tensorflow/core/framework/allocation_description.proto\x1a\x32tensorflow/core/framework/tensor_description.proto\"\x8a\x01\n\x13\x41llocatorMemoryUsed\x12\x16\n\x0e\x61llocator_name\x18\x01 \x01(\t\x12\x13\n\x0btotal_bytes\x18\x02 \x01(\x03\x12\x12\n\npeak_bytes\x18\x03 \x01(\x03\x12\x12\n\nlive_bytes\x18\x04 \x01(\x03\x12\x1e\n\x16\x61llocator_bytes_in_use\x18\x05 \x01(\x03\"U\n\nNodeOutput\x12\x0c\n\x04slot\x18\x01 \x01(\x05\x12\x39\n\x12tensor_description\x18\x03 \x01(\x0b\x32\x1d.tensorflow.TensorDescription\"\xef\x01\n\x0bMemoryStats\x12\x1d\n\x15host_temp_memory_size\x18\x01 \x01(\x03\x12\x1f\n\x17\x64\x65vice_temp_memory_size\x18\x02 \x01(\x03\x12#\n\x1bhost_persistent_memory_size\x18\x03 \x01(\x03\x12%\n\x1d\x64\x65vice_persistent_memory_size\x18\x04 \x01(\x03\x12(\n host_persistent_tensor_alloc_ids\x18\x05 \x03(\x03\x12*\n\"device_persistent_tensor_alloc_ids\x18\x06 \x03(\x03\"\x9b\x03\n\rNodeExecStats\x12\x11\n\tnode_name\x18\x01 \x01(\t\x12\x18\n\x10\x61ll_start_micros\x18\x02 \x01(\x03\x12\x1b\n\x13op_start_rel_micros\x18\x03 \x01(\x03\x12\x19\n\x11op_end_rel_micros\x18\x04 \x01(\x03\x12\x1a\n\x12\x61ll_end_rel_micros\x18\x05 \x01(\x03\x12/\n\x06memory\x18\x06 \x03(\x0b\x32\x1f.tensorflow.AllocatorMemoryUsed\x12&\n\x06output\x18\x07 \x03(\x0b\x32\x16.tensorflow.NodeOutput\x12\x16\n\x0etimeline_label\x18\x08 \x01(\t\x12\x18\n\x10scheduled_micros\x18\t \x01(\x03\x12\x11\n\tthread_id\x18\n \x01(\r\x12<\n\x11referenced_tensor\x18\x0b \x03(\x0b\x32!.tensorflow.AllocationDescription\x12-\n\x0cmemory_stats\x18\x0c \x01(\x0b\x32\x17.tensorflow.MemoryStats\"P\n\x0f\x44\x65viceStepStats\x12\x0e\n\x06\x64\x65vice\x18\x01 \x01(\t\x12-\n\nnode_stats\x18\x02 \x03(\x0b\x32\x19.tensorflow.NodeExecStats\";\n\tStepStats\x12.\n\tdev_stats\x18\x01 \x03(\x0b\x32\x1b.tensorflow.DeviceStepStatsB0\n\x18org.tensorflow.frameworkB\x0fStepStatsProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_allocation__description__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_tensor__description__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -57,6 +56,20 @@ _ALLOCATORMEMORYUSED = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='live_bytes', full_name='tensorflow.AllocatorMemoryUsed.live_bytes', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='allocator_bytes_in_use', full_name='tensorflow.AllocatorMemoryUsed.allocator_bytes_in_use', index=4,
+      number=5, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -69,8 +82,8 @@ _ALLOCATORMEMORYUSED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=166,
-  serialized_end=252,
+  serialized_start=167,
+  serialized_end=305,
 )
 
 
@@ -107,8 +120,74 @@ _NODEOUTPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=254,
-  serialized_end=339,
+  serialized_start=307,
+  serialized_end=392,
+)
+
+
+_MEMORYSTATS = _descriptor.Descriptor(
+  name='MemoryStats',
+  full_name='tensorflow.MemoryStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='host_temp_memory_size', full_name='tensorflow.MemoryStats.host_temp_memory_size', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='device_temp_memory_size', full_name='tensorflow.MemoryStats.device_temp_memory_size', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='host_persistent_memory_size', full_name='tensorflow.MemoryStats.host_persistent_memory_size', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='device_persistent_memory_size', full_name='tensorflow.MemoryStats.device_persistent_memory_size', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='host_persistent_tensor_alloc_ids', full_name='tensorflow.MemoryStats.host_persistent_tensor_alloc_ids', index=4,
+      number=5, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='device_persistent_tensor_alloc_ids', full_name='tensorflow.MemoryStats.device_persistent_tensor_alloc_ids', index=5,
+      number=6, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=395,
+  serialized_end=634,
 )
 
 
@@ -196,6 +275,13 @@ _NODEEXECSTATS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='memory_stats', full_name='tensorflow.NodeExecStats.memory_stats', index=11,
+      number=12, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -208,8 +294,8 @@ _NODEEXECSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=342,
-  serialized_end=706,
+  serialized_start=637,
+  serialized_end=1048,
 )
 
 
@@ -246,8 +332,8 @@ _DEVICESTEPSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=708,
-  serialized_end=788,
+  serialized_start=1050,
+  serialized_end=1130,
 )
 
 
@@ -277,21 +363,24 @@ _STEPSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=790,
-  serialized_end=849,
+  serialized_start=1132,
+  serialized_end=1191,
 )
 
 _NODEOUTPUT.fields_by_name['tensor_description'].message_type = tensorflow_dot_core_dot_framework_dot_tensor__description__pb2._TENSORDESCRIPTION
 _NODEEXECSTATS.fields_by_name['memory'].message_type = _ALLOCATORMEMORYUSED
 _NODEEXECSTATS.fields_by_name['output'].message_type = _NODEOUTPUT
 _NODEEXECSTATS.fields_by_name['referenced_tensor'].message_type = tensorflow_dot_core_dot_framework_dot_allocation__description__pb2._ALLOCATIONDESCRIPTION
+_NODEEXECSTATS.fields_by_name['memory_stats'].message_type = _MEMORYSTATS
 _DEVICESTEPSTATS.fields_by_name['node_stats'].message_type = _NODEEXECSTATS
 _STEPSTATS.fields_by_name['dev_stats'].message_type = _DEVICESTEPSTATS
 DESCRIPTOR.message_types_by_name['AllocatorMemoryUsed'] = _ALLOCATORMEMORYUSED
 DESCRIPTOR.message_types_by_name['NodeOutput'] = _NODEOUTPUT
+DESCRIPTOR.message_types_by_name['MemoryStats'] = _MEMORYSTATS
 DESCRIPTOR.message_types_by_name['NodeExecStats'] = _NODEEXECSTATS
 DESCRIPTOR.message_types_by_name['DeviceStepStats'] = _DEVICESTEPSTATS
 DESCRIPTOR.message_types_by_name['StepStats'] = _STEPSTATS
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 AllocatorMemoryUsed = _reflection.GeneratedProtocolMessageType('AllocatorMemoryUsed', (_message.Message,), dict(
   DESCRIPTOR = _ALLOCATORMEMORYUSED,
@@ -306,6 +395,13 @@ NodeOutput = _reflection.GeneratedProtocolMessageType('NodeOutput', (_message.Me
   # @@protoc_insertion_point(class_scope:tensorflow.NodeOutput)
   ))
 _sym_db.RegisterMessage(NodeOutput)
+
+MemoryStats = _reflection.GeneratedProtocolMessageType('MemoryStats', (_message.Message,), dict(
+  DESCRIPTOR = _MEMORYSTATS,
+  __module__ = 'tensorflow.core.framework.step_stats_pb2'
+  # @@protoc_insertion_point(class_scope:tensorflow.MemoryStats)
+  ))
+_sym_db.RegisterMessage(MemoryStats)
 
 NodeExecStats = _reflection.GeneratedProtocolMessageType('NodeExecStats', (_message.Message,), dict(
   DESCRIPTOR = _NODEEXECSTATS,

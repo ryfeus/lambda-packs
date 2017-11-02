@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n\'google/protobuf/internal/any_test.proto\x12\x18google.protobuf.internal\x1a\x19google/protobuf/any.proto\"K\n\x07TestAny\x12#\n\x05value\x18\x01 \x01(\x0b\x32\x14.google.protobuf.Any\x12\x11\n\tint_value\x18\x02 \x01(\x05*\x08\x08\n\x10\x80\x80\x80\x80\x02\"\x85\x01\n\x11TestAnyExtension1\x12\t\n\x01i\x18\x0f \x01(\x05\x32\x65\n\nextension1\x12!.google.protobuf.internal.TestAny\x18\xab\xff\xf6. \x01(\x0b\x32+.google.protobuf.internal.TestAnyExtension1')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -106,6 +105,7 @@ _TESTANYEXTENSION1 = _descriptor.Descriptor(
 _TESTANY.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 DESCRIPTOR.message_types_by_name['TestAny'] = _TESTANY
 DESCRIPTOR.message_types_by_name['TestAnyExtension1'] = _TESTANYEXTENSION1
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestAny = _reflection.GeneratedProtocolMessageType('TestAny', (_message.Message,), dict(
   DESCRIPTOR = _TESTANY,

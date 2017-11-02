@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n(tensorflow/core/framework/versions.proto\x12\ntensorflow\"K\n\nVersionDef\x12\x10\n\x08producer\x18\x01 \x01(\x05\x12\x14\n\x0cmin_consumer\x18\x02 \x01(\x05\x12\x15\n\rbad_consumers\x18\x03 \x03(\x05\x42/\n\x18org.tensorflow.frameworkB\x0eVersionsProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -71,6 +70,7 @@ _VERSIONDEF = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['VersionDef'] = _VERSIONDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 VersionDef = _reflection.GeneratedProtocolMessageType('VersionDef', (_message.Message,), dict(
   DESCRIPTOR = _VERSIONDEF,

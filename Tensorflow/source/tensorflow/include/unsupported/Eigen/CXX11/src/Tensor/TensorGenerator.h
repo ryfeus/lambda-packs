@@ -31,6 +31,7 @@ struct traits<TensorGeneratorOp<Generator, XprType> > : public traits<XprType>
   typedef typename remove_reference<Nested>::type _Nested;
   static const int NumDimensions = XprTraits::NumDimensions;
   static const int Layout = XprTraits::Layout;
+  typedef typename XprTraits::PointerType PointerType;
 };
 
 template<typename Generator, typename XprType>
@@ -98,9 +99,12 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorEvaluator(const XprType& op, const Device& device)
       : m_generator(op.generator())
+#ifdef EIGEN_USE_SYCL
+      , m_argImpl(op.expression(), device)
+#endif
   {
-    TensorEvaluator<ArgType, Device> impl(op.expression(), device);
-    m_dimensions = impl.dimensions();
+    TensorEvaluator<ArgType, Device> argImpl(op.expression(), device);
+    m_dimensions = argImpl.dimensions();
 
     if (static_cast<int>(Layout) == static_cast<int>(ColMajor)) {
       m_strides[0] = 1;
@@ -153,7 +157,12 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
                                   TensorOpCost::MulCost<Scalar>());
   }
 
-  EIGEN_DEVICE_FUNC Scalar* data() const { return NULL; }
+  EIGEN_DEVICE_FUNC typename Eigen::internal::traits<XprType>::PointerType  data() const { return NULL; }
+
+#ifdef EIGEN_USE_SYCL
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const TensorEvaluator<ArgType, Device>& impl() const { return m_argImpl; }
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Generator& functor() const { return m_generator; }
+#endif
 
  protected:
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
@@ -178,6 +187,9 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
   Dimensions m_dimensions;
   array<Index, NumDims> m_strides;
   Generator m_generator;
+#ifdef EIGEN_USE_SYCL
+  TensorEvaluator<ArgType, Device> m_argImpl;
+#endif
 };
 
 } // end namespace Eigen

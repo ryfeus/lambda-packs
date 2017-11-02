@@ -24,7 +24,7 @@ limitations under the License.
 
 namespace tensorflow {
 
-// PendingCounts is internal helper class to keep track of pending and
+// PendingCounts is an internal helper class to keep track of pending and
 // dead counts for nodes, for use in the ExecutorState module.  It
 // holds a map from Handles to various counts for that handle.  This
 // information is needed per frame iteration. The amount of memory
@@ -39,7 +39,7 @@ namespace tensorflow {
 //    }
 //
 // When we actually want to start an iteration we first create a
-// nPendingCounts object and then index into it using the precomputed
+// PendingCounts object and then index into it using the precomputed
 // handles:
 
 //    PendingCounts counts(layout);
@@ -69,7 +69,7 @@ class PendingCounts {
   // to retrieve the count data for this node.
   class Layout {
    public:
-    Handle CreateHandle(int max_pending_count, int max_dead_count);
+    Handle CreateHandle(size_t max_pending_count, size_t max_dead_count);
 
    private:
     friend class PendingCounts;
@@ -91,7 +91,7 @@ class PendingCounts {
 
   ~PendingCounts() { delete[] bytes_; }
 
-  void set_initial_count(Handle h, int pending_count) {
+  void set_initial_count(Handle h, size_t pending_count) {
     if (h.is_large_) {
       LargeCounts* c = Large(h);
       c->pending = pending_count;
@@ -305,8 +305,8 @@ class PendingCounts {
   void operator=(const PendingCounts&) = delete;
 };
 
-PendingCounts::Handle PendingCounts::Layout::CreateHandle(int max_pending_count,
-                                                          int max_dead_count) {
+inline PendingCounts::Handle PendingCounts::Layout::CreateHandle(
+    size_t max_pending_count, size_t max_dead_count) {
   Handle result;
   if ((max_pending_count > kMaxCountForPackedCounts) ||
       (max_dead_count > kMaxCountForPackedCounts)) {

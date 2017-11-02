@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n8google/protobuf/internal/import_test_package/inner.proto\x12\x33google.protobuf.python.internal.import_test_package\"\x1a\n\x05Inner\x12\x11\n\x05value\x18\x01 \x01(\x05:\x02\x35\x37')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -57,6 +56,7 @@ _INNER = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['Inner'] = _INNER
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Inner = _reflection.GeneratedProtocolMessageType('Inner', (_message.Message,), dict(
   DESCRIPTOR = _INNER,

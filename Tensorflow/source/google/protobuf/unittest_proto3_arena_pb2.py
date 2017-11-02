@@ -15,17 +15,19 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import unittest_import_pb2 as google_dot_protobuf_dot_unittest__import__pb2
-google_dot_protobuf_dot_unittest__import__public__pb2 = google_dot_protobuf_dot_unittest__import__pb2.google_dot_protobuf_dot_unittest__import__public__pb2
+try:
+  google_dot_protobuf_dot_unittest__import__public__pb2 = google_dot_protobuf_dot_unittest__import__pb2.google_dot_protobuf_dot_unittest__import__public__pb2
+except AttributeError:
+  google_dot_protobuf_dot_unittest__import__public__pb2 = google_dot_protobuf_dot_unittest__import__pb2.google.protobuf.unittest_import_public_pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='google/protobuf/unittest_proto3_arena.proto',
   package='proto3_arena_unittest',
   syntax='proto3',
-  serialized_pb=_b('\n+google/protobuf/unittest_proto3_arena.proto\x12\x15proto3_arena_unittest\x1a%google/protobuf/unittest_import.proto\"\xf6\x10\n\x0cTestAllTypes\x12\x16\n\x0eoptional_int32\x18\x01 \x01(\x05\x12\x16\n\x0eoptional_int64\x18\x02 \x01(\x03\x12\x17\n\x0foptional_uint32\x18\x03 \x01(\r\x12\x17\n\x0foptional_uint64\x18\x04 \x01(\x04\x12\x17\n\x0foptional_sint32\x18\x05 \x01(\x11\x12\x17\n\x0foptional_sint64\x18\x06 \x01(\x12\x12\x18\n\x10optional_fixed32\x18\x07 \x01(\x07\x12\x18\n\x10optional_fixed64\x18\x08 \x01(\x06\x12\x19\n\x11optional_sfixed32\x18\t \x01(\x0f\x12\x19\n\x11optional_sfixed64\x18\n \x01(\x10\x12\x16\n\x0eoptional_float\x18\x0b \x01(\x02\x12\x17\n\x0foptional_double\x18\x0c \x01(\x01\x12\x15\n\roptional_bool\x18\r \x01(\x08\x12\x17\n\x0foptional_string\x18\x0e \x01(\t\x12\x16\n\x0eoptional_bytes\x18\x0f \x01(\x0c\x12R\n\x17optional_nested_message\x18\x12 \x01(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessage\x12G\n\x18optional_foreign_message\x18\x13 \x01(\x0b\x32%.proto3_arena_unittest.ForeignMessage\x12H\n\x17optional_import_message\x18\x14 \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12L\n\x14optional_nested_enum\x18\x15 \x01(\x0e\x32..proto3_arena_unittest.TestAllTypes.NestedEnum\x12\x41\n\x15optional_foreign_enum\x18\x16 \x01(\x0e\x32\".proto3_arena_unittest.ForeignEnum\x12!\n\x15optional_string_piece\x18\x18 \x01(\tB\x02\x08\x02\x12\x19\n\roptional_cord\x18\x19 \x01(\tB\x02\x08\x01\x12U\n\x1eoptional_public_import_message\x18\x1a \x01(\x0b\x32-.protobuf_unittest_import.PublicImportMessage\x12T\n\x15optional_lazy_message\x18\x1b \x01(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x16\n\x0erepeated_int32\x18\x1f \x03(\x05\x12\x16\n\x0erepeated_int64\x18  \x03(\x03\x12\x17\n\x0frepeated_uint32\x18! \x03(\r\x12\x17\n\x0frepeated_uint64\x18\" \x03(\x04\x12\x17\n\x0frepeated_sint32\x18# \x03(\x11\x12\x17\n\x0frepeated_sint64\x18$ \x03(\x12\x12\x18\n\x10repeated_fixed32\x18% \x03(\x07\x12\x18\n\x10repeated_fixed64\x18& \x03(\x06\x12\x19\n\x11repeated_sfixed32\x18\' \x03(\x0f\x12\x19\n\x11repeated_sfixed64\x18( \x03(\x10\x12\x16\n\x0erepeated_float\x18) \x03(\x02\x12\x17\n\x0frepeated_double\x18* \x03(\x01\x12\x15\n\rrepeated_bool\x18+ \x03(\x08\x12\x17\n\x0frepeated_string\x18, \x03(\t\x12\x16\n\x0erepeated_bytes\x18- \x03(\x0c\x12R\n\x17repeated_nested_message\x18\x30 \x03(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessage\x12G\n\x18repeated_foreign_message\x18\x31 \x03(\x0b\x32%.proto3_arena_unittest.ForeignMessage\x12H\n\x17repeated_import_message\x18\x32 \x03(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12L\n\x14repeated_nested_enum\x18\x33 \x03(\x0e\x32..proto3_arena_unittest.TestAllTypes.NestedEnum\x12\x41\n\x15repeated_foreign_enum\x18\x34 \x03(\x0e\x32\".proto3_arena_unittest.ForeignEnum\x12!\n\x15repeated_string_piece\x18\x36 \x03(\tB\x02\x08\x02\x12\x19\n\rrepeated_cord\x18\x37 \x03(\tB\x02\x08\x01\x12T\n\x15repeated_lazy_message\x18\x39 \x03(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x16\n\x0coneof_uint32\x18o \x01(\rH\x00\x12Q\n\x14oneof_nested_message\x18p \x01(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessageH\x00\x12\x16\n\x0coneof_string\x18q \x01(\tH\x00\x12\x15\n\x0boneof_bytes\x18r \x01(\x0cH\x00\x1a\x1b\n\rNestedMessage\x12\n\n\x02\x62\x62\x18\x01 \x01(\x05\"C\n\nNestedEnum\x12\x08\n\x04ZERO\x10\x00\x12\x07\n\x03\x46OO\x10\x01\x12\x07\n\x03\x42\x41R\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x12\x10\n\x03NEG\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x42\r\n\x0boneof_field\"\xae\x03\n\x0fTestPackedTypes\x12\x18\n\x0cpacked_int32\x18Z \x03(\x05\x42\x02\x10\x01\x12\x18\n\x0cpacked_int64\x18[ \x03(\x03\x42\x02\x10\x01\x12\x19\n\rpacked_uint32\x18\\ \x03(\rB\x02\x10\x01\x12\x19\n\rpacked_uint64\x18] \x03(\x04\x42\x02\x10\x01\x12\x19\n\rpacked_sint32\x18^ \x03(\x11\x42\x02\x10\x01\x12\x19\n\rpacked_sint64\x18_ \x03(\x12\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed32\x18` \x03(\x07\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed64\x18\x61 \x03(\x06\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed32\x18\x62 \x03(\x0f\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed64\x18\x63 \x03(\x10\x42\x02\x10\x01\x12\x18\n\x0cpacked_float\x18\x64 \x03(\x02\x42\x02\x10\x01\x12\x19\n\rpacked_double\x18\x65 \x03(\x01\x42\x02\x10\x01\x12\x17\n\x0bpacked_bool\x18\x66 \x03(\x08\x42\x02\x10\x01\x12;\n\x0bpacked_enum\x18g \x03(\x0e\x32\".proto3_arena_unittest.ForeignEnumB\x02\x10\x01\"\xdf\x03\n\x11TestUnpackedTypes\x12\x1a\n\x0erepeated_int32\x18\x01 \x03(\x05\x42\x02\x10\x00\x12\x1a\n\x0erepeated_int64\x18\x02 \x03(\x03\x42\x02\x10\x00\x12\x1b\n\x0frepeated_uint32\x18\x03 \x03(\rB\x02\x10\x00\x12\x1b\n\x0frepeated_uint64\x18\x04 \x03(\x04\x42\x02\x10\x00\x12\x1b\n\x0frepeated_sint32\x18\x05 \x03(\x11\x42\x02\x10\x00\x12\x1b\n\x0frepeated_sint64\x18\x06 \x03(\x12\x42\x02\x10\x00\x12\x1c\n\x10repeated_fixed32\x18\x07 \x03(\x07\x42\x02\x10\x00\x12\x1c\n\x10repeated_fixed64\x18\x08 \x03(\x06\x42\x02\x10\x00\x12\x1d\n\x11repeated_sfixed32\x18\t \x03(\x0f\x42\x02\x10\x00\x12\x1d\n\x11repeated_sfixed64\x18\n \x03(\x10\x42\x02\x10\x00\x12\x1a\n\x0erepeated_float\x18\x0b \x03(\x02\x42\x02\x10\x00\x12\x1b\n\x0frepeated_double\x18\x0c \x03(\x01\x42\x02\x10\x00\x12\x19\n\rrepeated_bool\x18\r \x03(\x08\x42\x02\x10\x00\x12P\n\x14repeated_nested_enum\x18\x0e \x03(\x0e\x32..proto3_arena_unittest.TestAllTypes.NestedEnumB\x02\x10\x00\"\x84\x01\n\x12NestedTestAllTypes\x12\x38\n\x05\x63hild\x18\x01 \x01(\x0b\x32).proto3_arena_unittest.NestedTestAllTypes\x12\x34\n\x07payload\x18\x02 \x01(\x0b\x32#.proto3_arena_unittest.TestAllTypes\"\x1b\n\x0e\x46oreignMessage\x12\t\n\x01\x63\x18\x01 \x01(\x05\"\x12\n\x10TestEmptyMessage*R\n\x0b\x46oreignEnum\x12\x10\n\x0c\x46OREIGN_ZERO\x10\x00\x12\x0f\n\x0b\x46OREIGN_FOO\x10\x04\x12\x0f\n\x0b\x46OREIGN_BAR\x10\x05\x12\x0f\n\x0b\x46OREIGN_BAZ\x10\x06\x42\x03\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n+google/protobuf/unittest_proto3_arena.proto\x12\x15proto3_arena_unittest\x1a%google/protobuf/unittest_import.proto\"\xc9\x11\n\x0cTestAllTypes\x12\x16\n\x0eoptional_int32\x18\x01 \x01(\x05\x12\x16\n\x0eoptional_int64\x18\x02 \x01(\x03\x12\x17\n\x0foptional_uint32\x18\x03 \x01(\r\x12\x17\n\x0foptional_uint64\x18\x04 \x01(\x04\x12\x17\n\x0foptional_sint32\x18\x05 \x01(\x11\x12\x17\n\x0foptional_sint64\x18\x06 \x01(\x12\x12\x18\n\x10optional_fixed32\x18\x07 \x01(\x07\x12\x18\n\x10optional_fixed64\x18\x08 \x01(\x06\x12\x19\n\x11optional_sfixed32\x18\t \x01(\x0f\x12\x19\n\x11optional_sfixed64\x18\n \x01(\x10\x12\x16\n\x0eoptional_float\x18\x0b \x01(\x02\x12\x17\n\x0foptional_double\x18\x0c \x01(\x01\x12\x15\n\roptional_bool\x18\r \x01(\x08\x12\x17\n\x0foptional_string\x18\x0e \x01(\t\x12\x16\n\x0eoptional_bytes\x18\x0f \x01(\x0c\x12R\n\x17optional_nested_message\x18\x12 \x01(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessage\x12G\n\x18optional_foreign_message\x18\x13 \x01(\x0b\x32%.proto3_arena_unittest.ForeignMessage\x12H\n\x17optional_import_message\x18\x14 \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12L\n\x14optional_nested_enum\x18\x15 \x01(\x0e\x32..proto3_arena_unittest.TestAllTypes.NestedEnum\x12\x41\n\x15optional_foreign_enum\x18\x16 \x01(\x0e\x32\".proto3_arena_unittest.ForeignEnum\x12!\n\x15optional_string_piece\x18\x18 \x01(\tB\x02\x08\x02\x12\x19\n\roptional_cord\x18\x19 \x01(\tB\x02\x08\x01\x12U\n\x1eoptional_public_import_message\x18\x1a \x01(\x0b\x32-.protobuf_unittest_import.PublicImportMessage\x12T\n\x15optional_lazy_message\x18\x1b \x01(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12Q\n\x1coptional_lazy_import_message\x18s \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessageB\x02(\x01\x12\x16\n\x0erepeated_int32\x18\x1f \x03(\x05\x12\x16\n\x0erepeated_int64\x18  \x03(\x03\x12\x17\n\x0frepeated_uint32\x18! \x03(\r\x12\x17\n\x0frepeated_uint64\x18\" \x03(\x04\x12\x17\n\x0frepeated_sint32\x18# \x03(\x11\x12\x17\n\x0frepeated_sint64\x18$ \x03(\x12\x12\x18\n\x10repeated_fixed32\x18% \x03(\x07\x12\x18\n\x10repeated_fixed64\x18& \x03(\x06\x12\x19\n\x11repeated_sfixed32\x18\' \x03(\x0f\x12\x19\n\x11repeated_sfixed64\x18( \x03(\x10\x12\x16\n\x0erepeated_float\x18) \x03(\x02\x12\x17\n\x0frepeated_double\x18* \x03(\x01\x12\x15\n\rrepeated_bool\x18+ \x03(\x08\x12\x17\n\x0frepeated_string\x18, \x03(\t\x12\x16\n\x0erepeated_bytes\x18- \x03(\x0c\x12R\n\x17repeated_nested_message\x18\x30 \x03(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessage\x12G\n\x18repeated_foreign_message\x18\x31 \x03(\x0b\x32%.proto3_arena_unittest.ForeignMessage\x12H\n\x17repeated_import_message\x18\x32 \x03(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12L\n\x14repeated_nested_enum\x18\x33 \x03(\x0e\x32..proto3_arena_unittest.TestAllTypes.NestedEnum\x12\x41\n\x15repeated_foreign_enum\x18\x34 \x03(\x0e\x32\".proto3_arena_unittest.ForeignEnum\x12!\n\x15repeated_string_piece\x18\x36 \x03(\tB\x02\x08\x02\x12\x19\n\rrepeated_cord\x18\x37 \x03(\tB\x02\x08\x01\x12T\n\x15repeated_lazy_message\x18\x39 \x03(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x16\n\x0coneof_uint32\x18o \x01(\rH\x00\x12Q\n\x14oneof_nested_message\x18p \x01(\x0b\x32\x31.proto3_arena_unittest.TestAllTypes.NestedMessageH\x00\x12\x16\n\x0coneof_string\x18q \x01(\tH\x00\x12\x15\n\x0boneof_bytes\x18r \x01(\x0cH\x00\x1a\x1b\n\rNestedMessage\x12\n\n\x02\x62\x62\x18\x01 \x01(\x05\"C\n\nNestedEnum\x12\x08\n\x04ZERO\x10\x00\x12\x07\n\x03\x46OO\x10\x01\x12\x07\n\x03\x42\x41R\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x12\x10\n\x03NEG\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x42\r\n\x0boneof_field\"\xae\x03\n\x0fTestPackedTypes\x12\x18\n\x0cpacked_int32\x18Z \x03(\x05\x42\x02\x10\x01\x12\x18\n\x0cpacked_int64\x18[ \x03(\x03\x42\x02\x10\x01\x12\x19\n\rpacked_uint32\x18\\ \x03(\rB\x02\x10\x01\x12\x19\n\rpacked_uint64\x18] \x03(\x04\x42\x02\x10\x01\x12\x19\n\rpacked_sint32\x18^ \x03(\x11\x42\x02\x10\x01\x12\x19\n\rpacked_sint64\x18_ \x03(\x12\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed32\x18` \x03(\x07\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed64\x18\x61 \x03(\x06\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed32\x18\x62 \x03(\x0f\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed64\x18\x63 \x03(\x10\x42\x02\x10\x01\x12\x18\n\x0cpacked_float\x18\x64 \x03(\x02\x42\x02\x10\x01\x12\x19\n\rpacked_double\x18\x65 \x03(\x01\x42\x02\x10\x01\x12\x17\n\x0bpacked_bool\x18\x66 \x03(\x08\x42\x02\x10\x01\x12;\n\x0bpacked_enum\x18g \x03(\x0e\x32\".proto3_arena_unittest.ForeignEnumB\x02\x10\x01\"\xdf\x03\n\x11TestUnpackedTypes\x12\x1a\n\x0erepeated_int32\x18\x01 \x03(\x05\x42\x02\x10\x00\x12\x1a\n\x0erepeated_int64\x18\x02 \x03(\x03\x42\x02\x10\x00\x12\x1b\n\x0frepeated_uint32\x18\x03 \x03(\rB\x02\x10\x00\x12\x1b\n\x0frepeated_uint64\x18\x04 \x03(\x04\x42\x02\x10\x00\x12\x1b\n\x0frepeated_sint32\x18\x05 \x03(\x11\x42\x02\x10\x00\x12\x1b\n\x0frepeated_sint64\x18\x06 \x03(\x12\x42\x02\x10\x00\x12\x1c\n\x10repeated_fixed32\x18\x07 \x03(\x07\x42\x02\x10\x00\x12\x1c\n\x10repeated_fixed64\x18\x08 \x03(\x06\x42\x02\x10\x00\x12\x1d\n\x11repeated_sfixed32\x18\t \x03(\x0f\x42\x02\x10\x00\x12\x1d\n\x11repeated_sfixed64\x18\n \x03(\x10\x42\x02\x10\x00\x12\x1a\n\x0erepeated_float\x18\x0b \x03(\x02\x42\x02\x10\x00\x12\x1b\n\x0frepeated_double\x18\x0c \x03(\x01\x42\x02\x10\x00\x12\x19\n\rrepeated_bool\x18\r \x03(\x08\x42\x02\x10\x00\x12P\n\x14repeated_nested_enum\x18\x0e \x03(\x0e\x32..proto3_arena_unittest.TestAllTypes.NestedEnumB\x02\x10\x00\"\x84\x01\n\x12NestedTestAllTypes\x12\x38\n\x05\x63hild\x18\x01 \x01(\x0b\x32).proto3_arena_unittest.NestedTestAllTypes\x12\x34\n\x07payload\x18\x02 \x01(\x0b\x32#.proto3_arena_unittest.TestAllTypes\"\x1b\n\x0e\x46oreignMessage\x12\t\n\x01\x63\x18\x01 \x01(\x05\"\x12\n\x10TestEmptyMessage*R\n\x0b\x46oreignEnum\x12\x10\n\x0c\x46OREIGN_ZERO\x10\x00\x12\x0f\n\x0b\x46OREIGN_FOO\x10\x04\x12\x0f\n\x0b\x46OREIGN_BAR\x10\x05\x12\x0f\n\x0b\x46OREIGN_BAZ\x10\x06\x42\x03\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_unittest__import__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _FOREIGNENUM = _descriptor.EnumDescriptor(
   name='ForeignEnum',
@@ -52,8 +54,8 @@ _FOREIGNENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3377,
-  serialized_end=3459,
+  serialized_start=3460,
+  serialized_end=3542,
 )
 _sym_db.RegisterEnumDescriptor(_FOREIGNENUM)
 
@@ -93,8 +95,8 @@ _TESTALLTYPES_NESTEDENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=2194,
-  serialized_end=2261,
+  serialized_start=2277,
+  serialized_end=2344,
 )
 _sym_db.RegisterEnumDescriptor(_TESTALLTYPES_NESTEDENUM)
 
@@ -125,8 +127,8 @@ _TESTALLTYPES_NESTEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2165,
-  serialized_end=2192,
+  serialized_start=2248,
+  serialized_end=2275,
 )
 
 _TESTALLTYPES = _descriptor.Descriptor(
@@ -305,189 +307,196 @@ _TESTALLTYPES = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('(\001'))),
     _descriptor.FieldDescriptor(
-      name='repeated_int32', full_name='proto3_arena_unittest.TestAllTypes.repeated_int32', index=24,
+      name='optional_lazy_import_message', full_name='proto3_arena_unittest.TestAllTypes.optional_lazy_import_message', index=24,
+      number=115, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('(\001'))),
+    _descriptor.FieldDescriptor(
+      name='repeated_int32', full_name='proto3_arena_unittest.TestAllTypes.repeated_int32', index=25,
       number=31, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_int64', full_name='proto3_arena_unittest.TestAllTypes.repeated_int64', index=25,
+      name='repeated_int64', full_name='proto3_arena_unittest.TestAllTypes.repeated_int64', index=26,
       number=32, type=3, cpp_type=2, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_uint32', full_name='proto3_arena_unittest.TestAllTypes.repeated_uint32', index=26,
+      name='repeated_uint32', full_name='proto3_arena_unittest.TestAllTypes.repeated_uint32', index=27,
       number=33, type=13, cpp_type=3, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_uint64', full_name='proto3_arena_unittest.TestAllTypes.repeated_uint64', index=27,
+      name='repeated_uint64', full_name='proto3_arena_unittest.TestAllTypes.repeated_uint64', index=28,
       number=34, type=4, cpp_type=4, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_sint32', full_name='proto3_arena_unittest.TestAllTypes.repeated_sint32', index=28,
+      name='repeated_sint32', full_name='proto3_arena_unittest.TestAllTypes.repeated_sint32', index=29,
       number=35, type=17, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_sint64', full_name='proto3_arena_unittest.TestAllTypes.repeated_sint64', index=29,
+      name='repeated_sint64', full_name='proto3_arena_unittest.TestAllTypes.repeated_sint64', index=30,
       number=36, type=18, cpp_type=2, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_fixed32', full_name='proto3_arena_unittest.TestAllTypes.repeated_fixed32', index=30,
+      name='repeated_fixed32', full_name='proto3_arena_unittest.TestAllTypes.repeated_fixed32', index=31,
       number=37, type=7, cpp_type=3, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_fixed64', full_name='proto3_arena_unittest.TestAllTypes.repeated_fixed64', index=31,
+      name='repeated_fixed64', full_name='proto3_arena_unittest.TestAllTypes.repeated_fixed64', index=32,
       number=38, type=6, cpp_type=4, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_sfixed32', full_name='proto3_arena_unittest.TestAllTypes.repeated_sfixed32', index=32,
+      name='repeated_sfixed32', full_name='proto3_arena_unittest.TestAllTypes.repeated_sfixed32', index=33,
       number=39, type=15, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_sfixed64', full_name='proto3_arena_unittest.TestAllTypes.repeated_sfixed64', index=33,
+      name='repeated_sfixed64', full_name='proto3_arena_unittest.TestAllTypes.repeated_sfixed64', index=34,
       number=40, type=16, cpp_type=2, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_float', full_name='proto3_arena_unittest.TestAllTypes.repeated_float', index=34,
+      name='repeated_float', full_name='proto3_arena_unittest.TestAllTypes.repeated_float', index=35,
       number=41, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_double', full_name='proto3_arena_unittest.TestAllTypes.repeated_double', index=35,
+      name='repeated_double', full_name='proto3_arena_unittest.TestAllTypes.repeated_double', index=36,
       number=42, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_bool', full_name='proto3_arena_unittest.TestAllTypes.repeated_bool', index=36,
+      name='repeated_bool', full_name='proto3_arena_unittest.TestAllTypes.repeated_bool', index=37,
       number=43, type=8, cpp_type=7, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_string', full_name='proto3_arena_unittest.TestAllTypes.repeated_string', index=37,
+      name='repeated_string', full_name='proto3_arena_unittest.TestAllTypes.repeated_string', index=38,
       number=44, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_bytes', full_name='proto3_arena_unittest.TestAllTypes.repeated_bytes', index=38,
+      name='repeated_bytes', full_name='proto3_arena_unittest.TestAllTypes.repeated_bytes', index=39,
       number=45, type=12, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_nested_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_nested_message', index=39,
+      name='repeated_nested_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_nested_message', index=40,
       number=48, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_foreign_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_foreign_message', index=40,
+      name='repeated_foreign_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_foreign_message', index=41,
       number=49, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_import_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_import_message', index=41,
+      name='repeated_import_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_import_message', index=42,
       number=50, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_nested_enum', full_name='proto3_arena_unittest.TestAllTypes.repeated_nested_enum', index=42,
+      name='repeated_nested_enum', full_name='proto3_arena_unittest.TestAllTypes.repeated_nested_enum', index=43,
       number=51, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_foreign_enum', full_name='proto3_arena_unittest.TestAllTypes.repeated_foreign_enum', index=43,
+      name='repeated_foreign_enum', full_name='proto3_arena_unittest.TestAllTypes.repeated_foreign_enum', index=44,
       number=52, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='repeated_string_piece', full_name='proto3_arena_unittest.TestAllTypes.repeated_string_piece', index=44,
+      name='repeated_string_piece', full_name='proto3_arena_unittest.TestAllTypes.repeated_string_piece', index=45,
       number=54, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\010\002'))),
     _descriptor.FieldDescriptor(
-      name='repeated_cord', full_name='proto3_arena_unittest.TestAllTypes.repeated_cord', index=45,
+      name='repeated_cord', full_name='proto3_arena_unittest.TestAllTypes.repeated_cord', index=46,
       number=55, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\010\001'))),
     _descriptor.FieldDescriptor(
-      name='repeated_lazy_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_lazy_message', index=46,
+      name='repeated_lazy_message', full_name='proto3_arena_unittest.TestAllTypes.repeated_lazy_message', index=47,
       number=57, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('(\001'))),
     _descriptor.FieldDescriptor(
-      name='oneof_uint32', full_name='proto3_arena_unittest.TestAllTypes.oneof_uint32', index=47,
+      name='oneof_uint32', full_name='proto3_arena_unittest.TestAllTypes.oneof_uint32', index=48,
       number=111, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='oneof_nested_message', full_name='proto3_arena_unittest.TestAllTypes.oneof_nested_message', index=48,
+      name='oneof_nested_message', full_name='proto3_arena_unittest.TestAllTypes.oneof_nested_message', index=49,
       number=112, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='oneof_string', full_name='proto3_arena_unittest.TestAllTypes.oneof_string', index=49,
+      name='oneof_string', full_name='proto3_arena_unittest.TestAllTypes.oneof_string', index=50,
       number=113, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='oneof_bytes', full_name='proto3_arena_unittest.TestAllTypes.oneof_bytes', index=50,
+      name='oneof_bytes', full_name='proto3_arena_unittest.TestAllTypes.oneof_bytes', index=51,
       number=114, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
@@ -510,7 +519,7 @@ _TESTALLTYPES = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[]),
   ],
   serialized_start=110,
-  serialized_end=2276,
+  serialized_end=2359,
 )
 
 
@@ -631,8 +640,8 @@ _TESTPACKEDTYPES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2279,
-  serialized_end=2709,
+  serialized_start=2362,
+  serialized_end=2792,
 )
 
 
@@ -753,8 +762,8 @@ _TESTUNPACKEDTYPES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2712,
-  serialized_end=3191,
+  serialized_start=2795,
+  serialized_end=3274,
 )
 
 
@@ -791,8 +800,8 @@ _NESTEDTESTALLTYPES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3194,
-  serialized_end=3326,
+  serialized_start=3277,
+  serialized_end=3409,
 )
 
 
@@ -822,8 +831,8 @@ _FOREIGNMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3328,
-  serialized_end=3355,
+  serialized_start=3411,
+  serialized_end=3438,
 )
 
 
@@ -846,8 +855,8 @@ _TESTEMPTYMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3357,
-  serialized_end=3375,
+  serialized_start=3440,
+  serialized_end=3458,
 )
 
 _TESTALLTYPES_NESTEDMESSAGE.containing_type = _TESTALLTYPES
@@ -858,6 +867,7 @@ _TESTALLTYPES.fields_by_name['optional_nested_enum'].enum_type = _TESTALLTYPES_N
 _TESTALLTYPES.fields_by_name['optional_foreign_enum'].enum_type = _FOREIGNENUM
 _TESTALLTYPES.fields_by_name['optional_public_import_message'].message_type = google_dot_protobuf_dot_unittest__import__public__pb2._PUBLICIMPORTMESSAGE
 _TESTALLTYPES.fields_by_name['optional_lazy_message'].message_type = _TESTALLTYPES_NESTEDMESSAGE
+_TESTALLTYPES.fields_by_name['optional_lazy_import_message'].message_type = google_dot_protobuf_dot_unittest__import__pb2._IMPORTMESSAGE
 _TESTALLTYPES.fields_by_name['repeated_nested_message'].message_type = _TESTALLTYPES_NESTEDMESSAGE
 _TESTALLTYPES.fields_by_name['repeated_foreign_message'].message_type = _FOREIGNMESSAGE
 _TESTALLTYPES.fields_by_name['repeated_import_message'].message_type = google_dot_protobuf_dot_unittest__import__pb2._IMPORTMESSAGE
@@ -889,6 +899,7 @@ DESCRIPTOR.message_types_by_name['NestedTestAllTypes'] = _NESTEDTESTALLTYPES
 DESCRIPTOR.message_types_by_name['ForeignMessage'] = _FOREIGNMESSAGE
 DESCRIPTOR.message_types_by_name['TestEmptyMessage'] = _TESTEMPTYMESSAGE
 DESCRIPTOR.enum_types_by_name['ForeignEnum'] = _FOREIGNENUM
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestAllTypes = _reflection.GeneratedProtocolMessageType('TestAllTypes', (_message.Message,), dict(
 
@@ -949,6 +960,8 @@ _TESTALLTYPES.fields_by_name['optional_cord'].has_options = True
 _TESTALLTYPES.fields_by_name['optional_cord']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\010\001'))
 _TESTALLTYPES.fields_by_name['optional_lazy_message'].has_options = True
 _TESTALLTYPES.fields_by_name['optional_lazy_message']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('(\001'))
+_TESTALLTYPES.fields_by_name['optional_lazy_import_message'].has_options = True
+_TESTALLTYPES.fields_by_name['optional_lazy_import_message']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('(\001'))
 _TESTALLTYPES.fields_by_name['repeated_string_piece'].has_options = True
 _TESTALLTYPES.fields_by_name['repeated_string_piece']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\010\002'))
 _TESTALLTYPES.fields_by_name['repeated_cord'].has_options = True

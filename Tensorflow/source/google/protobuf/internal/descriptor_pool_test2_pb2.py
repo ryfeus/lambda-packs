@@ -26,7 +26,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   ,
   dependencies=[google_dot_protobuf_dot_internal_dot_descriptor__pool__test1__pb2.DESCRIPTOR,google_dot_protobuf_dot_internal_dot_more__messages__pb2.DESCRIPTOR,],
   public_dependencies=[google_dot_protobuf_dot_internal_dot_more__messages__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -236,6 +235,7 @@ _DESCRIPTORPOOLTEST3.fields_by_name['nested_enum'].enum_type = _DESCRIPTORPOOLTE
 _DESCRIPTORPOOLTEST3.fields_by_name['nested_message'].message_type = _DESCRIPTORPOOLTEST3_NESTEDMESSAGE
 _DESCRIPTORPOOLTEST3_NESTEDENUM.containing_type = _DESCRIPTORPOOLTEST3
 DESCRIPTOR.message_types_by_name['DescriptorPoolTest3'] = _DESCRIPTORPOOLTEST3
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DescriptorPoolTest3 = _reflection.GeneratedProtocolMessageType('DescriptorPoolTest3', (_message.Message,), dict(
 

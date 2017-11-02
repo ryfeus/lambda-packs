@@ -29,6 +29,26 @@ bool ProtoParseFromString(
     ::tensorflow::HistogramProto* msg)
         TF_MUST_USE_RESULT;
 
+// Message-text conversion for tensorflow.SummaryMetadata.PluginData
+string ProtoDebugString(
+    const ::tensorflow::SummaryMetadata_PluginData& msg);
+string ProtoShortDebugString(
+    const ::tensorflow::SummaryMetadata_PluginData& msg);
+bool ProtoParseFromString(
+    const string& s,
+    ::tensorflow::SummaryMetadata_PluginData* msg)
+        TF_MUST_USE_RESULT;
+
+// Message-text conversion for tensorflow.SummaryMetadata
+string ProtoDebugString(
+    const ::tensorflow::SummaryMetadata& msg);
+string ProtoShortDebugString(
+    const ::tensorflow::SummaryMetadata& msg);
+bool ProtoParseFromString(
+    const string& s,
+    ::tensorflow::SummaryMetadata* msg)
+        TF_MUST_USE_RESULT;
+
 // Message-text conversion for tensorflow.Summary.Image
 string ProtoDebugString(
     const ::tensorflow::Summary_Image& msg);

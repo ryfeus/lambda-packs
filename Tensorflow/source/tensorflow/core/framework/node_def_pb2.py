@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n(tensorflow/core/framework/node_def.proto\x12\ntensorflow\x1a*tensorflow/core/framework/attr_value.proto\"\xb3\x01\n\x07NodeDef\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02op\x18\x02 \x01(\t\x12\r\n\x05input\x18\x03 \x03(\t\x12\x0e\n\x06\x64\x65vice\x18\x04 \x01(\t\x12+\n\x04\x61ttr\x18\x05 \x03(\x0b\x32\x1d.tensorflow.NodeDef.AttrEntry\x1a\x42\n\tAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.tensorflow.AttrValue:\x02\x38\x01\x42*\n\x18org.tensorflow.frameworkB\tNodeProtoP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_attr__value__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -127,6 +126,7 @@ _NODEDEF_ATTRENTRY.fields_by_name['value'].message_type = tensorflow_dot_core_do
 _NODEDEF_ATTRENTRY.containing_type = _NODEDEF
 _NODEDEF.fields_by_name['attr'].message_type = _NODEDEF_ATTRENTRY
 DESCRIPTOR.message_types_by_name['NodeDef'] = _NODEDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 NodeDef = _reflection.GeneratedProtocolMessageType('NodeDef', (_message.Message,), dict(
 

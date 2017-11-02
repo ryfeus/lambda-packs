@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n=tensorflow/contrib/tensorboard/plugins/trace/trace_info.proto\x12\x1etensorflow.contrib.tensorboard\"y\n\tTraceInfo\x12\x33\n\x03ops\x18\x01 \x03(\x0b\x32&.tensorflow.contrib.tensorboard.OpInfo\x12\x37\n\x05\x66iles\x18\x02 \x03(\x0b\x32(.tensorflow.contrib.tensorboard.FileInfo\"\xee\x01\n\x06OpInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07op_type\x18\x02 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x03 \x01(\t\x12<\n\ttraceback\x18\x04 \x03(\x0b\x32).tensorflow.contrib.tensorboard.LineTrace\x12:\n\x06inputs\x18\x05 \x03(\x0b\x32*.tensorflow.contrib.tensorboard.TensorInfo\x12;\n\x07outputs\x18\x06 \x03(\x0b\x32*.tensorflow.contrib.tensorboard.TensorInfo\"3\n\tLineTrace\x12\x11\n\tfile_path\x18\x01 \x01(\t\x12\x13\n\x0bline_number\x18\x02 \x01(\r\"Y\n\nTensorInfo\x12\r\n\x05shape\x18\x01 \x03(\x05\x12\r\n\x05\x64type\x18\x02 \x01(\t\x12\x1a\n\x12num_bytes_per_elem\x18\x03 \x01(\r\x12\x11\n\tconsumers\x18\x04 \x03(\t\"\xcf\x01\n\x08\x46ileInfo\x12\x11\n\tfile_path\x18\x01 \x01(\t\x12\x13\n\x0bsource_code\x18\x02 \x01(\t\x12_\n\x14multiline_statements\x18\x03 \x03(\x0b\x32\x41.tensorflow.contrib.tensorboard.FileInfo.MultilineStatementsEntry\x1a:\n\x18MultilineStatementsEntry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r:\x02\x38\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -313,6 +312,7 @@ DESCRIPTOR.message_types_by_name['OpInfo'] = _OPINFO
 DESCRIPTOR.message_types_by_name['LineTrace'] = _LINETRACE
 DESCRIPTOR.message_types_by_name['TensorInfo'] = _TENSORINFO
 DESCRIPTOR.message_types_by_name['FileInfo'] = _FILEINFO
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TraceInfo = _reflection.GeneratedProtocolMessageType('TraceInfo', (_message.Message,), dict(
   DESCRIPTOR = _TRACEINFO,

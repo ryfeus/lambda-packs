@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n0tensorflow/core/util/memmapped_file_system.proto\x12\ntensorflow\"C\n#MemmappedFileSystemDirectoryElement\x12\x0e\n\x06offset\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\"`\n\x1cMemmappedFileSystemDirectory\x12@\n\x07\x65lement\x18\x01 \x03(\x0b\x32/.tensorflow.MemmappedFileSystemDirectoryElementB\x03\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -97,6 +96,7 @@ _MEMMAPPEDFILESYSTEMDIRECTORY = _descriptor.Descriptor(
 _MEMMAPPEDFILESYSTEMDIRECTORY.fields_by_name['element'].message_type = _MEMMAPPEDFILESYSTEMDIRECTORYELEMENT
 DESCRIPTOR.message_types_by_name['MemmappedFileSystemDirectoryElement'] = _MEMMAPPEDFILESYSTEMDIRECTORYELEMENT
 DESCRIPTOR.message_types_by_name['MemmappedFileSystemDirectory'] = _MEMMAPPEDFILESYSTEMDIRECTORY
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 MemmappedFileSystemDirectoryElement = _reflection.GeneratedProtocolMessageType('MemmappedFileSystemDirectoryElement', (_message.Message,), dict(
   DESCRIPTOR = _MEMMAPPEDFILESYSTEMDIRECTORYELEMENT,

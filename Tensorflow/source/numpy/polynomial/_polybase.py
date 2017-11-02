@@ -64,8 +64,8 @@ class ABCPolyBase(object):
     # Not hashable
     __hash__ = None
 
-    # Don't let participate in array operations. Value doesn't matter.
-    __array_priority__ = 1000
+    # Opt out of numpy ufuncs and Python ops with ndarray subclasses.
+    __array_ufunc__ = None
 
     # Limit runaway size. T_n^m has degree n*m
     maxpower = 100
@@ -223,13 +223,13 @@ class ABCPolyBase(object):
 
         Returns
         -------
-        coef:
+        coef
             The coefficients of`other` if it is a compatible instance,
             of ABCPolyBase, otherwise `other`.
 
         Raises
         ------
-        TypeError:
+        TypeError
             When `other` is an incompatible instance of ABCPolyBase.
 
         """
@@ -742,7 +742,7 @@ class ABCPolyBase(object):
         deg : int or 1-D array_like
             Degree(s) of the fitting polynomials. If `deg` is a single integer
             all terms up to and including the `deg`'th term are included in the
-            fit. For Numpy versions >= 1.11 a list of integers specifying the
+            fit. For NumPy versions >= 1.11.0 a list of integers specifying the
             degrees of the terms to include may be used instead.
         domain : {None, [beg, end], []}, optional
             Domain to use for the returned series. If ``None``,

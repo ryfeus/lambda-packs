@@ -211,13 +211,16 @@ struct GpuDevice {
   }
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void memcpy(void* dst, const void* src, size_t n) const {
-#ifndef __CUDA_ARCH__
+#ifndef EIGEN_CUDA_ARCH
     cudaError_t err = cudaMemcpyAsync(dst, src, n, cudaMemcpyDeviceToDevice,
                                       stream_->stream());
     EIGEN_UNUSED_VARIABLE(err)
     assert(err == cudaSuccess);
 #else
-  eigen_assert(false && "The default device should be used instead to generate kernel code");
+    EIGEN_UNUSED_VARIABLE(dst);
+    EIGEN_UNUSED_VARIABLE(src);
+    EIGEN_UNUSED_VARIABLE(n);
+    eigen_assert(false && "The default device should be used instead to generate kernel code");
 #endif
   }
 
@@ -236,7 +239,7 @@ struct GpuDevice {
   }
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void memset(void* buffer, int c, size_t n) const {
-#ifndef __CUDA_ARCH__
+#ifndef EIGEN_CUDA_ARCH
     cudaError_t err = cudaMemsetAsync(buffer, c, n, stream_->stream());
     EIGEN_UNUSED_VARIABLE(err)
     assert(err == cudaSuccess);
@@ -262,7 +265,7 @@ struct GpuDevice {
   }
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void synchronize() const {
-#if defined(__CUDACC__) && !defined(__CUDA_ARCH__)
+#if defined(EIGEN_CUDACC) && !defined(EIGEN_CUDA_ARCH)
     cudaError_t err = cudaStreamSynchronize(stream_->stream());
     if (err != cudaSuccess) {
       std::cerr << "Error detected in CUDA stream: "
@@ -301,7 +304,7 @@ struct GpuDevice {
   // This function checks if the CUDA runtime recorded an error for the
   // underlying stream device.
   inline bool ok() const {
-#ifdef __CUDACC__
+#ifdef EIGEN_CUDACC
     cudaError_t error = cudaStreamQuery(stream_->stream());
     return (error == cudaSuccess) || (error == cudaErrorNotReady);
 #else
@@ -320,9 +323,9 @@ struct GpuDevice {
 
 
 // FIXME: Should be device and kernel specific.
-#ifdef __CUDACC__
+#ifdef EIGEN_CUDACC
 static EIGEN_DEVICE_FUNC inline void setCudaSharedMemConfig(cudaSharedMemConfig config) {
-#ifndef __CUDA_ARCH__
+#ifndef EIGEN_CUDA_ARCH
   cudaError_t status = cudaDeviceSetSharedMemConfig(config);
   EIGEN_UNUSED_VARIABLE(status)
   assert(status == cudaSuccess);

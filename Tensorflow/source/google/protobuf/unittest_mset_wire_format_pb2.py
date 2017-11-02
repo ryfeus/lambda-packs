@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n/google/protobuf/unittest_mset_wire_format.proto\x12\x1aproto2_wireformat_unittest\"\x1e\n\x0eTestMessageSet*\x08\x08\x04\x10\xff\xff\xff\xff\x07:\x02\x08\x01\"d\n!TestMessageSetWireFormatContainer\x12?\n\x0bmessage_set\x18\x01 \x01(\x0b\x32*.proto2_wireformat_unittest.TestMessageSetB)H\x01\xf8\x01\x01\xaa\x02!Google.ProtocolBuffers.TestProtos')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -83,6 +82,7 @@ _TESTMESSAGESETWIREFORMATCONTAINER = _descriptor.Descriptor(
 _TESTMESSAGESETWIREFORMATCONTAINER.fields_by_name['message_set'].message_type = _TESTMESSAGESET
 DESCRIPTOR.message_types_by_name['TestMessageSet'] = _TESTMESSAGESET
 DESCRIPTOR.message_types_by_name['TestMessageSetWireFormatContainer'] = _TESTMESSAGESETWIREFORMATCONTAINER
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestMessageSet = _reflection.GeneratedProtocolMessageType('TestMessageSet', (_message.Message,), dict(
   DESCRIPTOR = _TESTMESSAGESET,

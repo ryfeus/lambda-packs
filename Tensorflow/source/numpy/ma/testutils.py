@@ -14,7 +14,7 @@ from numpy import ndarray, float_
 import numpy.core.umath as umath
 from numpy.testing import (
     TestCase, assert_, assert_allclose, assert_array_almost_equal_nulp,
-    assert_raises, build_err_msg, run_module_suite,
+    assert_raises, build_err_msg, run_module_suite
     )
 import numpy.testing.utils as utils
 from .core import mask_or, getmask, masked_array, nomask, masked, filled

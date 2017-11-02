@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n0tensorflow/contrib/session_bundle/manifest.proto\x12\x12tensorflow.serving\"\xec\x01\n\nSignatures\x12\x38\n\x11\x64\x65\x66\x61ult_signature\x18\x01 \x01(\x0b\x32\x1d.tensorflow.serving.Signature\x12M\n\x10named_signatures\x18\x02 \x03(\x0b\x32\x33.tensorflow.serving.Signatures.NamedSignaturesEntry\x1aU\n\x14NamedSignaturesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12,\n\x05value\x18\x02 \x01(\x0b\x32\x1d.tensorflow.serving.Signature:\x02\x38\x01\"$\n\rTensorBinding\x12\x13\n\x0btensor_name\x18\x01 \x01(\t\"X\n\tAssetFile\x12\x39\n\x0etensor_binding\x18\x01 \x01(\x0b\x32!.tensorflow.serving.TensorBinding\x12\x10\n\x08\x66ilename\x18\x02 \x01(\t\"\xf0\x01\n\tSignature\x12G\n\x14regression_signature\x18\x01 \x01(\x0b\x32\'.tensorflow.serving.RegressionSignatureH\x00\x12O\n\x18\x63lassification_signature\x18\x02 \x01(\x0b\x32+.tensorflow.serving.ClassificationSignatureH\x00\x12\x41\n\x11generic_signature\x18\x03 \x01(\x0b\x32$.tensorflow.serving.GenericSignatureH\x00\x42\x06\n\x04type\"z\n\x13RegressionSignature\x12\x30\n\x05input\x18\x01 \x01(\x0b\x32!.tensorflow.serving.TensorBinding\x12\x31\n\x06output\x18\x02 \x01(\x0b\x32!.tensorflow.serving.TensorBinding\"\xb2\x01\n\x17\x43lassificationSignature\x12\x30\n\x05input\x18\x01 \x01(\x0b\x32!.tensorflow.serving.TensorBinding\x12\x32\n\x07\x63lasses\x18\x02 \x01(\x0b\x32!.tensorflow.serving.TensorBinding\x12\x31\n\x06scores\x18\x03 \x01(\x0b\x32!.tensorflow.serving.TensorBinding\"\x9d\x01\n\x10GenericSignature\x12:\n\x03map\x18\x01 \x03(\x0b\x32-.tensorflow.serving.GenericSignature.MapEntry\x1aM\n\x08MapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.tensorflow.serving.TensorBinding:\x02\x38\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -400,6 +399,7 @@ DESCRIPTOR.message_types_by_name['Signature'] = _SIGNATURE
 DESCRIPTOR.message_types_by_name['RegressionSignature'] = _REGRESSIONSIGNATURE
 DESCRIPTOR.message_types_by_name['ClassificationSignature'] = _CLASSIFICATIONSIGNATURE
 DESCRIPTOR.message_types_by_name['GenericSignature'] = _GENERICSIGNATURE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Signatures = _reflection.GeneratedProtocolMessageType('Signatures', (_message.Message,), dict(
 

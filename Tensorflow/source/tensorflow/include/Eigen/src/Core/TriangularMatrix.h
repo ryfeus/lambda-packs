@@ -470,6 +470,8 @@ template<typename _MatrixType, unsigned int _Mode> class TriangularViewImpl<_Mat
       * \a Side==OnTheLeft (the default), or the right-inverse-multiply  \a other * inverse(\c *this) if
       * \a Side==OnTheRight.
       *
+      * Note that the template parameter \c Side can be ommitted, in which case \c Side==OnTheLeft
+      *
       * The matrix \c *this must be triangular and invertible (i.e., all the coefficients of the
       * diagonal must be non zero). It works as a forward (resp. backward) substitution if \c *this
       * is an upper (resp. lower) triangular matrix.
@@ -486,7 +488,6 @@ template<typename _MatrixType, unsigned int _Mode> class TriangularViewImpl<_Mat
       * \sa TriangularView::solveInPlace()
       */
     template<int Side, typename Other>
-    EIGEN_DEVICE_FUNC
     inline const internal::triangular_solve_retval<Side,TriangularViewType, Other>
     solve(const MatrixBase<Other>& other) const;
 
@@ -494,6 +495,8 @@ template<typename _MatrixType, unsigned int _Mode> class TriangularViewImpl<_Mat
       *
       * \warning The parameter is only marked 'const' to make the C++ compiler accept a temporary expression here.
       * This function will const_cast it, so constness isn't honored here.
+      *
+      * Note that the template parameter \c Side can be ommitted, in which case \c Side==OnTheLeft
       *
       * See TriangularView:solve() for the details.
       */
@@ -539,17 +542,18 @@ template<typename _MatrixType, unsigned int _Mode> class TriangularViewImpl<_Mat
 
     template<typename ProductType>
     EIGEN_DEVICE_FUNC
-    EIGEN_STRONG_INLINE TriangularViewType& _assignProduct(const ProductType& prod, const Scalar& alpha);
+    EIGEN_STRONG_INLINE TriangularViewType& _assignProduct(const ProductType& prod, const Scalar& alpha, bool beta);
 };
 
 /***************************************************************************
 * Implementation of triangular evaluation/assignment
 ***************************************************************************/
 
+#ifndef EIGEN_PARSED_BY_DOXYGEN
 // FIXME should we keep that possibility
 template<typename MatrixType, unsigned int Mode>
 template<typename OtherDerived>
-inline TriangularView<MatrixType, Mode>&
+EIGEN_DEVICE_FUNC inline TriangularView<MatrixType, Mode>&
 TriangularViewImpl<MatrixType, Mode, Dense>::operator=(const MatrixBase<OtherDerived>& other)
 {
   internal::call_assignment_no_alias(derived(), other.derived(), internal::assign_op<Scalar,typename OtherDerived::Scalar>());
@@ -559,7 +563,7 @@ TriangularViewImpl<MatrixType, Mode, Dense>::operator=(const MatrixBase<OtherDer
 // FIXME should we keep that possibility
 template<typename MatrixType, unsigned int Mode>
 template<typename OtherDerived>
-void TriangularViewImpl<MatrixType, Mode, Dense>::lazyAssign(const MatrixBase<OtherDerived>& other)
+EIGEN_DEVICE_FUNC void TriangularViewImpl<MatrixType, Mode, Dense>::lazyAssign(const MatrixBase<OtherDerived>& other)
 {
   internal::call_assignment_no_alias(derived(), other.template triangularView<Mode>());
 }
@@ -568,7 +572,7 @@ void TriangularViewImpl<MatrixType, Mode, Dense>::lazyAssign(const MatrixBase<Ot
 
 template<typename MatrixType, unsigned int Mode>
 template<typename OtherDerived>
-inline TriangularView<MatrixType, Mode>&
+EIGEN_DEVICE_FUNC inline TriangularView<MatrixType, Mode>&
 TriangularViewImpl<MatrixType, Mode, Dense>::operator=(const TriangularBase<OtherDerived>& other)
 {
   eigen_assert(Mode == int(OtherDerived::Mode));
@@ -578,11 +582,12 @@ TriangularViewImpl<MatrixType, Mode, Dense>::operator=(const TriangularBase<Othe
 
 template<typename MatrixType, unsigned int Mode>
 template<typename OtherDerived>
-void TriangularViewImpl<MatrixType, Mode, Dense>::lazyAssign(const TriangularBase<OtherDerived>& other)
+EIGEN_DEVICE_FUNC void TriangularViewImpl<MatrixType, Mode, Dense>::lazyAssign(const TriangularBase<OtherDerived>& other)
 {
   eigen_assert(Mode == int(OtherDerived::Mode));
   internal::call_assignment_no_alias(derived(), other.derived());
 }
+#endif
 
 /***************************************************************************
 * Implementation of TriangularBase methods
@@ -592,7 +597,7 @@ void TriangularViewImpl<MatrixType, Mode, Dense>::lazyAssign(const TriangularBas
   * If the matrix is triangular, the opposite part is set to zero. */
 template<typename Derived>
 template<typename DenseDerived>
-void TriangularBase<Derived>::evalTo(MatrixBase<DenseDerived> &other) const
+EIGEN_DEVICE_FUNC void TriangularBase<Derived>::evalTo(MatrixBase<DenseDerived> &other) const
 {
   evalToLazy(other.derived());
 }
@@ -618,6 +623,7 @@ void TriangularBase<Derived>::evalTo(MatrixBase<DenseDerived> &other) const
   */
 template<typename Derived>
 template<unsigned int Mode>
+EIGEN_DEVICE_FUNC
 typename MatrixBase<Derived>::template TriangularViewReturnType<Mode>::Type
 MatrixBase<Derived>::triangularView()
 {
@@ -627,6 +633,7 @@ MatrixBase<Derived>::triangularView()
 /** This is the const version of MatrixBase::triangularView() */
 template<typename Derived>
 template<unsigned int Mode>
+EIGEN_DEVICE_FUNC
 typename MatrixBase<Derived>::template ConstTriangularViewReturnType<Mode>::Type
 MatrixBase<Derived>::triangularView() const
 {
@@ -924,7 +931,7 @@ struct triangular_assignment_loop<Kernel, Mode, Dynamic, SetOpposite>
   * If the matrix is triangular, the opposite part is set to zero. */
 template<typename Derived>
 template<typename DenseDerived>
-void TriangularBase<Derived>::evalToLazy(MatrixBase<DenseDerived> &other) const
+EIGEN_DEVICE_FUNC void TriangularBase<Derived>::evalToLazy(MatrixBase<DenseDerived> &other) const
 {
   other.derived().resize(this->rows(), this->cols());
   internal::call_triangular_assignment_loop<Derived::Mode,(Derived::Mode&SelfAdjoint)==0 /* SetOpposite */>(other.derived(), derived().nestedExpression());
@@ -944,8 +951,7 @@ struct Assignment<DstXprType, Product<Lhs,Rhs,DefaultProduct>, internal::assign_
     if((dst.rows()!=dstRows) || (dst.cols()!=dstCols))
       dst.resize(dstRows, dstCols);
 
-    dst.setZero();
-    dst._assignProduct(src, 1);
+    dst._assignProduct(src, 1, 0);
   }
 };
 
@@ -956,7 +962,7 @@ struct Assignment<DstXprType, Product<Lhs,Rhs,DefaultProduct>, internal::add_ass
   typedef Product<Lhs,Rhs,DefaultProduct> SrcXprType;
   static void run(DstXprType &dst, const SrcXprType &src, const internal::add_assign_op<Scalar,typename SrcXprType::Scalar> &)
   {
-    dst._assignProduct(src, 1);
+    dst._assignProduct(src, 1, 1);
   }
 };
 
@@ -967,7 +973,7 @@ struct Assignment<DstXprType, Product<Lhs,Rhs,DefaultProduct>, internal::sub_ass
   typedef Product<Lhs,Rhs,DefaultProduct> SrcXprType;
   static void run(DstXprType &dst, const SrcXprType &src, const internal::sub_assign_op<Scalar,typename SrcXprType::Scalar> &)
   {
-    dst._assignProduct(src, -1);
+    dst._assignProduct(src, -1, 1);
   }
 };
 

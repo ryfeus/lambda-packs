@@ -24,6 +24,13 @@ bool ProtoParseFromScanner(
     ::tensorflow::strings::Scanner* scanner, bool nested, bool close_curly,
     ::tensorflow::TensorProto* msg);
 
+void AppendProtoDebugString(
+    ::tensorflow::strings::ProtoTextOutput* o,
+    const ::tensorflow::VariantTensorDataProto& msg);
+bool ProtoParseFromScanner(
+    ::tensorflow::strings::Scanner* scanner, bool nested, bool close_curly,
+    ::tensorflow::VariantTensorDataProto* msg);
+
 }  // namespace internal
 
 }  // namespace tensorflow

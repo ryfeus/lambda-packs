@@ -22,10 +22,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='google/protobuf/map_unittest.proto',
   package='protobuf_unittest',
   syntax='proto3',
-  serialized_pb=_b('\n\"google/protobuf/map_unittest.proto\x12\x11protobuf_unittest\x1a\x1egoogle/protobuf/unittest.proto\x1a\'google/protobuf/unittest_no_arena.proto\"\xd6\x13\n\x07TestMap\x12\x46\n\x0fmap_int32_int32\x18\x01 \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt32Int32Entry\x12\x46\n\x0fmap_int64_int64\x18\x02 \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt64Int64Entry\x12J\n\x11map_uint32_uint32\x18\x03 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapUint32Uint32Entry\x12J\n\x11map_uint64_uint64\x18\x04 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapUint64Uint64Entry\x12J\n\x11map_sint32_sint32\x18\x05 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapSint32Sint32Entry\x12J\n\x11map_sint64_sint64\x18\x06 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapSint64Sint64Entry\x12N\n\x13map_fixed32_fixed32\x18\x07 \x03(\x0b\x32\x31.protobuf_unittest.TestMap.MapFixed32Fixed32Entry\x12N\n\x13map_fixed64_fixed64\x18\x08 \x03(\x0b\x32\x31.protobuf_unittest.TestMap.MapFixed64Fixed64Entry\x12R\n\x15map_sfixed32_sfixed32\x18\t \x03(\x0b\x32\x33.protobuf_unittest.TestMap.MapSfixed32Sfixed32Entry\x12R\n\x15map_sfixed64_sfixed64\x18\n \x03(\x0b\x32\x33.protobuf_unittest.TestMap.MapSfixed64Sfixed64Entry\x12\x46\n\x0fmap_int32_float\x18\x0b \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt32FloatEntry\x12H\n\x10map_int32_double\x18\x0c \x03(\x0b\x32..protobuf_unittest.TestMap.MapInt32DoubleEntry\x12\x42\n\rmap_bool_bool\x18\r \x03(\x0b\x32+.protobuf_unittest.TestMap.MapBoolBoolEntry\x12J\n\x11map_string_string\x18\x0e \x03(\x0b\x32/.protobuf_unittest.TestMap.MapStringStringEntry\x12\x46\n\x0fmap_int32_bytes\x18\x0f \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt32BytesEntry\x12\x44\n\x0emap_int32_enum\x18\x10 \x03(\x0b\x32,.protobuf_unittest.TestMap.MapInt32EnumEntry\x12Y\n\x19map_int32_foreign_message\x18\x11 \x03(\x0b\x32\x36.protobuf_unittest.TestMap.MapInt32ForeignMessageEntry\x12[\n\x1amap_string_foreign_message\x18\x12 \x03(\x0b\x32\x37.protobuf_unittest.TestMap.MapStringForeignMessageEntry\x1a\x34\n\x12MapInt32Int32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12MapInt64Int64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a\x36\n\x14MapUint32Uint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r:\x02\x38\x01\x1a\x36\n\x14MapUint64Uint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x04:\x02\x38\x01\x1a\x36\n\x14MapSint32Sint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x11\x12\r\n\x05value\x18\x02 \x01(\x11:\x02\x38\x01\x1a\x36\n\x14MapSint64Sint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x12\x12\r\n\x05value\x18\x02 \x01(\x12:\x02\x38\x01\x1a\x38\n\x16MapFixed32Fixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x07\x12\r\n\x05value\x18\x02 \x01(\x07:\x02\x38\x01\x1a\x38\n\x16MapFixed64Fixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x06\x12\r\n\x05value\x18\x02 \x01(\x06:\x02\x38\x01\x1a:\n\x18MapSfixed32Sfixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x0f\x12\r\n\x05value\x18\x02 \x01(\x0f:\x02\x38\x01\x1a:\n\x18MapSfixed64Sfixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x10\x12\r\n\x05value\x18\x02 \x01(\x10:\x02\x38\x01\x1a\x34\n\x12MapInt32FloatEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x1a\x35\n\x13MapInt32DoubleEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a\x32\n\x10MapBoolBoolEntry\x12\x0b\n\x03key\x18\x01 \x01(\x08\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x36\n\x14MapStringStringEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x34\n\x12MapInt32BytesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x1aO\n\x11MapInt32EnumEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12)\n\x05value\x18\x02 \x01(\x0e\x32\x1a.protobuf_unittest.MapEnum:\x02\x38\x01\x1a`\n\x1bMapInt32ForeignMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:\x02\x38\x01\x1a\x61\n\x1cMapStringForeignMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:\x02\x38\x01\"A\n\x11TestMapSubmessage\x12,\n\x08test_map\x18\x01 \x01(\x0b\x32\x1a.protobuf_unittest.TestMap\"\xbc\x01\n\x0eTestMessageMap\x12Q\n\x11map_int32_message\x18\x01 \x03(\x0b\x32\x36.protobuf_unittest.TestMessageMap.MapInt32MessageEntry\x1aW\n\x14MapInt32MessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes:\x02\x38\x01\"\xe3\x01\n\x0fTestSameTypeMap\x12:\n\x04map1\x18\x01 \x03(\x0b\x32,.protobuf_unittest.TestSameTypeMap.Map1Entry\x12:\n\x04map2\x18\x02 \x03(\x0b\x32,.protobuf_unittest.TestSameTypeMap.Map2Entry\x1a+\n\tMap1Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tMap2Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xb6\x01\n\x16TestRequiredMessageMap\x12J\n\tmap_field\x18\x01 \x03(\x0b\x32\x37.protobuf_unittest.TestRequiredMessageMap.MapFieldEntry\x1aP\n\rMapFieldEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired:\x02\x38\x01\"\xd2\x14\n\x0cTestArenaMap\x12K\n\x0fmap_int32_int32\x18\x01 \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt32Int32Entry\x12K\n\x0fmap_int64_int64\x18\x02 \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt64Int64Entry\x12O\n\x11map_uint32_uint32\x18\x03 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapUint32Uint32Entry\x12O\n\x11map_uint64_uint64\x18\x04 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapUint64Uint64Entry\x12O\n\x11map_sint32_sint32\x18\x05 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapSint32Sint32Entry\x12O\n\x11map_sint64_sint64\x18\x06 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapSint64Sint64Entry\x12S\n\x13map_fixed32_fixed32\x18\x07 \x03(\x0b\x32\x36.protobuf_unittest.TestArenaMap.MapFixed32Fixed32Entry\x12S\n\x13map_fixed64_fixed64\x18\x08 \x03(\x0b\x32\x36.protobuf_unittest.TestArenaMap.MapFixed64Fixed64Entry\x12W\n\x15map_sfixed32_sfixed32\x18\t \x03(\x0b\x32\x38.protobuf_unittest.TestArenaMap.MapSfixed32Sfixed32Entry\x12W\n\x15map_sfixed64_sfixed64\x18\n \x03(\x0b\x32\x38.protobuf_unittest.TestArenaMap.MapSfixed64Sfixed64Entry\x12K\n\x0fmap_int32_float\x18\x0b \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt32FloatEntry\x12M\n\x10map_int32_double\x18\x0c \x03(\x0b\x32\x33.protobuf_unittest.TestArenaMap.MapInt32DoubleEntry\x12G\n\rmap_bool_bool\x18\r \x03(\x0b\x32\x30.protobuf_unittest.TestArenaMap.MapBoolBoolEntry\x12O\n\x11map_string_string\x18\x0e \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapStringStringEntry\x12K\n\x0fmap_int32_bytes\x18\x0f \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt32BytesEntry\x12I\n\x0emap_int32_enum\x18\x10 \x03(\x0b\x32\x31.protobuf_unittest.TestArenaMap.MapInt32EnumEntry\x12^\n\x19map_int32_foreign_message\x18\x11 \x03(\x0b\x32;.protobuf_unittest.TestArenaMap.MapInt32ForeignMessageEntry\x12n\n\"map_int32_foreign_message_no_arena\x18\x12 \x03(\x0b\x32\x42.protobuf_unittest.TestArenaMap.MapInt32ForeignMessageNoArenaEntry\x1a\x34\n\x12MapInt32Int32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12MapInt64Int64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a\x36\n\x14MapUint32Uint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r:\x02\x38\x01\x1a\x36\n\x14MapUint64Uint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x04:\x02\x38\x01\x1a\x36\n\x14MapSint32Sint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x11\x12\r\n\x05value\x18\x02 \x01(\x11:\x02\x38\x01\x1a\x36\n\x14MapSint64Sint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x12\x12\r\n\x05value\x18\x02 \x01(\x12:\x02\x38\x01\x1a\x38\n\x16MapFixed32Fixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x07\x12\r\n\x05value\x18\x02 \x01(\x07:\x02\x38\x01\x1a\x38\n\x16MapFixed64Fixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x06\x12\r\n\x05value\x18\x02 \x01(\x06:\x02\x38\x01\x1a:\n\x18MapSfixed32Sfixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x0f\x12\r\n\x05value\x18\x02 \x01(\x0f:\x02\x38\x01\x1a:\n\x18MapSfixed64Sfixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x10\x12\r\n\x05value\x18\x02 \x01(\x10:\x02\x38\x01\x1a\x34\n\x12MapInt32FloatEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x1a\x35\n\x13MapInt32DoubleEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a\x32\n\x10MapBoolBoolEntry\x12\x0b\n\x03key\x18\x01 \x01(\x08\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x36\n\x14MapStringStringEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x34\n\x12MapInt32BytesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x1aO\n\x11MapInt32EnumEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12)\n\x05value\x18\x02 \x01(\x0e\x32\x1a.protobuf_unittest.MapEnum:\x02\x38\x01\x1a`\n\x1bMapInt32ForeignMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:\x02\x38\x01\x1ap\n\"MapInt32ForeignMessageNoArenaEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x39\n\x05value\x18\x02 \x01(\x0b\x32*.protobuf_unittest_no_arena.ForeignMessage:\x02\x38\x01\"\xe4\x01\n\x1fMessageContainingEnumCalledType\x12J\n\x04type\x18\x01 \x03(\x0b\x32<.protobuf_unittest.MessageContainingEnumCalledType.TypeEntry\x1a_\n\tTypeEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x41\n\x05value\x18\x02 \x01(\x0b\x32\x32.protobuf_unittest.MessageContainingEnumCalledType:\x02\x38\x01\"\x14\n\x04Type\x12\x0c\n\x08TYPE_FOO\x10\x00\"\x9d\x01\n\x1fMessageContainingMapCalledEntry\x12L\n\x05\x65ntry\x18\x01 \x03(\x0b\x32=.protobuf_unittest.MessageContainingMapCalledEntry.EntryEntry\x1a,\n\nEntryEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xad\x01\n\x17TestRecursiveMapMessage\x12<\n\x01\x61\x18\x01 \x03(\x0b\x32\x31.protobuf_unittest.TestRecursiveMapMessage.AEntry\x1aT\n\x06\x41\x45ntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x39\n\x05value\x18\x02 \x01(\x0b\x32*.protobuf_unittest.TestRecursiveMapMessage:\x02\x38\x01*?\n\x07MapEnum\x12\x10\n\x0cMAP_ENUM_FOO\x10\x00\x12\x10\n\x0cMAP_ENUM_BAR\x10\x01\x12\x10\n\x0cMAP_ENUM_BAZ\x10\x02\x42\x03\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n\"google/protobuf/map_unittest.proto\x12\x11protobuf_unittest\x1a\x1egoogle/protobuf/unittest.proto\x1a\'google/protobuf/unittest_no_arena.proto\"\xff\x14\n\x07TestMap\x12\x46\n\x0fmap_int32_int32\x18\x01 \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt32Int32Entry\x12\x46\n\x0fmap_int64_int64\x18\x02 \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt64Int64Entry\x12J\n\x11map_uint32_uint32\x18\x03 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapUint32Uint32Entry\x12J\n\x11map_uint64_uint64\x18\x04 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapUint64Uint64Entry\x12J\n\x11map_sint32_sint32\x18\x05 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapSint32Sint32Entry\x12J\n\x11map_sint64_sint64\x18\x06 \x03(\x0b\x32/.protobuf_unittest.TestMap.MapSint64Sint64Entry\x12N\n\x13map_fixed32_fixed32\x18\x07 \x03(\x0b\x32\x31.protobuf_unittest.TestMap.MapFixed32Fixed32Entry\x12N\n\x13map_fixed64_fixed64\x18\x08 \x03(\x0b\x32\x31.protobuf_unittest.TestMap.MapFixed64Fixed64Entry\x12R\n\x15map_sfixed32_sfixed32\x18\t \x03(\x0b\x32\x33.protobuf_unittest.TestMap.MapSfixed32Sfixed32Entry\x12R\n\x15map_sfixed64_sfixed64\x18\n \x03(\x0b\x32\x33.protobuf_unittest.TestMap.MapSfixed64Sfixed64Entry\x12\x46\n\x0fmap_int32_float\x18\x0b \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt32FloatEntry\x12H\n\x10map_int32_double\x18\x0c \x03(\x0b\x32..protobuf_unittest.TestMap.MapInt32DoubleEntry\x12\x42\n\rmap_bool_bool\x18\r \x03(\x0b\x32+.protobuf_unittest.TestMap.MapBoolBoolEntry\x12J\n\x11map_string_string\x18\x0e \x03(\x0b\x32/.protobuf_unittest.TestMap.MapStringStringEntry\x12\x46\n\x0fmap_int32_bytes\x18\x0f \x03(\x0b\x32-.protobuf_unittest.TestMap.MapInt32BytesEntry\x12\x44\n\x0emap_int32_enum\x18\x10 \x03(\x0b\x32,.protobuf_unittest.TestMap.MapInt32EnumEntry\x12Y\n\x19map_int32_foreign_message\x18\x11 \x03(\x0b\x32\x36.protobuf_unittest.TestMap.MapInt32ForeignMessageEntry\x12[\n\x1amap_string_foreign_message\x18\x12 \x03(\x0b\x32\x37.protobuf_unittest.TestMap.MapStringForeignMessageEntry\x12M\n\x13map_int32_all_types\x18\x13 \x03(\x0b\x32\x30.protobuf_unittest.TestMap.MapInt32AllTypesEntry\x1a\x34\n\x12MapInt32Int32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12MapInt64Int64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a\x36\n\x14MapUint32Uint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r:\x02\x38\x01\x1a\x36\n\x14MapUint64Uint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x04:\x02\x38\x01\x1a\x36\n\x14MapSint32Sint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x11\x12\r\n\x05value\x18\x02 \x01(\x11:\x02\x38\x01\x1a\x36\n\x14MapSint64Sint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x12\x12\r\n\x05value\x18\x02 \x01(\x12:\x02\x38\x01\x1a\x38\n\x16MapFixed32Fixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x07\x12\r\n\x05value\x18\x02 \x01(\x07:\x02\x38\x01\x1a\x38\n\x16MapFixed64Fixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x06\x12\r\n\x05value\x18\x02 \x01(\x06:\x02\x38\x01\x1a:\n\x18MapSfixed32Sfixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x0f\x12\r\n\x05value\x18\x02 \x01(\x0f:\x02\x38\x01\x1a:\n\x18MapSfixed64Sfixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x10\x12\r\n\x05value\x18\x02 \x01(\x10:\x02\x38\x01\x1a\x34\n\x12MapInt32FloatEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x1a\x35\n\x13MapInt32DoubleEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a\x32\n\x10MapBoolBoolEntry\x12\x0b\n\x03key\x18\x01 \x01(\x08\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x36\n\x14MapStringStringEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x34\n\x12MapInt32BytesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x1aO\n\x11MapInt32EnumEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12)\n\x05value\x18\x02 \x01(\x0e\x32\x1a.protobuf_unittest.MapEnum:\x02\x38\x01\x1a`\n\x1bMapInt32ForeignMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:\x02\x38\x01\x1a\x61\n\x1cMapStringForeignMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:\x02\x38\x01\x1aX\n\x15MapInt32AllTypesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes:\x02\x38\x01\"A\n\x11TestMapSubmessage\x12,\n\x08test_map\x18\x01 \x01(\x0b\x32\x1a.protobuf_unittest.TestMap\"\xbc\x01\n\x0eTestMessageMap\x12Q\n\x11map_int32_message\x18\x01 \x03(\x0b\x32\x36.protobuf_unittest.TestMessageMap.MapInt32MessageEntry\x1aW\n\x14MapInt32MessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes:\x02\x38\x01\"\xe3\x01\n\x0fTestSameTypeMap\x12:\n\x04map1\x18\x01 \x03(\x0b\x32,.protobuf_unittest.TestSameTypeMap.Map1Entry\x12:\n\x04map2\x18\x02 \x03(\x0b\x32,.protobuf_unittest.TestSameTypeMap.Map2Entry\x1a+\n\tMap1Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tMap2Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xb6\x01\n\x16TestRequiredMessageMap\x12J\n\tmap_field\x18\x01 \x03(\x0b\x32\x37.protobuf_unittest.TestRequiredMessageMap.MapFieldEntry\x1aP\n\rMapFieldEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired:\x02\x38\x01\"\xd2\x14\n\x0cTestArenaMap\x12K\n\x0fmap_int32_int32\x18\x01 \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt32Int32Entry\x12K\n\x0fmap_int64_int64\x18\x02 \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt64Int64Entry\x12O\n\x11map_uint32_uint32\x18\x03 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapUint32Uint32Entry\x12O\n\x11map_uint64_uint64\x18\x04 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapUint64Uint64Entry\x12O\n\x11map_sint32_sint32\x18\x05 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapSint32Sint32Entry\x12O\n\x11map_sint64_sint64\x18\x06 \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapSint64Sint64Entry\x12S\n\x13map_fixed32_fixed32\x18\x07 \x03(\x0b\x32\x36.protobuf_unittest.TestArenaMap.MapFixed32Fixed32Entry\x12S\n\x13map_fixed64_fixed64\x18\x08 \x03(\x0b\x32\x36.protobuf_unittest.TestArenaMap.MapFixed64Fixed64Entry\x12W\n\x15map_sfixed32_sfixed32\x18\t \x03(\x0b\x32\x38.protobuf_unittest.TestArenaMap.MapSfixed32Sfixed32Entry\x12W\n\x15map_sfixed64_sfixed64\x18\n \x03(\x0b\x32\x38.protobuf_unittest.TestArenaMap.MapSfixed64Sfixed64Entry\x12K\n\x0fmap_int32_float\x18\x0b \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt32FloatEntry\x12M\n\x10map_int32_double\x18\x0c \x03(\x0b\x32\x33.protobuf_unittest.TestArenaMap.MapInt32DoubleEntry\x12G\n\rmap_bool_bool\x18\r \x03(\x0b\x32\x30.protobuf_unittest.TestArenaMap.MapBoolBoolEntry\x12O\n\x11map_string_string\x18\x0e \x03(\x0b\x32\x34.protobuf_unittest.TestArenaMap.MapStringStringEntry\x12K\n\x0fmap_int32_bytes\x18\x0f \x03(\x0b\x32\x32.protobuf_unittest.TestArenaMap.MapInt32BytesEntry\x12I\n\x0emap_int32_enum\x18\x10 \x03(\x0b\x32\x31.protobuf_unittest.TestArenaMap.MapInt32EnumEntry\x12^\n\x19map_int32_foreign_message\x18\x11 \x03(\x0b\x32;.protobuf_unittest.TestArenaMap.MapInt32ForeignMessageEntry\x12n\n\"map_int32_foreign_message_no_arena\x18\x12 \x03(\x0b\x32\x42.protobuf_unittest.TestArenaMap.MapInt32ForeignMessageNoArenaEntry\x1a\x34\n\x12MapInt32Int32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12MapInt64Int64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a\x36\n\x14MapUint32Uint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\r\n\x05value\x18\x02 \x01(\r:\x02\x38\x01\x1a\x36\n\x14MapUint64Uint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x04:\x02\x38\x01\x1a\x36\n\x14MapSint32Sint32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x11\x12\r\n\x05value\x18\x02 \x01(\x11:\x02\x38\x01\x1a\x36\n\x14MapSint64Sint64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x12\x12\r\n\x05value\x18\x02 \x01(\x12:\x02\x38\x01\x1a\x38\n\x16MapFixed32Fixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x07\x12\r\n\x05value\x18\x02 \x01(\x07:\x02\x38\x01\x1a\x38\n\x16MapFixed64Fixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x06\x12\r\n\x05value\x18\x02 \x01(\x06:\x02\x38\x01\x1a:\n\x18MapSfixed32Sfixed32Entry\x12\x0b\n\x03key\x18\x01 \x01(\x0f\x12\r\n\x05value\x18\x02 \x01(\x0f:\x02\x38\x01\x1a:\n\x18MapSfixed64Sfixed64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x10\x12\r\n\x05value\x18\x02 \x01(\x10:\x02\x38\x01\x1a\x34\n\x12MapInt32FloatEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x1a\x35\n\x13MapInt32DoubleEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a\x32\n\x10MapBoolBoolEntry\x12\x0b\n\x03key\x18\x01 \x01(\x08\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x36\n\x14MapStringStringEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x34\n\x12MapInt32BytesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x1aO\n\x11MapInt32EnumEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12)\n\x05value\x18\x02 \x01(\x0e\x32\x1a.protobuf_unittest.MapEnum:\x02\x38\x01\x1a`\n\x1bMapInt32ForeignMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:\x02\x38\x01\x1ap\n\"MapInt32ForeignMessageNoArenaEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x39\n\x05value\x18\x02 \x01(\x0b\x32*.protobuf_unittest_no_arena.ForeignMessage:\x02\x38\x01\"\xe4\x01\n\x1fMessageContainingEnumCalledType\x12J\n\x04type\x18\x01 \x03(\x0b\x32<.protobuf_unittest.MessageContainingEnumCalledType.TypeEntry\x1a_\n\tTypeEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x41\n\x05value\x18\x02 \x01(\x0b\x32\x32.protobuf_unittest.MessageContainingEnumCalledType:\x02\x38\x01\"\x14\n\x04Type\x12\x0c\n\x08TYPE_FOO\x10\x00\"\x9d\x01\n\x1fMessageContainingMapCalledEntry\x12L\n\x05\x65ntry\x18\x01 \x03(\x0b\x32=.protobuf_unittest.MessageContainingMapCalledEntry.EntryEntry\x1a,\n\nEntryEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xad\x01\n\x17TestRecursiveMapMessage\x12<\n\x01\x61\x18\x01 \x03(\x0b\x32\x31.protobuf_unittest.TestRecursiveMapMessage.AEntry\x1aT\n\x06\x41\x45ntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x39\n\x05value\x18\x02 \x01(\x0b\x32*.protobuf_unittest.TestRecursiveMapMessage:\x02\x38\x01*?\n\x07MapEnum\x12\x10\n\x0cMAP_ENUM_FOO\x10\x00\x12\x10\n\x0cMAP_ENUM_BAR\x10\x01\x12\x10\n\x0cMAP_ENUM_BAZ\x10\x02\x42\x03\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_unittest__pb2.DESCRIPTOR,google_dot_protobuf_dot_unittest__no__arena__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _MAPENUM = _descriptor.EnumDescriptor(
   name='MapEnum',
@@ -48,8 +47,8 @@ _MAPENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=6536,
-  serialized_end=6599,
+  serialized_start=6705,
+  serialized_end=6768,
 )
 _sym_db.RegisterEnumDescriptor(_MAPENUM)
 
@@ -72,8 +71,8 @@ _MESSAGECONTAININGENUMCALLEDTYPE_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=6178,
-  serialized_end=6198,
+  serialized_start=6347,
+  serialized_end=6367,
 )
 _sym_db.RegisterEnumDescriptor(_MESSAGECONTAININGENUMCALLEDTYPE_TYPE)
 
@@ -111,8 +110,8 @@ _TESTMAP_MAPINT32INT32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1534,
-  serialized_end=1586,
+  serialized_start=1613,
+  serialized_end=1665,
 )
 
 _TESTMAP_MAPINT64INT64ENTRY = _descriptor.Descriptor(
@@ -148,8 +147,8 @@ _TESTMAP_MAPINT64INT64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1588,
-  serialized_end=1640,
+  serialized_start=1667,
+  serialized_end=1719,
 )
 
 _TESTMAP_MAPUINT32UINT32ENTRY = _descriptor.Descriptor(
@@ -185,8 +184,8 @@ _TESTMAP_MAPUINT32UINT32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1642,
-  serialized_end=1696,
+  serialized_start=1721,
+  serialized_end=1775,
 )
 
 _TESTMAP_MAPUINT64UINT64ENTRY = _descriptor.Descriptor(
@@ -222,8 +221,8 @@ _TESTMAP_MAPUINT64UINT64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1698,
-  serialized_end=1752,
+  serialized_start=1777,
+  serialized_end=1831,
 )
 
 _TESTMAP_MAPSINT32SINT32ENTRY = _descriptor.Descriptor(
@@ -259,8 +258,8 @@ _TESTMAP_MAPSINT32SINT32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1754,
-  serialized_end=1808,
+  serialized_start=1833,
+  serialized_end=1887,
 )
 
 _TESTMAP_MAPSINT64SINT64ENTRY = _descriptor.Descriptor(
@@ -296,8 +295,8 @@ _TESTMAP_MAPSINT64SINT64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1810,
-  serialized_end=1864,
+  serialized_start=1889,
+  serialized_end=1943,
 )
 
 _TESTMAP_MAPFIXED32FIXED32ENTRY = _descriptor.Descriptor(
@@ -333,8 +332,8 @@ _TESTMAP_MAPFIXED32FIXED32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1866,
-  serialized_end=1922,
+  serialized_start=1945,
+  serialized_end=2001,
 )
 
 _TESTMAP_MAPFIXED64FIXED64ENTRY = _descriptor.Descriptor(
@@ -370,8 +369,8 @@ _TESTMAP_MAPFIXED64FIXED64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1924,
-  serialized_end=1980,
+  serialized_start=2003,
+  serialized_end=2059,
 )
 
 _TESTMAP_MAPSFIXED32SFIXED32ENTRY = _descriptor.Descriptor(
@@ -407,8 +406,8 @@ _TESTMAP_MAPSFIXED32SFIXED32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1982,
-  serialized_end=2040,
+  serialized_start=2061,
+  serialized_end=2119,
 )
 
 _TESTMAP_MAPSFIXED64SFIXED64ENTRY = _descriptor.Descriptor(
@@ -444,8 +443,8 @@ _TESTMAP_MAPSFIXED64SFIXED64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2042,
-  serialized_end=2100,
+  serialized_start=2121,
+  serialized_end=2179,
 )
 
 _TESTMAP_MAPINT32FLOATENTRY = _descriptor.Descriptor(
@@ -481,8 +480,8 @@ _TESTMAP_MAPINT32FLOATENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2102,
-  serialized_end=2154,
+  serialized_start=2181,
+  serialized_end=2233,
 )
 
 _TESTMAP_MAPINT32DOUBLEENTRY = _descriptor.Descriptor(
@@ -518,8 +517,8 @@ _TESTMAP_MAPINT32DOUBLEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2156,
-  serialized_end=2209,
+  serialized_start=2235,
+  serialized_end=2288,
 )
 
 _TESTMAP_MAPBOOLBOOLENTRY = _descriptor.Descriptor(
@@ -555,8 +554,8 @@ _TESTMAP_MAPBOOLBOOLENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2211,
-  serialized_end=2261,
+  serialized_start=2290,
+  serialized_end=2340,
 )
 
 _TESTMAP_MAPSTRINGSTRINGENTRY = _descriptor.Descriptor(
@@ -592,8 +591,8 @@ _TESTMAP_MAPSTRINGSTRINGENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2263,
-  serialized_end=2317,
+  serialized_start=2342,
+  serialized_end=2396,
 )
 
 _TESTMAP_MAPINT32BYTESENTRY = _descriptor.Descriptor(
@@ -629,8 +628,8 @@ _TESTMAP_MAPINT32BYTESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2319,
-  serialized_end=2371,
+  serialized_start=2398,
+  serialized_end=2450,
 )
 
 _TESTMAP_MAPINT32ENUMENTRY = _descriptor.Descriptor(
@@ -666,8 +665,8 @@ _TESTMAP_MAPINT32ENUMENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2373,
-  serialized_end=2452,
+  serialized_start=2452,
+  serialized_end=2531,
 )
 
 _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY = _descriptor.Descriptor(
@@ -703,8 +702,8 @@ _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2454,
-  serialized_end=2550,
+  serialized_start=2533,
+  serialized_end=2629,
 )
 
 _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY = _descriptor.Descriptor(
@@ -740,8 +739,45 @@ _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2552,
-  serialized_end=2649,
+  serialized_start=2631,
+  serialized_end=2728,
+)
+
+_TESTMAP_MAPINT32ALLTYPESENTRY = _descriptor.Descriptor(
+  name='MapInt32AllTypesEntry',
+  full_name='protobuf_unittest.TestMap.MapInt32AllTypesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='protobuf_unittest.TestMap.MapInt32AllTypesEntry.key', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='protobuf_unittest.TestMap.MapInt32AllTypesEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2730,
+  serialized_end=2818,
 )
 
 _TESTMAP = _descriptor.Descriptor(
@@ -877,10 +913,17 @@ _TESTMAP = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='map_int32_all_types', full_name='protobuf_unittest.TestMap.map_int32_all_types', index=18,
+      number=19, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
-  nested_types=[_TESTMAP_MAPINT32INT32ENTRY, _TESTMAP_MAPINT64INT64ENTRY, _TESTMAP_MAPUINT32UINT32ENTRY, _TESTMAP_MAPUINT64UINT64ENTRY, _TESTMAP_MAPSINT32SINT32ENTRY, _TESTMAP_MAPSINT64SINT64ENTRY, _TESTMAP_MAPFIXED32FIXED32ENTRY, _TESTMAP_MAPFIXED64FIXED64ENTRY, _TESTMAP_MAPSFIXED32SFIXED32ENTRY, _TESTMAP_MAPSFIXED64SFIXED64ENTRY, _TESTMAP_MAPINT32FLOATENTRY, _TESTMAP_MAPINT32DOUBLEENTRY, _TESTMAP_MAPBOOLBOOLENTRY, _TESTMAP_MAPSTRINGSTRINGENTRY, _TESTMAP_MAPINT32BYTESENTRY, _TESTMAP_MAPINT32ENUMENTRY, _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY, _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY, ],
+  nested_types=[_TESTMAP_MAPINT32INT32ENTRY, _TESTMAP_MAPINT64INT64ENTRY, _TESTMAP_MAPUINT32UINT32ENTRY, _TESTMAP_MAPUINT64UINT64ENTRY, _TESTMAP_MAPSINT32SINT32ENTRY, _TESTMAP_MAPSINT64SINT64ENTRY, _TESTMAP_MAPFIXED32FIXED32ENTRY, _TESTMAP_MAPFIXED64FIXED64ENTRY, _TESTMAP_MAPSFIXED32SFIXED32ENTRY, _TESTMAP_MAPSFIXED64SFIXED64ENTRY, _TESTMAP_MAPINT32FLOATENTRY, _TESTMAP_MAPINT32DOUBLEENTRY, _TESTMAP_MAPBOOLBOOLENTRY, _TESTMAP_MAPSTRINGSTRINGENTRY, _TESTMAP_MAPINT32BYTESENTRY, _TESTMAP_MAPINT32ENUMENTRY, _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY, _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY, _TESTMAP_MAPINT32ALLTYPESENTRY, ],
   enum_types=[
   ],
   options=None,
@@ -890,7 +933,7 @@ _TESTMAP = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=131,
-  serialized_end=2649,
+  serialized_end=2818,
 )
 
 
@@ -920,8 +963,8 @@ _TESTMAPSUBMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2651,
-  serialized_end=2716,
+  serialized_start=2820,
+  serialized_end=2885,
 )
 
 
@@ -958,8 +1001,8 @@ _TESTMESSAGEMAP_MAPINT32MESSAGEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2820,
-  serialized_end=2907,
+  serialized_start=2989,
+  serialized_end=3076,
 )
 
 _TESTMESSAGEMAP = _descriptor.Descriptor(
@@ -988,8 +1031,8 @@ _TESTMESSAGEMAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2719,
-  serialized_end=2907,
+  serialized_start=2888,
+  serialized_end=3076,
 )
 
 
@@ -1026,8 +1069,8 @@ _TESTSAMETYPEMAP_MAP1ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3049,
-  serialized_end=3092,
+  serialized_start=3218,
+  serialized_end=3261,
 )
 
 _TESTSAMETYPEMAP_MAP2ENTRY = _descriptor.Descriptor(
@@ -1063,8 +1106,8 @@ _TESTSAMETYPEMAP_MAP2ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3094,
-  serialized_end=3137,
+  serialized_start=3263,
+  serialized_end=3306,
 )
 
 _TESTSAMETYPEMAP = _descriptor.Descriptor(
@@ -1100,8 +1143,8 @@ _TESTSAMETYPEMAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2910,
-  serialized_end=3137,
+  serialized_start=3079,
+  serialized_end=3306,
 )
 
 
@@ -1138,8 +1181,8 @@ _TESTREQUIREDMESSAGEMAP_MAPFIELDENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3242,
-  serialized_end=3322,
+  serialized_start=3411,
+  serialized_end=3491,
 )
 
 _TESTREQUIREDMESSAGEMAP = _descriptor.Descriptor(
@@ -1168,8 +1211,8 @@ _TESTREQUIREDMESSAGEMAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3140,
-  serialized_end=3322,
+  serialized_start=3309,
+  serialized_end=3491,
 )
 
 
@@ -1206,8 +1249,8 @@ _TESTARENAMAP_MAPINT32INT32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1534,
-  serialized_end=1586,
+  serialized_start=1613,
+  serialized_end=1665,
 )
 
 _TESTARENAMAP_MAPINT64INT64ENTRY = _descriptor.Descriptor(
@@ -1243,8 +1286,8 @@ _TESTARENAMAP_MAPINT64INT64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1588,
-  serialized_end=1640,
+  serialized_start=1667,
+  serialized_end=1719,
 )
 
 _TESTARENAMAP_MAPUINT32UINT32ENTRY = _descriptor.Descriptor(
@@ -1280,8 +1323,8 @@ _TESTARENAMAP_MAPUINT32UINT32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1642,
-  serialized_end=1696,
+  serialized_start=1721,
+  serialized_end=1775,
 )
 
 _TESTARENAMAP_MAPUINT64UINT64ENTRY = _descriptor.Descriptor(
@@ -1317,8 +1360,8 @@ _TESTARENAMAP_MAPUINT64UINT64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1698,
-  serialized_end=1752,
+  serialized_start=1777,
+  serialized_end=1831,
 )
 
 _TESTARENAMAP_MAPSINT32SINT32ENTRY = _descriptor.Descriptor(
@@ -1354,8 +1397,8 @@ _TESTARENAMAP_MAPSINT32SINT32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1754,
-  serialized_end=1808,
+  serialized_start=1833,
+  serialized_end=1887,
 )
 
 _TESTARENAMAP_MAPSINT64SINT64ENTRY = _descriptor.Descriptor(
@@ -1391,8 +1434,8 @@ _TESTARENAMAP_MAPSINT64SINT64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1810,
-  serialized_end=1864,
+  serialized_start=1889,
+  serialized_end=1943,
 )
 
 _TESTARENAMAP_MAPFIXED32FIXED32ENTRY = _descriptor.Descriptor(
@@ -1428,8 +1471,8 @@ _TESTARENAMAP_MAPFIXED32FIXED32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1866,
-  serialized_end=1922,
+  serialized_start=1945,
+  serialized_end=2001,
 )
 
 _TESTARENAMAP_MAPFIXED64FIXED64ENTRY = _descriptor.Descriptor(
@@ -1465,8 +1508,8 @@ _TESTARENAMAP_MAPFIXED64FIXED64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1924,
-  serialized_end=1980,
+  serialized_start=2003,
+  serialized_end=2059,
 )
 
 _TESTARENAMAP_MAPSFIXED32SFIXED32ENTRY = _descriptor.Descriptor(
@@ -1502,8 +1545,8 @@ _TESTARENAMAP_MAPSFIXED32SFIXED32ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1982,
-  serialized_end=2040,
+  serialized_start=2061,
+  serialized_end=2119,
 )
 
 _TESTARENAMAP_MAPSFIXED64SFIXED64ENTRY = _descriptor.Descriptor(
@@ -1539,8 +1582,8 @@ _TESTARENAMAP_MAPSFIXED64SFIXED64ENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2042,
-  serialized_end=2100,
+  serialized_start=2121,
+  serialized_end=2179,
 )
 
 _TESTARENAMAP_MAPINT32FLOATENTRY = _descriptor.Descriptor(
@@ -1576,8 +1619,8 @@ _TESTARENAMAP_MAPINT32FLOATENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2102,
-  serialized_end=2154,
+  serialized_start=2181,
+  serialized_end=2233,
 )
 
 _TESTARENAMAP_MAPINT32DOUBLEENTRY = _descriptor.Descriptor(
@@ -1613,8 +1656,8 @@ _TESTARENAMAP_MAPINT32DOUBLEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2156,
-  serialized_end=2209,
+  serialized_start=2235,
+  serialized_end=2288,
 )
 
 _TESTARENAMAP_MAPBOOLBOOLENTRY = _descriptor.Descriptor(
@@ -1650,8 +1693,8 @@ _TESTARENAMAP_MAPBOOLBOOLENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2211,
-  serialized_end=2261,
+  serialized_start=2290,
+  serialized_end=2340,
 )
 
 _TESTARENAMAP_MAPSTRINGSTRINGENTRY = _descriptor.Descriptor(
@@ -1687,8 +1730,8 @@ _TESTARENAMAP_MAPSTRINGSTRINGENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2263,
-  serialized_end=2317,
+  serialized_start=2342,
+  serialized_end=2396,
 )
 
 _TESTARENAMAP_MAPINT32BYTESENTRY = _descriptor.Descriptor(
@@ -1724,8 +1767,8 @@ _TESTARENAMAP_MAPINT32BYTESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2319,
-  serialized_end=2371,
+  serialized_start=2398,
+  serialized_end=2450,
 )
 
 _TESTARENAMAP_MAPINT32ENUMENTRY = _descriptor.Descriptor(
@@ -1761,8 +1804,8 @@ _TESTARENAMAP_MAPINT32ENUMENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2373,
-  serialized_end=2452,
+  serialized_start=2452,
+  serialized_end=2531,
 )
 
 _TESTARENAMAP_MAPINT32FOREIGNMESSAGEENTRY = _descriptor.Descriptor(
@@ -1798,8 +1841,8 @@ _TESTARENAMAP_MAPINT32FOREIGNMESSAGEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2454,
-  serialized_end=2550,
+  serialized_start=2533,
+  serialized_end=2629,
 )
 
 _TESTARENAMAP_MAPINT32FOREIGNMESSAGENOARENAENTRY = _descriptor.Descriptor(
@@ -1835,8 +1878,8 @@ _TESTARENAMAP_MAPINT32FOREIGNMESSAGENOARENAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5855,
-  serialized_end=5967,
+  serialized_start=6024,
+  serialized_end=6136,
 )
 
 _TESTARENAMAP = _descriptor.Descriptor(
@@ -1984,8 +2027,8 @@ _TESTARENAMAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3325,
-  serialized_end=5967,
+  serialized_start=3494,
+  serialized_end=6136,
 )
 
 
@@ -2022,8 +2065,8 @@ _MESSAGECONTAININGENUMCALLEDTYPE_TYPEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6081,
-  serialized_end=6176,
+  serialized_start=6250,
+  serialized_end=6345,
 )
 
 _MESSAGECONTAININGENUMCALLEDTYPE = _descriptor.Descriptor(
@@ -2053,8 +2096,8 @@ _MESSAGECONTAININGENUMCALLEDTYPE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5970,
-  serialized_end=6198,
+  serialized_start=6139,
+  serialized_end=6367,
 )
 
 
@@ -2091,8 +2134,8 @@ _MESSAGECONTAININGMAPCALLEDENTRY_ENTRYENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6314,
-  serialized_end=6358,
+  serialized_start=6483,
+  serialized_end=6527,
 )
 
 _MESSAGECONTAININGMAPCALLEDENTRY = _descriptor.Descriptor(
@@ -2121,8 +2164,8 @@ _MESSAGECONTAININGMAPCALLEDENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6201,
-  serialized_end=6358,
+  serialized_start=6370,
+  serialized_end=6527,
 )
 
 
@@ -2159,8 +2202,8 @@ _TESTRECURSIVEMAPMESSAGE_AENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6450,
-  serialized_end=6534,
+  serialized_start=6619,
+  serialized_end=6703,
 )
 
 _TESTRECURSIVEMAPMESSAGE = _descriptor.Descriptor(
@@ -2189,8 +2232,8 @@ _TESTRECURSIVEMAPMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6361,
-  serialized_end=6534,
+  serialized_start=6530,
+  serialized_end=6703,
 )
 
 _TESTMAP_MAPINT32INT32ENTRY.containing_type = _TESTMAP
@@ -2214,6 +2257,8 @@ _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY.fields_by_name['value'].message_type = goog
 _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY.containing_type = _TESTMAP
 _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_unittest__pb2._FOREIGNMESSAGE
 _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY.containing_type = _TESTMAP
+_TESTMAP_MAPINT32ALLTYPESENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_unittest__pb2._TESTALLTYPES
+_TESTMAP_MAPINT32ALLTYPESENTRY.containing_type = _TESTMAP
 _TESTMAP.fields_by_name['map_int32_int32'].message_type = _TESTMAP_MAPINT32INT32ENTRY
 _TESTMAP.fields_by_name['map_int64_int64'].message_type = _TESTMAP_MAPINT64INT64ENTRY
 _TESTMAP.fields_by_name['map_uint32_uint32'].message_type = _TESTMAP_MAPUINT32UINT32ENTRY
@@ -2232,6 +2277,7 @@ _TESTMAP.fields_by_name['map_int32_bytes'].message_type = _TESTMAP_MAPINT32BYTES
 _TESTMAP.fields_by_name['map_int32_enum'].message_type = _TESTMAP_MAPINT32ENUMENTRY
 _TESTMAP.fields_by_name['map_int32_foreign_message'].message_type = _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY
 _TESTMAP.fields_by_name['map_string_foreign_message'].message_type = _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY
+_TESTMAP.fields_by_name['map_int32_all_types'].message_type = _TESTMAP_MAPINT32ALLTYPESENTRY
 _TESTMAPSUBMESSAGE.fields_by_name['test_map'].message_type = _TESTMAP
 _TESTMESSAGEMAP_MAPINT32MESSAGEENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_unittest__pb2._TESTALLTYPES
 _TESTMESSAGEMAP_MAPINT32MESSAGEENTRY.containing_type = _TESTMESSAGEMAP
@@ -2301,6 +2347,7 @@ DESCRIPTOR.message_types_by_name['MessageContainingEnumCalledType'] = _MESSAGECO
 DESCRIPTOR.message_types_by_name['MessageContainingMapCalledEntry'] = _MESSAGECONTAININGMAPCALLEDENTRY
 DESCRIPTOR.message_types_by_name['TestRecursiveMapMessage'] = _TESTRECURSIVEMAPMESSAGE
 DESCRIPTOR.enum_types_by_name['MapEnum'] = _MAPENUM
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestMap = _reflection.GeneratedProtocolMessageType('TestMap', (_message.Message,), dict(
 
@@ -2429,6 +2476,13 @@ TestMap = _reflection.GeneratedProtocolMessageType('TestMap', (_message.Message,
     # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMap.MapStringForeignMessageEntry)
     ))
   ,
+
+  MapInt32AllTypesEntry = _reflection.GeneratedProtocolMessageType('MapInt32AllTypesEntry', (_message.Message,), dict(
+    DESCRIPTOR = _TESTMAP_MAPINT32ALLTYPESENTRY,
+    __module__ = 'google.protobuf.map_unittest_pb2'
+    # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMap.MapInt32AllTypesEntry)
+    ))
+  ,
   DESCRIPTOR = _TESTMAP,
   __module__ = 'google.protobuf.map_unittest_pb2'
   # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMap)
@@ -2452,6 +2506,7 @@ _sym_db.RegisterMessage(TestMap.MapInt32BytesEntry)
 _sym_db.RegisterMessage(TestMap.MapInt32EnumEntry)
 _sym_db.RegisterMessage(TestMap.MapInt32ForeignMessageEntry)
 _sym_db.RegisterMessage(TestMap.MapStringForeignMessageEntry)
+_sym_db.RegisterMessage(TestMap.MapInt32AllTypesEntry)
 
 TestMapSubmessage = _reflection.GeneratedProtocolMessageType('TestMapSubmessage', (_message.Message,), dict(
   DESCRIPTOR = _TESTMAPSUBMESSAGE,
@@ -2748,6 +2803,8 @@ _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY.has_options = True
 _TESTMAP_MAPINT32FOREIGNMESSAGEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY.has_options = True
 _TESTMAP_MAPSTRINGFOREIGNMESSAGEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_TESTMAP_MAPINT32ALLTYPESENTRY.has_options = True
+_TESTMAP_MAPINT32ALLTYPESENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _TESTMESSAGEMAP_MAPINT32MESSAGEENTRY.has_options = True
 _TESTMESSAGEMAP_MAPINT32MESSAGEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _TESTSAMETYPEMAP_MAP1ENTRY.has_options = True

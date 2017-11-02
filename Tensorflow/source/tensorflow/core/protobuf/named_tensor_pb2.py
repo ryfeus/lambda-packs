@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n+tensorflow/core/protobuf/named_tensor.proto\x12\ntensorflow\x1a&tensorflow/core/framework/tensor.proto\"I\n\x10NamedTensorProto\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\'\n\x06tensor\x18\x02 \x01(\x0b\x32\x17.tensorflow.TensorProtoB2\n\x18org.tensorflow.frameworkB\x11NamedTensorProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_tensor__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -67,6 +66,7 @@ _NAMEDTENSORPROTO = _descriptor.Descriptor(
 
 _NAMEDTENSORPROTO.fields_by_name['tensor'].message_type = tensorflow_dot_core_dot_framework_dot_tensor__pb2._TENSORPROTO
 DESCRIPTOR.message_types_by_name['NamedTensorProto'] = _NAMEDTENSORPROTO
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 NamedTensorProto = _reflection.GeneratedProtocolMessageType('NamedTensorProto', (_message.Message,), dict(
   DESCRIPTOR = _NAMEDTENSORPROTO,

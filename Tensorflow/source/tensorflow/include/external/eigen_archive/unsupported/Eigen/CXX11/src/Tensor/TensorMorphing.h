@@ -31,6 +31,7 @@ struct traits<TensorReshapingOp<NewDimensions, XprType> > : public traits<XprTyp
   typedef typename remove_reference<Nested>::type _Nested;
   static const int NumDimensions = array_size<NewDimensions>::value;
   static const int Layout = XprTraits::Layout;
+  typedef typename XprTraits::PointerType PointerType;
 };
 
 template<typename NewDimensions, typename XprType>
@@ -146,7 +147,7 @@ struct TensorEvaluator<const TensorReshapingOp<NewDimensions, ArgType>, Device>
     return m_impl.costPerCoeff(vectorized);
   }
 
-  EIGEN_DEVICE_FUNC Scalar* data() const { return const_cast<Scalar*>(m_impl.data()); }
+  EIGEN_DEVICE_FUNC typename Eigen::internal::traits<XprType>::PointerType data() const { return const_cast<Scalar*>(m_impl.data()); }
 
   EIGEN_DEVICE_FUNC const TensorEvaluator<ArgType, Device>& impl() const { return m_impl; }
 
@@ -214,6 +215,7 @@ struct traits<TensorSlicingOp<StartIndices, Sizes, XprType> > : public traits<Xp
   typedef typename remove_reference<Nested>::type _Nested;
   static const int NumDimensions = array_size<StartIndices>::value;
   static const int Layout = XprTraits::Layout;
+  typedef typename XprTraits::PointerType PointerType;
 };
 
 template<typename StartIndices, typename Sizes, typename XprType>
@@ -468,7 +470,7 @@ struct TensorEvaluator<const TensorSlicingOp<StartIndices, Sizes, ArgType>, Devi
   }
 
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar* data() const {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename Eigen::internal::traits<XprType>::PointerType data() const {
     Scalar* result = m_impl.data();
     if (result) {
       Index offset = 0;
@@ -633,6 +635,7 @@ struct traits<TensorStridingSlicingOp<StartIndices, StopIndices, Strides, XprTyp
   typedef typename remove_reference<Nested>::type _Nested;
   static const int NumDimensions = array_size<StartIndices>::value;
   static const int Layout = XprTraits::Layout;
+  typedef typename XprTraits::PointerType PointerType;
 };
 
 template<typename StartIndices, typename StopIndices, typename Strides, typename XprType>
@@ -711,6 +714,12 @@ struct TensorEvaluator<const TensorStridingSlicingOp<StartIndices, StopIndices, 
 {
   typedef TensorStridingSlicingOp<StartIndices, StopIndices, Strides, ArgType> XprType;
   static const int NumDims = internal::array_size<Strides>::value;
+  typedef typename XprType::Index Index;
+  typedef typename XprType::Scalar Scalar;
+  typedef typename internal::remove_const<Scalar>::type ScalarNonConst;
+  typedef typename XprType::CoeffReturnType CoeffReturnType;
+  typedef typename PacketType<CoeffReturnType, Device>::type PacketReturnType;
+  typedef Strides Dimensions;
 
   enum {
     // Alignment can't be guaranteed at compile time since it depends on the
@@ -733,7 +742,7 @@ struct TensorEvaluator<const TensorStridingSlicingOp<StartIndices, StopIndices, 
         startIndicesClamped[i] = clamp(op.startIndices()[i], 0, m_impl.dimensions()[i]);
         stopIndicesClamped[i] = clamp(op.stopIndices()[i], 0, m_impl.dimensions()[i]);
       }else{
-        /* implies m_strides[i]<0 by assert */
+      /* implies m_strides[i]<0 by assert */
         startIndicesClamped[i] = clamp(op.startIndices()[i], -1, m_impl.dimensions()[i] - 1);
         stopIndicesClamped[i] = clamp(op.stopIndices()[i], -1, m_impl.dimensions()[i] - 1);
       }
@@ -796,13 +805,6 @@ struct TensorEvaluator<const TensorStridingSlicingOp<StartIndices, StopIndices, 
                                           sizeof(Scalar));
   }
 
-  typedef typename XprType::Index Index;
-  typedef typename XprType::Scalar Scalar;
-  typedef typename internal::remove_const<Scalar>::type ScalarNonConst;
-  typedef typename XprType::CoeffReturnType CoeffReturnType;
-  typedef typename PacketType<CoeffReturnType, Device>::type PacketReturnType;
-  typedef Strides Dimensions;
-
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Dimensions& dimensions() const { return m_dimensions; }
 
 
@@ -824,7 +826,7 @@ struct TensorEvaluator<const TensorStridingSlicingOp<StartIndices, StopIndices, 
     return m_impl.costPerCoeff(vectorized) + TensorOpCost(0, 0, NumDims);
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar* data() const {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename Eigen::internal::traits<XprType>::PointerType data() const {
     return NULL;
   }
 
@@ -858,7 +860,11 @@ struct TensorEvaluator<const TensorStridingSlicingOp<StartIndices, StopIndices, 
   }
 
   static EIGEN_STRONG_INLINE Index clamp(Index value, Index min, Index max) {
+#ifndef __SYCL_DEVICE_ONLY__
     return numext::maxi(min, numext::mini(max,value));
+#else
+    return cl::sycl::clamp(value, min, max);
+#endif
   }
 
   array<Index, NumDims> m_outputStrides;

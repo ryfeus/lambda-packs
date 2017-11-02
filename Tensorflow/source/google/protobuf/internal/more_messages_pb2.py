@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n,google/protobuf/internal/more_messages.proto\x12\x18google.protobuf.internal\"h\n\x10OutOfOrderFields\x12\x17\n\x0foptional_sint32\x18\x05 \x01(\x11\x12\x17\n\x0foptional_uint32\x18\x03 \x01(\r\x12\x16\n\x0eoptional_int32\x18\x01 \x01(\x05*\x04\x08\x04\x10\x05*\x04\x08\x02\x10\x03:C\n\x0foptional_uint64\x12*.google.protobuf.internal.OutOfOrderFields\x18\x04 \x01(\x04:B\n\x0eoptional_int64\x12*.google.protobuf.internal.OutOfOrderFields\x18\x02 \x01(\x03')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 OPTIONAL_UINT64_FIELD_NUMBER = 4
@@ -89,6 +88,7 @@ _OUTOFORDERFIELDS = _descriptor.Descriptor(
 DESCRIPTOR.message_types_by_name['OutOfOrderFields'] = _OUTOFORDERFIELDS
 DESCRIPTOR.extensions_by_name['optional_uint64'] = optional_uint64
 DESCRIPTOR.extensions_by_name['optional_int64'] = optional_int64
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OutOfOrderFields = _reflection.GeneratedProtocolMessageType('OutOfOrderFields', (_message.Message,), dict(
   DESCRIPTOR = _OUTOFORDERFIELDS,

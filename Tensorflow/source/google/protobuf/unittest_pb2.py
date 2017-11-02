@@ -17,17 +17,19 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import unittest_import_pb2 as google_dot_protobuf_dot_unittest__import__pb2
-google_dot_protobuf_dot_unittest__import__public__pb2 = google_dot_protobuf_dot_unittest__import__pb2.google_dot_protobuf_dot_unittest__import__public__pb2
+try:
+  google_dot_protobuf_dot_unittest__import__public__pb2 = google_dot_protobuf_dot_unittest__import__pb2.google_dot_protobuf_dot_unittest__import__public__pb2
+except AttributeError:
+  google_dot_protobuf_dot_unittest__import__public__pb2 = google_dot_protobuf_dot_unittest__import__pb2.google.protobuf.unittest_import_public_pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='google/protobuf/unittest.proto',
   package='protobuf_unittest',
   syntax='proto2',
-  serialized_pb=_b('\n\x1egoogle/protobuf/unittest.proto\x12\x11protobuf_unittest\x1a%google/protobuf/unittest_import.proto\"\xed\x18\n\x0cTestAllTypes\x12\x16\n\x0eoptional_int32\x18\x01 \x01(\x05\x12\x16\n\x0eoptional_int64\x18\x02 \x01(\x03\x12\x17\n\x0foptional_uint32\x18\x03 \x01(\r\x12\x17\n\x0foptional_uint64\x18\x04 \x01(\x04\x12\x17\n\x0foptional_sint32\x18\x05 \x01(\x11\x12\x17\n\x0foptional_sint64\x18\x06 \x01(\x12\x12\x18\n\x10optional_fixed32\x18\x07 \x01(\x07\x12\x18\n\x10optional_fixed64\x18\x08 \x01(\x06\x12\x19\n\x11optional_sfixed32\x18\t \x01(\x0f\x12\x19\n\x11optional_sfixed64\x18\n \x01(\x10\x12\x16\n\x0eoptional_float\x18\x0b \x01(\x02\x12\x17\n\x0foptional_double\x18\x0c \x01(\x01\x12\x15\n\roptional_bool\x18\r \x01(\x08\x12\x17\n\x0foptional_string\x18\x0e \x01(\t\x12\x16\n\x0eoptional_bytes\x18\x0f \x01(\x0c\x12\x44\n\roptionalgroup\x18\x10 \x01(\n2-.protobuf_unittest.TestAllTypes.OptionalGroup\x12N\n\x17optional_nested_message\x18\x12 \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage\x12\x43\n\x18optional_foreign_message\x18\x13 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12H\n\x17optional_import_message\x18\x14 \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12H\n\x14optional_nested_enum\x18\x15 \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum\x12=\n\x15optional_foreign_enum\x18\x16 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x42\n\x14optional_import_enum\x18\x17 \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum\x12!\n\x15optional_string_piece\x18\x18 \x01(\tB\x02\x08\x02\x12\x19\n\roptional_cord\x18\x19 \x01(\tB\x02\x08\x01\x12U\n\x1eoptional_public_import_message\x18\x1a \x01(\x0b\x32-.protobuf_unittest_import.PublicImportMessage\x12P\n\x15optional_lazy_message\x18\x1b \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x16\n\x0erepeated_int32\x18\x1f \x03(\x05\x12\x16\n\x0erepeated_int64\x18  \x03(\x03\x12\x17\n\x0frepeated_uint32\x18! \x03(\r\x12\x17\n\x0frepeated_uint64\x18\" \x03(\x04\x12\x17\n\x0frepeated_sint32\x18# \x03(\x11\x12\x17\n\x0frepeated_sint64\x18$ \x03(\x12\x12\x18\n\x10repeated_fixed32\x18% \x03(\x07\x12\x18\n\x10repeated_fixed64\x18& \x03(\x06\x12\x19\n\x11repeated_sfixed32\x18\' \x03(\x0f\x12\x19\n\x11repeated_sfixed64\x18( \x03(\x10\x12\x16\n\x0erepeated_float\x18) \x03(\x02\x12\x17\n\x0frepeated_double\x18* \x03(\x01\x12\x15\n\rrepeated_bool\x18+ \x03(\x08\x12\x17\n\x0frepeated_string\x18, \x03(\t\x12\x16\n\x0erepeated_bytes\x18- \x03(\x0c\x12\x44\n\rrepeatedgroup\x18. \x03(\n2-.protobuf_unittest.TestAllTypes.RepeatedGroup\x12N\n\x17repeated_nested_message\x18\x30 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage\x12\x43\n\x18repeated_foreign_message\x18\x31 \x03(\x0b\x32!.protobuf_unittest.ForeignMessage\x12H\n\x17repeated_import_message\x18\x32 \x03(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12H\n\x14repeated_nested_enum\x18\x33 \x03(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum\x12=\n\x15repeated_foreign_enum\x18\x34 \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x42\n\x14repeated_import_enum\x18\x35 \x03(\x0e\x32$.protobuf_unittest_import.ImportEnum\x12!\n\x15repeated_string_piece\x18\x36 \x03(\tB\x02\x08\x02\x12\x19\n\rrepeated_cord\x18\x37 \x03(\tB\x02\x08\x01\x12P\n\x15repeated_lazy_message\x18\x39 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x19\n\rdefault_int32\x18= \x01(\x05:\x02\x34\x31\x12\x19\n\rdefault_int64\x18> \x01(\x03:\x02\x34\x32\x12\x1a\n\x0e\x64\x65\x66\x61ult_uint32\x18? \x01(\r:\x02\x34\x33\x12\x1a\n\x0e\x64\x65\x66\x61ult_uint64\x18@ \x01(\x04:\x02\x34\x34\x12\x1b\n\x0e\x64\x65\x66\x61ult_sint32\x18\x41 \x01(\x11:\x03-45\x12\x1a\n\x0e\x64\x65\x66\x61ult_sint64\x18\x42 \x01(\x12:\x02\x34\x36\x12\x1b\n\x0f\x64\x65\x66\x61ult_fixed32\x18\x43 \x01(\x07:\x02\x34\x37\x12\x1b\n\x0f\x64\x65\x66\x61ult_fixed64\x18\x44 \x01(\x06:\x02\x34\x38\x12\x1c\n\x10\x64\x65\x66\x61ult_sfixed32\x18\x45 \x01(\x0f:\x02\x34\x39\x12\x1d\n\x10\x64\x65\x66\x61ult_sfixed64\x18\x46 \x01(\x10:\x03-50\x12\x1b\n\rdefault_float\x18G \x01(\x02:\x04\x35\x31.5\x12\x1d\n\x0e\x64\x65\x66\x61ult_double\x18H \x01(\x01:\x05\x35\x32\x30\x30\x30\x12\x1a\n\x0c\x64\x65\x66\x61ult_bool\x18I \x01(\x08:\x04true\x12\x1d\n\x0e\x64\x65\x66\x61ult_string\x18J \x01(\t:\x05hello\x12\x1c\n\rdefault_bytes\x18K \x01(\x0c:\x05world\x12L\n\x13\x64\x65\x66\x61ult_nested_enum\x18Q \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:\x03\x42\x41R\x12I\n\x14\x64\x65\x66\x61ult_foreign_enum\x18R \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:\x0b\x46OREIGN_BAR\x12M\n\x13\x64\x65\x66\x61ult_import_enum\x18S \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum:\nIMPORT_BAR\x12%\n\x14\x64\x65\x66\x61ult_string_piece\x18T \x01(\t:\x03\x61\x62\x63\x42\x02\x08\x02\x12\x1d\n\x0c\x64\x65\x66\x61ult_cord\x18U \x01(\t:\x03\x31\x32\x33\x42\x02\x08\x01\x12\x16\n\x0coneof_uint32\x18o \x01(\rH\x00\x12M\n\x14oneof_nested_message\x18p \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageH\x00\x12\x16\n\x0coneof_string\x18q \x01(\tH\x00\x12\x15\n\x0boneof_bytes\x18r \x01(\x0cH\x00\x1a\x1b\n\rNestedMessage\x12\n\n\x02\x62\x62\x18\x01 \x01(\x05\x1a\x1a\n\rOptionalGroup\x12\t\n\x01\x61\x18\x11 \x01(\x05\x1a\x1a\n\rRepeatedGroup\x12\t\n\x01\x61\x18/ \x01(\x05\"9\n\nNestedEnum\x12\x07\n\x03\x46OO\x10\x01\x12\x07\n\x03\x42\x41R\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x12\x10\n\x03NEG\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x42\r\n\x0boneof_field\"\xbb\x01\n\x12NestedTestAllTypes\x12\x34\n\x05\x63hild\x18\x01 \x01(\x0b\x32%.protobuf_unittest.NestedTestAllTypes\x12\x30\n\x07payload\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12=\n\x0erepeated_child\x18\x03 \x03(\x0b\x32%.protobuf_unittest.NestedTestAllTypes\"4\n\x14TestDeprecatedFields\x12\x1c\n\x10\x64\x65precated_int32\x18\x01 \x01(\x05\x42\x02\x18\x01\"&\n\x0e\x46oreignMessage\x12\t\n\x01\x63\x18\x01 \x01(\x05\x12\t\n\x01\x64\x18\x02 \x01(\x05\"0\n\x12TestReservedFieldsJ\x04\x08\x02\x10\x03J\x04\x08\x0f\x10\x10J\x04\x08\t\x10\x0cR\x03\x62\x61rR\x03\x62\x61z\"\x1d\n\x11TestAllExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"$\n\x17OptionalGroup_extension\x12\t\n\x01\x61\x18\x11 \x01(\x05\"$\n\x17RepeatedGroup_extension\x12\t\n\x01\x61\x18/ \x01(\x05\"\x98\x01\n\x13TestNestedExtension29\n\x04test\x12$.protobuf_unittest.TestAllExtensions\x18\xea\x07 \x01(\t:\x04test2F\n\x17nested_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18\xeb\x07 \x01(\t\"\xd5\x05\n\x0cTestRequired\x12\t\n\x01\x61\x18\x01 \x02(\x05\x12\x0e\n\x06\x64ummy2\x18\x02 \x01(\x05\x12\t\n\x01\x62\x18\x03 \x02(\x05\x12\x0e\n\x06\x64ummy4\x18\x04 \x01(\x05\x12\x0e\n\x06\x64ummy5\x18\x05 \x01(\x05\x12\x0e\n\x06\x64ummy6\x18\x06 \x01(\x05\x12\x0e\n\x06\x64ummy7\x18\x07 \x01(\x05\x12\x0e\n\x06\x64ummy8\x18\x08 \x01(\x05\x12\x0e\n\x06\x64ummy9\x18\t \x01(\x05\x12\x0f\n\x07\x64ummy10\x18\n \x01(\x05\x12\x0f\n\x07\x64ummy11\x18\x0b \x01(\x05\x12\x0f\n\x07\x64ummy12\x18\x0c \x01(\x05\x12\x0f\n\x07\x64ummy13\x18\r \x01(\x05\x12\x0f\n\x07\x64ummy14\x18\x0e \x01(\x05\x12\x0f\n\x07\x64ummy15\x18\x0f \x01(\x05\x12\x0f\n\x07\x64ummy16\x18\x10 \x01(\x05\x12\x0f\n\x07\x64ummy17\x18\x11 \x01(\x05\x12\x0f\n\x07\x64ummy18\x18\x12 \x01(\x05\x12\x0f\n\x07\x64ummy19\x18\x13 \x01(\x05\x12\x0f\n\x07\x64ummy20\x18\x14 \x01(\x05\x12\x0f\n\x07\x64ummy21\x18\x15 \x01(\x05\x12\x0f\n\x07\x64ummy22\x18\x16 \x01(\x05\x12\x0f\n\x07\x64ummy23\x18\x17 \x01(\x05\x12\x0f\n\x07\x64ummy24\x18\x18 \x01(\x05\x12\x0f\n\x07\x64ummy25\x18\x19 \x01(\x05\x12\x0f\n\x07\x64ummy26\x18\x1a \x01(\x05\x12\x0f\n\x07\x64ummy27\x18\x1b \x01(\x05\x12\x0f\n\x07\x64ummy28\x18\x1c \x01(\x05\x12\x0f\n\x07\x64ummy29\x18\x1d \x01(\x05\x12\x0f\n\x07\x64ummy30\x18\x1e \x01(\x05\x12\x0f\n\x07\x64ummy31\x18\x1f \x01(\x05\x12\x0f\n\x07\x64ummy32\x18  \x01(\x05\x12\t\n\x01\x63\x18! \x02(\x05\x32V\n\x06single\x12$.protobuf_unittest.TestAllExtensions\x18\xe8\x07 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired2U\n\x05multi\x12$.protobuf_unittest.TestAllExtensions\x18\xe9\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestRequired\"\x9a\x01\n\x13TestRequiredForeign\x12\x39\n\x10optional_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired\x12\x39\n\x10repeated_message\x18\x02 \x03(\x0b\x32\x1f.protobuf_unittest.TestRequired\x12\r\n\x05\x64ummy\x18\x03 \x01(\x05\"Z\n\x11TestForeignNested\x12\x45\n\x0e\x66oreign_nested\x18\x01 \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage\"\x12\n\x10TestEmptyMessage\"*\n\x1eTestEmptyMessageWithExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"7\n\x1bTestMultipleExtensionRanges*\x04\x08*\x10+*\x06\x08\xaf \x10\x94!*\n\x08\x80\x80\x04\x10\x80\x80\x80\x80\x02\"4\n\x18TestReallyLargeTagNumber\x12\t\n\x01\x61\x18\x01 \x01(\x05\x12\r\n\x02\x62\x62\x18\xff\xff\xff\x7f \x01(\x05\"U\n\x14TestRecursiveMessage\x12\x32\n\x01\x61\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestRecursiveMessage\x12\t\n\x01i\x18\x02 \x01(\x05\"K\n\x14TestMutualRecursionA\x12\x33\n\x02\x62\x62\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestMutualRecursionB\"b\n\x14TestMutualRecursionB\x12\x32\n\x01\x61\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestMutualRecursionA\x12\x16\n\x0eoptional_int32\x18\x02 \x01(\x05\"\xb3\x01\n\x12TestDupFieldNumber\x12\t\n\x01\x61\x18\x01 \x01(\x05\x12\x36\n\x03\x66oo\x18\x02 \x01(\n2).protobuf_unittest.TestDupFieldNumber.Foo\x12\x36\n\x03\x62\x61r\x18\x03 \x01(\n2).protobuf_unittest.TestDupFieldNumber.Bar\x1a\x10\n\x03\x46oo\x12\t\n\x01\x61\x18\x01 \x01(\x05\x1a\x10\n\x03\x42\x61r\x12\t\n\x01\x61\x18\x01 \x01(\x05\"L\n\x10TestEagerMessage\x12\x38\n\x0bsub_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesB\x02(\x00\"K\n\x0fTestLazyMessage\x12\x38\n\x0bsub_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesB\x02(\x01\"\x80\x02\n\x18TestNestedMessageHasBits\x12Z\n\x17optional_nested_message\x18\x01 \x01(\x0b\x32\x39.protobuf_unittest.TestNestedMessageHasBits.NestedMessage\x1a\x87\x01\n\rNestedMessage\x12$\n\x1cnestedmessage_repeated_int32\x18\x01 \x03(\x05\x12P\n%nestedmessage_repeated_foreignmessage\x18\x02 \x03(\x0b\x32!.protobuf_unittest.ForeignMessage\"\xe5\x03\n\x17TestCamelCaseFieldNames\x12\x16\n\x0ePrimitiveField\x18\x01 \x01(\x05\x12\x13\n\x0bStringField\x18\x02 \x01(\t\x12\x31\n\tEnumField\x18\x03 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x37\n\x0cMessageField\x18\x04 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12\x1c\n\x10StringPieceField\x18\x05 \x01(\tB\x02\x08\x02\x12\x15\n\tCordField\x18\x06 \x01(\tB\x02\x08\x01\x12\x1e\n\x16RepeatedPrimitiveField\x18\x07 \x03(\x05\x12\x1b\n\x13RepeatedStringField\x18\x08 \x03(\t\x12\x39\n\x11RepeatedEnumField\x18\t \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12?\n\x14RepeatedMessageField\x18\n \x03(\x0b\x32!.protobuf_unittest.ForeignMessage\x12$\n\x18RepeatedStringPieceField\x18\x0b \x03(\tB\x02\x08\x02\x12\x1d\n\x11RepeatedCordField\x18\x0c \x03(\tB\x02\x08\x01\"\xd5\x01\n\x12TestFieldOrderings\x12\x11\n\tmy_string\x18\x0b \x01(\t\x12\x0e\n\x06my_int\x18\x01 \x01(\x03\x12\x10\n\x08my_float\x18\x65 \x01(\x02\x12U\n\x17optional_nested_message\x18\xc8\x01 \x01(\x0b\x32\x33.protobuf_unittest.TestFieldOrderings.NestedMessage\x1a\'\n\rNestedMessage\x12\n\n\x02oo\x18\x02 \x01(\x03\x12\n\n\x02\x62\x62\x18\x01 \x01(\x05*\x04\x08\x02\x10\x0b*\x04\x08\x0c\x10\x65\"\xb6\x07\n\x18TestExtremeDefaultValues\x12?\n\rescaped_bytes\x18\x01 \x01(\x0c:(\\000\\001\\007\\010\\014\\n\\r\\t\\013\\\\\\\'\\\"\\376\x12 \n\x0clarge_uint32\x18\x02 \x01(\r:\n4294967295\x12*\n\x0clarge_uint64\x18\x03 \x01(\x04:\x14\x31\x38\x34\x34\x36\x37\x34\x34\x30\x37\x33\x37\x30\x39\x35\x35\x31\x36\x31\x35\x12 \n\x0bsmall_int32\x18\x04 \x01(\x05:\x0b-2147483647\x12)\n\x0bsmall_int64\x18\x05 \x01(\x03:\x14-9223372036854775807\x12\'\n\x12really_small_int32\x18\x15 \x01(\x05:\x0b-2147483648\x12\x30\n\x12really_small_int64\x18\x16 \x01(\x03:\x14-9223372036854775808\x12\x18\n\x0butf8_string\x18\x06 \x01(\t:\x03\xe1\x88\xb4\x12\x15\n\nzero_float\x18\x07 \x01(\x02:\x01\x30\x12\x14\n\tone_float\x18\x08 \x01(\x02:\x01\x31\x12\x18\n\x0bsmall_float\x18\t \x01(\x02:\x03\x31.5\x12\x1e\n\x12negative_one_float\x18\n \x01(\x02:\x02-1\x12\x1c\n\x0enegative_float\x18\x0b \x01(\x02:\x04-1.5\x12\x1a\n\x0blarge_float\x18\x0c \x01(\x02:\x05\x32\x65+08\x12$\n\x14small_negative_float\x18\r \x01(\x02:\x06-8e-28\x12\x17\n\ninf_double\x18\x0e \x01(\x01:\x03inf\x12\x1c\n\x0eneg_inf_double\x18\x0f \x01(\x01:\x04-inf\x12\x17\n\nnan_double\x18\x10 \x01(\x01:\x03nan\x12\x16\n\tinf_float\x18\x11 \x01(\x02:\x03inf\x12\x1b\n\rneg_inf_float\x18\x12 \x01(\x02:\x04-inf\x12\x16\n\tnan_float\x18\x13 \x01(\x02:\x03nan\x12+\n\x0c\x63pp_trigraph\x18\x14 \x01(\t:\x15? ? ?? ?? ??? ??/ ??-\x12 \n\x10string_with_zero\x18\x17 \x01(\t:\x06hel\x00lo\x12\"\n\x0f\x62ytes_with_zero\x18\x18 \x01(\x0c:\twor\\000ld\x12(\n\x16string_piece_with_zero\x18\x19 \x01(\t:\x04\x61\x62\x00\x63\x42\x02\x08\x02\x12 \n\x0e\x63ord_with_zero\x18\x1a \x01(\t:\x04\x31\x32\x00\x33\x42\x02\x08\x01\x12&\n\x12replacement_string\x18\x1b \x01(\t:\n${unknown}\"K\n\x11SparseEnumMessage\x12\x36\n\x0bsparse_enum\x18\x01 \x01(\x0e\x32!.protobuf_unittest.TestSparseEnum\"\x19\n\tOneString\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"\x1a\n\nMoreString\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\t\"\x18\n\x08OneBytes\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\x19\n\tMoreBytes\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x0c\"\x1c\n\x0cInt32Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x05\"\x1d\n\rUint32Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\r\"\x1c\n\x0cInt64Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x03\"\x1d\n\rUint64Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x04\"\x1b\n\x0b\x42oolMessage\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x08\"\xd0\x01\n\tTestOneof\x12\x11\n\x07\x66oo_int\x18\x01 \x01(\x05H\x00\x12\x14\n\nfoo_string\x18\x02 \x01(\tH\x00\x12\x36\n\x0b\x66oo_message\x18\x03 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesH\x00\x12\x39\n\x08\x66oogroup\x18\x04 \x01(\n2%.protobuf_unittest.TestOneof.FooGroupH\x00\x1a \n\x08\x46ooGroup\x12\t\n\x01\x61\x18\x05 \x01(\x05\x12\t\n\x01\x62\x18\x06 \x01(\tB\x05\n\x03\x66oo\"\xe7\x01\n\x1cTestOneofBackwardsCompatible\x12\x0f\n\x07\x66oo_int\x18\x01 \x01(\x05\x12\x12\n\nfoo_string\x18\x02 \x01(\t\x12\x34\n\x0b\x66oo_message\x18\x03 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12J\n\x08\x66oogroup\x18\x04 \x01(\n28.protobuf_unittest.TestOneofBackwardsCompatible.FooGroup\x1a \n\x08\x46ooGroup\x12\t\n\x01\x61\x18\x05 \x01(\x05\x12\t\n\x01\x62\x18\x06 \x01(\t\"\x9e\x06\n\nTestOneof2\x12\x11\n\x07\x66oo_int\x18\x01 \x01(\x05H\x00\x12\x14\n\nfoo_string\x18\x02 \x01(\tH\x00\x12\x16\n\x08\x66oo_cord\x18\x03 \x01(\tB\x02\x08\x01H\x00\x12\x1e\n\x10\x66oo_string_piece\x18\x04 \x01(\tB\x02\x08\x02H\x00\x12\x13\n\tfoo_bytes\x18\x05 \x01(\x0cH\x00\x12<\n\x08\x66oo_enum\x18\x06 \x01(\x0e\x32(.protobuf_unittest.TestOneof2.NestedEnumH\x00\x12\x42\n\x0b\x66oo_message\x18\x07 \x01(\x0b\x32+.protobuf_unittest.TestOneof2.NestedMessageH\x00\x12:\n\x08\x66oogroup\x18\x08 \x01(\n2&.protobuf_unittest.TestOneof2.FooGroupH\x00\x12K\n\x10\x66oo_lazy_message\x18\x0b \x01(\x0b\x32+.protobuf_unittest.TestOneof2.NestedMessageB\x02(\x01H\x00\x12\x14\n\x07\x62\x61r_int\x18\x0c \x01(\x05:\x01\x35H\x01\x12\x1c\n\nbar_string\x18\r \x01(\t:\x06STRINGH\x01\x12\x1c\n\x08\x62\x61r_cord\x18\x0e \x01(\t:\x04\x43ORDB\x02\x08\x01H\x01\x12&\n\x10\x62\x61r_string_piece\x18\x0f \x01(\t:\x06SPIECEB\x02\x08\x02H\x01\x12\x1a\n\tbar_bytes\x18\x10 \x01(\x0c:\x05\x42YTESH\x01\x12\x41\n\x08\x62\x61r_enum\x18\x11 \x01(\x0e\x32(.protobuf_unittest.TestOneof2.NestedEnum:\x03\x42\x41RH\x01\x12\x0f\n\x07\x62\x61z_int\x18\x12 \x01(\x05\x12\x17\n\nbaz_string\x18\x13 \x01(\t:\x03\x42\x41Z\x1a \n\x08\x46ooGroup\x12\t\n\x01\x61\x18\t \x01(\x05\x12\t\n\x01\x62\x18\n \x01(\t\x1a\x33\n\rNestedMessage\x12\x0f\n\x07qux_int\x18\x01 \x01(\x03\x12\x11\n\tcorge_int\x18\x02 \x03(\x05\"\'\n\nNestedEnum\x12\x07\n\x03\x46OO\x10\x01\x12\x07\n\x03\x42\x41R\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x42\x05\n\x03\x66ooB\x05\n\x03\x62\x61r\"\xb8\x01\n\x11TestRequiredOneof\x12\x11\n\x07\x66oo_int\x18\x01 \x01(\x05H\x00\x12\x14\n\nfoo_string\x18\x02 \x01(\tH\x00\x12I\n\x0b\x66oo_message\x18\x03 \x01(\x0b\x32\x32.protobuf_unittest.TestRequiredOneof.NestedMessageH\x00\x1a(\n\rNestedMessage\x12\x17\n\x0frequired_double\x18\x01 \x02(\x01\x42\x05\n\x03\x66oo\"\xaa\x03\n\x0fTestPackedTypes\x12\x18\n\x0cpacked_int32\x18Z \x03(\x05\x42\x02\x10\x01\x12\x18\n\x0cpacked_int64\x18[ \x03(\x03\x42\x02\x10\x01\x12\x19\n\rpacked_uint32\x18\\ \x03(\rB\x02\x10\x01\x12\x19\n\rpacked_uint64\x18] \x03(\x04\x42\x02\x10\x01\x12\x19\n\rpacked_sint32\x18^ \x03(\x11\x42\x02\x10\x01\x12\x19\n\rpacked_sint64\x18_ \x03(\x12\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed32\x18` \x03(\x07\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed64\x18\x61 \x03(\x06\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed32\x18\x62 \x03(\x0f\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed64\x18\x63 \x03(\x10\x42\x02\x10\x01\x12\x18\n\x0cpacked_float\x18\x64 \x03(\x02\x42\x02\x10\x01\x12\x19\n\rpacked_double\x18\x65 \x03(\x01\x42\x02\x10\x01\x12\x17\n\x0bpacked_bool\x18\x66 \x03(\x08\x42\x02\x10\x01\x12\x37\n\x0bpacked_enum\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x01\"\xc8\x03\n\x11TestUnpackedTypes\x12\x1a\n\x0eunpacked_int32\x18Z \x03(\x05\x42\x02\x10\x00\x12\x1a\n\x0eunpacked_int64\x18[ \x03(\x03\x42\x02\x10\x00\x12\x1b\n\x0funpacked_uint32\x18\\ \x03(\rB\x02\x10\x00\x12\x1b\n\x0funpacked_uint64\x18] \x03(\x04\x42\x02\x10\x00\x12\x1b\n\x0funpacked_sint32\x18^ \x03(\x11\x42\x02\x10\x00\x12\x1b\n\x0funpacked_sint64\x18_ \x03(\x12\x42\x02\x10\x00\x12\x1c\n\x10unpacked_fixed32\x18` \x03(\x07\x42\x02\x10\x00\x12\x1c\n\x10unpacked_fixed64\x18\x61 \x03(\x06\x42\x02\x10\x00\x12\x1d\n\x11unpacked_sfixed32\x18\x62 \x03(\x0f\x42\x02\x10\x00\x12\x1d\n\x11unpacked_sfixed64\x18\x63 \x03(\x10\x42\x02\x10\x00\x12\x1a\n\x0eunpacked_float\x18\x64 \x03(\x02\x42\x02\x10\x00\x12\x1b\n\x0funpacked_double\x18\x65 \x03(\x01\x42\x02\x10\x00\x12\x19\n\runpacked_bool\x18\x66 \x03(\x08\x42\x02\x10\x00\x12\x39\n\runpacked_enum\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x00\" \n\x14TestPackedExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"\"\n\x16TestUnpackedExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"\x99\x04\n\x15TestDynamicExtensions\x12\x19\n\x10scalar_extension\x18\xd0\x0f \x01(\x07\x12\x37\n\x0e\x65num_extension\x18\xd1\x0f \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12Y\n\x16\x64ynamic_enum_extension\x18\xd2\x0f \x01(\x0e\x32\x38.protobuf_unittest.TestDynamicExtensions.DynamicEnumType\x12=\n\x11message_extension\x18\xd3\x0f \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12_\n\x19\x64ynamic_message_extension\x18\xd4\x0f \x01(\x0b\x32;.protobuf_unittest.TestDynamicExtensions.DynamicMessageType\x12\x1b\n\x12repeated_extension\x18\xd5\x0f \x03(\t\x12\x1d\n\x10packed_extension\x18\xd6\x0f \x03(\x11\x42\x02\x10\x01\x1a,\n\x12\x44ynamicMessageType\x12\x16\n\rdynamic_field\x18\xb4\x10 \x01(\x05\"G\n\x0f\x44ynamicEnumType\x12\x10\n\x0b\x44YNAMIC_FOO\x10\x98\x11\x12\x10\n\x0b\x44YNAMIC_BAR\x10\x99\x11\x12\x10\n\x0b\x44YNAMIC_BAZ\x10\x9a\x11\"\xc0\x01\n#TestRepeatedScalarDifferentTagSizes\x12\x18\n\x10repeated_fixed32\x18\x0c \x03(\x07\x12\x16\n\x0erepeated_int32\x18\r \x03(\x05\x12\x19\n\x10repeated_fixed64\x18\xfe\x0f \x03(\x06\x12\x17\n\x0erepeated_int64\x18\xff\x0f \x03(\x03\x12\x18\n\x0erepeated_float\x18\xfe\xff\x0f \x03(\x02\x12\x19\n\x0frepeated_uint64\x18\xff\xff\x0f \x03(\x04\"\xf7\t\n\x10TestParsingMerge\x12;\n\x12required_all_types\x18\x01 \x02(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12;\n\x12optional_all_types\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12;\n\x12repeated_all_types\x18\x03 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12H\n\roptionalgroup\x18\n \x01(\n21.protobuf_unittest.TestParsingMerge.OptionalGroup\x12H\n\rrepeatedgroup\x18\x14 \x03(\n21.protobuf_unittest.TestParsingMerge.RepeatedGroup\x1a\xaa\x04\n\x17RepeatedFieldsGenerator\x12/\n\x06\x66ield1\x18\x01 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12/\n\x06\x66ield2\x18\x02 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12/\n\x06\x66ield3\x18\x03 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12R\n\x06group1\x18\n \x03(\n2B.protobuf_unittest.TestParsingMerge.RepeatedFieldsGenerator.Group1\x12R\n\x06group2\x18\x14 \x03(\n2B.protobuf_unittest.TestParsingMerge.RepeatedFieldsGenerator.Group2\x12.\n\x04\x65xt1\x18\xe8\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12.\n\x04\x65xt2\x18\xe9\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1a\x39\n\x06Group1\x12/\n\x06\x66ield1\x18\x0b \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1a\x39\n\x06Group2\x12/\n\x06\x66ield1\x18\x15 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1aR\n\rOptionalGroup\x12\x41\n\x18optional_group_all_types\x18\x0b \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1aR\n\rRepeatedGroup\x12\x41\n\x18repeated_group_all_types\x18\x15 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes*\t\x08\xe8\x07\x10\x80\x80\x80\x80\x02\x32[\n\x0coptional_ext\x12#.protobuf_unittest.TestParsingMerge\x18\xe8\x07 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes2[\n\x0crepeated_ext\x12#.protobuf_unittest.TestParsingMerge\x18\xe9\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\"D\n\x1bTestCommentInjectionMessage\x12%\n\x01\x61\x18\x01 \x01(\t:\x1a*/ <- Neither should this.\"\x0c\n\nFooRequest\"\r\n\x0b\x46ooResponse\"\x12\n\x10\x46ooClientMessage\"\x12\n\x10\x46ooServerMessage\"\x0c\n\nBarRequest\"\r\n\x0b\x42\x61rResponse\"\x92\x01\n\x0cTestJsonName\x12\x13\n\x0b\x66ield_name1\x18\x01 \x01(\x05\x12\x12\n\nfieldName2\x18\x02 \x01(\x05\x12\x12\n\nFieldName3\x18\x03 \x01(\x05\x12\x14\n\x0c_field_name4\x18\x04 \x01(\x05\x12\x13\n\x0b\x46IELD_NAME5\x18\x05 \x01(\x05\x12\x1a\n\x0b\x66ield_name6\x18\x06 \x01(\x05R\x05@type*@\n\x0b\x46oreignEnum\x12\x0f\n\x0b\x46OREIGN_FOO\x10\x04\x12\x0f\n\x0b\x46OREIGN_BAR\x10\x05\x12\x0f\n\x0b\x46OREIGN_BAZ\x10\x06*K\n\x14TestEnumWithDupValue\x12\x08\n\x04\x46OO1\x10\x01\x12\x08\n\x04\x42\x41R1\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x12\x08\n\x04\x46OO2\x10\x01\x12\x08\n\x04\x42\x41R2\x10\x02\x1a\x02\x10\x01*\x89\x01\n\x0eTestSparseEnum\x12\x0c\n\x08SPARSE_A\x10{\x12\x0e\n\x08SPARSE_B\x10\xa6\xe7\x03\x12\x0f\n\x08SPARSE_C\x10\xb2\xb1\x80\x06\x12\x15\n\x08SPARSE_D\x10\xf1\xff\xff\xff\xff\xff\xff\xff\xff\x01\x12\x15\n\x08SPARSE_E\x10\xb4\xde\xfc\xff\xff\xff\xff\xff\xff\x01\x12\x0c\n\x08SPARSE_F\x10\x00\x12\x0c\n\x08SPARSE_G\x10\x02\x32\x99\x01\n\x0bTestService\x12\x44\n\x03\x46oo\x12\x1d.protobuf_unittest.FooRequest\x1a\x1e.protobuf_unittest.FooResponse\x12\x44\n\x03\x42\x61r\x12\x1d.protobuf_unittest.BarRequest\x1a\x1e.protobuf_unittest.BarResponse:F\n\x18optional_int32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x01 \x01(\x05:F\n\x18optional_int64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x02 \x01(\x03:G\n\x19optional_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x03 \x01(\r:G\n\x19optional_uint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x04 \x01(\x04:G\n\x19optional_sint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x05 \x01(\x11:G\n\x19optional_sint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x06 \x01(\x12:H\n\x1aoptional_fixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x07 \x01(\x07:H\n\x1aoptional_fixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x08 \x01(\x06:I\n\x1boptional_sfixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\t \x01(\x0f:I\n\x1boptional_sfixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\n \x01(\x10:F\n\x18optional_float_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0b \x01(\x02:G\n\x19optional_double_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0c \x01(\x01:E\n\x17optional_bool_extension\x12$.protobuf_unittest.TestAllExtensions\x18\r \x01(\x08:G\n\x19optional_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0e \x01(\t:F\n\x18optional_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0f \x01(\x0c:q\n\x17optionalgroup_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x10 \x01(\n2*.protobuf_unittest.OptionalGroup_extension:~\n!optional_nested_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x12 \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage:s\n\"optional_foreign_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x13 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:x\n!optional_import_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x14 \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessage:x\n\x1eoptional_nested_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x15 \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:m\n\x1foptional_foreign_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x16 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:r\n\x1eoptional_import_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x17 \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum:Q\n\x1foptional_string_piece_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x18 \x01(\tB\x02\x08\x02:I\n\x17optional_cord_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x19 \x01(\tB\x02\x08\x01:\x85\x01\n(optional_public_import_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x1a \x01(\x0b\x32-.protobuf_unittest_import.PublicImportMessage:\x80\x01\n\x1foptional_lazy_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x1b \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01:F\n\x18repeated_int32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x1f \x03(\x05:F\n\x18repeated_int64_extension\x12$.protobuf_unittest.TestAllExtensions\x18  \x03(\x03:G\n\x19repeated_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18! \x03(\r:G\n\x19repeated_uint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\" \x03(\x04:G\n\x19repeated_sint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18# \x03(\x11:G\n\x19repeated_sint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18$ \x03(\x12:H\n\x1arepeated_fixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18% \x03(\x07:H\n\x1arepeated_fixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18& \x03(\x06:I\n\x1brepeated_sfixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\' \x03(\x0f:I\n\x1brepeated_sfixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18( \x03(\x10:F\n\x18repeated_float_extension\x12$.protobuf_unittest.TestAllExtensions\x18) \x03(\x02:G\n\x19repeated_double_extension\x12$.protobuf_unittest.TestAllExtensions\x18* \x03(\x01:E\n\x17repeated_bool_extension\x12$.protobuf_unittest.TestAllExtensions\x18+ \x03(\x08:G\n\x19repeated_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18, \x03(\t:F\n\x18repeated_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18- \x03(\x0c:q\n\x17repeatedgroup_extension\x12$.protobuf_unittest.TestAllExtensions\x18. \x03(\n2*.protobuf_unittest.RepeatedGroup_extension:~\n!repeated_nested_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x30 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage:s\n\"repeated_foreign_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x31 \x03(\x0b\x32!.protobuf_unittest.ForeignMessage:x\n!repeated_import_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x32 \x03(\x0b\x32\'.protobuf_unittest_import.ImportMessage:x\n\x1erepeated_nested_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x33 \x03(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:m\n\x1frepeated_foreign_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x34 \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:r\n\x1erepeated_import_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x35 \x03(\x0e\x32$.protobuf_unittest_import.ImportEnum:Q\n\x1frepeated_string_piece_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x36 \x03(\tB\x02\x08\x02:I\n\x17repeated_cord_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x37 \x03(\tB\x02\x08\x01:\x80\x01\n\x1frepeated_lazy_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x39 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01:I\n\x17\x64\x65\x66\x61ult_int32_extension\x12$.protobuf_unittest.TestAllExtensions\x18= \x01(\x05:\x02\x34\x31:I\n\x17\x64\x65\x66\x61ult_int64_extension\x12$.protobuf_unittest.TestAllExtensions\x18> \x01(\x03:\x02\x34\x32:J\n\x18\x64\x65\x66\x61ult_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18? \x01(\r:\x02\x34\x33:J\n\x18\x64\x65\x66\x61ult_uint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18@ \x01(\x04:\x02\x34\x34:K\n\x18\x64\x65\x66\x61ult_sint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x41 \x01(\x11:\x03-45:J\n\x18\x64\x65\x66\x61ult_sint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x42 \x01(\x12:\x02\x34\x36:K\n\x19\x64\x65\x66\x61ult_fixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x43 \x01(\x07:\x02\x34\x37:K\n\x19\x64\x65\x66\x61ult_fixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x44 \x01(\x06:\x02\x34\x38:L\n\x1a\x64\x65\x66\x61ult_sfixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x45 \x01(\x0f:\x02\x34\x39:M\n\x1a\x64\x65\x66\x61ult_sfixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x46 \x01(\x10:\x03-50:K\n\x17\x64\x65\x66\x61ult_float_extension\x12$.protobuf_unittest.TestAllExtensions\x18G \x01(\x02:\x04\x35\x31.5:M\n\x18\x64\x65\x66\x61ult_double_extension\x12$.protobuf_unittest.TestAllExtensions\x18H \x01(\x01:\x05\x35\x32\x30\x30\x30:J\n\x16\x64\x65\x66\x61ult_bool_extension\x12$.protobuf_unittest.TestAllExtensions\x18I \x01(\x08:\x04true:M\n\x18\x64\x65\x66\x61ult_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18J \x01(\t:\x05hello:L\n\x17\x64\x65\x66\x61ult_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18K \x01(\x0c:\x05world:|\n\x1d\x64\x65\x66\x61ult_nested_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18Q \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:\x03\x42\x41R:y\n\x1e\x64\x65\x66\x61ult_foreign_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18R \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:\x0b\x46OREIGN_BAR:}\n\x1d\x64\x65\x66\x61ult_import_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18S \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum:\nIMPORT_BAR:U\n\x1e\x64\x65\x66\x61ult_string_piece_extension\x12$.protobuf_unittest.TestAllExtensions\x18T \x01(\t:\x03\x61\x62\x63\x42\x02\x08\x02:M\n\x16\x64\x65\x66\x61ult_cord_extension\x12$.protobuf_unittest.TestAllExtensions\x18U \x01(\t:\x03\x31\x32\x33\x42\x02\x08\x01:D\n\x16oneof_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18o \x01(\r:{\n\x1eoneof_nested_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18p \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage:D\n\x16oneof_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18q \x01(\t:C\n\x15oneof_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18r \x01(\x0c:B\n\x13my_extension_string\x12%.protobuf_unittest.TestFieldOrderings\x18\x32 \x01(\t:?\n\x10my_extension_int\x12%.protobuf_unittest.TestFieldOrderings\x18\x05 \x01(\x05:K\n\x16packed_int32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18Z \x03(\x05\x42\x02\x10\x01:K\n\x16packed_int64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18[ \x03(\x03\x42\x02\x10\x01:L\n\x17packed_uint32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\\ \x03(\rB\x02\x10\x01:L\n\x17packed_uint64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18] \x03(\x04\x42\x02\x10\x01:L\n\x17packed_sint32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18^ \x03(\x11\x42\x02\x10\x01:L\n\x17packed_sint64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18_ \x03(\x12\x42\x02\x10\x01:M\n\x18packed_fixed32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18` \x03(\x07\x42\x02\x10\x01:M\n\x18packed_fixed64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x61 \x03(\x06\x42\x02\x10\x01:N\n\x19packed_sfixed32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x62 \x03(\x0f\x42\x02\x10\x01:N\n\x19packed_sfixed64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x63 \x03(\x10\x42\x02\x10\x01:K\n\x16packed_float_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x64 \x03(\x02\x42\x02\x10\x01:L\n\x17packed_double_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x65 \x03(\x01\x42\x02\x10\x01:J\n\x15packed_bool_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x66 \x03(\x08\x42\x02\x10\x01:j\n\x15packed_enum_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x01:O\n\x18unpacked_int32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18Z \x03(\x05\x42\x02\x10\x00:O\n\x18unpacked_int64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18[ \x03(\x03\x42\x02\x10\x00:P\n\x19unpacked_uint32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\\ \x03(\rB\x02\x10\x00:P\n\x19unpacked_uint64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18] \x03(\x04\x42\x02\x10\x00:P\n\x19unpacked_sint32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18^ \x03(\x11\x42\x02\x10\x00:P\n\x19unpacked_sint64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18_ \x03(\x12\x42\x02\x10\x00:Q\n\x1aunpacked_fixed32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18` \x03(\x07\x42\x02\x10\x00:Q\n\x1aunpacked_fixed64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x61 \x03(\x06\x42\x02\x10\x00:R\n\x1bunpacked_sfixed32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x62 \x03(\x0f\x42\x02\x10\x00:R\n\x1bunpacked_sfixed64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x63 \x03(\x10\x42\x02\x10\x00:O\n\x18unpacked_float_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x64 \x03(\x02\x42\x02\x10\x00:P\n\x19unpacked_double_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x65 \x03(\x01\x42\x02\x10\x00:N\n\x17unpacked_bool_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x66 \x03(\x08\x42\x02\x10\x00:n\n\x17unpacked_enum_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x00\x42\x1d\x42\rUnittestProtoH\x01\x80\x01\x01\x88\x01\x01\x90\x01\x01\xf8\x01\x01')
+  serialized_pb=_b('\n\x1egoogle/protobuf/unittest.proto\x12\x11protobuf_unittest\x1a%google/protobuf/unittest_import.proto\"\xed\x18\n\x0cTestAllTypes\x12\x16\n\x0eoptional_int32\x18\x01 \x01(\x05\x12\x16\n\x0eoptional_int64\x18\x02 \x01(\x03\x12\x17\n\x0foptional_uint32\x18\x03 \x01(\r\x12\x17\n\x0foptional_uint64\x18\x04 \x01(\x04\x12\x17\n\x0foptional_sint32\x18\x05 \x01(\x11\x12\x17\n\x0foptional_sint64\x18\x06 \x01(\x12\x12\x18\n\x10optional_fixed32\x18\x07 \x01(\x07\x12\x18\n\x10optional_fixed64\x18\x08 \x01(\x06\x12\x19\n\x11optional_sfixed32\x18\t \x01(\x0f\x12\x19\n\x11optional_sfixed64\x18\n \x01(\x10\x12\x16\n\x0eoptional_float\x18\x0b \x01(\x02\x12\x17\n\x0foptional_double\x18\x0c \x01(\x01\x12\x15\n\roptional_bool\x18\r \x01(\x08\x12\x17\n\x0foptional_string\x18\x0e \x01(\t\x12\x16\n\x0eoptional_bytes\x18\x0f \x01(\x0c\x12\x44\n\roptionalgroup\x18\x10 \x01(\n2-.protobuf_unittest.TestAllTypes.OptionalGroup\x12N\n\x17optional_nested_message\x18\x12 \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage\x12\x43\n\x18optional_foreign_message\x18\x13 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12H\n\x17optional_import_message\x18\x14 \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12H\n\x14optional_nested_enum\x18\x15 \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum\x12=\n\x15optional_foreign_enum\x18\x16 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x42\n\x14optional_import_enum\x18\x17 \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum\x12!\n\x15optional_string_piece\x18\x18 \x01(\tB\x02\x08\x02\x12\x19\n\roptional_cord\x18\x19 \x01(\tB\x02\x08\x01\x12U\n\x1eoptional_public_import_message\x18\x1a \x01(\x0b\x32-.protobuf_unittest_import.PublicImportMessage\x12P\n\x15optional_lazy_message\x18\x1b \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x16\n\x0erepeated_int32\x18\x1f \x03(\x05\x12\x16\n\x0erepeated_int64\x18  \x03(\x03\x12\x17\n\x0frepeated_uint32\x18! \x03(\r\x12\x17\n\x0frepeated_uint64\x18\" \x03(\x04\x12\x17\n\x0frepeated_sint32\x18# \x03(\x11\x12\x17\n\x0frepeated_sint64\x18$ \x03(\x12\x12\x18\n\x10repeated_fixed32\x18% \x03(\x07\x12\x18\n\x10repeated_fixed64\x18& \x03(\x06\x12\x19\n\x11repeated_sfixed32\x18\' \x03(\x0f\x12\x19\n\x11repeated_sfixed64\x18( \x03(\x10\x12\x16\n\x0erepeated_float\x18) \x03(\x02\x12\x17\n\x0frepeated_double\x18* \x03(\x01\x12\x15\n\rrepeated_bool\x18+ \x03(\x08\x12\x17\n\x0frepeated_string\x18, \x03(\t\x12\x16\n\x0erepeated_bytes\x18- \x03(\x0c\x12\x44\n\rrepeatedgroup\x18. \x03(\n2-.protobuf_unittest.TestAllTypes.RepeatedGroup\x12N\n\x17repeated_nested_message\x18\x30 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage\x12\x43\n\x18repeated_foreign_message\x18\x31 \x03(\x0b\x32!.protobuf_unittest.ForeignMessage\x12H\n\x17repeated_import_message\x18\x32 \x03(\x0b\x32\'.protobuf_unittest_import.ImportMessage\x12H\n\x14repeated_nested_enum\x18\x33 \x03(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum\x12=\n\x15repeated_foreign_enum\x18\x34 \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x42\n\x14repeated_import_enum\x18\x35 \x03(\x0e\x32$.protobuf_unittest_import.ImportEnum\x12!\n\x15repeated_string_piece\x18\x36 \x03(\tB\x02\x08\x02\x12\x19\n\rrepeated_cord\x18\x37 \x03(\tB\x02\x08\x01\x12P\n\x15repeated_lazy_message\x18\x39 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01\x12\x19\n\rdefault_int32\x18= \x01(\x05:\x02\x34\x31\x12\x19\n\rdefault_int64\x18> \x01(\x03:\x02\x34\x32\x12\x1a\n\x0e\x64\x65\x66\x61ult_uint32\x18? \x01(\r:\x02\x34\x33\x12\x1a\n\x0e\x64\x65\x66\x61ult_uint64\x18@ \x01(\x04:\x02\x34\x34\x12\x1b\n\x0e\x64\x65\x66\x61ult_sint32\x18\x41 \x01(\x11:\x03-45\x12\x1a\n\x0e\x64\x65\x66\x61ult_sint64\x18\x42 \x01(\x12:\x02\x34\x36\x12\x1b\n\x0f\x64\x65\x66\x61ult_fixed32\x18\x43 \x01(\x07:\x02\x34\x37\x12\x1b\n\x0f\x64\x65\x66\x61ult_fixed64\x18\x44 \x01(\x06:\x02\x34\x38\x12\x1c\n\x10\x64\x65\x66\x61ult_sfixed32\x18\x45 \x01(\x0f:\x02\x34\x39\x12\x1d\n\x10\x64\x65\x66\x61ult_sfixed64\x18\x46 \x01(\x10:\x03-50\x12\x1b\n\rdefault_float\x18G \x01(\x02:\x04\x35\x31.5\x12\x1d\n\x0e\x64\x65\x66\x61ult_double\x18H \x01(\x01:\x05\x35\x32\x30\x30\x30\x12\x1a\n\x0c\x64\x65\x66\x61ult_bool\x18I \x01(\x08:\x04true\x12\x1d\n\x0e\x64\x65\x66\x61ult_string\x18J \x01(\t:\x05hello\x12\x1c\n\rdefault_bytes\x18K \x01(\x0c:\x05world\x12L\n\x13\x64\x65\x66\x61ult_nested_enum\x18Q \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:\x03\x42\x41R\x12I\n\x14\x64\x65\x66\x61ult_foreign_enum\x18R \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:\x0b\x46OREIGN_BAR\x12M\n\x13\x64\x65\x66\x61ult_import_enum\x18S \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum:\nIMPORT_BAR\x12%\n\x14\x64\x65\x66\x61ult_string_piece\x18T \x01(\t:\x03\x61\x62\x63\x42\x02\x08\x02\x12\x1d\n\x0c\x64\x65\x66\x61ult_cord\x18U \x01(\t:\x03\x31\x32\x33\x42\x02\x08\x01\x12\x16\n\x0coneof_uint32\x18o \x01(\rH\x00\x12M\n\x14oneof_nested_message\x18p \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageH\x00\x12\x16\n\x0coneof_string\x18q \x01(\tH\x00\x12\x15\n\x0boneof_bytes\x18r \x01(\x0cH\x00\x1a\x1b\n\rNestedMessage\x12\n\n\x02\x62\x62\x18\x01 \x01(\x05\x1a\x1a\n\rOptionalGroup\x12\t\n\x01\x61\x18\x11 \x01(\x05\x1a\x1a\n\rRepeatedGroup\x12\t\n\x01\x61\x18/ \x01(\x05\"9\n\nNestedEnum\x12\x07\n\x03\x46OO\x10\x01\x12\x07\n\x03\x42\x41R\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x12\x10\n\x03NEG\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x42\r\n\x0boneof_field\"\xbb\x01\n\x12NestedTestAllTypes\x12\x34\n\x05\x63hild\x18\x01 \x01(\x0b\x32%.protobuf_unittest.NestedTestAllTypes\x12\x30\n\x07payload\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12=\n\x0erepeated_child\x18\x03 \x03(\x0b\x32%.protobuf_unittest.NestedTestAllTypes\"4\n\x14TestDeprecatedFields\x12\x1c\n\x10\x64\x65precated_int32\x18\x01 \x01(\x05\x42\x02\x18\x01\"\x1b\n\x15TestDeprecatedMessage:\x02\x18\x01\"&\n\x0e\x46oreignMessage\x12\t\n\x01\x63\x18\x01 \x01(\x05\x12\t\n\x01\x64\x18\x02 \x01(\x05\"0\n\x12TestReservedFieldsJ\x04\x08\x02\x10\x03J\x04\x08\x0f\x10\x10J\x04\x08\t\x10\x0cR\x03\x62\x61rR\x03\x62\x61z\"\x1d\n\x11TestAllExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"$\n\x17OptionalGroup_extension\x12\t\n\x01\x61\x18\x11 \x01(\x05\"$\n\x17RepeatedGroup_extension\x12\t\n\x01\x61\x18/ \x01(\x05\"\x98\x01\n\x13TestNestedExtension29\n\x04test\x12$.protobuf_unittest.TestAllExtensions\x18\xea\x07 \x01(\t:\x04test2F\n\x17nested_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18\xeb\x07 \x01(\t\"\xd5\x05\n\x0cTestRequired\x12\t\n\x01\x61\x18\x01 \x02(\x05\x12\x0e\n\x06\x64ummy2\x18\x02 \x01(\x05\x12\t\n\x01\x62\x18\x03 \x02(\x05\x12\x0e\n\x06\x64ummy4\x18\x04 \x01(\x05\x12\x0e\n\x06\x64ummy5\x18\x05 \x01(\x05\x12\x0e\n\x06\x64ummy6\x18\x06 \x01(\x05\x12\x0e\n\x06\x64ummy7\x18\x07 \x01(\x05\x12\x0e\n\x06\x64ummy8\x18\x08 \x01(\x05\x12\x0e\n\x06\x64ummy9\x18\t \x01(\x05\x12\x0f\n\x07\x64ummy10\x18\n \x01(\x05\x12\x0f\n\x07\x64ummy11\x18\x0b \x01(\x05\x12\x0f\n\x07\x64ummy12\x18\x0c \x01(\x05\x12\x0f\n\x07\x64ummy13\x18\r \x01(\x05\x12\x0f\n\x07\x64ummy14\x18\x0e \x01(\x05\x12\x0f\n\x07\x64ummy15\x18\x0f \x01(\x05\x12\x0f\n\x07\x64ummy16\x18\x10 \x01(\x05\x12\x0f\n\x07\x64ummy17\x18\x11 \x01(\x05\x12\x0f\n\x07\x64ummy18\x18\x12 \x01(\x05\x12\x0f\n\x07\x64ummy19\x18\x13 \x01(\x05\x12\x0f\n\x07\x64ummy20\x18\x14 \x01(\x05\x12\x0f\n\x07\x64ummy21\x18\x15 \x01(\x05\x12\x0f\n\x07\x64ummy22\x18\x16 \x01(\x05\x12\x0f\n\x07\x64ummy23\x18\x17 \x01(\x05\x12\x0f\n\x07\x64ummy24\x18\x18 \x01(\x05\x12\x0f\n\x07\x64ummy25\x18\x19 \x01(\x05\x12\x0f\n\x07\x64ummy26\x18\x1a \x01(\x05\x12\x0f\n\x07\x64ummy27\x18\x1b \x01(\x05\x12\x0f\n\x07\x64ummy28\x18\x1c \x01(\x05\x12\x0f\n\x07\x64ummy29\x18\x1d \x01(\x05\x12\x0f\n\x07\x64ummy30\x18\x1e \x01(\x05\x12\x0f\n\x07\x64ummy31\x18\x1f \x01(\x05\x12\x0f\n\x07\x64ummy32\x18  \x01(\x05\x12\t\n\x01\x63\x18! \x02(\x05\x32V\n\x06single\x12$.protobuf_unittest.TestAllExtensions\x18\xe8\x07 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired2U\n\x05multi\x12$.protobuf_unittest.TestAllExtensions\x18\xe9\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestRequired\"\x9a\x01\n\x13TestRequiredForeign\x12\x39\n\x10optional_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired\x12\x39\n\x10repeated_message\x18\x02 \x03(\x0b\x32\x1f.protobuf_unittest.TestRequired\x12\r\n\x05\x64ummy\x18\x03 \x01(\x05\"\xc6\x01\n\x13TestRequiredMessage\x12\x39\n\x10optional_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestRequired\x12\x39\n\x10repeated_message\x18\x02 \x03(\x0b\x32\x1f.protobuf_unittest.TestRequired\x12\x39\n\x10required_message\x18\x03 \x02(\x0b\x32\x1f.protobuf_unittest.TestRequired\"Z\n\x11TestForeignNested\x12\x45\n\x0e\x66oreign_nested\x18\x01 \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage\"\x12\n\x10TestEmptyMessage\"*\n\x1eTestEmptyMessageWithExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"7\n\x1bTestMultipleExtensionRanges*\x04\x08*\x10+*\x06\x08\xaf \x10\x94!*\n\x08\x80\x80\x04\x10\x80\x80\x80\x80\x02\"4\n\x18TestReallyLargeTagNumber\x12\t\n\x01\x61\x18\x01 \x01(\x05\x12\r\n\x02\x62\x62\x18\xff\xff\xff\x7f \x01(\x05\"U\n\x14TestRecursiveMessage\x12\x32\n\x01\x61\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestRecursiveMessage\x12\t\n\x01i\x18\x02 \x01(\x05\"\xe1\x02\n\x14TestMutualRecursionA\x12\x33\n\x02\x62\x62\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestMutualRecursionB\x12\x42\n\x08subgroup\x18\x02 \x01(\n20.protobuf_unittest.TestMutualRecursionA.SubGroup\x1a@\n\nSubMessage\x12\x32\n\x01\x62\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestMutualRecursionB\x1a\x8d\x01\n\x08SubGroup\x12G\n\x0bsub_message\x18\x03 \x01(\x0b\x32\x32.protobuf_unittest.TestMutualRecursionA.SubMessage\x12\x38\n\x0fnot_in_this_scc\x18\x04 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\"b\n\x14TestMutualRecursionB\x12\x32\n\x01\x61\x18\x01 \x01(\x0b\x32\'.protobuf_unittest.TestMutualRecursionA\x12\x16\n\x0eoptional_int32\x18\x02 \x01(\x05\"\xca\x01\n\x11TestIsInitialized\x12\x44\n\x0bsub_message\x18\x01 \x01(\x0b\x32/.protobuf_unittest.TestIsInitialized.SubMessage\x1ao\n\nSubMessage\x12J\n\x08subgroup\x18\x01 \x01(\n28.protobuf_unittest.TestIsInitialized.SubMessage.SubGroup\x1a\x15\n\x08SubGroup\x12\t\n\x01i\x18\x02 \x02(\x05\"\xb3\x01\n\x12TestDupFieldNumber\x12\t\n\x01\x61\x18\x01 \x01(\x05\x12\x36\n\x03\x66oo\x18\x02 \x01(\n2).protobuf_unittest.TestDupFieldNumber.Foo\x12\x36\n\x03\x62\x61r\x18\x03 \x01(\n2).protobuf_unittest.TestDupFieldNumber.Bar\x1a\x10\n\x03\x46oo\x12\t\n\x01\x61\x18\x01 \x01(\x05\x1a\x10\n\x03\x42\x61r\x12\t\n\x01\x61\x18\x01 \x01(\x05\"L\n\x10TestEagerMessage\x12\x38\n\x0bsub_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesB\x02(\x00\"K\n\x0fTestLazyMessage\x12\x38\n\x0bsub_message\x18\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesB\x02(\x01\"\x80\x02\n\x18TestNestedMessageHasBits\x12Z\n\x17optional_nested_message\x18\x01 \x01(\x0b\x32\x39.protobuf_unittest.TestNestedMessageHasBits.NestedMessage\x1a\x87\x01\n\rNestedMessage\x12$\n\x1cnestedmessage_repeated_int32\x18\x01 \x03(\x05\x12P\n%nestedmessage_repeated_foreignmessage\x18\x02 \x03(\x0b\x32!.protobuf_unittest.ForeignMessage\"\xe5\x03\n\x17TestCamelCaseFieldNames\x12\x16\n\x0ePrimitiveField\x18\x01 \x01(\x05\x12\x13\n\x0bStringField\x18\x02 \x01(\t\x12\x31\n\tEnumField\x18\x03 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x37\n\x0cMessageField\x18\x04 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12\x1c\n\x10StringPieceField\x18\x05 \x01(\tB\x02\x08\x02\x12\x15\n\tCordField\x18\x06 \x01(\tB\x02\x08\x01\x12\x1e\n\x16RepeatedPrimitiveField\x18\x07 \x03(\x05\x12\x1b\n\x13RepeatedStringField\x18\x08 \x03(\t\x12\x39\n\x11RepeatedEnumField\x18\t \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12?\n\x14RepeatedMessageField\x18\n \x03(\x0b\x32!.protobuf_unittest.ForeignMessage\x12$\n\x18RepeatedStringPieceField\x18\x0b \x03(\tB\x02\x08\x02\x12\x1d\n\x11RepeatedCordField\x18\x0c \x03(\tB\x02\x08\x01\"\xd5\x01\n\x12TestFieldOrderings\x12\x11\n\tmy_string\x18\x0b \x01(\t\x12\x0e\n\x06my_int\x18\x01 \x01(\x03\x12\x10\n\x08my_float\x18\x65 \x01(\x02\x12U\n\x17optional_nested_message\x18\xc8\x01 \x01(\x0b\x32\x33.protobuf_unittest.TestFieldOrderings.NestedMessage\x1a\'\n\rNestedMessage\x12\n\n\x02oo\x18\x02 \x01(\x03\x12\n\n\x02\x62\x62\x18\x01 \x01(\x05*\x04\x08\x02\x10\x0b*\x04\x08\x0c\x10\x65\"\xb6\x07\n\x18TestExtremeDefaultValues\x12?\n\rescaped_bytes\x18\x01 \x01(\x0c:(\\000\\001\\007\\010\\014\\n\\r\\t\\013\\\\\\\'\\\"\\376\x12 \n\x0clarge_uint32\x18\x02 \x01(\r:\n4294967295\x12*\n\x0clarge_uint64\x18\x03 \x01(\x04:\x14\x31\x38\x34\x34\x36\x37\x34\x34\x30\x37\x33\x37\x30\x39\x35\x35\x31\x36\x31\x35\x12 \n\x0bsmall_int32\x18\x04 \x01(\x05:\x0b-2147483647\x12)\n\x0bsmall_int64\x18\x05 \x01(\x03:\x14-9223372036854775807\x12\'\n\x12really_small_int32\x18\x15 \x01(\x05:\x0b-2147483648\x12\x30\n\x12really_small_int64\x18\x16 \x01(\x03:\x14-9223372036854775808\x12\x18\n\x0butf8_string\x18\x06 \x01(\t:\x03\xe1\x88\xb4\x12\x15\n\nzero_float\x18\x07 \x01(\x02:\x01\x30\x12\x14\n\tone_float\x18\x08 \x01(\x02:\x01\x31\x12\x18\n\x0bsmall_float\x18\t \x01(\x02:\x03\x31.5\x12\x1e\n\x12negative_one_float\x18\n \x01(\x02:\x02-1\x12\x1c\n\x0enegative_float\x18\x0b \x01(\x02:\x04-1.5\x12\x1a\n\x0blarge_float\x18\x0c \x01(\x02:\x05\x32\x65+08\x12$\n\x14small_negative_float\x18\r \x01(\x02:\x06-8e-28\x12\x17\n\ninf_double\x18\x0e \x01(\x01:\x03inf\x12\x1c\n\x0eneg_inf_double\x18\x0f \x01(\x01:\x04-inf\x12\x17\n\nnan_double\x18\x10 \x01(\x01:\x03nan\x12\x16\n\tinf_float\x18\x11 \x01(\x02:\x03inf\x12\x1b\n\rneg_inf_float\x18\x12 \x01(\x02:\x04-inf\x12\x16\n\tnan_float\x18\x13 \x01(\x02:\x03nan\x12+\n\x0c\x63pp_trigraph\x18\x14 \x01(\t:\x15? ? ?? ?? ??? ??/ ??-\x12 \n\x10string_with_zero\x18\x17 \x01(\t:\x06hel\x00lo\x12\"\n\x0f\x62ytes_with_zero\x18\x18 \x01(\x0c:\twor\\000ld\x12(\n\x16string_piece_with_zero\x18\x19 \x01(\t:\x04\x61\x62\x00\x63\x42\x02\x08\x02\x12 \n\x0e\x63ord_with_zero\x18\x1a \x01(\t:\x04\x31\x32\x00\x33\x42\x02\x08\x01\x12&\n\x12replacement_string\x18\x1b \x01(\t:\n${unknown}\"K\n\x11SparseEnumMessage\x12\x36\n\x0bsparse_enum\x18\x01 \x01(\x0e\x32!.protobuf_unittest.TestSparseEnum\"\x19\n\tOneString\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"\x1a\n\nMoreString\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\t\"\x18\n\x08OneBytes\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\x19\n\tMoreBytes\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x0c\"\x1c\n\x0cInt32Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x05\"\x1d\n\rUint32Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\r\"\x1c\n\x0cInt64Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x03\"\x1d\n\rUint64Message\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x04\"\x1b\n\x0b\x42oolMessage\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x08\"\xd0\x01\n\tTestOneof\x12\x11\n\x07\x66oo_int\x18\x01 \x01(\x05H\x00\x12\x14\n\nfoo_string\x18\x02 \x01(\tH\x00\x12\x36\n\x0b\x66oo_message\x18\x03 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesH\x00\x12\x39\n\x08\x66oogroup\x18\x04 \x01(\n2%.protobuf_unittest.TestOneof.FooGroupH\x00\x1a \n\x08\x46ooGroup\x12\t\n\x01\x61\x18\x05 \x01(\x05\x12\t\n\x01\x62\x18\x06 \x01(\tB\x05\n\x03\x66oo\"\xe7\x01\n\x1cTestOneofBackwardsCompatible\x12\x0f\n\x07\x66oo_int\x18\x01 \x01(\x05\x12\x12\n\nfoo_string\x18\x02 \x01(\t\x12\x34\n\x0b\x66oo_message\x18\x03 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12J\n\x08\x66oogroup\x18\x04 \x01(\n28.protobuf_unittest.TestOneofBackwardsCompatible.FooGroup\x1a \n\x08\x46ooGroup\x12\t\n\x01\x61\x18\x05 \x01(\x05\x12\t\n\x01\x62\x18\x06 \x01(\t\"\x9e\x06\n\nTestOneof2\x12\x11\n\x07\x66oo_int\x18\x01 \x01(\x05H\x00\x12\x14\n\nfoo_string\x18\x02 \x01(\tH\x00\x12\x16\n\x08\x66oo_cord\x18\x03 \x01(\tB\x02\x08\x01H\x00\x12\x1e\n\x10\x66oo_string_piece\x18\x04 \x01(\tB\x02\x08\x02H\x00\x12\x13\n\tfoo_bytes\x18\x05 \x01(\x0cH\x00\x12<\n\x08\x66oo_enum\x18\x06 \x01(\x0e\x32(.protobuf_unittest.TestOneof2.NestedEnumH\x00\x12\x42\n\x0b\x66oo_message\x18\x07 \x01(\x0b\x32+.protobuf_unittest.TestOneof2.NestedMessageH\x00\x12:\n\x08\x66oogroup\x18\x08 \x01(\n2&.protobuf_unittest.TestOneof2.FooGroupH\x00\x12K\n\x10\x66oo_lazy_message\x18\x0b \x01(\x0b\x32+.protobuf_unittest.TestOneof2.NestedMessageB\x02(\x01H\x00\x12\x14\n\x07\x62\x61r_int\x18\x0c \x01(\x05:\x01\x35H\x01\x12\x1c\n\nbar_string\x18\r \x01(\t:\x06STRINGH\x01\x12\x1c\n\x08\x62\x61r_cord\x18\x0e \x01(\t:\x04\x43ORDB\x02\x08\x01H\x01\x12&\n\x10\x62\x61r_string_piece\x18\x0f \x01(\t:\x06SPIECEB\x02\x08\x02H\x01\x12\x1a\n\tbar_bytes\x18\x10 \x01(\x0c:\x05\x42YTESH\x01\x12\x41\n\x08\x62\x61r_enum\x18\x11 \x01(\x0e\x32(.protobuf_unittest.TestOneof2.NestedEnum:\x03\x42\x41RH\x01\x12\x0f\n\x07\x62\x61z_int\x18\x12 \x01(\x05\x12\x17\n\nbaz_string\x18\x13 \x01(\t:\x03\x42\x41Z\x1a \n\x08\x46ooGroup\x12\t\n\x01\x61\x18\t \x01(\x05\x12\t\n\x01\x62\x18\n \x01(\t\x1a\x33\n\rNestedMessage\x12\x0f\n\x07qux_int\x18\x01 \x01(\x03\x12\x11\n\tcorge_int\x18\x02 \x03(\x05\"\'\n\nNestedEnum\x12\x07\n\x03\x46OO\x10\x01\x12\x07\n\x03\x42\x41R\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x42\x05\n\x03\x66ooB\x05\n\x03\x62\x61r\"\xb8\x01\n\x11TestRequiredOneof\x12\x11\n\x07\x66oo_int\x18\x01 \x01(\x05H\x00\x12\x14\n\nfoo_string\x18\x02 \x01(\tH\x00\x12I\n\x0b\x66oo_message\x18\x03 \x01(\x0b\x32\x32.protobuf_unittest.TestRequiredOneof.NestedMessageH\x00\x1a(\n\rNestedMessage\x12\x17\n\x0frequired_double\x18\x01 \x02(\x01\x42\x05\n\x03\x66oo\"\xaa\x03\n\x0fTestPackedTypes\x12\x18\n\x0cpacked_int32\x18Z \x03(\x05\x42\x02\x10\x01\x12\x18\n\x0cpacked_int64\x18[ \x03(\x03\x42\x02\x10\x01\x12\x19\n\rpacked_uint32\x18\\ \x03(\rB\x02\x10\x01\x12\x19\n\rpacked_uint64\x18] \x03(\x04\x42\x02\x10\x01\x12\x19\n\rpacked_sint32\x18^ \x03(\x11\x42\x02\x10\x01\x12\x19\n\rpacked_sint64\x18_ \x03(\x12\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed32\x18` \x03(\x07\x42\x02\x10\x01\x12\x1a\n\x0epacked_fixed64\x18\x61 \x03(\x06\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed32\x18\x62 \x03(\x0f\x42\x02\x10\x01\x12\x1b\n\x0fpacked_sfixed64\x18\x63 \x03(\x10\x42\x02\x10\x01\x12\x18\n\x0cpacked_float\x18\x64 \x03(\x02\x42\x02\x10\x01\x12\x19\n\rpacked_double\x18\x65 \x03(\x01\x42\x02\x10\x01\x12\x17\n\x0bpacked_bool\x18\x66 \x03(\x08\x42\x02\x10\x01\x12\x37\n\x0bpacked_enum\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x01\"\xc8\x03\n\x11TestUnpackedTypes\x12\x1a\n\x0eunpacked_int32\x18Z \x03(\x05\x42\x02\x10\x00\x12\x1a\n\x0eunpacked_int64\x18[ \x03(\x03\x42\x02\x10\x00\x12\x1b\n\x0funpacked_uint32\x18\\ \x03(\rB\x02\x10\x00\x12\x1b\n\x0funpacked_uint64\x18] \x03(\x04\x42\x02\x10\x00\x12\x1b\n\x0funpacked_sint32\x18^ \x03(\x11\x42\x02\x10\x00\x12\x1b\n\x0funpacked_sint64\x18_ \x03(\x12\x42\x02\x10\x00\x12\x1c\n\x10unpacked_fixed32\x18` \x03(\x07\x42\x02\x10\x00\x12\x1c\n\x10unpacked_fixed64\x18\x61 \x03(\x06\x42\x02\x10\x00\x12\x1d\n\x11unpacked_sfixed32\x18\x62 \x03(\x0f\x42\x02\x10\x00\x12\x1d\n\x11unpacked_sfixed64\x18\x63 \x03(\x10\x42\x02\x10\x00\x12\x1a\n\x0eunpacked_float\x18\x64 \x03(\x02\x42\x02\x10\x00\x12\x1b\n\x0funpacked_double\x18\x65 \x03(\x01\x42\x02\x10\x00\x12\x19\n\runpacked_bool\x18\x66 \x03(\x08\x42\x02\x10\x00\x12\x39\n\runpacked_enum\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x00\" \n\x14TestPackedExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"\"\n\x16TestUnpackedExtensions*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"\x99\x04\n\x15TestDynamicExtensions\x12\x19\n\x10scalar_extension\x18\xd0\x0f \x01(\x07\x12\x37\n\x0e\x65num_extension\x18\xd1\x0f \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12Y\n\x16\x64ynamic_enum_extension\x18\xd2\x0f \x01(\x0e\x32\x38.protobuf_unittest.TestDynamicExtensions.DynamicEnumType\x12=\n\x11message_extension\x18\xd3\x0f \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12_\n\x19\x64ynamic_message_extension\x18\xd4\x0f \x01(\x0b\x32;.protobuf_unittest.TestDynamicExtensions.DynamicMessageType\x12\x1b\n\x12repeated_extension\x18\xd5\x0f \x03(\t\x12\x1d\n\x10packed_extension\x18\xd6\x0f \x03(\x11\x42\x02\x10\x01\x1a,\n\x12\x44ynamicMessageType\x12\x16\n\rdynamic_field\x18\xb4\x10 \x01(\x05\"G\n\x0f\x44ynamicEnumType\x12\x10\n\x0b\x44YNAMIC_FOO\x10\x98\x11\x12\x10\n\x0b\x44YNAMIC_BAR\x10\x99\x11\x12\x10\n\x0b\x44YNAMIC_BAZ\x10\x9a\x11\"\xc0\x01\n#TestRepeatedScalarDifferentTagSizes\x12\x18\n\x10repeated_fixed32\x18\x0c \x03(\x07\x12\x16\n\x0erepeated_int32\x18\r \x03(\x05\x12\x19\n\x10repeated_fixed64\x18\xfe\x0f \x03(\x06\x12\x17\n\x0erepeated_int64\x18\xff\x0f \x03(\x03\x12\x18\n\x0erepeated_float\x18\xfe\xff\x0f \x03(\x02\x12\x19\n\x0frepeated_uint64\x18\xff\xff\x0f \x03(\x04\"\xf7\t\n\x10TestParsingMerge\x12;\n\x12required_all_types\x18\x01 \x02(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12;\n\x12optional_all_types\x18\x02 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12;\n\x12repeated_all_types\x18\x03 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12H\n\roptionalgroup\x18\n \x01(\n21.protobuf_unittest.TestParsingMerge.OptionalGroup\x12H\n\rrepeatedgroup\x18\x14 \x03(\n21.protobuf_unittest.TestParsingMerge.RepeatedGroup\x1a\xaa\x04\n\x17RepeatedFieldsGenerator\x12/\n\x06\x66ield1\x18\x01 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12/\n\x06\x66ield2\x18\x02 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12/\n\x06\x66ield3\x18\x03 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12R\n\x06group1\x18\n \x03(\n2B.protobuf_unittest.TestParsingMerge.RepeatedFieldsGenerator.Group1\x12R\n\x06group2\x18\x14 \x03(\n2B.protobuf_unittest.TestParsingMerge.RepeatedFieldsGenerator.Group2\x12.\n\x04\x65xt1\x18\xe8\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x12.\n\x04\x65xt2\x18\xe9\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1a\x39\n\x06Group1\x12/\n\x06\x66ield1\x18\x0b \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1a\x39\n\x06Group2\x12/\n\x06\x66ield1\x18\x15 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1aR\n\rOptionalGroup\x12\x41\n\x18optional_group_all_types\x18\x0b \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\x1aR\n\rRepeatedGroup\x12\x41\n\x18repeated_group_all_types\x18\x15 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes*\t\x08\xe8\x07\x10\x80\x80\x80\x80\x02\x32[\n\x0coptional_ext\x12#.protobuf_unittest.TestParsingMerge\x18\xe8\x07 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypes2[\n\x0crepeated_ext\x12#.protobuf_unittest.TestParsingMerge\x18\xe9\x07 \x03(\x0b\x32\x1f.protobuf_unittest.TestAllTypes\"D\n\x1bTestCommentInjectionMessage\x12%\n\x01\x61\x18\x01 \x01(\t:\x1a*/ <- Neither should this.\"\x0c\n\nFooRequest\"\r\n\x0b\x46ooResponse\"\x12\n\x10\x46ooClientMessage\"\x12\n\x10\x46ooServerMessage\"\x0c\n\nBarRequest\"\r\n\x0b\x42\x61rResponse\"\x92\x01\n\x0cTestJsonName\x12\x13\n\x0b\x66ield_name1\x18\x01 \x01(\x05\x12\x12\n\nfieldName2\x18\x02 \x01(\x05\x12\x12\n\nFieldName3\x18\x03 \x01(\x05\x12\x14\n\x0c_field_name4\x18\x04 \x01(\x05\x12\x13\n\x0b\x46IELD_NAME5\x18\x05 \x01(\x05\x12\x1a\n\x0b\x66ield_name6\x18\x06 \x01(\x05R\x05@type\"\xfd\x05\n\x14TestHugeFieldNumbers\x12\x1a\n\x0eoptional_int32\x18\xf0\xf8\xff\xff\x01 \x01(\x05\x12\x14\n\x08\x66ixed_32\x18\xf1\xf8\xff\xff\x01 \x01(\x05\x12\x1e\n\x0erepeated_int32\x18\xf2\xf8\xff\xff\x01 \x03(\x05\x42\x02\x10\x00\x12\x1c\n\x0cpacked_int32\x18\xf3\xf8\xff\xff\x01 \x03(\x05\x42\x02\x10\x01\x12\x39\n\roptional_enum\x18\xf4\xf8\xff\xff\x01 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum\x12\x1b\n\x0foptional_string\x18\xf5\xf8\xff\xff\x01 \x01(\t\x12\x1a\n\x0eoptional_bytes\x18\xf6\xf8\xff\xff\x01 \x01(\x0c\x12?\n\x10optional_message\x18\xf7\xf8\xff\xff\x01 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage\x12P\n\roptionalgroup\x18\xf8\xf8\xff\xff\x01 \x01(\n25.protobuf_unittest.TestHugeFieldNumbers.OptionalGroup\x12[\n\x11string_string_map\x18\xfa\xf8\xff\xff\x01 \x03(\x0b\x32<.protobuf_unittest.TestHugeFieldNumbers.StringStringMapEntry\x12\x1a\n\x0coneof_uint32\x18\xfb\xf8\xff\xff\x01 \x01(\rH\x00\x12\x43\n\x14oneof_test_all_types\x18\xfc\xf8\xff\xff\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesH\x00\x12\x1a\n\x0coneof_string\x18\xfd\xf8\xff\xff\x01 \x01(\tH\x00\x12\x19\n\x0boneof_bytes\x18\xfe\xf8\xff\xff\x01 \x01(\x0cH\x00\x1a$\n\rOptionalGroup\x12\x13\n\x07group_a\x18\xf9\xf8\xff\xff\x01 \x01(\x05\x1a\x36\n\x14StringStringMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01*\x0c\x08\xe0\xaa\xff\xff\x01\x10\xf0\xf8\xff\xff\x01\x42\r\n\x0boneof_field*@\n\x0b\x46oreignEnum\x12\x0f\n\x0b\x46OREIGN_FOO\x10\x04\x12\x0f\n\x0b\x46OREIGN_BAR\x10\x05\x12\x0f\n\x0b\x46OREIGN_BAZ\x10\x06*K\n\x14TestEnumWithDupValue\x12\x08\n\x04\x46OO1\x10\x01\x12\x08\n\x04\x42\x41R1\x10\x02\x12\x07\n\x03\x42\x41Z\x10\x03\x12\x08\n\x04\x46OO2\x10\x01\x12\x08\n\x04\x42\x41R2\x10\x02\x1a\x02\x10\x01*\x89\x01\n\x0eTestSparseEnum\x12\x0c\n\x08SPARSE_A\x10{\x12\x0e\n\x08SPARSE_B\x10\xa6\xe7\x03\x12\x0f\n\x08SPARSE_C\x10\xb2\xb1\x80\x06\x12\x15\n\x08SPARSE_D\x10\xf1\xff\xff\xff\xff\xff\xff\xff\xff\x01\x12\x15\n\x08SPARSE_E\x10\xb4\xde\xfc\xff\xff\xff\xff\xff\xff\x01\x12\x0c\n\x08SPARSE_F\x10\x00\x12\x0c\n\x08SPARSE_G\x10\x02\x32\x99\x01\n\x0bTestService\x12\x44\n\x03\x46oo\x12\x1d.protobuf_unittest.FooRequest\x1a\x1e.protobuf_unittest.FooResponse\x12\x44\n\x03\x42\x61r\x12\x1d.protobuf_unittest.BarRequest\x1a\x1e.protobuf_unittest.BarResponse:F\n\x18optional_int32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x01 \x01(\x05:F\n\x18optional_int64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x02 \x01(\x03:G\n\x19optional_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x03 \x01(\r:G\n\x19optional_uint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x04 \x01(\x04:G\n\x19optional_sint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x05 \x01(\x11:G\n\x19optional_sint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x06 \x01(\x12:H\n\x1aoptional_fixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x07 \x01(\x07:H\n\x1aoptional_fixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x08 \x01(\x06:I\n\x1boptional_sfixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\t \x01(\x0f:I\n\x1boptional_sfixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\n \x01(\x10:F\n\x18optional_float_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0b \x01(\x02:G\n\x19optional_double_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0c \x01(\x01:E\n\x17optional_bool_extension\x12$.protobuf_unittest.TestAllExtensions\x18\r \x01(\x08:G\n\x19optional_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0e \x01(\t:F\n\x18optional_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x0f \x01(\x0c:q\n\x17optionalgroup_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x10 \x01(\n2*.protobuf_unittest.OptionalGroup_extension:~\n!optional_nested_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x12 \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage:s\n\"optional_foreign_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x13 \x01(\x0b\x32!.protobuf_unittest.ForeignMessage:x\n!optional_import_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x14 \x01(\x0b\x32\'.protobuf_unittest_import.ImportMessage:x\n\x1eoptional_nested_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x15 \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:m\n\x1foptional_foreign_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x16 \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:r\n\x1eoptional_import_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x17 \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum:Q\n\x1foptional_string_piece_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x18 \x01(\tB\x02\x08\x02:I\n\x17optional_cord_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x19 \x01(\tB\x02\x08\x01:\x85\x01\n(optional_public_import_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x1a \x01(\x0b\x32-.protobuf_unittest_import.PublicImportMessage:\x80\x01\n\x1foptional_lazy_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x1b \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01:F\n\x18repeated_int32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x1f \x03(\x05:F\n\x18repeated_int64_extension\x12$.protobuf_unittest.TestAllExtensions\x18  \x03(\x03:G\n\x19repeated_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18! \x03(\r:G\n\x19repeated_uint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\" \x03(\x04:G\n\x19repeated_sint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18# \x03(\x11:G\n\x19repeated_sint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18$ \x03(\x12:H\n\x1arepeated_fixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18% \x03(\x07:H\n\x1arepeated_fixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18& \x03(\x06:I\n\x1brepeated_sfixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\' \x03(\x0f:I\n\x1brepeated_sfixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18( \x03(\x10:F\n\x18repeated_float_extension\x12$.protobuf_unittest.TestAllExtensions\x18) \x03(\x02:G\n\x19repeated_double_extension\x12$.protobuf_unittest.TestAllExtensions\x18* \x03(\x01:E\n\x17repeated_bool_extension\x12$.protobuf_unittest.TestAllExtensions\x18+ \x03(\x08:G\n\x19repeated_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18, \x03(\t:F\n\x18repeated_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18- \x03(\x0c:q\n\x17repeatedgroup_extension\x12$.protobuf_unittest.TestAllExtensions\x18. \x03(\n2*.protobuf_unittest.RepeatedGroup_extension:~\n!repeated_nested_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x30 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage:s\n\"repeated_foreign_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x31 \x03(\x0b\x32!.protobuf_unittest.ForeignMessage:x\n!repeated_import_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x32 \x03(\x0b\x32\'.protobuf_unittest_import.ImportMessage:x\n\x1erepeated_nested_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x33 \x03(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:m\n\x1frepeated_foreign_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x34 \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:r\n\x1erepeated_import_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x35 \x03(\x0e\x32$.protobuf_unittest_import.ImportEnum:Q\n\x1frepeated_string_piece_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x36 \x03(\tB\x02\x08\x02:I\n\x17repeated_cord_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x37 \x03(\tB\x02\x08\x01:\x80\x01\n\x1frepeated_lazy_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x39 \x03(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessageB\x02(\x01:I\n\x17\x64\x65\x66\x61ult_int32_extension\x12$.protobuf_unittest.TestAllExtensions\x18= \x01(\x05:\x02\x34\x31:I\n\x17\x64\x65\x66\x61ult_int64_extension\x12$.protobuf_unittest.TestAllExtensions\x18> \x01(\x03:\x02\x34\x32:J\n\x18\x64\x65\x66\x61ult_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18? \x01(\r:\x02\x34\x33:J\n\x18\x64\x65\x66\x61ult_uint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18@ \x01(\x04:\x02\x34\x34:K\n\x18\x64\x65\x66\x61ult_sint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x41 \x01(\x11:\x03-45:J\n\x18\x64\x65\x66\x61ult_sint64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x42 \x01(\x12:\x02\x34\x36:K\n\x19\x64\x65\x66\x61ult_fixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x43 \x01(\x07:\x02\x34\x37:K\n\x19\x64\x65\x66\x61ult_fixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x44 \x01(\x06:\x02\x34\x38:L\n\x1a\x64\x65\x66\x61ult_sfixed32_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x45 \x01(\x0f:\x02\x34\x39:M\n\x1a\x64\x65\x66\x61ult_sfixed64_extension\x12$.protobuf_unittest.TestAllExtensions\x18\x46 \x01(\x10:\x03-50:K\n\x17\x64\x65\x66\x61ult_float_extension\x12$.protobuf_unittest.TestAllExtensions\x18G \x01(\x02:\x04\x35\x31.5:M\n\x18\x64\x65\x66\x61ult_double_extension\x12$.protobuf_unittest.TestAllExtensions\x18H \x01(\x01:\x05\x35\x32\x30\x30\x30:J\n\x16\x64\x65\x66\x61ult_bool_extension\x12$.protobuf_unittest.TestAllExtensions\x18I \x01(\x08:\x04true:M\n\x18\x64\x65\x66\x61ult_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18J \x01(\t:\x05hello:L\n\x17\x64\x65\x66\x61ult_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18K \x01(\x0c:\x05world:|\n\x1d\x64\x65\x66\x61ult_nested_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18Q \x01(\x0e\x32*.protobuf_unittest.TestAllTypes.NestedEnum:\x03\x42\x41R:y\n\x1e\x64\x65\x66\x61ult_foreign_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18R \x01(\x0e\x32\x1e.protobuf_unittest.ForeignEnum:\x0b\x46OREIGN_BAR:}\n\x1d\x64\x65\x66\x61ult_import_enum_extension\x12$.protobuf_unittest.TestAllExtensions\x18S \x01(\x0e\x32$.protobuf_unittest_import.ImportEnum:\nIMPORT_BAR:U\n\x1e\x64\x65\x66\x61ult_string_piece_extension\x12$.protobuf_unittest.TestAllExtensions\x18T \x01(\t:\x03\x61\x62\x63\x42\x02\x08\x02:M\n\x16\x64\x65\x66\x61ult_cord_extension\x12$.protobuf_unittest.TestAllExtensions\x18U \x01(\t:\x03\x31\x32\x33\x42\x02\x08\x01:D\n\x16oneof_uint32_extension\x12$.protobuf_unittest.TestAllExtensions\x18o \x01(\r:{\n\x1eoneof_nested_message_extension\x12$.protobuf_unittest.TestAllExtensions\x18p \x01(\x0b\x32-.protobuf_unittest.TestAllTypes.NestedMessage:D\n\x16oneof_string_extension\x12$.protobuf_unittest.TestAllExtensions\x18q \x01(\t:C\n\x15oneof_bytes_extension\x12$.protobuf_unittest.TestAllExtensions\x18r \x01(\x0c:B\n\x13my_extension_string\x12%.protobuf_unittest.TestFieldOrderings\x18\x32 \x01(\t:?\n\x10my_extension_int\x12%.protobuf_unittest.TestFieldOrderings\x18\x05 \x01(\x05:K\n\x16packed_int32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18Z \x03(\x05\x42\x02\x10\x01:K\n\x16packed_int64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18[ \x03(\x03\x42\x02\x10\x01:L\n\x17packed_uint32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\\ \x03(\rB\x02\x10\x01:L\n\x17packed_uint64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18] \x03(\x04\x42\x02\x10\x01:L\n\x17packed_sint32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18^ \x03(\x11\x42\x02\x10\x01:L\n\x17packed_sint64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18_ \x03(\x12\x42\x02\x10\x01:M\n\x18packed_fixed32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18` \x03(\x07\x42\x02\x10\x01:M\n\x18packed_fixed64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x61 \x03(\x06\x42\x02\x10\x01:N\n\x19packed_sfixed32_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x62 \x03(\x0f\x42\x02\x10\x01:N\n\x19packed_sfixed64_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x63 \x03(\x10\x42\x02\x10\x01:K\n\x16packed_float_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x64 \x03(\x02\x42\x02\x10\x01:L\n\x17packed_double_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x65 \x03(\x01\x42\x02\x10\x01:J\n\x15packed_bool_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18\x66 \x03(\x08\x42\x02\x10\x01:j\n\x15packed_enum_extension\x12\'.protobuf_unittest.TestPackedExtensions\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x01:O\n\x18unpacked_int32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18Z \x03(\x05\x42\x02\x10\x00:O\n\x18unpacked_int64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18[ \x03(\x03\x42\x02\x10\x00:P\n\x19unpacked_uint32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\\ \x03(\rB\x02\x10\x00:P\n\x19unpacked_uint64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18] \x03(\x04\x42\x02\x10\x00:P\n\x19unpacked_sint32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18^ \x03(\x11\x42\x02\x10\x00:P\n\x19unpacked_sint64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18_ \x03(\x12\x42\x02\x10\x00:Q\n\x1aunpacked_fixed32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18` \x03(\x07\x42\x02\x10\x00:Q\n\x1aunpacked_fixed64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x61 \x03(\x06\x42\x02\x10\x00:R\n\x1bunpacked_sfixed32_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x62 \x03(\x0f\x42\x02\x10\x00:R\n\x1bunpacked_sfixed64_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x63 \x03(\x10\x42\x02\x10\x00:O\n\x18unpacked_float_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x64 \x03(\x02\x42\x02\x10\x00:P\n\x19unpacked_double_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x65 \x03(\x01\x42\x02\x10\x00:N\n\x17unpacked_bool_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18\x66 \x03(\x08\x42\x02\x10\x00:n\n\x17unpacked_enum_extension\x12).protobuf_unittest.TestUnpackedExtensions\x18g \x03(\x0e\x32\x1e.protobuf_unittest.ForeignEnumB\x02\x10\x00:d\n\x0etest_all_types\x12\'.protobuf_unittest.TestHugeFieldNumbers\x18\xe0\xaa\xff\xff\x01 \x01(\x0b\x32\x1f.protobuf_unittest.TestAllTypesB\x1d\x42\rUnittestProtoH\x01\x80\x01\x01\x88\x01\x01\x90\x01\x01\xf8\x01\x01')
   ,
   dependencies=[google_dot_protobuf_dot_unittest__import__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _FOREIGNENUM = _descriptor.EnumDescriptor(
   name='ForeignEnum',
@@ -50,8 +52,8 @@ _FOREIGNENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=12594,
-  serialized_end=12658,
+  serialized_start=14076,
+  serialized_end=14140,
 )
 _sym_db.RegisterEnumDescriptor(_FOREIGNENUM)
 
@@ -85,8 +87,8 @@ _TESTENUMWITHDUPVALUE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=_descriptor._ParseOptions(descriptor_pb2.EnumOptions(), _b('\020\001')),
-  serialized_start=12660,
-  serialized_end=12735,
+  serialized_start=14142,
+  serialized_end=14217,
 )
 _sym_db.RegisterEnumDescriptor(_TESTENUMWITHDUPVALUE)
 
@@ -128,8 +130,8 @@ _TESTSPARSEENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=12738,
-  serialized_end=12875,
+  serialized_start=14220,
+  serialized_end=14357,
 )
 _sym_db.RegisterEnumDescriptor(_TESTSPARSEENUM)
 
@@ -990,6 +992,14 @@ unpacked_enum_extension = _descriptor.FieldDescriptor(
   message_type=None, enum_type=None, containing_type=None,
   is_extension=True, extension_scope=None,
   options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\000')))
+TEST_ALL_TYPES_FIELD_NUMBER = 536860000
+test_all_types = _descriptor.FieldDescriptor(
+  name='test_all_types', full_name='protobuf_unittest.test_all_types', index=105,
+  number=536860000, type=11, cpp_type=10, label=1,
+  has_default_value=False, default_value=None,
+  message_type=None, enum_type=None, containing_type=None,
+  is_extension=True, extension_scope=None,
+  options=None)
 
 _TESTALLTYPES_NESTEDENUM = _descriptor.EnumDescriptor(
   name='NestedEnum',
@@ -1068,8 +1078,8 @@ _TESTDYNAMICEXTENSIONS_DYNAMICENUMTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=10735,
-  serialized_end=10806,
+  serialized_start=11449,
+  serialized_end=11520,
 )
 _sym_db.RegisterEnumDescriptor(_TESTDYNAMICEXTENSIONS_DYNAMICENUMTYPE)
 
@@ -1793,6 +1803,30 @@ _TESTDEPRECATEDFIELDS = _descriptor.Descriptor(
 )
 
 
+_TESTDEPRECATEDMESSAGE = _descriptor.Descriptor(
+  name='TestDeprecatedMessage',
+  full_name='protobuf_unittest.TestDeprecatedMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('\030\001')),
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3520,
+  serialized_end=3547,
+)
+
+
 _FOREIGNMESSAGE = _descriptor.Descriptor(
   name='ForeignMessage',
   full_name='protobuf_unittest.ForeignMessage',
@@ -1826,8 +1860,8 @@ _FOREIGNMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3520,
-  serialized_end=3558,
+  serialized_start=3549,
+  serialized_end=3587,
 )
 
 
@@ -1850,8 +1884,8 @@ _TESTRESERVEDFIELDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3560,
-  serialized_end=3608,
+  serialized_start=3589,
+  serialized_end=3637,
 )
 
 
@@ -1874,8 +1908,8 @@ _TESTALLEXTENSIONS = _descriptor.Descriptor(
   extension_ranges=[(1, 536870912), ],
   oneofs=[
   ],
-  serialized_start=3610,
-  serialized_end=3639,
+  serialized_start=3639,
+  serialized_end=3668,
 )
 
 
@@ -1905,8 +1939,8 @@ _OPTIONALGROUP_EXTENSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3641,
-  serialized_end=3677,
+  serialized_start=3670,
+  serialized_end=3706,
 )
 
 
@@ -1936,8 +1970,8 @@ _REPEATEDGROUP_EXTENSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3679,
-  serialized_end=3715,
+  serialized_start=3708,
+  serialized_end=3744,
 )
 
 
@@ -1974,8 +2008,8 @@ _TESTNESTEDEXTENSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3718,
-  serialized_end=3870,
+  serialized_start=3747,
+  serialized_end=3899,
 )
 
 
@@ -2243,8 +2277,8 @@ _TESTREQUIRED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3873,
-  serialized_end=4598,
+  serialized_start=3902,
+  serialized_end=4627,
 )
 
 
@@ -2288,8 +2322,53 @@ _TESTREQUIREDFOREIGN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4601,
-  serialized_end=4755,
+  serialized_start=4630,
+  serialized_end=4784,
+)
+
+
+_TESTREQUIREDMESSAGE = _descriptor.Descriptor(
+  name='TestRequiredMessage',
+  full_name='protobuf_unittest.TestRequiredMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='optional_message', full_name='protobuf_unittest.TestRequiredMessage.optional_message', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='repeated_message', full_name='protobuf_unittest.TestRequiredMessage.repeated_message', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='required_message', full_name='protobuf_unittest.TestRequiredMessage.required_message', index=2,
+      number=3, type=11, cpp_type=10, label=2,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4787,
+  serialized_end=4985,
 )
 
 
@@ -2319,8 +2398,8 @@ _TESTFOREIGNNESTED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4757,
-  serialized_end=4847,
+  serialized_start=4987,
+  serialized_end=5077,
 )
 
 
@@ -2343,8 +2422,8 @@ _TESTEMPTYMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4849,
-  serialized_end=4867,
+  serialized_start=5079,
+  serialized_end=5097,
 )
 
 
@@ -2367,8 +2446,8 @@ _TESTEMPTYMESSAGEWITHEXTENSIONS = _descriptor.Descriptor(
   extension_ranges=[(1, 536870912), ],
   oneofs=[
   ],
-  serialized_start=4869,
-  serialized_end=4911,
+  serialized_start=5099,
+  serialized_end=5141,
 )
 
 
@@ -2391,8 +2470,8 @@ _TESTMULTIPLEEXTENSIONRANGES = _descriptor.Descriptor(
   extension_ranges=[(42, 43), (4143, 4244), (65536, 536870912), ],
   oneofs=[
   ],
-  serialized_start=4913,
-  serialized_end=4968,
+  serialized_start=5143,
+  serialized_end=5198,
 )
 
 
@@ -2429,8 +2508,8 @@ _TESTREALLYLARGETAGNUMBER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4970,
-  serialized_end=5022,
+  serialized_start=5200,
+  serialized_end=5252,
 )
 
 
@@ -2467,20 +2546,20 @@ _TESTRECURSIVEMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5024,
-  serialized_end=5109,
+  serialized_start=5254,
+  serialized_end=5339,
 )
 
 
-_TESTMUTUALRECURSIONA = _descriptor.Descriptor(
-  name='TestMutualRecursionA',
-  full_name='protobuf_unittest.TestMutualRecursionA',
+_TESTMUTUALRECURSIONA_SUBMESSAGE = _descriptor.Descriptor(
+  name='SubMessage',
+  full_name='protobuf_unittest.TestMutualRecursionA.SubMessage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='bb', full_name='protobuf_unittest.TestMutualRecursionA.bb', index=0,
+      name='b', full_name='protobuf_unittest.TestMutualRecursionA.SubMessage.b', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2498,8 +2577,82 @@ _TESTMUTUALRECURSIONA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5111,
-  serialized_end=5186,
+  serialized_start=5487,
+  serialized_end=5551,
+)
+
+_TESTMUTUALRECURSIONA_SUBGROUP = _descriptor.Descriptor(
+  name='SubGroup',
+  full_name='protobuf_unittest.TestMutualRecursionA.SubGroup',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='sub_message', full_name='protobuf_unittest.TestMutualRecursionA.SubGroup.sub_message', index=0,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='not_in_this_scc', full_name='protobuf_unittest.TestMutualRecursionA.SubGroup.not_in_this_scc', index=1,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5554,
+  serialized_end=5695,
+)
+
+_TESTMUTUALRECURSIONA = _descriptor.Descriptor(
+  name='TestMutualRecursionA',
+  full_name='protobuf_unittest.TestMutualRecursionA',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='bb', full_name='protobuf_unittest.TestMutualRecursionA.bb', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='subgroup', full_name='protobuf_unittest.TestMutualRecursionA.subgroup', index=1,
+      number=2, type=10, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTMUTUALRECURSIONA_SUBMESSAGE, _TESTMUTUALRECURSIONA_SUBGROUP, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5342,
+  serialized_end=5695,
 )
 
 
@@ -2536,8 +2689,99 @@ _TESTMUTUALRECURSIONB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5188,
-  serialized_end=5286,
+  serialized_start=5697,
+  serialized_end=5795,
+)
+
+
+_TESTISINITIALIZED_SUBMESSAGE_SUBGROUP = _descriptor.Descriptor(
+  name='SubGroup',
+  full_name='protobuf_unittest.TestIsInitialized.SubMessage.SubGroup',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='i', full_name='protobuf_unittest.TestIsInitialized.SubMessage.SubGroup.i', index=0,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5979,
+  serialized_end=6000,
+)
+
+_TESTISINITIALIZED_SUBMESSAGE = _descriptor.Descriptor(
+  name='SubMessage',
+  full_name='protobuf_unittest.TestIsInitialized.SubMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='subgroup', full_name='protobuf_unittest.TestIsInitialized.SubMessage.subgroup', index=0,
+      number=1, type=10, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTISINITIALIZED_SUBMESSAGE_SUBGROUP, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5889,
+  serialized_end=6000,
+)
+
+_TESTISINITIALIZED = _descriptor.Descriptor(
+  name='TestIsInitialized',
+  full_name='protobuf_unittest.TestIsInitialized',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='sub_message', full_name='protobuf_unittest.TestIsInitialized.sub_message', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTISINITIALIZED_SUBMESSAGE, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5798,
+  serialized_end=6000,
 )
 
 
@@ -2567,8 +2811,8 @@ _TESTDUPFIELDNUMBER_FOO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5434,
-  serialized_end=5450,
+  serialized_start=6148,
+  serialized_end=6164,
 )
 
 _TESTDUPFIELDNUMBER_BAR = _descriptor.Descriptor(
@@ -2597,8 +2841,8 @@ _TESTDUPFIELDNUMBER_BAR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5452,
-  serialized_end=5468,
+  serialized_start=6166,
+  serialized_end=6182,
 )
 
 _TESTDUPFIELDNUMBER = _descriptor.Descriptor(
@@ -2641,8 +2885,8 @@ _TESTDUPFIELDNUMBER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5289,
-  serialized_end=5468,
+  serialized_start=6003,
+  serialized_end=6182,
 )
 
 
@@ -2672,8 +2916,8 @@ _TESTEAGERMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5470,
-  serialized_end=5546,
+  serialized_start=6184,
+  serialized_end=6260,
 )
 
 
@@ -2703,8 +2947,8 @@ _TESTLAZYMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5548,
-  serialized_end=5623,
+  serialized_start=6262,
+  serialized_end=6337,
 )
 
 
@@ -2741,8 +2985,8 @@ _TESTNESTEDMESSAGEHASBITS_NESTEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5747,
-  serialized_end=5882,
+  serialized_start=6461,
+  serialized_end=6596,
 )
 
 _TESTNESTEDMESSAGEHASBITS = _descriptor.Descriptor(
@@ -2771,8 +3015,8 @@ _TESTNESTEDMESSAGEHASBITS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5626,
-  serialized_end=5882,
+  serialized_start=6340,
+  serialized_end=6596,
 )
 
 
@@ -2879,8 +3123,8 @@ _TESTCAMELCASEFIELDNAMES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5885,
-  serialized_end=6370,
+  serialized_start=6599,
+  serialized_end=7084,
 )
 
 
@@ -2917,8 +3161,8 @@ _TESTFIELDORDERINGS_NESTEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6535,
-  serialized_end=6574,
+  serialized_start=7249,
+  serialized_end=7288,
 )
 
 _TESTFIELDORDERINGS = _descriptor.Descriptor(
@@ -2968,8 +3212,8 @@ _TESTFIELDORDERINGS = _descriptor.Descriptor(
   extension_ranges=[(2, 11), (12, 101), ],
   oneofs=[
   ],
-  serialized_start=6373,
-  serialized_end=6586,
+  serialized_start=7087,
+  serialized_end=7300,
 )
 
 
@@ -3181,8 +3425,8 @@ _TESTEXTREMEDEFAULTVALUES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6589,
-  serialized_end=7539,
+  serialized_start=7303,
+  serialized_end=8253,
 )
 
 
@@ -3212,8 +3456,8 @@ _SPARSEENUMMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7541,
-  serialized_end=7616,
+  serialized_start=8255,
+  serialized_end=8330,
 )
 
 
@@ -3243,8 +3487,8 @@ _ONESTRING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7618,
-  serialized_end=7643,
+  serialized_start=8332,
+  serialized_end=8357,
 )
 
 
@@ -3274,8 +3518,8 @@ _MORESTRING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7645,
-  serialized_end=7671,
+  serialized_start=8359,
+  serialized_end=8385,
 )
 
 
@@ -3305,8 +3549,8 @@ _ONEBYTES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7673,
-  serialized_end=7697,
+  serialized_start=8387,
+  serialized_end=8411,
 )
 
 
@@ -3336,8 +3580,8 @@ _MOREBYTES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7699,
-  serialized_end=7724,
+  serialized_start=8413,
+  serialized_end=8438,
 )
 
 
@@ -3367,8 +3611,8 @@ _INT32MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7726,
-  serialized_end=7754,
+  serialized_start=8440,
+  serialized_end=8468,
 )
 
 
@@ -3398,8 +3642,8 @@ _UINT32MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7756,
-  serialized_end=7785,
+  serialized_start=8470,
+  serialized_end=8499,
 )
 
 
@@ -3429,8 +3673,8 @@ _INT64MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7787,
-  serialized_end=7815,
+  serialized_start=8501,
+  serialized_end=8529,
 )
 
 
@@ -3460,8 +3704,8 @@ _UINT64MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7817,
-  serialized_end=7846,
+  serialized_start=8531,
+  serialized_end=8560,
 )
 
 
@@ -3491,8 +3735,8 @@ _BOOLMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7848,
-  serialized_end=7875,
+  serialized_start=8562,
+  serialized_end=8589,
 )
 
 
@@ -3529,8 +3773,8 @@ _TESTONEOF_FOOGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8047,
-  serialized_end=8079,
+  serialized_start=8761,
+  serialized_end=8793,
 )
 
 _TESTONEOF = _descriptor.Descriptor(
@@ -3583,8 +3827,8 @@ _TESTONEOF = _descriptor.Descriptor(
       name='foo', full_name='protobuf_unittest.TestOneof.foo',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=7878,
-  serialized_end=8086,
+  serialized_start=8592,
+  serialized_end=8800,
 )
 
 
@@ -3621,8 +3865,8 @@ _TESTONEOFBACKWARDSCOMPATIBLE_FOOGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8047,
-  serialized_end=8079,
+  serialized_start=8761,
+  serialized_end=8793,
 )
 
 _TESTONEOFBACKWARDSCOMPATIBLE = _descriptor.Descriptor(
@@ -3672,8 +3916,8 @@ _TESTONEOFBACKWARDSCOMPATIBLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8089,
-  serialized_end=8320,
+  serialized_start=8803,
+  serialized_end=9034,
 )
 
 
@@ -3710,8 +3954,8 @@ _TESTONEOF2_FOOGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8981,
-  serialized_end=9013,
+  serialized_start=9695,
+  serialized_end=9727,
 )
 
 _TESTONEOF2_NESTEDMESSAGE = _descriptor.Descriptor(
@@ -3747,8 +3991,8 @@ _TESTONEOF2_NESTEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9015,
-  serialized_end=9066,
+  serialized_start=9729,
+  serialized_end=9780,
 )
 
 _TESTONEOF2 = _descriptor.Descriptor(
@@ -3896,8 +4140,8 @@ _TESTONEOF2 = _descriptor.Descriptor(
       name='bar', full_name='protobuf_unittest.TestOneof2.bar',
       index=1, containing_type=None, fields=[]),
   ],
-  serialized_start=8323,
-  serialized_end=9121,
+  serialized_start=9037,
+  serialized_end=9835,
 )
 
 
@@ -3927,8 +4171,8 @@ _TESTREQUIREDONEOF_NESTEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9261,
-  serialized_end=9301,
+  serialized_start=9975,
+  serialized_end=10015,
 )
 
 _TESTREQUIREDONEOF = _descriptor.Descriptor(
@@ -3974,8 +4218,8 @@ _TESTREQUIREDONEOF = _descriptor.Descriptor(
       name='foo', full_name='protobuf_unittest.TestRequiredOneof.foo',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=9124,
-  serialized_end=9308,
+  serialized_start=9838,
+  serialized_end=10022,
 )
 
 
@@ -4096,8 +4340,8 @@ _TESTPACKEDTYPES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9311,
-  serialized_end=9737,
+  serialized_start=10025,
+  serialized_end=10451,
 )
 
 
@@ -4218,8 +4462,8 @@ _TESTUNPACKEDTYPES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9740,
-  serialized_end=10196,
+  serialized_start=10454,
+  serialized_end=10910,
 )
 
 
@@ -4242,8 +4486,8 @@ _TESTPACKEDEXTENSIONS = _descriptor.Descriptor(
   extension_ranges=[(1, 536870912), ],
   oneofs=[
   ],
-  serialized_start=10198,
-  serialized_end=10230,
+  serialized_start=10912,
+  serialized_end=10944,
 )
 
 
@@ -4266,8 +4510,8 @@ _TESTUNPACKEDEXTENSIONS = _descriptor.Descriptor(
   extension_ranges=[(1, 536870912), ],
   oneofs=[
   ],
-  serialized_start=10232,
-  serialized_end=10266,
+  serialized_start=10946,
+  serialized_end=10980,
 )
 
 
@@ -4297,8 +4541,8 @@ _TESTDYNAMICEXTENSIONS_DYNAMICMESSAGETYPE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10689,
-  serialized_end=10733,
+  serialized_start=11403,
+  serialized_end=11447,
 )
 
 _TESTDYNAMICEXTENSIONS = _descriptor.Descriptor(
@@ -4370,8 +4614,8 @@ _TESTDYNAMICEXTENSIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10269,
-  serialized_end=10806,
+  serialized_start=10983,
+  serialized_end=11520,
 )
 
 
@@ -4436,8 +4680,8 @@ _TESTREPEATEDSCALARDIFFERENTTAGSIZES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10809,
-  serialized_end=11001,
+  serialized_start=11523,
+  serialized_end=11715,
 )
 
 
@@ -4467,8 +4711,8 @@ _TESTPARSINGMERGE_REPEATEDFIELDSGENERATOR_GROUP1 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11794,
-  serialized_end=11851,
+  serialized_start=12508,
+  serialized_end=12565,
 )
 
 _TESTPARSINGMERGE_REPEATEDFIELDSGENERATOR_GROUP2 = _descriptor.Descriptor(
@@ -4497,8 +4741,8 @@ _TESTPARSINGMERGE_REPEATEDFIELDSGENERATOR_GROUP2 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11853,
-  serialized_end=11910,
+  serialized_start=12567,
+  serialized_end=12624,
 )
 
 _TESTPARSINGMERGE_REPEATEDFIELDSGENERATOR = _descriptor.Descriptor(
@@ -4569,8 +4813,8 @@ _TESTPARSINGMERGE_REPEATEDFIELDSGENERATOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11356,
-  serialized_end=11910,
+  serialized_start=12070,
+  serialized_end=12624,
 )
 
 _TESTPARSINGMERGE_OPTIONALGROUP = _descriptor.Descriptor(
@@ -4599,8 +4843,8 @@ _TESTPARSINGMERGE_OPTIONALGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11912,
-  serialized_end=11994,
+  serialized_start=12626,
+  serialized_end=12708,
 )
 
 _TESTPARSINGMERGE_REPEATEDGROUP = _descriptor.Descriptor(
@@ -4629,8 +4873,8 @@ _TESTPARSINGMERGE_REPEATEDGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11996,
-  serialized_end=12078,
+  serialized_start=12710,
+  serialized_end=12792,
 )
 
 _TESTPARSINGMERGE = _descriptor.Descriptor(
@@ -4701,8 +4945,8 @@ _TESTPARSINGMERGE = _descriptor.Descriptor(
   extension_ranges=[(1000, 536870912), ],
   oneofs=[
   ],
-  serialized_start=11004,
-  serialized_end=12275,
+  serialized_start=11718,
+  serialized_end=12989,
 )
 
 
@@ -4732,8 +4976,8 @@ _TESTCOMMENTINJECTIONMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12277,
-  serialized_end=12345,
+  serialized_start=12991,
+  serialized_end=13059,
 )
 
 
@@ -4756,8 +5000,8 @@ _FOOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12347,
-  serialized_end=12359,
+  serialized_start=13061,
+  serialized_end=13073,
 )
 
 
@@ -4780,8 +5024,8 @@ _FOORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12361,
-  serialized_end=12374,
+  serialized_start=13075,
+  serialized_end=13088,
 )
 
 
@@ -4804,8 +5048,8 @@ _FOOCLIENTMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12376,
-  serialized_end=12394,
+  serialized_start=13090,
+  serialized_end=13108,
 )
 
 
@@ -4828,8 +5072,8 @@ _FOOSERVERMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12396,
-  serialized_end=12414,
+  serialized_start=13110,
+  serialized_end=13128,
 )
 
 
@@ -4852,8 +5096,8 @@ _BARREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12416,
-  serialized_end=12428,
+  serialized_start=13130,
+  serialized_end=13142,
 )
 
 
@@ -4876,8 +5120,8 @@ _BARRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12430,
-  serialized_end=12443,
+  serialized_start=13144,
+  serialized_end=13157,
 )
 
 
@@ -4942,8 +5186,200 @@ _TESTJSONNAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12446,
-  serialized_end=12592,
+  serialized_start=13160,
+  serialized_end=13306,
+)
+
+
+_TESTHUGEFIELDNUMBERS_OPTIONALGROUP = _descriptor.Descriptor(
+  name='OptionalGroup',
+  full_name='protobuf_unittest.TestHugeFieldNumbers.OptionalGroup',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='group_a', full_name='protobuf_unittest.TestHugeFieldNumbers.OptionalGroup.group_a', index=0,
+      number=536870009, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=13953,
+  serialized_end=13989,
+)
+
+_TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY = _descriptor.Descriptor(
+  name='StringStringMapEntry',
+  full_name='protobuf_unittest.TestHugeFieldNumbers.StringStringMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='protobuf_unittest.TestHugeFieldNumbers.StringStringMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='protobuf_unittest.TestHugeFieldNumbers.StringStringMapEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=13991,
+  serialized_end=14045,
+)
+
+_TESTHUGEFIELDNUMBERS = _descriptor.Descriptor(
+  name='TestHugeFieldNumbers',
+  full_name='protobuf_unittest.TestHugeFieldNumbers',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='optional_int32', full_name='protobuf_unittest.TestHugeFieldNumbers.optional_int32', index=0,
+      number=536870000, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='fixed_32', full_name='protobuf_unittest.TestHugeFieldNumbers.fixed_32', index=1,
+      number=536870001, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='repeated_int32', full_name='protobuf_unittest.TestHugeFieldNumbers.repeated_int32', index=2,
+      number=536870002, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\000'))),
+    _descriptor.FieldDescriptor(
+      name='packed_int32', full_name='protobuf_unittest.TestHugeFieldNumbers.packed_int32', index=3,
+      number=536870003, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=_descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\001'))),
+    _descriptor.FieldDescriptor(
+      name='optional_enum', full_name='protobuf_unittest.TestHugeFieldNumbers.optional_enum', index=4,
+      number=536870004, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=4,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='optional_string', full_name='protobuf_unittest.TestHugeFieldNumbers.optional_string', index=5,
+      number=536870005, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='optional_bytes', full_name='protobuf_unittest.TestHugeFieldNumbers.optional_bytes', index=6,
+      number=536870006, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='optional_message', full_name='protobuf_unittest.TestHugeFieldNumbers.optional_message', index=7,
+      number=536870007, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='optionalgroup', full_name='protobuf_unittest.TestHugeFieldNumbers.optionalgroup', index=8,
+      number=536870008, type=10, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='string_string_map', full_name='protobuf_unittest.TestHugeFieldNumbers.string_string_map', index=9,
+      number=536870010, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='oneof_uint32', full_name='protobuf_unittest.TestHugeFieldNumbers.oneof_uint32', index=10,
+      number=536870011, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='oneof_test_all_types', full_name='protobuf_unittest.TestHugeFieldNumbers.oneof_test_all_types', index=11,
+      number=536870012, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='oneof_string', full_name='protobuf_unittest.TestHugeFieldNumbers.oneof_string', index=12,
+      number=536870013, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='oneof_bytes', full_name='protobuf_unittest.TestHugeFieldNumbers.oneof_bytes', index=13,
+      number=536870014, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTHUGEFIELDNUMBERS_OPTIONALGROUP, _TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=True,
+  syntax='proto2',
+  extension_ranges=[(536860000, 536870000), ],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='oneof_field', full_name='protobuf_unittest.TestHugeFieldNumbers.oneof_field',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=13309,
+  serialized_end=14074,
 )
 
 _TESTALLTYPES_NESTEDMESSAGE.containing_type = _TESTALLTYPES
@@ -4988,10 +5424,23 @@ _NESTEDTESTALLTYPES.fields_by_name['payload'].message_type = _TESTALLTYPES
 _NESTEDTESTALLTYPES.fields_by_name['repeated_child'].message_type = _NESTEDTESTALLTYPES
 _TESTREQUIREDFOREIGN.fields_by_name['optional_message'].message_type = _TESTREQUIRED
 _TESTREQUIREDFOREIGN.fields_by_name['repeated_message'].message_type = _TESTREQUIRED
+_TESTREQUIREDMESSAGE.fields_by_name['optional_message'].message_type = _TESTREQUIRED
+_TESTREQUIREDMESSAGE.fields_by_name['repeated_message'].message_type = _TESTREQUIRED
+_TESTREQUIREDMESSAGE.fields_by_name['required_message'].message_type = _TESTREQUIRED
 _TESTFOREIGNNESTED.fields_by_name['foreign_nested'].message_type = _TESTALLTYPES_NESTEDMESSAGE
 _TESTRECURSIVEMESSAGE.fields_by_name['a'].message_type = _TESTRECURSIVEMESSAGE
+_TESTMUTUALRECURSIONA_SUBMESSAGE.fields_by_name['b'].message_type = _TESTMUTUALRECURSIONB
+_TESTMUTUALRECURSIONA_SUBMESSAGE.containing_type = _TESTMUTUALRECURSIONA
+_TESTMUTUALRECURSIONA_SUBGROUP.fields_by_name['sub_message'].message_type = _TESTMUTUALRECURSIONA_SUBMESSAGE
+_TESTMUTUALRECURSIONA_SUBGROUP.fields_by_name['not_in_this_scc'].message_type = _TESTALLTYPES
+_TESTMUTUALRECURSIONA_SUBGROUP.containing_type = _TESTMUTUALRECURSIONA
 _TESTMUTUALRECURSIONA.fields_by_name['bb'].message_type = _TESTMUTUALRECURSIONB
+_TESTMUTUALRECURSIONA.fields_by_name['subgroup'].message_type = _TESTMUTUALRECURSIONA_SUBGROUP
 _TESTMUTUALRECURSIONB.fields_by_name['a'].message_type = _TESTMUTUALRECURSIONA
+_TESTISINITIALIZED_SUBMESSAGE_SUBGROUP.containing_type = _TESTISINITIALIZED_SUBMESSAGE
+_TESTISINITIALIZED_SUBMESSAGE.fields_by_name['subgroup'].message_type = _TESTISINITIALIZED_SUBMESSAGE_SUBGROUP
+_TESTISINITIALIZED_SUBMESSAGE.containing_type = _TESTISINITIALIZED
+_TESTISINITIALIZED.fields_by_name['sub_message'].message_type = _TESTISINITIALIZED_SUBMESSAGE
 _TESTDUPFIELDNUMBER_FOO.containing_type = _TESTDUPFIELDNUMBER
 _TESTDUPFIELDNUMBER_BAR.containing_type = _TESTDUPFIELDNUMBER
 _TESTDUPFIELDNUMBER.fields_by_name['foo'].message_type = _TESTDUPFIELDNUMBER_FOO
@@ -5119,9 +5568,29 @@ _TESTPARSINGMERGE.fields_by_name['optional_all_types'].message_type = _TESTALLTY
 _TESTPARSINGMERGE.fields_by_name['repeated_all_types'].message_type = _TESTALLTYPES
 _TESTPARSINGMERGE.fields_by_name['optionalgroup'].message_type = _TESTPARSINGMERGE_OPTIONALGROUP
 _TESTPARSINGMERGE.fields_by_name['repeatedgroup'].message_type = _TESTPARSINGMERGE_REPEATEDGROUP
+_TESTHUGEFIELDNUMBERS_OPTIONALGROUP.containing_type = _TESTHUGEFIELDNUMBERS
+_TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY.containing_type = _TESTHUGEFIELDNUMBERS
+_TESTHUGEFIELDNUMBERS.fields_by_name['optional_enum'].enum_type = _FOREIGNENUM
+_TESTHUGEFIELDNUMBERS.fields_by_name['optional_message'].message_type = _FOREIGNMESSAGE
+_TESTHUGEFIELDNUMBERS.fields_by_name['optionalgroup'].message_type = _TESTHUGEFIELDNUMBERS_OPTIONALGROUP
+_TESTHUGEFIELDNUMBERS.fields_by_name['string_string_map'].message_type = _TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY
+_TESTHUGEFIELDNUMBERS.fields_by_name['oneof_test_all_types'].message_type = _TESTALLTYPES
+_TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field'].fields.append(
+  _TESTHUGEFIELDNUMBERS.fields_by_name['oneof_uint32'])
+_TESTHUGEFIELDNUMBERS.fields_by_name['oneof_uint32'].containing_oneof = _TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field']
+_TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field'].fields.append(
+  _TESTHUGEFIELDNUMBERS.fields_by_name['oneof_test_all_types'])
+_TESTHUGEFIELDNUMBERS.fields_by_name['oneof_test_all_types'].containing_oneof = _TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field']
+_TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field'].fields.append(
+  _TESTHUGEFIELDNUMBERS.fields_by_name['oneof_string'])
+_TESTHUGEFIELDNUMBERS.fields_by_name['oneof_string'].containing_oneof = _TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field']
+_TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field'].fields.append(
+  _TESTHUGEFIELDNUMBERS.fields_by_name['oneof_bytes'])
+_TESTHUGEFIELDNUMBERS.fields_by_name['oneof_bytes'].containing_oneof = _TESTHUGEFIELDNUMBERS.oneofs_by_name['oneof_field']
 DESCRIPTOR.message_types_by_name['TestAllTypes'] = _TESTALLTYPES
 DESCRIPTOR.message_types_by_name['NestedTestAllTypes'] = _NESTEDTESTALLTYPES
 DESCRIPTOR.message_types_by_name['TestDeprecatedFields'] = _TESTDEPRECATEDFIELDS
+DESCRIPTOR.message_types_by_name['TestDeprecatedMessage'] = _TESTDEPRECATEDMESSAGE
 DESCRIPTOR.message_types_by_name['ForeignMessage'] = _FOREIGNMESSAGE
 DESCRIPTOR.message_types_by_name['TestReservedFields'] = _TESTRESERVEDFIELDS
 DESCRIPTOR.message_types_by_name['TestAllExtensions'] = _TESTALLEXTENSIONS
@@ -5130,6 +5599,7 @@ DESCRIPTOR.message_types_by_name['RepeatedGroup_extension'] = _REPEATEDGROUP_EXT
 DESCRIPTOR.message_types_by_name['TestNestedExtension'] = _TESTNESTEDEXTENSION
 DESCRIPTOR.message_types_by_name['TestRequired'] = _TESTREQUIRED
 DESCRIPTOR.message_types_by_name['TestRequiredForeign'] = _TESTREQUIREDFOREIGN
+DESCRIPTOR.message_types_by_name['TestRequiredMessage'] = _TESTREQUIREDMESSAGE
 DESCRIPTOR.message_types_by_name['TestForeignNested'] = _TESTFOREIGNNESTED
 DESCRIPTOR.message_types_by_name['TestEmptyMessage'] = _TESTEMPTYMESSAGE
 DESCRIPTOR.message_types_by_name['TestEmptyMessageWithExtensions'] = _TESTEMPTYMESSAGEWITHEXTENSIONS
@@ -5138,6 +5608,7 @@ DESCRIPTOR.message_types_by_name['TestReallyLargeTagNumber'] = _TESTREALLYLARGET
 DESCRIPTOR.message_types_by_name['TestRecursiveMessage'] = _TESTRECURSIVEMESSAGE
 DESCRIPTOR.message_types_by_name['TestMutualRecursionA'] = _TESTMUTUALRECURSIONA
 DESCRIPTOR.message_types_by_name['TestMutualRecursionB'] = _TESTMUTUALRECURSIONB
+DESCRIPTOR.message_types_by_name['TestIsInitialized'] = _TESTISINITIALIZED
 DESCRIPTOR.message_types_by_name['TestDupFieldNumber'] = _TESTDUPFIELDNUMBER
 DESCRIPTOR.message_types_by_name['TestEagerMessage'] = _TESTEAGERMESSAGE
 DESCRIPTOR.message_types_by_name['TestLazyMessage'] = _TESTLAZYMESSAGE
@@ -5174,6 +5645,7 @@ DESCRIPTOR.message_types_by_name['FooServerMessage'] = _FOOSERVERMESSAGE
 DESCRIPTOR.message_types_by_name['BarRequest'] = _BARREQUEST
 DESCRIPTOR.message_types_by_name['BarResponse'] = _BARRESPONSE
 DESCRIPTOR.message_types_by_name['TestJsonName'] = _TESTJSONNAME
+DESCRIPTOR.message_types_by_name['TestHugeFieldNumbers'] = _TESTHUGEFIELDNUMBERS
 DESCRIPTOR.enum_types_by_name['ForeignEnum'] = _FOREIGNENUM
 DESCRIPTOR.enum_types_by_name['TestEnumWithDupValue'] = _TESTENUMWITHDUPVALUE
 DESCRIPTOR.enum_types_by_name['TestSparseEnum'] = _TESTSPARSEENUM
@@ -5282,6 +5754,8 @@ DESCRIPTOR.extensions_by_name['unpacked_float_extension'] = unpacked_float_exten
 DESCRIPTOR.extensions_by_name['unpacked_double_extension'] = unpacked_double_extension
 DESCRIPTOR.extensions_by_name['unpacked_bool_extension'] = unpacked_bool_extension
 DESCRIPTOR.extensions_by_name['unpacked_enum_extension'] = unpacked_enum_extension
+DESCRIPTOR.extensions_by_name['test_all_types'] = test_all_types
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestAllTypes = _reflection.GeneratedProtocolMessageType('TestAllTypes', (_message.Message,), dict(
 
@@ -5327,6 +5801,13 @@ TestDeprecatedFields = _reflection.GeneratedProtocolMessageType('TestDeprecatedF
   # @@protoc_insertion_point(class_scope:protobuf_unittest.TestDeprecatedFields)
   ))
 _sym_db.RegisterMessage(TestDeprecatedFields)
+
+TestDeprecatedMessage = _reflection.GeneratedProtocolMessageType('TestDeprecatedMessage', (_message.Message,), dict(
+  DESCRIPTOR = _TESTDEPRECATEDMESSAGE,
+  __module__ = 'google.protobuf.unittest_pb2'
+  # @@protoc_insertion_point(class_scope:protobuf_unittest.TestDeprecatedMessage)
+  ))
+_sym_db.RegisterMessage(TestDeprecatedMessage)
 
 ForeignMessage = _reflection.GeneratedProtocolMessageType('ForeignMessage', (_message.Message,), dict(
   DESCRIPTOR = _FOREIGNMESSAGE,
@@ -5384,6 +5865,13 @@ TestRequiredForeign = _reflection.GeneratedProtocolMessageType('TestRequiredFore
   ))
 _sym_db.RegisterMessage(TestRequiredForeign)
 
+TestRequiredMessage = _reflection.GeneratedProtocolMessageType('TestRequiredMessage', (_message.Message,), dict(
+  DESCRIPTOR = _TESTREQUIREDMESSAGE,
+  __module__ = 'google.protobuf.unittest_pb2'
+  # @@protoc_insertion_point(class_scope:protobuf_unittest.TestRequiredMessage)
+  ))
+_sym_db.RegisterMessage(TestRequiredMessage)
+
 TestForeignNested = _reflection.GeneratedProtocolMessageType('TestForeignNested', (_message.Message,), dict(
   DESCRIPTOR = _TESTFOREIGNNESTED,
   __module__ = 'google.protobuf.unittest_pb2'
@@ -5427,11 +5915,27 @@ TestRecursiveMessage = _reflection.GeneratedProtocolMessageType('TestRecursiveMe
 _sym_db.RegisterMessage(TestRecursiveMessage)
 
 TestMutualRecursionA = _reflection.GeneratedProtocolMessageType('TestMutualRecursionA', (_message.Message,), dict(
+
+  SubMessage = _reflection.GeneratedProtocolMessageType('SubMessage', (_message.Message,), dict(
+    DESCRIPTOR = _TESTMUTUALRECURSIONA_SUBMESSAGE,
+    __module__ = 'google.protobuf.unittest_pb2'
+    # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMutualRecursionA.SubMessage)
+    ))
+  ,
+
+  SubGroup = _reflection.GeneratedProtocolMessageType('SubGroup', (_message.Message,), dict(
+    DESCRIPTOR = _TESTMUTUALRECURSIONA_SUBGROUP,
+    __module__ = 'google.protobuf.unittest_pb2'
+    # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMutualRecursionA.SubGroup)
+    ))
+  ,
   DESCRIPTOR = _TESTMUTUALRECURSIONA,
   __module__ = 'google.protobuf.unittest_pb2'
   # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMutualRecursionA)
   ))
 _sym_db.RegisterMessage(TestMutualRecursionA)
+_sym_db.RegisterMessage(TestMutualRecursionA.SubMessage)
+_sym_db.RegisterMessage(TestMutualRecursionA.SubGroup)
 
 TestMutualRecursionB = _reflection.GeneratedProtocolMessageType('TestMutualRecursionB', (_message.Message,), dict(
   DESCRIPTOR = _TESTMUTUALRECURSIONB,
@@ -5439,6 +5943,29 @@ TestMutualRecursionB = _reflection.GeneratedProtocolMessageType('TestMutualRecur
   # @@protoc_insertion_point(class_scope:protobuf_unittest.TestMutualRecursionB)
   ))
 _sym_db.RegisterMessage(TestMutualRecursionB)
+
+TestIsInitialized = _reflection.GeneratedProtocolMessageType('TestIsInitialized', (_message.Message,), dict(
+
+  SubMessage = _reflection.GeneratedProtocolMessageType('SubMessage', (_message.Message,), dict(
+
+    SubGroup = _reflection.GeneratedProtocolMessageType('SubGroup', (_message.Message,), dict(
+      DESCRIPTOR = _TESTISINITIALIZED_SUBMESSAGE_SUBGROUP,
+      __module__ = 'google.protobuf.unittest_pb2'
+      # @@protoc_insertion_point(class_scope:protobuf_unittest.TestIsInitialized.SubMessage.SubGroup)
+      ))
+    ,
+    DESCRIPTOR = _TESTISINITIALIZED_SUBMESSAGE,
+    __module__ = 'google.protobuf.unittest_pb2'
+    # @@protoc_insertion_point(class_scope:protobuf_unittest.TestIsInitialized.SubMessage)
+    ))
+  ,
+  DESCRIPTOR = _TESTISINITIALIZED,
+  __module__ = 'google.protobuf.unittest_pb2'
+  # @@protoc_insertion_point(class_scope:protobuf_unittest.TestIsInitialized)
+  ))
+_sym_db.RegisterMessage(TestIsInitialized)
+_sym_db.RegisterMessage(TestIsInitialized.SubMessage)
+_sym_db.RegisterMessage(TestIsInitialized.SubMessage.SubGroup)
 
 TestDupFieldNumber = _reflection.GeneratedProtocolMessageType('TestDupFieldNumber', (_message.Message,), dict(
 
@@ -5812,6 +6339,29 @@ TestJsonName = _reflection.GeneratedProtocolMessageType('TestJsonName', (_messag
   ))
 _sym_db.RegisterMessage(TestJsonName)
 
+TestHugeFieldNumbers = _reflection.GeneratedProtocolMessageType('TestHugeFieldNumbers', (_message.Message,), dict(
+
+  OptionalGroup = _reflection.GeneratedProtocolMessageType('OptionalGroup', (_message.Message,), dict(
+    DESCRIPTOR = _TESTHUGEFIELDNUMBERS_OPTIONALGROUP,
+    __module__ = 'google.protobuf.unittest_pb2'
+    # @@protoc_insertion_point(class_scope:protobuf_unittest.TestHugeFieldNumbers.OptionalGroup)
+    ))
+  ,
+
+  StringStringMapEntry = _reflection.GeneratedProtocolMessageType('StringStringMapEntry', (_message.Message,), dict(
+    DESCRIPTOR = _TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY,
+    __module__ = 'google.protobuf.unittest_pb2'
+    # @@protoc_insertion_point(class_scope:protobuf_unittest.TestHugeFieldNumbers.StringStringMapEntry)
+    ))
+  ,
+  DESCRIPTOR = _TESTHUGEFIELDNUMBERS,
+  __module__ = 'google.protobuf.unittest_pb2'
+  # @@protoc_insertion_point(class_scope:protobuf_unittest.TestHugeFieldNumbers)
+  ))
+_sym_db.RegisterMessage(TestHugeFieldNumbers)
+_sym_db.RegisterMessage(TestHugeFieldNumbers.OptionalGroup)
+_sym_db.RegisterMessage(TestHugeFieldNumbers.StringStringMapEntry)
+
 TestAllExtensions.RegisterExtension(optional_int32_extension)
 TestAllExtensions.RegisterExtension(optional_int64_extension)
 TestAllExtensions.RegisterExtension(optional_uint32_extension)
@@ -5940,6 +6490,8 @@ TestUnpackedExtensions.RegisterExtension(unpacked_double_extension)
 TestUnpackedExtensions.RegisterExtension(unpacked_bool_extension)
 unpacked_enum_extension.enum_type = _FOREIGNENUM
 TestUnpackedExtensions.RegisterExtension(unpacked_enum_extension)
+test_all_types.message_type = _TESTALLTYPES
+TestHugeFieldNumbers.RegisterExtension(test_all_types)
 TestAllExtensions.RegisterExtension(_TESTNESTEDEXTENSION.extensions_by_name['test'])
 TestAllExtensions.RegisterExtension(_TESTNESTEDEXTENSION.extensions_by_name['nested_string_extension'])
 _TESTREQUIRED.extensions_by_name['single'].message_type = _TESTREQUIRED
@@ -6045,6 +6597,8 @@ _TESTALLTYPES.fields_by_name['default_cord'].has_options = True
 _TESTALLTYPES.fields_by_name['default_cord']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\010\001'))
 _TESTDEPRECATEDFIELDS.fields_by_name['deprecated_int32'].has_options = True
 _TESTDEPRECATEDFIELDS.fields_by_name['deprecated_int32']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\030\001'))
+_TESTDEPRECATEDMESSAGE.has_options = True
+_TESTDEPRECATEDMESSAGE._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('\030\001'))
 _TESTEAGERMESSAGE.fields_by_name['sub_message'].has_options = True
 _TESTEAGERMESSAGE.fields_by_name['sub_message']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('(\000'))
 _TESTLAZYMESSAGE.fields_by_name['sub_message'].has_options = True
@@ -6129,6 +6683,12 @@ _TESTUNPACKEDTYPES.fields_by_name['unpacked_enum'].has_options = True
 _TESTUNPACKEDTYPES.fields_by_name['unpacked_enum']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\000'))
 _TESTDYNAMICEXTENSIONS.fields_by_name['packed_extension'].has_options = True
 _TESTDYNAMICEXTENSIONS.fields_by_name['packed_extension']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\001'))
+_TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY.has_options = True
+_TESTHUGEFIELDNUMBERS_STRINGSTRINGMAPENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_TESTHUGEFIELDNUMBERS.fields_by_name['repeated_int32'].has_options = True
+_TESTHUGEFIELDNUMBERS.fields_by_name['repeated_int32']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\000'))
+_TESTHUGEFIELDNUMBERS.fields_by_name['packed_int32'].has_options = True
+_TESTHUGEFIELDNUMBERS.fields_by_name['packed_int32']._options = _descriptor._ParseOptions(descriptor_pb2.FieldOptions(), _b('\020\001'))
 
 _TESTSERVICE = _descriptor.ServiceDescriptor(
   name='TestService',
@@ -6136,8 +6696,8 @@ _TESTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=12878,
-  serialized_end=13031,
+  serialized_start=14360,
+  serialized_end=14513,
   methods=[
   _descriptor.MethodDescriptor(
     name='Foo',
@@ -6158,6 +6718,9 @@ _TESTSERVICE = _descriptor.ServiceDescriptor(
     options=None,
   ),
 ])
+_sym_db.RegisterServiceDescriptor(_TESTSERVICE)
+
+DESCRIPTOR.services_by_name['TestService'] = _TESTSERVICE
 
 TestService = service_reflection.GeneratedServiceType('TestService', (_service.Service,), dict(
   DESCRIPTOR = _TESTSERVICE,

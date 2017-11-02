@@ -1,24 +1,26 @@
-"""Python wrappers around Brain.
+"""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
+Original C++ source file: logging_ops.cc
 """
 
 import collections as _collections
 
-from google.protobuf import text_format as _text_format
+from tensorflow.python.eager import execute as _execute
+from tensorflow.python.eager import context as _context
+from tensorflow.python.eager import core as _core
+from tensorflow.python.framework import dtypes as _dtypes
+from tensorflow.python.framework import tensor_shape as _tensor_shape
 
 from tensorflow.core.framework import op_def_pb2 as _op_def_pb2
-
 # Needed to trigger the call to _set_call_cpp_shape_fn.
 from tensorflow.python.framework import common_shapes as _common_shapes
-
 from tensorflow.python.framework import op_def_registry as _op_def_registry
 from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import op_def_library as _op_def_library
-__assert_outputs = [""]
 
 
-def _assert(condition, data, summarize=None, name=None):
+def _assert(condition, data, summarize=3, name=None):
   r"""Asserts that the given condition is true.
 
   If `condition` evaluates to false, print the list of tensors in `data`.
@@ -35,15 +37,27 @@ def _assert(condition, data, summarize=None, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("Assert", condition=condition, data=data,
-                                summarize=summarize, name=name)
-  return result
+  if summarize is None:
+    summarize = 3
+  summarize = _execute.make_int(summarize, "summarize")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "Assert", condition=condition, data=data, summarize=summarize,
+        name=name)
+    return _op
+  else:
+    _attr_T, data = _execute.convert_to_mixed_eager_tensors(data, _ctx)
+    _attr_T = [_t.as_datatype_enum for _t in _attr_T]
+    condition = _ops.convert_to_tensor(condition, _dtypes.bool)
+    _inputs_flat = [condition] + list(data)
+    _attrs = ("T", _attr_T, "summarize", summarize)
+    _result = _execute.execute(b"Assert", 0, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  return _result
 
 
-__audio_summary_outputs = ["summary"]
-
-
-def _audio_summary(tag, tensor, sample_rate, max_outputs=None, name=None):
+def _audio_summary(tag, tensor, sample_rate, max_outputs=3, name=None):
   r"""Outputs a `Summary` protocol buffer with audio.
 
   The summary has up to `max_outputs` summary values containing audio. The
@@ -70,16 +84,33 @@ def _audio_summary(tag, tensor, sample_rate, max_outputs=None, name=None):
   Returns:
     A `Tensor` of type `string`. Scalar. Serialized `Summary` protocol buffer.
   """
-  result = _op_def_lib.apply_op("AudioSummary", tag=tag, tensor=tensor,
-                                sample_rate=sample_rate,
-                                max_outputs=max_outputs, name=name)
-  return result
+  sample_rate = _execute.make_float(sample_rate, "sample_rate")
+  if max_outputs is None:
+    max_outputs = 3
+  max_outputs = _execute.make_int(max_outputs, "max_outputs")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "AudioSummary", tag=tag, tensor=tensor, sample_rate=sample_rate,
+        max_outputs=max_outputs, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("sample_rate", _op.get_attr("sample_rate"), "max_outputs",
+              _op.get_attr("max_outputs"))
+  else:
+    tag = _ops.convert_to_tensor(tag, _dtypes.string)
+    tensor = _ops.convert_to_tensor(tensor, _dtypes.float32)
+    _inputs_flat = [tag, tensor]
+    _attrs = ("sample_rate", sample_rate, "max_outputs", max_outputs)
+    _result = _execute.execute(b"AudioSummary", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "AudioSummary", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__audio_summary_v2_outputs = ["summary"]
-
-
-def _audio_summary_v2(tag, tensor, sample_rate, max_outputs=None, name=None):
+def _audio_summary_v2(tag, tensor, sample_rate, max_outputs=3, name=None):
   r"""Outputs a `Summary` protocol buffer with audio.
 
   The summary has up to `max_outputs` summary values containing audio. The
@@ -107,13 +138,29 @@ def _audio_summary_v2(tag, tensor, sample_rate, max_outputs=None, name=None):
   Returns:
     A `Tensor` of type `string`. Scalar. Serialized `Summary` protocol buffer.
   """
-  result = _op_def_lib.apply_op("AudioSummaryV2", tag=tag, tensor=tensor,
-                                sample_rate=sample_rate,
-                                max_outputs=max_outputs, name=name)
-  return result
-
-
-__histogram_summary_outputs = ["summary"]
+  if max_outputs is None:
+    max_outputs = 3
+  max_outputs = _execute.make_int(max_outputs, "max_outputs")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "AudioSummaryV2", tag=tag, tensor=tensor, sample_rate=sample_rate,
+        max_outputs=max_outputs, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("max_outputs", _op.get_attr("max_outputs"))
+  else:
+    tag = _ops.convert_to_tensor(tag, _dtypes.string)
+    tensor = _ops.convert_to_tensor(tensor, _dtypes.float32)
+    sample_rate = _ops.convert_to_tensor(sample_rate, _dtypes.float32)
+    _inputs_flat = [tag, tensor, sample_rate]
+    _attrs = ("max_outputs", max_outputs)
+    _result = _execute.execute(b"AudioSummaryV2", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "AudioSummaryV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _histogram_summary(tag, values, name=None):
@@ -135,15 +182,28 @@ def _histogram_summary(tag, values, name=None):
   Returns:
     A `Tensor` of type `string`. Scalar. Serialized `Summary` protocol buffer.
   """
-  result = _op_def_lib.apply_op("HistogramSummary", tag=tag, values=values,
-                                name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "HistogramSummary", tag=tag, values=values, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (values,) = _execute.args_to_matching_eager([values], _ctx, _dtypes.float32)
+    _attr_T = _attr_T.as_datatype_enum
+    tag = _ops.convert_to_tensor(tag, _dtypes.string)
+    _inputs_flat = [tag, values]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"HistogramSummary", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "HistogramSummary", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__image_summary_outputs = ["summary"]
-
-
-def _image_summary(tag, tensor, max_images=None, bad_color=None, name=None):
+def _image_summary(tag, tensor, max_images=3, bad_color=_execute.make_tensor("""dtype: DT_UINT8 tensor_shape { dim { size: 4 } } int_val: 255 int_val: 0 int_val: 0 int_val: 255""", "bad_color"), name=None):
   r"""Outputs a `Summary` protocol buffer with images.
 
   The summary has up to `max_images` summary values containing images. The
@@ -183,25 +243,45 @@ def _image_summary(tag, tensor, max_images=None, bad_color=None, name=None):
   Args:
     tag: A `Tensor` of type `string`.
       Scalar. Used to build the `tag` attribute of the summary values.
-    tensor: A `Tensor`. Must be one of the following types: `uint8`, `float32`, `half`.
+    tensor: A `Tensor`. Must be one of the following types: `uint8`, `float32`, `half`, `float64`.
       4-D of shape `[batch_size, height, width, channels]` where
       `channels` is 1, 3, or 4.
     max_images: An optional `int` that is `>= 1`. Defaults to `3`.
       Max number of batch elements to generate images for.
-    bad_color: . Defaults to `[]`.
+    bad_color: An optional `tf.TensorProto`. Defaults to `dtype: DT_UINT8 tensor_shape { dim { size: 4 } } int_val: 255 int_val: 0 int_val: 0 int_val: 255`.
       Color to use for pixels with non-finite values.
     name: A name for the operation (optional).
 
   Returns:
     A `Tensor` of type `string`. Scalar. Serialized `Summary` protocol buffer.
   """
-  result = _op_def_lib.apply_op("ImageSummary", tag=tag, tensor=tensor,
-                                max_images=max_images, bad_color=bad_color,
-                                name=name)
-  return result
-
-
-__merge_summary_outputs = ["summary"]
+  if max_images is None:
+    max_images = 3
+  max_images = _execute.make_int(max_images, "max_images")
+  if bad_color is None:
+    bad_color = _execute.make_tensor("""dtype: DT_UINT8 tensor_shape { dim { size: 4 } } int_val: 255 int_val: 0 int_val: 0 int_val: 255""", "bad_color")
+  bad_color = _execute.make_tensor(bad_color, "bad_color")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ImageSummary", tag=tag, tensor=tensor, max_images=max_images,
+        bad_color=bad_color, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("max_images", _op.get_attr("max_images"), "T",
+              _op.get_attr("T"), "bad_color", _op.get_attr("bad_color"))
+  else:
+    _attr_T, (tensor,) = _execute.args_to_matching_eager([tensor], _ctx, _dtypes.float32)
+    _attr_T = _attr_T.as_datatype_enum
+    tag = _ops.convert_to_tensor(tag, _dtypes.string)
+    _inputs_flat = [tag, tensor]
+    _attrs = ("max_images", max_images, "T", _attr_T, "bad_color", bad_color)
+    _result = _execute.execute(b"ImageSummary", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ImageSummary", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _merge_summary(inputs, name=None):
@@ -216,7 +296,7 @@ def _merge_summary(inputs, name=None):
   in the summaries to merge use the same tag.
 
   Args:
-    inputs: A list of at least 1 `Tensor` objects of type `string`.
+    inputs: A list of at least 1 `Tensor` objects with type `string`.
       Can be of any shape.  Each must contain serialized `Summary` protocol
       buffers.
     name: A name for the operation (optional).
@@ -224,15 +304,31 @@ def _merge_summary(inputs, name=None):
   Returns:
     A `Tensor` of type `string`. Scalar. Serialized `Summary` protocol buffer.
   """
-  result = _op_def_lib.apply_op("MergeSummary", inputs=inputs, name=name)
-  return result
+  if not isinstance(inputs, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'inputs' argument to "
+        "'merge_summary' Op, not %r." % inputs)
+  _attr_N = len(inputs)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "MergeSummary", inputs=inputs, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("N", _op.get_attr("N"))
+  else:
+    inputs = _ops.convert_n_to_tensor(inputs, _dtypes.string)
+    _inputs_flat = list(inputs)
+    _attrs = ("N", _attr_N)
+    _result = _execute.execute(b"MergeSummary", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "MergeSummary", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__print_outputs = ["output"]
-
-
-def _print(input, data, message=None, first_n=None, summarize=None,
-           name=None):
+def _print(input, data, message="", first_n=-1, summarize=3, name=None):
   r"""Prints a list of tensors.
 
   Passes `input` through to `output` and prints `data` when evaluating.
@@ -252,13 +348,39 @@ def _print(input, data, message=None, first_n=None, summarize=None,
   Returns:
     The unmodified `input` tensor
   """
-  result = _op_def_lib.apply_op("Print", input=input, data=data,
-                                message=message, first_n=first_n,
-                                summarize=summarize, name=name)
-  return result
-
-
-__scalar_summary_outputs = ["summary"]
+  if message is None:
+    message = ""
+  message = _execute.make_str(message, "message")
+  if first_n is None:
+    first_n = -1
+  first_n = _execute.make_int(first_n, "first_n")
+  if summarize is None:
+    summarize = 3
+  summarize = _execute.make_int(summarize, "summarize")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "Print", input=input, data=data, message=message, first_n=first_n,
+        summarize=summarize, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "U", _op.get_attr("U"), "message",
+              _op.get_attr("message"), "first_n", _op.get_attr("first_n"),
+              "summarize", _op.get_attr("summarize"))
+  else:
+    _attr_T, (input,) = _execute.args_to_matching_eager([input], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    _attr_U, data = _execute.convert_to_mixed_eager_tensors(data, _ctx)
+    _attr_U = [_t.as_datatype_enum for _t in _attr_U]
+    _inputs_flat = [input] + list(data)
+    _attrs = ("T", _attr_T, "U", _attr_U, "message", message, "first_n",
+              first_n, "summarize", summarize)
+    _result = _execute.execute(b"Print", 1, inputs=_inputs_flat, attrs=_attrs,
+                               ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "Print", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _scalar_summary(tags, values, name=None):
@@ -277,17 +399,33 @@ def _scalar_summary(tags, values, name=None):
     A `Tensor` of type `string`.
     Scalar.  Serialized `Summary` protocol buffer.
   """
-  result = _op_def_lib.apply_op("ScalarSummary", tags=tags, values=values,
-                                name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ScalarSummary", tags=tags, values=values, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (values,) = _execute.args_to_matching_eager([values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    tags = _ops.convert_to_tensor(tags, _dtypes.string)
+    _inputs_flat = [tags, values]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"ScalarSummary", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ScalarSummary", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__tensor_summary_outputs = ["summary"]
-
-
-def _tensor_summary(tensor, description=None, labels=None, display_name=None,
-                    name=None):
+def _tensor_summary(tensor, description="", labels=[], display_name="", name=None):
   r"""Outputs a `Summary` protocol buffer with a tensor.
+
+  This op is being phased out in favor of TensorSummaryV2, which lets callers pass
+  a tag as well as a serialized SummaryMetadata proto string that contains
+  plugin-specific data. We will keep this op to maintain backwards compatibility.
 
   Args:
     tensor: A `Tensor`. A tensor to serialize.
@@ -301,332 +439,419 @@ def _tensor_summary(tensor, description=None, labels=None, display_name=None,
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("TensorSummary", tensor=tensor,
-                                description=description, labels=labels,
-                                display_name=display_name, name=name)
-  return result
+  if description is None:
+    description = ""
+  description = _execute.make_str(description, "description")
+  if labels is None:
+    labels = []
+  if not isinstance(labels, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'labels' argument to "
+        "'tensor_summary' Op, not %r." % labels)
+  labels = [_execute.make_str(_s, "labels") for _s in labels]
+  if display_name is None:
+    display_name = ""
+  display_name = _execute.make_str(display_name, "display_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TensorSummary", tensor=tensor, description=description,
+        labels=labels, display_name=display_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "description",
+              _op.get_attr("description"), "labels", _op.get_attr("labels"),
+              "display_name", _op.get_attr("display_name"))
+  else:
+    _attr_T, (tensor,) = _execute.args_to_matching_eager([tensor], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    _inputs_flat = [tensor]
+    _attrs = ("T", _attr_T, "description", description, "labels", labels,
+              "display_name", display_name)
+    _result = _execute.execute(b"TensorSummary", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "TensorSummary", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-def _InitOpDefLibrary():
+def _tensor_summary_v2(tag, tensor, serialized_summary_metadata, name=None):
+  r"""Outputs a `Summary` protocol buffer with a tensor and per-plugin data.
+
+  Args:
+    tag: A `Tensor` of type `string`.
+      A string attached to this summary. Used for organization in TensorBoard.
+    tensor: A `Tensor`. A tensor to serialize.
+    serialized_summary_metadata: A `Tensor` of type `string`.
+      A serialized SummaryMetadata proto. Contains plugin
+      data.
+    name: A name for the operation (optional).
+
+  Returns:
+    A `Tensor` of type `string`.
+  """
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TensorSummaryV2", tag=tag, tensor=tensor,
+        serialized_summary_metadata=serialized_summary_metadata, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (tensor,) = _execute.args_to_matching_eager([tensor], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    tag = _ops.convert_to_tensor(tag, _dtypes.string)
+    serialized_summary_metadata = _ops.convert_to_tensor(serialized_summary_metadata, _dtypes.string)
+    _inputs_flat = [tag, tensor, serialized_summary_metadata]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"TensorSummaryV2", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "TensorSummaryV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
+
+def _InitOpDefLibrary(op_list_proto_bytes):
   op_list = _op_def_pb2.OpList()
-  _text_format.Merge(_InitOpDefLibrary.op_list_ascii, op_list)
+  op_list.ParseFromString(op_list_proto_bytes)
   _op_def_registry.register_op_list(op_list)
   op_def_lib = _op_def_library.OpDefLibrary()
   op_def_lib.add_op_list(op_list)
   return op_def_lib
-
-
-_InitOpDefLibrary.op_list_ascii = """op {
-  name: "Assert"
-  input_arg {
-    name: "condition"
-    type: DT_BOOL
-  }
-  input_arg {
-    name: "data"
-    type_list_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "list(type)"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "summarize"
-    type: "int"
-    default_value {
-      i: 3
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "AudioSummary"
-  input_arg {
-    name: "tag"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "sample_rate"
-    type: "float"
-  }
-  attr {
-    name: "max_outputs"
-    type: "int"
-    default_value {
-      i: 3
-    }
-    has_minimum: true
-    minimum: 1
-  }
-  deprecation {
-    version: 15
-    explanation: "Use AudioSummaryV2."
-  }
-}
-op {
-  name: "AudioSummaryV2"
-  input_arg {
-    name: "tag"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor"
-    type: DT_FLOAT
-  }
-  input_arg {
-    name: "sample_rate"
-    type: DT_FLOAT
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "max_outputs"
-    type: "int"
-    default_value {
-      i: 3
-    }
-    has_minimum: true
-    minimum: 1
-  }
-}
-op {
-  name: "HistogramSummary"
-  input_arg {
-    name: "tag"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "values"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "T"
-    type: "type"
-    default_value {
-      type: DT_FLOAT
-    }
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT32
-        type: DT_INT64
-        type: DT_UINT8
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_UINT16
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "ImageSummary"
-  input_arg {
-    name: "tag"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "max_images"
-    type: "int"
-    default_value {
-      i: 3
-    }
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "T"
-    type: "type"
-    default_value {
-      type: DT_FLOAT
-    }
-    allowed_values {
-      list {
-        type: DT_UINT8
-        type: DT_FLOAT
-        type: DT_HALF
-      }
-    }
-  }
-  attr {
-    name: "bad_color"
-    type: "tensor"
-    default_value {
-      tensor {
-        dtype: DT_UINT8
-        tensor_shape {
-          dim {
-            size: 4
-          }
-        }
-        int_val: 255
-        int_val: 0
-        int_val: 0
-        int_val: 255
-      }
-    }
-  }
-}
-op {
-  name: "MergeSummary"
-  input_arg {
-    name: "inputs"
-    type: DT_STRING
-    number_attr: "N"
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "N"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-}
-op {
-  name: "Print"
-  input_arg {
-    name: "input"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "data"
-    type_list_attr: "U"
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-  attr {
-    name: "U"
-    type: "list(type)"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "message"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "first_n"
-    type: "int"
-    default_value {
-      i: -1
-    }
-  }
-  attr {
-    name: "summarize"
-    type: "int"
-    default_value {
-      i: 3
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "ScalarSummary"
-  input_arg {
-    name: "tags"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "values"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT32
-        type: DT_INT64
-        type: DT_UINT8
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_UINT16
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "TensorSummary"
-  input_arg {
-    name: "tensor"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "summary"
-    type: DT_STRING
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-  attr {
-    name: "description"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "labels"
-    type: "list(string)"
-    default_value {
-      list {
-      }
-    }
-  }
-  attr {
-    name: "display_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-}
-"""
-
-
-_op_def_lib = _InitOpDefLibrary()
+# op {
+#   name: "Assert"
+#   input_arg {
+#     name: "condition"
+#     type: DT_BOOL
+#   }
+#   input_arg {
+#     name: "data"
+#     type_list_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "list(type)"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "summarize"
+#     type: "int"
+#     default_value {
+#       i: 3
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "AudioSummary"
+#   input_arg {
+#     name: "tag"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "sample_rate"
+#     type: "float"
+#   }
+#   attr {
+#     name: "max_outputs"
+#     type: "int"
+#     default_value {
+#       i: 3
+#     }
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   deprecation {
+#     version: 15
+#     explanation: "Use AudioSummaryV2."
+#   }
+# }
+# op {
+#   name: "AudioSummaryV2"
+#   input_arg {
+#     name: "tag"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor"
+#     type: DT_FLOAT
+#   }
+#   input_arg {
+#     name: "sample_rate"
+#     type: DT_FLOAT
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "max_outputs"
+#     type: "int"
+#     default_value {
+#       i: 3
+#     }
+#     has_minimum: true
+#     minimum: 1
+#   }
+# }
+# op {
+#   name: "HistogramSummary"
+#   input_arg {
+#     name: "tag"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     default_value {
+#       type: DT_FLOAT
+#     }
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT32
+#         type: DT_INT64
+#         type: DT_UINT8
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_UINT16
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "ImageSummary"
+#   input_arg {
+#     name: "tag"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "max_images"
+#     type: "int"
+#     default_value {
+#       i: 3
+#     }
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     default_value {
+#       type: DT_FLOAT
+#     }
+#     allowed_values {
+#       list {
+#         type: DT_UINT8
+#         type: DT_FLOAT
+#         type: DT_HALF
+#         type: DT_DOUBLE
+#       }
+#     }
+#   }
+#   attr {
+#     name: "bad_color"
+#     type: "tensor"
+#     default_value {
+#       tensor {
+#         dtype: DT_UINT8
+#         tensor_shape {
+#           dim {
+#             size: 4
+#           }
+#         }
+#         int_val: 255
+#         int_val: 0
+#         int_val: 0
+#         int_val: 255
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "MergeSummary"
+#   input_arg {
+#     name: "inputs"
+#     type: DT_STRING
+#     number_attr: "N"
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "N"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+# }
+# op {
+#   name: "Print"
+#   input_arg {
+#     name: "input"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "data"
+#     type_list_attr: "U"
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+#   attr {
+#     name: "U"
+#     type: "list(type)"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "message"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "first_n"
+#     type: "int"
+#     default_value {
+#       i: -1
+#     }
+#   }
+#   attr {
+#     name: "summarize"
+#     type: "int"
+#     default_value {
+#       i: 3
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ScalarSummary"
+#   input_arg {
+#     name: "tags"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT32
+#         type: DT_INT64
+#         type: DT_UINT8
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_UINT16
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "TensorSummary"
+#   input_arg {
+#     name: "tensor"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+#   attr {
+#     name: "description"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "labels"
+#     type: "list(string)"
+#     default_value {
+#       list {
+#       }
+#     }
+#   }
+#   attr {
+#     name: "display_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+# }
+# op {
+#   name: "TensorSummaryV2"
+#   input_arg {
+#     name: "tag"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "serialized_summary_metadata"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "summary"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+_op_def_lib = _InitOpDefLibrary(b"\nP\n\006Assert\022\r\n\tcondition\030\n\022\t\n\004data2\001T\"\023\n\001T\022\nlist(type)(\0010\001\"\024\n\tsummarize\022\003int\032\002\030\003\210\001\001\n{\n\014AudioSummary\022\007\n\003tag\030\007\022\n\n\006tensor\030\001\032\013\n\007summary\030\007\"\024\n\013sample_rate\022\005float\"\032\n\013max_outputs\022\003int\032\002\030\003(\0010\001B\027\010\017\022\023Use AudioSummaryV2.\n_\n\016AudioSummaryV2\022\007\n\003tag\030\007\022\n\n\006tensor\030\001\022\017\n\013sample_rate\030\001\032\013\n\007summary\030\007\"\032\n\013max_outputs\022\003int\032\002\030\003(\0010\001\nS\n\020HistogramSummary\022\007\n\003tag\030\007\022\013\n\006values\"\001T\032\013\n\007summary\030\007\"\034\n\001T\022\004type\032\0020\001:\r\n\0132\t\001\002\003\t\004\005\006\021\023\n\216\001\n\014ImageSummary\022\007\n\003tag\030\007\022\013\n\006tensor\"\001T\032\013\n\007summary\030\007\"\031\n\nmax_images\022\003int\032\002\030\003(\0010\001\"\027\n\001T\022\004type\032\0020\001:\010\n\0062\004\004\001\023\002\"\'\n\tbad_color\022\006tensor\032\022B\020\010\004\022\004\022\002\010\004:\006\377\001\000\000\377\001\n8\n\014MergeSummary\022\r\n\006inputs\030\007*\001N\032\013\n\007summary\030\007\"\014\n\001N\022\003int(\0010\001\n\230\001\n\005Print\022\n\n\005input\"\001T\022\t\n\004data2\001U\032\013\n\006output\"\001T\"\t\n\001T\022\004type\"\023\n\001U\022\nlist(type)(\0010\001\"\025\n\007message\022\006string\032\002\022\000\"\033\n\007first_n\022\003int\032\013\030\377\377\377\377\377\377\377\377\377\001\"\024\n\tsummarize\022\003int\032\002\030\003\210\001\001\nM\n\rScalarSummary\022\010\n\004tags\030\007\022\013\n\006values\"\001T\032\013\n\007summary\030\007\"\030\n\001T\022\004type:\r\n\0132\t\001\002\003\t\004\005\006\021\023\n\207\001\n\rTensorSummary\022\013\n\006tensor\"\001T\032\013\n\007summary\030\007\"\t\n\001T\022\004type\"\031\n\013description\022\006string\032\002\022\000\"\032\n\006labels\022\014list(string)\032\002\n\000\"\032\n\014display_name\022\006string\032\002\022\000\n`\n\017TensorSummaryV2\022\007\n\003tag\030\007\022\013\n\006tensor\"\001T\022\037\n\033serialized_summary_metadata\030\007\032\013\n\007summary\030\007\"\t\n\001T\022\004type")

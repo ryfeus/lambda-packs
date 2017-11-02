@@ -71,6 +71,7 @@ struct traits<TensorFFTOp<FFT, XprType, FFTResultType, FFTDir> > : public traits
   typedef typename remove_reference<Nested>::type _Nested;
   static const int NumDimensions = XprTraits::NumDimensions;
   static const int Layout = XprTraits::Layout;
+  typedef typename traits<XprType>::PointerType PointerType;
 };
 
 template <typename FFT, typename XprType, int FFTResultType, int FFTDirection>
@@ -234,7 +235,7 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
         if (line_len > 1) {
           const RealScalar pi_over_len(EIGEN_PI / line_len);
           const ComplexScalar pos_j_base = ComplexScalar(
-	       std::cos(pi_over_len), std::sin(pi_over_len));
+              std::cos(pi_over_len), std::sin(pi_over_len));
           pos_j_base_powered[1] = pos_j_base;
           if (line_len > 2) {
             const ComplexScalar pos_j_base_sq = pos_j_base * pos_j_base;
@@ -253,7 +254,7 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
         // get data into line_buf
         const Index stride = m_strides[dim];
         if (stride == 1) {
-          memcpy(line_buf, &buf[base_offset], line_len*sizeof(ComplexScalar));
+          m_device.memcpy(line_buf, &buf[base_offset], line_len*sizeof(ComplexScalar));
         } else {
           Index offset = base_offset;
           for (int j = 0; j < line_len; ++j, offset += stride) {
@@ -271,7 +272,7 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
 
         // write back
         if (FFTDir == FFT_FORWARD && stride == 1) {
-          memcpy(&buf[base_offset], line_buf, line_len*sizeof(ComplexScalar));
+          m_device.memcpy(&buf[base_offset], line_buf, line_len*sizeof(ComplexScalar));
         } else {
           Index offset = base_offset;
           const ComplexScalar div_factor =  ComplexScalar(1.0 / line_len, 0);

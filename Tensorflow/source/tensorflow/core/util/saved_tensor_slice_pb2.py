@@ -27,7 +27,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n-tensorflow/core/util/saved_tensor_slice.proto\x12\ntensorflow\x1a,tensorflow/core/framework/tensor_shape.proto\x1a,tensorflow/core/framework/tensor_slice.proto\x1a&tensorflow/core/framework/tensor.proto\x1a%tensorflow/core/framework/types.proto\x1a(tensorflow/core/framework/versions.proto\"\x9c\x01\n\x0eSavedSliceMeta\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x05shape\x18\x02 \x01(\x0b\x32\x1c.tensorflow.TensorShapeProto\x12\"\n\x04type\x18\x03 \x01(\x0e\x32\x14.tensorflow.DataType\x12+\n\x05slice\x18\x04 \x03(\x0b\x32\x1c.tensorflow.TensorSliceProto\"l\n\x14SavedTensorSliceMeta\x12*\n\x06tensor\x18\x01 \x03(\x0b\x32\x1a.tensorflow.SavedSliceMeta\x12(\n\x08versions\x18\x02 \x01(\x0b\x32\x16.tensorflow.VersionDef\"n\n\nSavedSlice\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x05slice\x18\x02 \x01(\x0b\x32\x1c.tensorflow.TensorSliceProto\x12%\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x17.tensorflow.TensorProto\"i\n\x11SavedTensorSlices\x12.\n\x04meta\x18\x01 \x01(\x0b\x32 .tensorflow.SavedTensorSliceMeta\x12$\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32\x16.tensorflow.SavedSliceB2\n\x13org.tensorflow.utilB\x16SavedTensorSliceProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_tensor__shape__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_tensor__slice__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_tensor__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_types__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_versions__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -217,6 +216,7 @@ DESCRIPTOR.message_types_by_name['SavedSliceMeta'] = _SAVEDSLICEMETA
 DESCRIPTOR.message_types_by_name['SavedTensorSliceMeta'] = _SAVEDTENSORSLICEMETA
 DESCRIPTOR.message_types_by_name['SavedSlice'] = _SAVEDSLICE
 DESCRIPTOR.message_types_by_name['SavedTensorSlices'] = _SAVEDTENSORSLICES
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SavedSliceMeta = _reflection.GeneratedProtocolMessageType('SavedSliceMeta', (_message.Message,), dict(
   DESCRIPTOR = _SAVEDSLICEMETA,

@@ -26,7 +26,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   ,
   dependencies=[google_dot_protobuf_dot_unittest__import__public__pb2.DESCRIPTOR,],
   public_dependencies=[google_dot_protobuf_dot_unittest__import__public__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _IMPORTENUM = _descriptor.EnumDescriptor(
   name='ImportEnum',
@@ -124,6 +123,7 @@ _IMPORTMESSAGE = _descriptor.Descriptor(
 DESCRIPTOR.message_types_by_name['ImportMessage'] = _IMPORTMESSAGE
 DESCRIPTOR.enum_types_by_name['ImportEnum'] = _IMPORTENUM
 DESCRIPTOR.enum_types_by_name['ImportEnumForMap'] = _IMPORTENUMFORMAP
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ImportMessage = _reflection.GeneratedProtocolMessageType('ImportMessage', (_message.Message,), dict(
   DESCRIPTOR = _IMPORTMESSAGE,

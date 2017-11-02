@@ -115,11 +115,30 @@ As hello world code I used recognition of images trained on imagenet (https://ww
 
 #### Tools
 
-Tensorflow 1.0.0
+Tensorflow 1.4.0
 
 #### Documentation
 
 https://www.tensorflow.org/tutorials/image_recognition
+
+#### Serverless start
+
+```
+serverless install -u https://github.com/ryfeus/lambda-packs/tree/master/tensorflow/source -n tensorflow
+cd tensorflow
+serverless deploy
+serverless invoke --function main --log
+```
+
+#### Build pack
+
+```
+wget https://github.com/ryfeus/lambda-packs/blob/master/tensorflow/buildPack.sh
+wget https://github.com/ryfeus/lambda-packs/blob/master/tensorflow/index.py
+docker pull amazonlinux:latest
+docker run -v $(pwd):/outputs --name lambdapackgen -d amazonlinux:latest tail -f /dev/null
+docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack.sh
+```
 
 ---
 ### Sklearn

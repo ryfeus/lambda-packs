@@ -154,6 +154,13 @@ class MapReflectionFriend;     // scalar_map_container.h
 }
 
 
+namespace internal {
+class ReflectionOps;     // reflection_ops.h
+class MapKeySorter;      // wire_format.cc
+class WireFormat;        // wire_format.h
+class MapFieldReflectionTest;  // map_test.cc
+}
+
 template<typename T>
 class RepeatedField;     // repeated_field.h
 
@@ -245,7 +252,10 @@ class LIBPROTOBUF_EXPORT Message : public MessageLite {
   // using reflection (rather than the generated code implementation for
   // ByteSize()). Like ByteSize(), its CPU time is linear in the number of
   // fields defined for the proto.
-  virtual int SpaceUsed() const;
+  virtual size_t SpaceUsedLong() const;
+
+  PROTOBUF_RUNTIME_DEPRECATED("Please use SpaceUsedLong() instead")
+  int SpaceUsed() const { return internal::ToIntSize(SpaceUsedLong()); }
 
   // Debugging & Testing----------------------------------------------
 
@@ -417,7 +427,12 @@ class LIBPROTOBUF_EXPORT Reflection {
   virtual UnknownFieldSet* MutableUnknownFields(Message* message) const = 0;
 
   // Estimate the amount of memory used by the message object.
-  virtual int SpaceUsed(const Message& message) const = 0;
+  virtual size_t SpaceUsedLong(const Message& message) const = 0;
+
+  PROTOBUF_RUNTIME_DEPRECATED("Please use SpaceUsedLong() instead")
+  int SpaceUsed(const Message& message) const {
+    return internal::ToIntSize(SpaceUsedLong(message));
+  }
 
   // Check if the given non-repeated field is set.
   virtual bool HasField(const Message& message,
@@ -519,7 +534,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   // will only be present when the new unknown-enum-value semantics are enabled
   // for a message.)
   virtual int GetEnumValue(
-      const Message& message, const FieldDescriptor* field) const;
+      const Message& message, const FieldDescriptor* field) const = 0;
 
   // See MutableMessage() for the meaning of the "factory" parameter.
   virtual const Message& GetMessage(const Message& message,
@@ -575,7 +590,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   // messages with new unknown-enum-value semantics.
   virtual void SetEnumValue(Message* message,
                             const FieldDescriptor* field,
-                            int value) const;
+                            int value) const = 0;
 
   // Get a mutable pointer to a field with a message type.  If a MessageFactory
   // is provided, it will be used to construct instances of the sub-message;
@@ -646,7 +661,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   // for a message.)
   virtual int GetRepeatedEnumValue(
       const Message& message,
-      const FieldDescriptor* field, int index) const;
+      const FieldDescriptor* field, int index) const = 0;
   virtual const Message& GetRepeatedMessage(
       const Message& message,
       const FieldDescriptor* field, int index) const = 0;
@@ -693,7 +708,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   // messages with new unknown-enum-value semantics.
   virtual void SetRepeatedEnumValue(Message* message,
                                     const FieldDescriptor* field, int index,
-                                    int value) const;
+                                    int value) const = 0;
   // Get a mutable pointer to an element of a repeated field with a message
   // type.
   virtual Message* MutableRepeatedMessage(
@@ -729,7 +744,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   // messages with new unknown-enum-value semantics.
   virtual void AddEnumValue(Message* message,
                             const FieldDescriptor* field,
-                            int value) const;
+                            int value) const = 0;
   // See MutableMessage() for comments on the "factory" parameter.
   virtual Message* AddMessage(Message* message,
                               const FieldDescriptor* field,
@@ -739,9 +754,9 @@ class LIBPROTOBUF_EXPORT Reflection {
   // specifyed by 'field' passing ownership to the message.
   // TODO(tmarek): Make virtual after all subclasses have been
   // updated.
-  virtual void AddAllocatedMessage(Message* /* message */,
-                                   const FieldDescriptor* /*field */,
-                                   Message* /* new_entry */) const {}
+  virtual void AddAllocatedMessage(Message* message,
+                                   const FieldDescriptor* field,
+                                   Message* new_entry) const;
 
 
   // Get a RepeatedFieldRef object that can be used to read the underlying
@@ -848,34 +863,31 @@ class LIBPROTOBUF_EXPORT Reflection {
   // downgrade to a compatible value or use the UnknownFieldSet if not. For
   // example:
   //
-  // int new_value = GetValueFromApplicationLogic();
-  // if (reflection->SupportsUnknownEnumValues()) {
+  //   int new_value = GetValueFromApplicationLogic();
+  //   if (reflection->SupportsUnknownEnumValues()) {
   //     reflection->SetEnumValue(message, field, new_value);
-  // } else {
+  //   } else {
   //     if (field_descriptor->enum_type()->
-  //             FindValueByNumver(new_value) != NULL) {
-  //         reflection->SetEnumValue(message, field, new_value);
+  //             FindValueByNumber(new_value) != NULL) {
+  //       reflection->SetEnumValue(message, field, new_value);
   //     } else if (emit_unknown_enum_values) {
-  //         reflection->MutableUnknownFields(message)->AddVarint(
-  //             field->number(),
-  //             new_value);
+  //       reflection->MutableUnknownFields(message)->AddVarint(
+  //           field->number(), new_value);
   //     } else {
-  //         // convert value to a compatible/default value.
-  //         new_value = CompatibleDowngrade(new_value);
-  //         reflection->SetEnumValue(message, field, new_value);
+  //       // convert value to a compatible/default value.
+  //       new_value = CompatibleDowngrade(new_value);
+  //       reflection->SetEnumValue(message, field, new_value);
   //     }
-  // }
+  //   }
   virtual bool SupportsUnknownEnumValues() const { return false; }
 
   // Returns the MessageFactory associated with this message.  This can be
   // useful for determining if a message is a generated message or not, for
   // example:
-  //
-  // if (message->GetReflection()->GetMessageFactory() ==
-  //     google::protobuf::MessageFactory::generated_factory()) {
-  //   // This is a generated message.
-  // }
-  //
+  //   if (message->GetReflection()->GetMessageFactory() ==
+  //       google::protobuf::MessageFactory::generated_factory()) {
+  //     // This is a generated message.
+  //   }
   // It can also be used to create more messages of this type, though
   // Message::New() is an easier way to accomplish this.
   virtual MessageFactory* GetMessageFactory() const;
@@ -933,6 +945,10 @@ class LIBPROTOBUF_EXPORT Reflection {
   template<typename T, typename Enable>
   friend class MutableRepeatedFieldRef;
   friend class ::google::protobuf::python::MapReflectionFriend;
+  friend class internal::MapFieldReflectionTest;
+  friend class internal::MapKeySorter;
+  friend class internal::WireFormat;
+  friend class internal::ReflectionOps;
 
   // Special version for specialized implementations of string.  We can't call
   // MutableRawRepeatedField directly here because we don't have access to
@@ -947,7 +963,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   // TODO(jieluo) - make the map APIs pure virtual after updating
   // all the subclasses.
   // Returns true if key is in map. Returns false if key is not in map field.
-  virtual bool ContainsMapKey(const Message& /* message*/,
+  virtual bool ContainsMapKey(const Message& /* message */,
                               const FieldDescriptor* /* field */,
                               const MapKey& /* key */) const {
     return false;
@@ -965,7 +981,7 @@ class LIBPROTOBUF_EXPORT Reflection {
 
   // Delete and returns true if key is in the map field. Returns false
   // otherwise.
-  virtual bool DeleteMapValue(Message* /* mesage */,
+  virtual bool DeleteMapValue(Message* /* message */,
                               const FieldDescriptor* /* field */,
                               const MapKey& /* key */) const {
     return false;

@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n8google/protobuf/internal/import_test_package/outer.proto\x12\x33google.protobuf.python.internal.import_test_package\x1a\x38google/protobuf/internal/import_test_package/inner.proto\"R\n\x05Outer\x12I\n\x05inner\x18\x01 \x01(\x0b\x32:.google.protobuf.python.internal.import_test_package.Inner')
   ,
   dependencies=[google_dot_protobuf_dot_internal_dot_import__test__package_dot_inner__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -60,6 +59,7 @@ _OUTER = _descriptor.Descriptor(
 
 _OUTER.fields_by_name['inner'].message_type = google_dot_protobuf_dot_internal_dot_import__test__package_dot_inner__pb2._INNER
 DESCRIPTOR.message_types_by_name['Outer'] = _OUTER
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Outer = _reflection.GeneratedProtocolMessageType('Outer', (_message.Message,), dict(
   DESCRIPTOR = _OUTER,

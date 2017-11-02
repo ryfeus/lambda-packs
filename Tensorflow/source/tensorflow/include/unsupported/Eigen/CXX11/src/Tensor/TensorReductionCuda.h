@@ -14,7 +14,7 @@ namespace Eigen {
 namespace internal {
 
 
-#if defined(EIGEN_USE_GPU) && defined(__CUDACC__)
+#if defined(EIGEN_USE_GPU) && defined(EIGEN_CUDACC)
 // Full reducers for GPU, don't vectorize for now
 
 // Reducer function that enables multiple cuda thread to safely accumulate at the same
@@ -23,7 +23,7 @@ namespace internal {
 // updated the content of the output address it will try again.
 template <typename T, typename R>
 __device__ EIGEN_ALWAYS_INLINE void atomicReduce(T* output, T accum, R& reducer) {
-#if __CUDA_ARCH__ >= 300
+#if EIGEN_CUDA_ARCH >= 300
   if (sizeof(T) == 4)
   {
     unsigned int oldval = *reinterpret_cast<unsigned int*>(output);
@@ -62,9 +62,9 @@ __device__ EIGEN_ALWAYS_INLINE void atomicReduce(T* output, T accum, R& reducer)
   else {
     assert(0 && "Wordsize not supported");
   }
-#else
+#else // EIGEN_CUDA_ARCH >= 300
   assert(0 && "Shouldn't be called on unsupported device");
-#endif
+#endif // EIGEN_CUDA_ARCH >= 300
 }
 
 // We extend atomicExch to support extra data types
@@ -98,15 +98,15 @@ __device__ inline void atomicReduce(half2* output, half2 accum, R<half>& reducer
     }
   }
 }
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
 template <>
 __device__ inline void atomicReduce(float* output, float accum, SumReducer<float>&) {
-#if __CUDA_ARCH__ >= 300
+#if EIGEN_CUDA_ARCH >= 300
   atomicAdd(output, accum);
-#else
+#else // EIGEN_CUDA_ARCH >= 300
   assert(0 && "Shouldn't be called on unsupported device");
-#endif
+#endif // EIGEN_CUDA_ARCH >= 300
 }
 
 
@@ -124,7 +124,7 @@ template <int BlockSize, int NumPerThread, typename Self,
           typename Reducer, typename Index>
 __global__ void FullReductionKernel(Reducer reducer, const Self input, Index num_coeffs,
                                     typename Self::CoeffReturnType* output, unsigned int* semaphore) {
-#if __CUDA_ARCH__ >= 300
+#if EIGEN_CUDA_ARCH >= 300
   // Initialize the output value
   const Index first_index = blockIdx.x * BlockSize * NumPerThread + threadIdx.x;
   if (gridDim.x == 1) {
@@ -168,7 +168,11 @@ __global__ void FullReductionKernel(Reducer reducer, const Self input, Index num
 
 #pragma unroll
   for (int offset = warpSize/2; offset > 0; offset /= 2) {
+  #if defined(EIGEN_CUDACC_VER) && EIGEN_CUDACC_VER < 90000
     reducer.reduce(__shfl_down(accum, offset, warpSize), &accum);
+  #else
+    reducer.reduce(__shfl_down_sync(0xFFFFFFFF, accum, offset, warpSize), &accum);
+  #endif
   }
 
   if ((threadIdx.x & (warpSize - 1)) == 0) {
@@ -179,9 +183,9 @@ __global__ void FullReductionKernel(Reducer reducer, const Self input, Index num
     // Let the last block reset the semaphore
     atomicInc(semaphore, gridDim.x + 1);
   }
-#else
+#else // EIGEN_CUDA_ARCH >= 300
   assert(0 && "Shouldn't be called on unsupported device");
-#endif
+#endif // EIGEN_CUDA_ARCH >= 300
 }
 
 
@@ -223,12 +227,14 @@ __global__ void FullReductionKernelHalfFloat(Reducer reducer, const Self input, 
   const Index first_index = blockIdx.x * BlockSize * NumPerThread + 2*threadIdx.x;
 
   // Initialize the output value if it wasn't initialized by the ReductionInitKernel
-  if (gridDim.x == 1 && first_index == 0) {
-    if (num_coeffs % 2 != 0) {
-      half last = input.m_impl.coeff(num_coeffs-1);
-      *scratch = __halves2half2(last, reducer.initialize());
-    } else {
-      *scratch = reducer.template initializePacket<half2>();
+  if (gridDim.x == 1) {
+    if (first_index == 0) {
+      if (num_coeffs % 2 != 0) {
+        half last = input.m_impl.coeff(num_coeffs-1);
+        *scratch = __halves2half2(last, reducer.initialize());
+      } else {
+        *scratch = reducer.template initializePacket<half2>();
+      }
     }
     __syncthreads();
   }
@@ -244,19 +250,25 @@ __global__ void FullReductionKernelHalfFloat(Reducer reducer, const Self input, 
 
 #pragma unroll
   for (int offset = warpSize/2; offset > 0; offset /= 2) {
+  #if defined(EIGEN_CUDACC_VER) && EIGEN_CUDACC_VER < 90000
     reducer.reducePacket(__shfl_down(accum, offset, warpSize), &accum);
+  #else
+    int temp = __shfl_down_sync(0xFFFFFFFF, *(int*)(&accum), (unsigned)offset, warpSize);
+    reducer.reducePacket(*(half2*)(&temp), &accum);
+  #endif
   }
 
   if ((threadIdx.x & (warpSize - 1)) == 0) {
     atomicReduce(scratch, accum, reducer);
   }
 
-  __syncthreads();
-
-  if (gridDim.x == 1 && first_index == 0) {
-    half tmp = __low2half(*scratch);
-    reducer.reduce(__high2half(*scratch), &tmp);
-    *output = tmp;
+  if (gridDim.x == 1) {
+    __syncthreads();
+    if (first_index == 0) {
+      half tmp = __low2half(*scratch);
+      reducer.reduce(__high2half(*scratch), &tmp);
+      *output = tmp;
+    }
   }
 }
 
@@ -268,7 +280,7 @@ __global__ void ReductionCleanupKernelHalfFloat(Op& reducer, half* output, half2
   *output = tmp;
 }
 
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
 template <typename Self, typename Op, typename OutputType, bool PacketAccess, typename Enabled = void>
 struct FullReductionLauncher {
@@ -287,7 +299,6 @@ struct FullReductionLauncher<
     void>::type> {
   static void run(const Self& self, Op& reducer, const GpuDevice& device, OutputType* output, typename Self::Index num_coeffs) {
     typedef typename Self::Index Index;
-    typedef typename Self::CoeffReturnType Scalar;
     const int block_size = 256;
     const int num_per_thread = 128;
     const int num_blocks = divup<int>(num_coeffs, block_size * num_per_thread);
@@ -336,7 +347,7 @@ struct FullReductionLauncher<Self, Op, Eigen::half, true> {
     }
   }
 };
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
 
 template <typename Self, typename Op, bool Vectorizable>
@@ -349,11 +360,11 @@ struct FullReducer<Self, Op, GpuDevice, Vectorizable> {
       (internal::is_same<typename Self::CoeffReturnType, float>::value ||
        internal::is_same<typename Self::CoeffReturnType, double>::value ||
        (internal::is_same<typename Self::CoeffReturnType, Eigen::half>::value && reducer_traits<Op, GpuDevice>::PacketAccess));
-#else
+#else // EIGEN_HAS_CUDA_FP16
   static const bool HasOptimizedImplementation = !Op::IsStateful &&
                                                 (internal::is_same<typename Self::CoeffReturnType, float>::value ||
                                                  internal::is_same<typename Self::CoeffReturnType, double>::value);
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
   template <typename OutputType>
   static void run(const Self& self, Op& reducer, const GpuDevice& device, OutputType* output) {
@@ -373,7 +384,7 @@ template <int NumPerThread, typename Self,
           typename Reducer, typename Index>
 __global__ void InnerReductionKernel(Reducer reducer, const Self input, Index num_coeffs_to_reduce, Index num_preserved_coeffs,
                                          typename Self::CoeffReturnType* output) {
-#if __CUDA_ARCH__ >= 300
+#if EIGEN_CUDA_ARCH >= 300
   typedef typename Self::CoeffReturnType Type;
   eigen_assert(blockDim.y == 1);
   eigen_assert(blockDim.z == 1);
@@ -426,7 +437,11 @@ __global__ void InnerReductionKernel(Reducer reducer, const Self input, Index nu
 
 #pragma unroll
       for (int offset = warpSize/2; offset > 0; offset /= 2) {
+      #if defined(EIGEN_CUDACC_VER) && EIGEN_CUDACC_VER < 90000
         reducer.reduce(__shfl_down(reduced_val, offset), &reduced_val);
+      #else
+        reducer.reduce(__shfl_down_sync(0xFFFFFFFF, reduced_val, offset), &reduced_val);
+      #endif
       }
 
       if ((threadIdx.x & (warpSize - 1)) == 0) {
@@ -434,9 +449,9 @@ __global__ void InnerReductionKernel(Reducer reducer, const Self input, Index nu
       }
     }
   }
-#else
+#else // EIGEN_CUDA_ARCH >= 300
   assert(0 && "Shouldn't be called on unsupported device");
-#endif
+#endif // EIGEN_CUDA_ARCH >= 300
 }
 
 #ifdef EIGEN_HAS_CUDA_FP16
@@ -516,8 +531,15 @@ __global__ void InnerReductionKernelHalfFloat(Reducer reducer, const Self input,
 
 #pragma unroll
       for (int offset = warpSize/2; offset > 0; offset /= 2) {
+      #if defined(EIGEN_CUDACC_VER) && EIGEN_CUDACC_VER < 90000
         reducer.reducePacket(__shfl_down(reduced_val1, offset, warpSize), &reduced_val1);
         reducer.reducePacket(__shfl_down(reduced_val2, offset, warpSize), &reduced_val2);
+      #else
+        int temp1 = __shfl_down_sync(0xFFFFFFFF, *(int*)(&reduced_val1), (unsigned)offset, warpSize);
+        int temp2 = __shfl_down_sync(0xFFFFFFFF, *(int*)(&reduced_val2), (unsigned)offset, warpSize);
+        reducer.reducePacket(*(half2*)(&temp1), &reduced_val1);
+        reducer.reducePacket(*(half2*)(&temp2), &reduced_val2);
+      #endif
       }
 
       half val1 =  __low2half(reduced_val1);
@@ -534,7 +556,7 @@ __global__ void InnerReductionKernelHalfFloat(Reducer reducer, const Self input,
   }
 }
 
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
 template <typename Self, typename Op, typename OutputType, bool PacketAccess, typename Enabled = void>
 struct InnerReductionLauncher {
@@ -626,7 +648,7 @@ struct InnerReductionLauncher<Self, Op, Eigen::half, true> {
     return false;
   }
 };
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
 
 template <typename Self, typename Op>
@@ -639,11 +661,11 @@ struct InnerReducer<Self, Op, GpuDevice> {
       (internal::is_same<typename Self::CoeffReturnType, float>::value ||
        internal::is_same<typename Self::CoeffReturnType, double>::value ||
        (internal::is_same<typename Self::CoeffReturnType, Eigen::half>::value && reducer_traits<Op, GpuDevice>::PacketAccess));
-#else
+#else // EIGEN_HAS_CUDA_FP16
   static const bool HasOptimizedImplementation = !Op::IsStateful &&
                                                  (internal::is_same<typename Self::CoeffReturnType, float>::value ||
                                                   internal::is_same<typename Self::CoeffReturnType, double>::value);
-#endif
+#endif // EIGEN_HAS_CUDA_FP16
 
   template <typename OutputType>
   static bool run(const Self& self, Op& reducer, const GpuDevice& device, OutputType* output, typename Self::Index num_coeffs_to_reduce, typename Self::Index num_preserved_vals) {
@@ -741,7 +763,7 @@ struct OuterReducer<Self, Op, GpuDevice> {
   }
 };
 
-#endif
+#endif // defined(EIGEN_USE_GPU) && defined(__CUDACC__)
 
 
 } // end namespace internal

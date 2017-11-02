@@ -9,14 +9,14 @@
 
 namespace tensorflow {
 
-// Message-text conversion for tensorflow.ResourceHandle
+// Message-text conversion for tensorflow.ResourceHandleProto
 string ProtoDebugString(
-    const ::tensorflow::ResourceHandle& msg);
+    const ::tensorflow::ResourceHandleProto& msg);
 string ProtoShortDebugString(
-    const ::tensorflow::ResourceHandle& msg);
+    const ::tensorflow::ResourceHandleProto& msg);
 bool ProtoParseFromString(
     const string& s,
-    ::tensorflow::ResourceHandle* msg)
+    ::tensorflow::ResourceHandleProto* msg)
         TF_MUST_USE_RESULT;
 
 }  // namespace tensorflow

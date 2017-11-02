@@ -100,7 +100,7 @@ class IndexMapper {
       }
     } else {
       for (int i = NumDims - 1; i >= 0; --i) {
-        if (i + 1 < offset) {
+        if (static_cast<size_t>(i + 1) < offset) {
           m_cudaInputStrides[i] =
               m_cudaInputStrides[i + 1] * cudaInputDimensions[i + 1];
           m_cudaOutputStrides[i] =
@@ -231,6 +231,8 @@ struct traits<TensorConvolutionOp<Dimensions, InputXprType, KernelXprType> >
   typedef typename remove_reference<RhsNested>::type _RhsNested;
   static const int NumDimensions = traits<InputXprType>::NumDimensions;
   static const int Layout = traits<InputXprType>::Layout;
+  typedef typename conditional<Pointer_type_promotion<typename InputXprType::Scalar, Scalar>::val,
+  typename traits<InputXprType>::PointerType, typename traits<KernelXprType>::PointerType>::type PointerType;
 
   enum {
     Flags = 0
@@ -465,7 +467,7 @@ struct TensorEvaluator<const TensorConvolutionOp<Indices, InputArgType, KernelAr
                                        PacketSize));
   }
 
-  EIGEN_DEVICE_FUNC Scalar* data() const { return NULL; }
+  EIGEN_DEVICE_FUNC typename Eigen::internal::traits<XprType>::PointerType data() const { return NULL; }
 
  private:
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Index firstInput(Index index) const {
@@ -551,7 +553,7 @@ struct TensorEvaluator<const TensorConvolutionOp<Indices, InputArgType, KernelAr
 
 
 // Use an optimized implementation of the evaluation code for GPUs whenever possible.
-#if defined(EIGEN_USE_GPU) && defined(__CUDACC__)
+#if defined(EIGEN_USE_GPU) && defined(EIGEN_CUDACC)
 
 template <int StaticKernelSize>
 struct GetKernelSize {

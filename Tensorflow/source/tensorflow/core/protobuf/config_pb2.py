@@ -17,16 +17,17 @@ from tensorflow.core.framework import cost_graph_pb2 as tensorflow_dot_core_dot_
 from tensorflow.core.framework import graph_pb2 as tensorflow_dot_core_dot_framework_dot_graph__pb2
 from tensorflow.core.framework import step_stats_pb2 as tensorflow_dot_core_dot_framework_dot_step__stats__pb2
 from tensorflow.core.protobuf import debug_pb2 as tensorflow_dot_core_dot_protobuf_dot_debug__pb2
+from tensorflow.core.protobuf import cluster_pb2 as tensorflow_dot_core_dot_protobuf_dot_cluster__pb2
+from tensorflow.core.protobuf import rewriter_config_pb2 as tensorflow_dot_core_dot_protobuf_dot_rewriter__config__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='tensorflow/core/protobuf/config.proto',
   package='tensorflow',
   syntax='proto3',
-  serialized_pb=_b('\n%tensorflow/core/protobuf/config.proto\x12\ntensorflow\x1a*tensorflow/core/framework/cost_graph.proto\x1a%tensorflow/core/framework/graph.proto\x1a*tensorflow/core/framework/step_stats.proto\x1a$tensorflow/core/protobuf/debug.proto\"\xa1\x01\n\nGPUOptions\x12\'\n\x1fper_process_gpu_memory_fraction\x18\x01 \x01(\x01\x12\x16\n\x0e\x61llocator_type\x18\x02 \x01(\t\x12\x1f\n\x17\x64\x65\x66\x65rred_deletion_bytes\x18\x03 \x01(\x03\x12\x14\n\x0c\x61llow_growth\x18\x04 \x01(\x08\x12\x1b\n\x13visible_device_list\x18\x05 \x01(\t\"\xdf\x02\n\x10OptimizerOptions\x12+\n#do_common_subexpression_elimination\x18\x01 \x01(\x08\x12\x1b\n\x13\x64o_constant_folding\x18\x02 \x01(\x08\x12\x1c\n\x14\x64o_function_inlining\x18\x04 \x01(\x08\x12\x35\n\topt_level\x18\x03 \x01(\x0e\x32\".tensorflow.OptimizerOptions.Level\x12\x45\n\x10global_jit_level\x18\x05 \x01(\x0e\x32+.tensorflow.OptimizerOptions.GlobalJitLevel\" \n\x05Level\x12\x06\n\x02L1\x10\x00\x12\x0f\n\x02L0\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\"C\n\x0eGlobalJitLevel\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x00\x12\x10\n\x03OFF\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x12\x08\n\x04ON_1\x10\x01\x12\x08\n\x04ON_2\x10\x02\"\xb9\x02\n\x0cGraphOptions\x12\x1e\n\x16\x65nable_recv_scheduling\x18\x02 \x01(\x08\x12\x37\n\x11optimizer_options\x18\x03 \x01(\x0b\x32\x1c.tensorflow.OptimizerOptions\x12\x18\n\x10\x62uild_cost_model\x18\x04 \x01(\x03\x12\x1e\n\x16\x62uild_cost_model_after\x18\t \x01(\x03\x12\x14\n\x0cinfer_shapes\x18\x05 \x01(\x08\x12\x1a\n\x12place_pruned_graph\x18\x06 \x01(\x08\x12 \n\x18\x65nable_bfloat16_sendrecv\x18\x07 \x01(\x08\x12\x15\n\rtimeline_step\x18\x08 \x01(\x05J\x04\x08\x01\x10\x02R%skip_common_subexpression_elimination\",\n\x15ThreadPoolOptionProto\x12\x13\n\x0bnum_threads\x18\x01 \x01(\x05\"2\n\nRPCOptions\x12$\n\x1cuse_rpc_for_inprocess_master\x18\x01 \x01(\x08\"\xd1\x04\n\x0b\x43onfigProto\x12>\n\x0c\x64\x65vice_count\x18\x01 \x03(\x0b\x32(.tensorflow.ConfigProto.DeviceCountEntry\x12$\n\x1cintra_op_parallelism_threads\x18\x02 \x01(\x05\x12$\n\x1cinter_op_parallelism_threads\x18\x05 \x01(\x05\x12\x1f\n\x17use_per_session_threads\x18\t \x01(\x08\x12G\n\x1csession_inter_op_thread_pool\x18\x0c \x03(\x0b\x32!.tensorflow.ThreadPoolOptionProto\x12\x18\n\x10placement_period\x18\x03 \x01(\x05\x12\x16\n\x0e\x64\x65vice_filters\x18\x04 \x03(\t\x12+\n\x0bgpu_options\x18\x06 \x01(\x0b\x32\x16.tensorflow.GPUOptions\x12\x1c\n\x14\x61llow_soft_placement\x18\x07 \x01(\x08\x12\x1c\n\x14log_device_placement\x18\x08 \x01(\x08\x12/\n\rgraph_options\x18\n \x01(\x0b\x32\x18.tensorflow.GraphOptions\x12\x1f\n\x17operation_timeout_in_ms\x18\x0b \x01(\x03\x12+\n\x0brpc_options\x18\r \x01(\x0b\x32\x16.tensorflow.RPCOptions\x1a\x32\n\x10\x44\x65viceCountEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xa5\x02\n\nRunOptions\x12\x36\n\x0btrace_level\x18\x01 \x01(\x0e\x32!.tensorflow.RunOptions.TraceLevel\x12\x15\n\rtimeout_in_ms\x18\x02 \x01(\x03\x12\x1c\n\x14inter_op_thread_pool\x18\x03 \x01(\x05\x12\x1f\n\x17output_partition_graphs\x18\x05 \x01(\x08\x12/\n\rdebug_options\x18\x06 \x01(\x0b\x32\x18.tensorflow.DebugOptions\"R\n\nTraceLevel\x12\x0c\n\x08NO_TRACE\x10\x00\x12\x12\n\x0eSOFTWARE_TRACE\x10\x01\x12\x12\n\x0eHARDWARE_TRACE\x10\x02\x12\x0e\n\nFULL_TRACE\x10\x03J\x04\x08\x04\x10\x05\"\x96\x01\n\x0bRunMetadata\x12)\n\nstep_stats\x18\x01 \x01(\x0b\x32\x15.tensorflow.StepStats\x12,\n\ncost_graph\x18\x02 \x01(\x0b\x32\x18.tensorflow.CostGraphDef\x12.\n\x10partition_graphs\x18\x03 \x03(\x0b\x32\x14.tensorflow.GraphDefB-\n\x18org.tensorflow.frameworkB\x0c\x43onfigProtosP\x01\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n%tensorflow/core/protobuf/config.proto\x12\ntensorflow\x1a*tensorflow/core/framework/cost_graph.proto\x1a%tensorflow/core/framework/graph.proto\x1a*tensorflow/core/framework/step_stats.proto\x1a$tensorflow/core/protobuf/debug.proto\x1a&tensorflow/core/protobuf/cluster.proto\x1a.tensorflow/core/protobuf/rewriter_config.proto\"\x89\x02\n\nGPUOptions\x12\'\n\x1fper_process_gpu_memory_fraction\x18\x01 \x01(\x01\x12\x16\n\x0e\x61llocator_type\x18\x02 \x01(\t\x12\x1f\n\x17\x64\x65\x66\x65rred_deletion_bytes\x18\x03 \x01(\x03\x12\x14\n\x0c\x61llow_growth\x18\x04 \x01(\x08\x12\x1b\n\x13visible_device_list\x18\x05 \x01(\t\x12\"\n\x1apolling_active_delay_usecs\x18\x06 \x01(\x05\x12$\n\x1cpolling_inactive_delay_msecs\x18\x07 \x01(\x05\x12\x1c\n\x14\x66orce_gpu_compatible\x18\x08 \x01(\x08\"\xdf\x02\n\x10OptimizerOptions\x12+\n#do_common_subexpression_elimination\x18\x01 \x01(\x08\x12\x1b\n\x13\x64o_constant_folding\x18\x02 \x01(\x08\x12\x1c\n\x14\x64o_function_inlining\x18\x04 \x01(\x08\x12\x35\n\topt_level\x18\x03 \x01(\x0e\x32\".tensorflow.OptimizerOptions.Level\x12\x45\n\x10global_jit_level\x18\x05 \x01(\x0e\x32+.tensorflow.OptimizerOptions.GlobalJitLevel\" \n\x05Level\x12\x06\n\x02L1\x10\x00\x12\x0f\n\x02L0\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\"C\n\x0eGlobalJitLevel\x12\x0b\n\x07\x44\x45\x46\x41ULT\x10\x00\x12\x10\n\x03OFF\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x12\x08\n\x04ON_1\x10\x01\x12\x08\n\x04ON_2\x10\x02\"\xee\x02\n\x0cGraphOptions\x12\x1e\n\x16\x65nable_recv_scheduling\x18\x02 \x01(\x08\x12\x37\n\x11optimizer_options\x18\x03 \x01(\x0b\x32\x1c.tensorflow.OptimizerOptions\x12\x18\n\x10\x62uild_cost_model\x18\x04 \x01(\x03\x12\x1e\n\x16\x62uild_cost_model_after\x18\t \x01(\x03\x12\x14\n\x0cinfer_shapes\x18\x05 \x01(\x08\x12\x1a\n\x12place_pruned_graph\x18\x06 \x01(\x08\x12 \n\x18\x65nable_bfloat16_sendrecv\x18\x07 \x01(\x08\x12\x15\n\rtimeline_step\x18\x08 \x01(\x05\x12\x33\n\x0frewrite_options\x18\n \x01(\x0b\x32\x1a.tensorflow.RewriterConfigJ\x04\x08\x01\x10\x02R%skip_common_subexpression_elimination\"A\n\x15ThreadPoolOptionProto\x12\x13\n\x0bnum_threads\x18\x01 \x01(\x05\x12\x13\n\x0bglobal_name\x18\x02 \x01(\t\"2\n\nRPCOptions\x12$\n\x1cuse_rpc_for_inprocess_master\x18\x01 \x01(\x08\"\xfe\x04\n\x0b\x43onfigProto\x12>\n\x0c\x64\x65vice_count\x18\x01 \x03(\x0b\x32(.tensorflow.ConfigProto.DeviceCountEntry\x12$\n\x1cintra_op_parallelism_threads\x18\x02 \x01(\x05\x12$\n\x1cinter_op_parallelism_threads\x18\x05 \x01(\x05\x12\x1f\n\x17use_per_session_threads\x18\t \x01(\x08\x12G\n\x1csession_inter_op_thread_pool\x18\x0c \x03(\x0b\x32!.tensorflow.ThreadPoolOptionProto\x12\x18\n\x10placement_period\x18\x03 \x01(\x05\x12\x16\n\x0e\x64\x65vice_filters\x18\x04 \x03(\t\x12+\n\x0bgpu_options\x18\x06 \x01(\x0b\x32\x16.tensorflow.GPUOptions\x12\x1c\n\x14\x61llow_soft_placement\x18\x07 \x01(\x08\x12\x1c\n\x14log_device_placement\x18\x08 \x01(\x08\x12/\n\rgraph_options\x18\n \x01(\x0b\x32\x18.tensorflow.GraphOptions\x12\x1f\n\x17operation_timeout_in_ms\x18\x0b \x01(\x03\x12+\n\x0brpc_options\x18\r \x01(\x0b\x32\x16.tensorflow.RPCOptions\x12+\n\x0b\x63luster_def\x18\x0e \x01(\x0b\x32\x16.tensorflow.ClusterDef\x1a\x32\n\x10\x44\x65viceCountEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xa5\x02\n\nRunOptions\x12\x36\n\x0btrace_level\x18\x01 \x01(\x0e\x32!.tensorflow.RunOptions.TraceLevel\x12\x15\n\rtimeout_in_ms\x18\x02 \x01(\x03\x12\x1c\n\x14inter_op_thread_pool\x18\x03 \x01(\x05\x12\x1f\n\x17output_partition_graphs\x18\x05 \x01(\x08\x12/\n\rdebug_options\x18\x06 \x01(\x0b\x32\x18.tensorflow.DebugOptions\"R\n\nTraceLevel\x12\x0c\n\x08NO_TRACE\x10\x00\x12\x12\n\x0eSOFTWARE_TRACE\x10\x01\x12\x12\n\x0eHARDWARE_TRACE\x10\x02\x12\x0e\n\nFULL_TRACE\x10\x03J\x04\x08\x04\x10\x05\"\x96\x01\n\x0bRunMetadata\x12)\n\nstep_stats\x18\x01 \x01(\x0b\x32\x15.tensorflow.StepStats\x12,\n\ncost_graph\x18\x02 \x01(\x0b\x32\x18.tensorflow.CostGraphDef\x12.\n\x10partition_graphs\x18\x03 \x03(\x0b\x32\x14.tensorflow.GraphDefB-\n\x18org.tensorflow.frameworkB\x0c\x43onfigProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
-  dependencies=[tensorflow_dot_core_dot_framework_dot_cost__graph__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_graph__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_step__stats__pb2.DESCRIPTOR,tensorflow_dot_core_dot_protobuf_dot_debug__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
+  dependencies=[tensorflow_dot_core_dot_framework_dot_cost__graph__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_graph__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_step__stats__pb2.DESCRIPTOR,tensorflow_dot_core_dot_protobuf_dot_debug__pb2.DESCRIPTOR,tensorflow_dot_core_dot_protobuf_dot_cluster__pb2.DESCRIPTOR,tensorflow_dot_core_dot_protobuf_dot_rewriter__config__pb2.DESCRIPTOR,])
 
 
 
@@ -47,8 +48,8 @@ _OPTIMIZEROPTIONS_LEVEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=633,
-  serialized_end=665,
+  serialized_start=825,
+  serialized_end=857,
 )
 _sym_db.RegisterEnumDescriptor(_OPTIMIZEROPTIONS_LEVEL)
 
@@ -77,8 +78,8 @@ _OPTIMIZEROPTIONS_GLOBALJITLEVEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=667,
-  serialized_end=734,
+  serialized_start=859,
+  serialized_end=926,
 )
 _sym_db.RegisterEnumDescriptor(_OPTIMIZEROPTIONS_GLOBALJITLEVEL)
 
@@ -107,8 +108,8 @@ _RUNOPTIONS_TRACELEVEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1952,
-  serialized_end=2034,
+  serialized_start=2263,
+  serialized_end=2345,
 )
 _sym_db.RegisterEnumDescriptor(_RUNOPTIONS_TRACELEVEL)
 
@@ -155,6 +156,27 @@ _GPUOPTIONS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='polling_active_delay_usecs', full_name='tensorflow.GPUOptions.polling_active_delay_usecs', index=5,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='polling_inactive_delay_msecs', full_name='tensorflow.GPUOptions.polling_inactive_delay_msecs', index=6,
+      number=7, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='force_gpu_compatible', full_name='tensorflow.GPUOptions.force_gpu_compatible', index=7,
+      number=8, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -167,8 +189,8 @@ _GPUOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=219,
-  serialized_end=380,
+  serialized_start=307,
+  serialized_end=572,
 )
 
 
@@ -228,8 +250,8 @@ _OPTIMIZEROPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=383,
-  serialized_end=734,
+  serialized_start=575,
+  serialized_end=926,
 )
 
 
@@ -296,6 +318,13 @@ _GRAPHOPTIONS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='rewrite_options', full_name='tensorflow.GraphOptions.rewrite_options', index=8,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -308,8 +337,8 @@ _GRAPHOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=737,
-  serialized_end=1050,
+  serialized_start=929,
+  serialized_end=1295,
 )
 
 
@@ -327,6 +356,13 @@ _THREADPOOLOPTIONPROTO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='global_name', full_name='tensorflow.ThreadPoolOptionProto.global_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -339,8 +375,8 @@ _THREADPOOLOPTIONPROTO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1052,
-  serialized_end=1096,
+  serialized_start=1297,
+  serialized_end=1362,
 )
 
 
@@ -370,8 +406,8 @@ _RPCOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1098,
-  serialized_end=1148,
+  serialized_start=1364,
+  serialized_end=1414,
 )
 
 
@@ -408,8 +444,8 @@ _CONFIGPROTO_DEVICECOUNTENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1694,
-  serialized_end=1744,
+  serialized_start=2005,
+  serialized_end=2055,
 )
 
 _CONFIGPROTO = _descriptor.Descriptor(
@@ -510,6 +546,13 @@ _CONFIGPROTO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='cluster_def', full_name='tensorflow.ConfigProto.cluster_def', index=13,
+      number=14, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -522,8 +565,8 @@ _CONFIGPROTO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1151,
-  serialized_end=1744,
+  serialized_start=1417,
+  serialized_end=2055,
 )
 
 
@@ -582,8 +625,8 @@ _RUNOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1747,
-  serialized_end=2040,
+  serialized_start=2058,
+  serialized_end=2351,
 )
 
 
@@ -627,8 +670,8 @@ _RUNMETADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2043,
-  serialized_end=2193,
+  serialized_start=2354,
+  serialized_end=2504,
 )
 
 _OPTIMIZEROPTIONS.fields_by_name['opt_level'].enum_type = _OPTIMIZEROPTIONS_LEVEL
@@ -636,12 +679,14 @@ _OPTIMIZEROPTIONS.fields_by_name['global_jit_level'].enum_type = _OPTIMIZEROPTIO
 _OPTIMIZEROPTIONS_LEVEL.containing_type = _OPTIMIZEROPTIONS
 _OPTIMIZEROPTIONS_GLOBALJITLEVEL.containing_type = _OPTIMIZEROPTIONS
 _GRAPHOPTIONS.fields_by_name['optimizer_options'].message_type = _OPTIMIZEROPTIONS
+_GRAPHOPTIONS.fields_by_name['rewrite_options'].message_type = tensorflow_dot_core_dot_protobuf_dot_rewriter__config__pb2._REWRITERCONFIG
 _CONFIGPROTO_DEVICECOUNTENTRY.containing_type = _CONFIGPROTO
 _CONFIGPROTO.fields_by_name['device_count'].message_type = _CONFIGPROTO_DEVICECOUNTENTRY
 _CONFIGPROTO.fields_by_name['session_inter_op_thread_pool'].message_type = _THREADPOOLOPTIONPROTO
 _CONFIGPROTO.fields_by_name['gpu_options'].message_type = _GPUOPTIONS
 _CONFIGPROTO.fields_by_name['graph_options'].message_type = _GRAPHOPTIONS
 _CONFIGPROTO.fields_by_name['rpc_options'].message_type = _RPCOPTIONS
+_CONFIGPROTO.fields_by_name['cluster_def'].message_type = tensorflow_dot_core_dot_protobuf_dot_cluster__pb2._CLUSTERDEF
 _RUNOPTIONS.fields_by_name['trace_level'].enum_type = _RUNOPTIONS_TRACELEVEL
 _RUNOPTIONS.fields_by_name['debug_options'].message_type = tensorflow_dot_core_dot_protobuf_dot_debug__pb2._DEBUGOPTIONS
 _RUNOPTIONS_TRACELEVEL.containing_type = _RUNOPTIONS
@@ -656,6 +701,7 @@ DESCRIPTOR.message_types_by_name['RPCOptions'] = _RPCOPTIONS
 DESCRIPTOR.message_types_by_name['ConfigProto'] = _CONFIGPROTO
 DESCRIPTOR.message_types_by_name['RunOptions'] = _RUNOPTIONS
 DESCRIPTOR.message_types_by_name['RunMetadata'] = _RUNMETADATA
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 GPUOptions = _reflection.GeneratedProtocolMessageType('GPUOptions', (_message.Message,), dict(
   DESCRIPTOR = _GPUOPTIONS,

@@ -19,6 +19,16 @@ bool ProtoParseFromString(
     ::tensorflow::TensorProto* msg)
         TF_MUST_USE_RESULT;
 
+// Message-text conversion for tensorflow.VariantTensorDataProto
+string ProtoDebugString(
+    const ::tensorflow::VariantTensorDataProto& msg);
+string ProtoShortDebugString(
+    const ::tensorflow::VariantTensorDataProto& msg);
+bool ProtoParseFromString(
+    const string& s,
+    ::tensorflow::VariantTensorDataProto* msg)
+        TF_MUST_USE_RESULT;
+
 }  // namespace tensorflow
 
 #endif  // tensorflow_core_framework_tensor_proto_H_

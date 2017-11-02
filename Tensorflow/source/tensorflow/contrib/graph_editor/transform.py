@@ -137,7 +137,7 @@ def copy_op_handler(info, op, copy_shape=True):
     op: the `tf.Operation` to be copied.
     copy_shape: also copy the shape of the tensor
   Returns:
-    A `(op, op_outputs)` tuple containgin the transformed op and its outputs.
+    A `(op, op_outputs)` tuple containing the transformed op and its outputs.
   """
   # pylint: disable=protected-access
 
@@ -166,13 +166,12 @@ def copy_op_handler(info, op, copy_shape=True):
     for t, t_ in zip(op.outputs, op_.outputs):
       t_.set_shape(t.get_shape())
 
-  # Finalize original op.
+  # Original op cannot be finalised here yet. Because some ops require this
+  # attribute to exist, we will create a dummy original_op first and then
+  # later finalise it with the actual original_op when all the ops have
+  # been copied.
   if op._original_op:
-    original_op = info.transform_original_op_handler(info, op._original_op)
-    if original_op is None:
-      logging.info("Could not find original op of: %s", op_.name)
-    else:
-      op_._original_op = original_op
+    op_._original_op = op._original_op
 
   # Add op to the graph
   info.graph_._add_op(op_)
@@ -442,11 +441,11 @@ class Transformer(object):
   def _copy_ops(self, info):
     """Copy ops without connecting them."""
     for op in info.sgv.ops:
-      logging.info("Copying op: %s", op.name)
+      logging.debug("Copying op: %s", op.name)
       # TODO(fkp): return a subgraph?
       op_, op_outputs_ = self.transform_op_handler(info, op)
       if op is op_:
-        raise ValueError("In-place tranformation not allowed.")
+        raise ValueError("In-place transformation not allowed.")
 
       # Process op.
       info.transformed_ops[op] = op_
@@ -460,7 +459,7 @@ class Transformer(object):
   def _connect_ops(self, info):
     """Connect the previously copied ops."""
     for op in info.sgv.ops:
-      logging.info("Finalizing op: %s", op.name)
+      logging.debug("Finalizing op: %s", op.name)
       op_ = info.transformed_ops[op]
 
       # pylint: disable=protected-access
@@ -470,6 +469,14 @@ class Transformer(object):
       inputs_ = [self._transformed_t(info, t) for t in op.inputs]
       for t in inputs_:
         op_._add_input(t)
+
+      # Finalize original op.
+      if op._original_op:
+        original_op = info.transform_original_op_handler(info, op._original_op)
+        if original_op is None:
+          logging.debug("Could not find original op for: %s", op_.name)
+        else:
+          op_._original_op = original_op
 
       # Finalize control inputs:
       control_inputs_ = [self.transform_control_input_handler(info, ci)

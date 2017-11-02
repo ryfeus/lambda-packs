@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n.google/protobuf/unittest_no_arena_import.proto\x12\x15proto2_arena_unittest\"\'\n\x1aImportNoArenaNestedMessage\x12\t\n\x01\x64\x18\x01 \x01(\x05')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -57,6 +56,7 @@ _IMPORTNOARENANESTEDMESSAGE = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['ImportNoArenaNestedMessage'] = _IMPORTNOARENANESTEDMESSAGE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ImportNoArenaNestedMessage = _reflection.GeneratedProtocolMessageType('ImportNoArenaNestedMessage', (_message.Message,), dict(
   DESCRIPTOR = _IMPORTNOARENANESTEDMESSAGE,

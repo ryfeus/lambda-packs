@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n1tensorflow/core/framework/device_attributes.proto\x12\ntensorflow\" \n\x0e\x44\x65viceLocality\x12\x0e\n\x06\x62us_id\x18\x01 \x01(\x05\"\xac\x01\n\x10\x44\x65viceAttributes\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65vice_type\x18\x02 \x01(\t\x12\x14\n\x0cmemory_limit\x18\x04 \x01(\x03\x12,\n\x08locality\x18\x05 \x01(\x0b\x32\x1a.tensorflow.DeviceLocality\x12\x13\n\x0bincarnation\x18\x06 \x01(\x06\x12\x1c\n\x14physical_device_desc\x18\x07 \x01(\tB7\n\x18org.tensorflow.frameworkB\x16\x44\x65viceAttributesProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -125,6 +124,7 @@ _DEVICEATTRIBUTES = _descriptor.Descriptor(
 _DEVICEATTRIBUTES.fields_by_name['locality'].message_type = _DEVICELOCALITY
 DESCRIPTOR.message_types_by_name['DeviceLocality'] = _DEVICELOCALITY
 DESCRIPTOR.message_types_by_name['DeviceAttributes'] = _DEVICEATTRIBUTES
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DeviceLocality = _reflection.GeneratedProtocolMessageType('DeviceLocality', (_message.Message,), dict(
   DESCRIPTOR = _DEVICELOCALITY,

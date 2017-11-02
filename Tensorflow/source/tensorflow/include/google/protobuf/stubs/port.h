@@ -44,6 +44,8 @@
 #include <stdint.h>
 #endif
 
+#include <google/protobuf/stubs/platform_macros.h>
+
 #undef PROTOBUF_LITTLE_ENDIAN
 #ifdef _WIN32
   // Assuming windows is always little-endian.
@@ -60,8 +62,12 @@
   #endif
 #else
   #include <sys/param.h>   // __BYTE_ORDER
+  #if defined(__OpenBSD__)
+    #include <endian.h>
+  #endif
   #if ((defined(__LITTLE_ENDIAN__) && !defined(__BIG_ENDIAN__)) || \
-         (defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN)) && \
+         (defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN) || \
+         (defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN)) && \
       !defined(PROTOBUF_DISABLE_LITTLE_ENDIAN_OPT_FOR_TEST)
     #define PROTOBUF_LITTLE_ENDIAN 1
   #endif
@@ -93,6 +99,15 @@
 
 // ===================================================================
 // from google3/base/port.h
+
+#if (defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L || \
+     (defined(_MSC_VER) && _MSC_VER >= 1900))
+// Define this to 1 if the code is compiled in C++11 mode; leave it
+// undefined otherwise.  Do NOT define it to 0 -- that causes
+// '#ifdef LANG_CXX11' to behave differently from '#if LANG_CXX11'.
+#define LANG_CXX11 1
+#endif
+
 namespace google {
 namespace protobuf {
 
@@ -237,9 +252,18 @@ static const uint64 kuint64max = GOOGLE_ULONGLONG(0xFFFFFFFFFFFFFFFF);
 #define GOOGLE_GUARDED_BY(x)
 #define GOOGLE_ATTRIBUTE_COLD
 
+#ifdef GOOGLE_PROTOBUF_DONT_USE_UNALIGNED
+# define GOOGLE_PROTOBUF_USE_UNALIGNED 0
+#else
 // x86 and x86-64 can perform unaligned loads/stores directly.
-#if defined(_M_X64) || defined(__x86_64__) || \
-    defined(_M_IX86) || defined(__i386__)
+# if defined(_M_X64) || defined(__x86_64__) || defined(_M_IX86) || defined(__i386__)
+#  define GOOGLE_PROTOBUF_USE_UNALIGNED 1
+# else
+#  define GOOGLE_PROTOBUF_USE_UNALIGNED 0
+# endif
+#endif
+
+#if GOOGLE_PROTOBUF_USE_UNALIGNED
 
 #define GOOGLE_UNALIGNED_LOAD16(_p) (*reinterpret_cast<const uint16 *>(_p))
 #define GOOGLE_UNALIGNED_LOAD32(_p) (*reinterpret_cast<const uint32 *>(_p))
@@ -333,7 +357,7 @@ class Bits {
  public:
   static uint32 Log2FloorNonZero(uint32 n) {
 #if defined(__GNUC__)
-  return 31 ^ __builtin_clz(n);
+  return 31 ^ static_cast<uint32>(__builtin_clz(n));
 #elif defined(COMPILER_MSVC) && defined(_M_IX86)
   _asm {
     bsr ebx, n
@@ -345,9 +369,14 @@ class Bits {
 #endif
   }
 
-  static uint64 Log2FloorNonZero64(uint64 n) {
-#if defined(__GNUC__)
-  return 63 ^ __builtin_clzll(n);
+  static uint32 Log2FloorNonZero64(uint64 n) {
+    // arm-nacl-clang runs into an instruction-selection failure when it
+    // encounters __builtin_clzll:
+    // https://bugs.chromium.org/p/nativeclient/issues/detail?id=4395
+    // To work around this, when we build for NaCl we use the portable
+    // implementation instead.
+#if defined(__GNUC__) && !defined(GOOGLE_PROTOBUF_OS_NACL)
+  return 63 ^ static_cast<uint32>(__builtin_clzll(n));
 #else
   return Log2FloorNonZero64_Portable(n);
 #endif
@@ -374,9 +403,9 @@ class Bits {
     const uint32 topbits = static_cast<uint32>(n >> 32);
     if (topbits == 0) {
       // Top bits are zero, so scan in bottom bits
-      return Log2FloorNonZero(static_cast<uint32>(n));
+      return static_cast<int>(Log2FloorNonZero(static_cast<uint32>(n)));
     } else {
-      return 32 + Log2FloorNonZero(topbits);
+      return 32 + static_cast<int>(Log2FloorNonZero(topbits));
     }
   }
 };
@@ -441,6 +470,9 @@ class BigEndian {
   }
 };
 
+#ifndef GOOGLE_ATTRIBUTE_SECTION_VARIABLE
+#define GOOGLE_ATTRIBUTE_SECTION_VARIABLE(name)
+#endif
 
 }  // namespace protobuf
 }  // namespace google

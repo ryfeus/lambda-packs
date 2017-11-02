@@ -18,12 +18,12 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import contextlib
 import traceback
 import warnings
 
 from tensorflow.core.lib.core import error_codes_pb2
-from tensorflow.python import pywrap_tensorflow
+from tensorflow.python import pywrap_tensorflow as c_api
+from tensorflow.python.framework import c_api_util
 from tensorflow.python.util import compat
 
 
@@ -32,9 +32,6 @@ class OpError(Exception):
 
   Whenever possible, the session will raise a more specific subclass
   of `OpError` from the `tf.errors` module.
-
-  @@op
-  @@node_def
   """
 
   def __init__(self, node_def, op, message, error_code):
@@ -64,9 +61,9 @@ class OpError(Exception):
 
     *N.B.* If the failed op was synthesized at runtime, e.g. a `Send`
     or `Recv` op, there will be no corresponding
-    [`Operation`](../../api_docs/python/framework.md#Operation)
+    @{tf.Operation}
     object.  In that case, this will return `None`, and you should
-    instead use the [`OpError.node_def`](#OpError.node_def) to
+    instead use the @{tf.OpError.node_def} to
     discover information about the op.
 
     Returns:
@@ -159,10 +156,10 @@ class CancelledError(OpError):
   """Raised when an operation or step is cancelled.
 
   For example, a long-running operation (e.g.
-  [`queue.enqueue()`](../../api_docs/python/io_ops.md#QueueBase.enqueue) may be
+  @{tf.QueueBase.enqueue} may be
   cancelled by running another operation (e.g.
-  [`queue.close(cancel_pending_enqueues=True)`](../../api_docs/python/io_ops.md#QueueBase.close),
-  or by [closing the session](../../api_docs/python/client.md#Session.close).
+  @{tf.QueueBase.close},
+  or by @{tf.Session.close}.
   A step that is running such a long-running operation will fail by raising
   `CancelledError`.
 
@@ -197,9 +194,9 @@ class InvalidArgumentError(OpError):
 
   This may occur, for example, if an operation is receives an input
   tensor that has an invalid value or shape. For example, the
-  [`tf.matmul()`](../../api_docs/python/math_ops.md#matmul) op will raise this
+  @{tf.matmul} op will raise this
   error if it receives an input that is not a matrix, and the
-  [`tf.reshape()`](../../api_docs/python/array_ops.md#reshape) op will raise
+  @{tf.reshape} op will raise
   this error if the new shape does not match the number of elements in the input
   tensor.
 
@@ -230,7 +227,7 @@ class NotFoundError(OpError):
   """Raised when a requested entity (e.g., a file or directory) was not found.
 
   For example, running the
-  [`tf.WholeFileReader.read()`](../../api_docs/python/io_ops.md#WholeFileReader)
+  @{tf.WholeFileReader.read}
   operation could raise `NotFoundError` if it receives the name of a file that
   does not exist.
 
@@ -246,7 +243,7 @@ class AlreadyExistsError(OpError):
   """Raised when an entity that we attempted to create already exists.
 
   For example, running an operation that saves a file
-  (e.g. [`tf.train.Saver.save()`](../../api_docs/python/train.md#Saver.save))
+  (e.g. @{tf.train.Saver.save})
   could potentially raise this exception if an explicit filename for an
   existing file was passed.
 
@@ -263,7 +260,7 @@ class PermissionDeniedError(OpError):
   """Raised when the caller does not have permission to run an operation.
 
   For example, running the
-  [`tf.WholeFileReader.read()`](../../api_docs/python/io_ops.md#WholeFileReader)
+  @{tf.WholeFileReader.read}
   operation could raise `PermissionDeniedError` if it receives the name of a
   file for which the user does not have the read file permission.
 
@@ -309,7 +306,7 @@ class FailedPreconditionError(OpError):
   """Operation was rejected because the system is not in a state to execute it.
 
   This exception is most commonly raised when running an operation
-  that reads a [`tf.Variable`](../../api_docs/python/state_ops.md#Variable)
+  that reads a @{tf.Variable}
   before it has been initialized.
 
   @@__init__
@@ -325,9 +322,9 @@ class AbortedError(OpError):
   """The operation was aborted, typically due to a concurrent action.
 
   For example, running a
-  [`queue.enqueue()`](../../api_docs/python/io_ops.md#QueueBase.enqueue)
+  @{tf.QueueBase.enqueue}
   operation may raise `AbortedError` if a
-  [`queue.close()`](../../api_docs/python/io_ops.md#QueueBase.close) operation
+  @{tf.QueueBase.close} operation
   previously ran.
 
   @@__init__
@@ -342,9 +339,9 @@ class OutOfRangeError(OpError):
   """Raised when an operation iterates past the valid input range.
 
   This exception is raised in "end-of-file" conditions, such as when a
-  [`queue.dequeue()`](../../api_docs/python/io_ops.md#QueueBase.dequeue)
+  @{tf.QueueBase.dequeue}
   operation is blocked on an empty queue, and a
-  [`queue.close()`](../../api_docs/python/io_ops.md#QueueBase.close)
+  @{tf.QueueBase.close}
   operation executes.
 
   @@__init__
@@ -361,7 +358,7 @@ class UnimplementedError(OpError):
 
   Some operations may raise this error when passed otherwise-valid
   arguments that it does not currently support. For example, running
-  the [`tf.nn.max_pool()`](../../api_docs/python/nn.md#max_pool) operation
+  the @{tf.nn.max_pool} operation
   would raise this error if pooling was requested on the batch dimension,
   because this is not yet supported.
 
@@ -406,7 +403,7 @@ class DataLossError(OpError):
   """Raised when unrecoverable data loss or corruption is encountered.
 
   For example, this may be raised by running a
-  [`tf.WholeFileReader.read()`](../../api_docs/python/io_ops.md#WholeFileReader)
+  @{tf.WholeFileReader.read}
   operation, if the file is truncated while it is being read.
 
   @@__init__
@@ -457,15 +454,26 @@ def _make_specific_exception(node_def, op, message, error_code):
     return UnknownError(node_def, op, message, error_code)
 
 
-@contextlib.contextmanager
-def raise_exception_on_not_ok_status():
-  try:
-    status = pywrap_tensorflow.TF_NewStatus()
-    yield status
-    if pywrap_tensorflow.TF_GetCode(status) != 0:
-      raise _make_specific_exception(
-          None, None,
-          compat.as_text(pywrap_tensorflow.TF_Message(status)),
-          pywrap_tensorflow.TF_GetCode(status))
-  finally:
-    pywrap_tensorflow.TF_DeleteStatus(status)
+# Named like a function for backwards compatibility with the
+# @tf_contextlib.contextmanager version, which was switched to a class to avoid
+# some object creation overhead.
+class raise_exception_on_not_ok_status(object):  # pylint: disable=invalid-name
+  """Context manager to check for C API status."""
+
+  def __enter__(self):
+    self.status = c_api_util.ScopedTFStatus()
+    return self.status.status
+
+  def __exit__(self, type_arg, value_arg, traceback_arg):
+    try:
+      if c_api.TF_GetCode(self.status.status) != 0:
+        raise _make_specific_exception(
+            None, None,
+            compat.as_text(c_api.TF_Message(self.status.status)),
+            c_api.TF_GetCode(self.status.status))
+    # Delete the underlying status object from memory otherwise it stays alive
+    # as there is a reference to status from this from the traceback due to
+    # raise.
+    finally:
+      del self.status
+    return False  # False values do not suppress exceptions

@@ -1,4 +1,4 @@
-service: lambda
+service: tensorflow
 
 frameworkVersion: ">=1.2.0 <2.0.0"
 
@@ -10,4 +10,4 @@ provider:
 
 functions:
   main:
-    handler: service.handler
+    handler: index.handler

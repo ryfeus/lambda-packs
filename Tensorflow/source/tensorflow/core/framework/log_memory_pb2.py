@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n*tensorflow/core/framework/log_memory.proto\x12\ntensorflow\x1a\x32tensorflow/core/framework/tensor_description.proto\"0\n\rMemoryLogStep\x12\x0f\n\x07step_id\x18\x01 \x01(\x03\x12\x0e\n\x06handle\x18\x02 \x01(\t\"p\n\x19MemoryLogTensorAllocation\x12\x0f\n\x07step_id\x18\x01 \x01(\x03\x12\x13\n\x0bkernel_name\x18\x02 \x01(\t\x12-\n\x06tensor\x18\x03 \x01(\x0b\x32\x1d.tensorflow.TensorDescription\"L\n\x1bMemoryLogTensorDeallocation\x12\x15\n\rallocation_id\x18\x01 \x01(\x03\x12\x16\n\x0e\x61llocator_name\x18\x02 \x01(\t\"{\n\x15MemoryLogTensorOutput\x12\x0f\n\x07step_id\x18\x01 \x01(\x03\x12\x13\n\x0bkernel_name\x18\x02 \x01(\t\x12\r\n\x05index\x18\x03 \x01(\x05\x12-\n\x06tensor\x18\x04 \x01(\x0b\x32\x1d.tensorflow.TensorDescription\"\x8b\x01\n\x16MemoryLogRawAllocation\x12\x0f\n\x07step_id\x18\x01 \x01(\x03\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x11\n\tnum_bytes\x18\x03 \x01(\x03\x12\x0b\n\x03ptr\x18\x04 \x01(\x04\x12\x15\n\rallocation_id\x18\x05 \x01(\x03\x12\x16\n\x0e\x61llocator_name\x18\x06 \x01(\t\"\x7f\n\x18MemoryLogRawDeallocation\x12\x0f\n\x07step_id\x18\x01 \x01(\x03\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x15\n\rallocation_id\x18\x03 \x01(\x03\x12\x16\n\x0e\x61llocator_name\x18\x04 \x01(\t\x12\x10\n\x08\x64\x65\x66\x65rred\x18\x05 \x01(\x08\x42\x30\n\x18org.tensorflow.frameworkB\x0fLogMemoryProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_tensor__description__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -333,6 +332,7 @@ DESCRIPTOR.message_types_by_name['MemoryLogTensorDeallocation'] = _MEMORYLOGTENS
 DESCRIPTOR.message_types_by_name['MemoryLogTensorOutput'] = _MEMORYLOGTENSOROUTPUT
 DESCRIPTOR.message_types_by_name['MemoryLogRawAllocation'] = _MEMORYLOGRAWALLOCATION
 DESCRIPTOR.message_types_by_name['MemoryLogRawDeallocation'] = _MEMORYLOGRAWDEALLOCATION
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 MemoryLogStep = _reflection.GeneratedProtocolMessageType('MemoryLogStep', (_message.Message,), dict(
   DESCRIPTOR = _MEMORYLOGSTEP,

@@ -22,7 +22,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n2google/protobuf/unittest_no_generic_services.proto\x12(google.protobuf.no_generic_services_test\"#\n\x0bTestMessage\x12\t\n\x01\x61\x18\x01 \x01(\x05*\t\x08\xe8\x07\x10\x80\x80\x80\x80\x02*\x13\n\x08TestEnum\x12\x07\n\x03\x46OO\x10\x01\x32\x82\x01\n\x0bTestService\x12s\n\x03\x46oo\x12\x35.google.protobuf.no_generic_services_test.TestMessage\x1a\x35.google.protobuf.no_generic_services_test.TestMessage:N\n\x0etest_extension\x12\x35.google.protobuf.no_generic_services_test.TestMessage\x18\xe8\x07 \x01(\x05')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _TESTENUM = _descriptor.EnumDescriptor(
   name='TestEnum',
@@ -88,6 +87,7 @@ _TESTMESSAGE = _descriptor.Descriptor(
 DESCRIPTOR.message_types_by_name['TestMessage'] = _TESTMESSAGE
 DESCRIPTOR.enum_types_by_name['TestEnum'] = _TESTENUM
 DESCRIPTOR.extensions_by_name['test_extension'] = test_extension
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestMessage = _reflection.GeneratedProtocolMessageType('TestMessage', (_message.Message,), dict(
   DESCRIPTOR = _TESTMESSAGE,
@@ -97,5 +97,29 @@ TestMessage = _reflection.GeneratedProtocolMessageType('TestMessage', (_message.
 _sym_db.RegisterMessage(TestMessage)
 
 TestMessage.RegisterExtension(test_extension)
+
+
+_TESTSERVICE = _descriptor.ServiceDescriptor(
+  name='TestService',
+  full_name='google.protobuf.no_generic_services_test.TestService',
+  file=DESCRIPTOR,
+  index=0,
+  options=None,
+  serialized_start=155,
+  serialized_end=285,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='Foo',
+    full_name='google.protobuf.no_generic_services_test.TestService.Foo',
+    index=0,
+    containing_service=None,
+    input_type=_TESTMESSAGE,
+    output_type=_TESTMESSAGE,
+    options=None,
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_TESTSERVICE)
+
+DESCRIPTOR.services_by_name['TestService'] = _TESTSERVICE
 
 # @@protoc_insertion_point(module_scope)

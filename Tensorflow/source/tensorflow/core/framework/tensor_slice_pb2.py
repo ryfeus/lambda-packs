@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n,tensorflow/core/framework/tensor_slice.proto\x12\ntensorflow\"\x80\x01\n\x10TensorSliceProto\x12\x33\n\x06\x65xtent\x18\x01 \x03(\x0b\x32#.tensorflow.TensorSliceProto.Extent\x1a\x37\n\x06\x45xtent\x12\r\n\x05start\x18\x01 \x01(\x03\x12\x10\n\x06length\x18\x02 \x01(\x03H\x00\x42\x0c\n\nhas_lengthB2\n\x18org.tensorflow.frameworkB\x11TensorSliceProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -102,6 +101,7 @@ _TENSORSLICEPROTO_EXTENT.oneofs_by_name['has_length'].fields.append(
 _TENSORSLICEPROTO_EXTENT.fields_by_name['length'].containing_oneof = _TENSORSLICEPROTO_EXTENT.oneofs_by_name['has_length']
 _TENSORSLICEPROTO.fields_by_name['extent'].message_type = _TENSORSLICEPROTO_EXTENT
 DESCRIPTOR.message_types_by_name['TensorSliceProto'] = _TENSORSLICEPROTO
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TensorSliceProto = _reflection.GeneratedProtocolMessageType('TensorSliceProto', (_message.Message,), dict(
 

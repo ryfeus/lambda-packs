@@ -13,10 +13,10 @@ namespace internal {
 
 void AppendProtoDebugString(
     ::tensorflow::strings::ProtoTextOutput* o,
-    const ::tensorflow::ResourceHandle& msg);
+    const ::tensorflow::ResourceHandleProto& msg);
 bool ProtoParseFromScanner(
     ::tensorflow::strings::Scanner* scanner, bool nested, bool close_curly,
-    ::tensorflow::ResourceHandle* msg);
+    ::tensorflow::ResourceHandleProto* msg);
 
 }  // namespace internal
 

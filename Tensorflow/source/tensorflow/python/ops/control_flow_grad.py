@@ -49,7 +49,7 @@ def _SwitchGrad(op, *grad):
       # This is the second time this Switch is visited. It comes from
       # the non-exit branch of the Switch, so update the second input
       # to the Merge.
-      # TODO: Perform shape inference with this new input.
+      # TODO(yuanbyu): Perform shape inference with this new input.
       if grad[1] is not None:
         # pylint: disable=protected-access
         control_flow_ops._AddNextAndBackEdge(merge_grad, grad[1])
@@ -72,6 +72,9 @@ def _SwitchGrad(op, *grad):
     good_grad = grad[op_ctxt.branch]
     zero_grad = grad[1 - op_ctxt.branch]
     # At this point, we have created zero_grad guarded by the right switch.
+    # Unfortunately, we may still get None here for not trainable data types.
+    if zero_grad is None:
+      return None, None
     return merge([good_grad, zero_grad], name="cond_grad")[0], None
   else:
     false_grad = switch(grad[0], op.inputs[1])[0]
@@ -114,7 +117,7 @@ def _MergeGrad(op, grad, _):
 
         # Add the stack pop op. If pred.op is in a (outer) CondContext,
         # the stack pop will be guarded with a switch.
-        real_pred = grad_state.AddBackPropAccumulatedValue(history_pred, pred)
+        real_pred = grad_state.AddBackpropAccumulatedValue(history_pred, pred)
         grad_state.history_map[pred.name] = real_pred
       pred = real_pred
     # pylint: disable=protected-access
@@ -162,11 +165,14 @@ def _ExitGrad(op, grad):
     dense_shape = grad.dense_shape
     if dense_shape is not None:
       grad_ctxt.AddName(dense_shape.name)
-  enter_fn = control_flow_ops._Enter  # pylint: disable=protected-access
   grad_ctxt.Enter()
-  result = enter_fn(grad, grad_ctxt.name, is_constant=False,
-                    parallel_iterations=grad_ctxt.parallel_iterations,
-                    name="b_exit")
+  # pylint: disable=protected-access
+  result = control_flow_ops._Enter(
+      grad, grad_ctxt.name, is_constant=False,
+      parallel_iterations=grad_ctxt.parallel_iterations,
+      name="b_exit")
+  # pylint: enable=protected-access
+  grad_ctxt.loop_enters.append(result)
   grad_ctxt.Exit()
   return result
 
@@ -208,9 +214,9 @@ def _EnterGrad(op, grad):
   if op.get_attr("is_constant"):
     # Add a gradient accumulator for each loop invariant.
     if isinstance(grad, ops.Tensor):
-      result = grad_ctxt.AddBackPropAccumulator(op, grad)
+      result = grad_ctxt.AddBackpropAccumulator(op, grad)
     elif isinstance(grad, ops.IndexedSlices):
-      result = grad_ctxt.AddBackPropIndexedSlicesAccumulator(op, grad)
+      result = grad_ctxt.AddBackpropIndexedSlicesAccumulator(op, grad)
     else:
       # TODO(yuanbyu, lukasr): Add support for SparseTensor.
       raise TypeError("Type %s not supported" % type(grad))

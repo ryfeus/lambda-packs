@@ -20,10 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='google/protobuf/internal/more_extensions_dynamic.proto',
   package='google.protobuf.internal',
   syntax='proto2',
-  serialized_pb=_b('\n6google/protobuf/internal/more_extensions_dynamic.proto\x12\x18google.protobuf.internal\x1a.google/protobuf/internal/more_extensions.proto\"\x1f\n\x12\x44ynamicMessageType\x12\t\n\x01\x61\x18\x01 \x01(\x05:J\n\x17\x64ynamic_int32_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x64 \x01(\x05:z\n\x19\x64ynamic_message_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x65 \x01(\x0b\x32,.google.protobuf.internal.DynamicMessageType')
+  serialized_pb=_b('\n6google/protobuf/internal/more_extensions_dynamic.proto\x12\x18google.protobuf.internal\x1a.google/protobuf/internal/more_extensions.proto\"\x1f\n\x12\x44ynamicMessageType\x12\t\n\x01\x61\x18\x01 \x01(\x05:J\n\x17\x64ynamic_int32_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x64 \x01(\x05:z\n\x19\x64ynamic_message_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x65 \x01(\x0b\x32,.google.protobuf.internal.DynamicMessageType:\x83\x01\n\"repeated_dynamic_message_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x66 \x03(\x0b\x32,.google.protobuf.internal.DynamicMessageType')
   ,
   dependencies=[google_dot_protobuf_dot_internal_dot_more__extensions__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 DYNAMIC_INT32_EXTENSION_FIELD_NUMBER = 100
@@ -39,6 +38,14 @@ dynamic_message_extension = _descriptor.FieldDescriptor(
   name='dynamic_message_extension', full_name='google.protobuf.internal.dynamic_message_extension', index=1,
   number=101, type=11, cpp_type=10, label=1,
   has_default_value=False, default_value=None,
+  message_type=None, enum_type=None, containing_type=None,
+  is_extension=True, extension_scope=None,
+  options=None)
+REPEATED_DYNAMIC_MESSAGE_EXTENSION_FIELD_NUMBER = 102
+repeated_dynamic_message_extension = _descriptor.FieldDescriptor(
+  name='repeated_dynamic_message_extension', full_name='google.protobuf.internal.repeated_dynamic_message_extension', index=2,
+  number=102, type=11, cpp_type=10, label=3,
+  has_default_value=False, default_value=[],
   message_type=None, enum_type=None, containing_type=None,
   is_extension=True, extension_scope=None,
   options=None)
@@ -77,6 +84,8 @@ _DYNAMICMESSAGETYPE = _descriptor.Descriptor(
 DESCRIPTOR.message_types_by_name['DynamicMessageType'] = _DYNAMICMESSAGETYPE
 DESCRIPTOR.extensions_by_name['dynamic_int32_extension'] = dynamic_int32_extension
 DESCRIPTOR.extensions_by_name['dynamic_message_extension'] = dynamic_message_extension
+DESCRIPTOR.extensions_by_name['repeated_dynamic_message_extension'] = repeated_dynamic_message_extension
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DynamicMessageType = _reflection.GeneratedProtocolMessageType('DynamicMessageType', (_message.Message,), dict(
   DESCRIPTOR = _DYNAMICMESSAGETYPE,
@@ -88,5 +97,7 @@ _sym_db.RegisterMessage(DynamicMessageType)
 google_dot_protobuf_dot_internal_dot_more__extensions__pb2.ExtendedMessage.RegisterExtension(dynamic_int32_extension)
 dynamic_message_extension.message_type = _DYNAMICMESSAGETYPE
 google_dot_protobuf_dot_internal_dot_more__extensions__pb2.ExtendedMessage.RegisterExtension(dynamic_message_extension)
+repeated_dynamic_message_extension.message_type = _DYNAMICMESSAGETYPE
+google_dot_protobuf_dot_internal_dot_more__extensions__pb2.ExtendedMessage.RegisterExtension(repeated_dynamic_message_extension)
 
 # @@protoc_insertion_point(module_scope)

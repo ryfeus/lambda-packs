@@ -1,30 +1,32 @@
-"""Python wrappers around Brain.
+"""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
+Original C++ source file: sparse_feature_cross_op.cc
 """
 
 import collections as _collections
 
-from google.protobuf import text_format as _text_format
+from tensorflow.python.eager import execute as _execute
+from tensorflow.python.eager import context as _context
+from tensorflow.python.eager import core as _core
+from tensorflow.python.framework import dtypes as _dtypes
+from tensorflow.python.framework import tensor_shape as _tensor_shape
 
 from tensorflow.core.framework import op_def_pb2 as _op_def_pb2
-
 # Needed to trigger the call to _set_call_cpp_shape_fn.
 from tensorflow.python.framework import common_shapes as _common_shapes
-
 from tensorflow.python.framework import op_def_registry as _op_def_registry
 from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import op_def_library as _op_def_library
+
+
 _sparse_feature_cross_outputs = ["output_indices", "output_values",
                                 "output_shape"]
+_SparseFeatureCrossOutput = _collections.namedtuple(
+    "SparseFeatureCross", _sparse_feature_cross_outputs)
 
 
-_SparseFeatureCrossOutput = _collections.namedtuple("SparseFeatureCross",
-                                                    _sparse_feature_cross_outputs)
-
-
-def sparse_feature_cross(indices, values, shapes, dense, hashed_output,
-                         num_buckets, out_type, internal_type, name=None):
+def sparse_feature_cross(indices, values, shapes, dense, hashed_output, num_buckets, out_type, internal_type, name=None):
   r"""Generates sparse cross form a list of sparse tensors.
 
   The op takes two lists, one of 2D `SparseTensor` and one of 2D `Tensor`, each
@@ -65,11 +67,11 @@ def sparse_feature_cross(indices, values, shapes, dense, hashed_output,
                       Fingerprint64("e"), Fingerprint64("c")))
 
   Args:
-    indices: A list of `Tensor` objects of type `int64`.
+    indices: A list of `Tensor` objects with type `int64`.
       2-D.  Indices of each input `SparseTensor`.
     values: A list of `Tensor` objects with types from: `int64`, `string`.
       1-D.   values of each `SparseTensor`.
-    shapes: A list with the same number of `Tensor` objects as `indices` of `Tensor` objects of type `int64`.
+    shapes: A list with the same length as `indices` of `Tensor` objects with type `int64`.
       1-D.   Shapes of each `SparseTensor`.
     dense: A list of `Tensor` objects with types from: `int64`, `string`.
       2-D.    Columns represented by dense `Tensor`.
@@ -81,31 +83,74 @@ def sparse_feature_cross(indices, values, shapes, dense, hashed_output,
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  Indices of the concatenated `SparseTensor`.
     output_values: A `Tensor` of type `out_type`. 1-D.  Non-empty values of the concatenated or hashed
       `SparseTensor`.
     output_shape: A `Tensor` of type `int64`. 1-D.  Shape of the concatenated `SparseTensor`.
   """
-  result = _op_def_lib.apply_op("SparseFeatureCross", indices=indices,
-                                values=values, shapes=shapes, dense=dense,
-                                hashed_output=hashed_output,
-                                num_buckets=num_buckets, out_type=out_type,
-                                internal_type=internal_type, name=name)
-  return _SparseFeatureCrossOutput._make(result)
-
+  if not isinstance(indices, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'indices' argument to "
+        "'sparse_feature_cross' Op, not %r." % indices)
+  _attr_N = len(indices)
+  if not isinstance(shapes, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'shapes' argument to "
+        "'sparse_feature_cross' Op, not %r." % shapes)
+  if len(shapes) != _attr_N:
+    raise ValueError(
+        "List argument 'shapes' to 'sparse_feature_cross' Op with length %d "
+        "must match length %d of argument 'indices'." %
+        (len(shapes), _attr_N))
+  hashed_output = _execute.make_bool(hashed_output, "hashed_output")
+  num_buckets = _execute.make_int(num_buckets, "num_buckets")
+  out_type = _execute.make_type(out_type, "out_type")
+  internal_type = _execute.make_type(internal_type, "internal_type")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseFeatureCross", indices=indices, values=values, shapes=shapes,
+        dense=dense, hashed_output=hashed_output, num_buckets=num_buckets,
+        out_type=out_type, internal_type=internal_type, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("N", _op.get_attr("N"), "hashed_output",
+              _op.get_attr("hashed_output"), "num_buckets",
+              _op.get_attr("num_buckets"), "sparse_types",
+              _op.get_attr("sparse_types"), "dense_types",
+              _op.get_attr("dense_types"), "out_type",
+              _op.get_attr("out_type"), "internal_type",
+              _op.get_attr("internal_type"))
+  else:
+    _attr_sparse_types, values = _execute.convert_to_mixed_eager_tensors(values, _ctx)
+    _attr_sparse_types = [_t.as_datatype_enum for _t in _attr_sparse_types]
+    _attr_dense_types, dense = _execute.convert_to_mixed_eager_tensors(dense, _ctx)
+    _attr_dense_types = [_t.as_datatype_enum for _t in _attr_dense_types]
+    indices = _ops.convert_n_to_tensor(indices, _dtypes.int64)
+    shapes = _ops.convert_n_to_tensor(shapes, _dtypes.int64)
+    _inputs_flat = list(indices) + list(values) + list(shapes) + list(dense)
+    _attrs = ("N", _attr_N, "hashed_output", hashed_output, "num_buckets",
+              num_buckets, "sparse_types", _attr_sparse_types, "dense_types",
+              _attr_dense_types, "out_type", out_type, "internal_type",
+              internal_type)
+    _result = _execute.execute(b"SparseFeatureCross", 3, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseFeatureCross", _inputs_flat, _attrs, _result, name)
+  _result = _SparseFeatureCrossOutput._make(_result)
+  return _result
 
 _ops.RegisterShape("SparseFeatureCross")(None)
+
+
 _sparse_feature_cross_v2_outputs = ["output_indices", "output_values",
                                    "output_shape"]
+_SparseFeatureCrossV2Output = _collections.namedtuple(
+    "SparseFeatureCrossV2", _sparse_feature_cross_v2_outputs)
 
 
-_SparseFeatureCrossV2Output = _collections.namedtuple("SparseFeatureCrossV2",
-                                                      _sparse_feature_cross_v2_outputs)
-
-
-def sparse_feature_cross_v2(indices, values, shapes, dense, hashed_output,
-                            num_buckets, hash_key, out_type, internal_type,
-                            name=None):
+def sparse_feature_cross_v2(indices, values, shapes, dense, hashed_output, num_buckets, hash_key, out_type, internal_type, name=None):
   r"""Generates sparse cross form a list of sparse tensors.
 
   The op takes two lists, one of 2D `SparseTensor` and one of 2D `Tensor`, each
@@ -146,11 +191,11 @@ def sparse_feature_cross_v2(indices, values, shapes, dense, hashed_output,
                       Fingerprint64("e"), Fingerprint64("c")))
 
   Args:
-    indices: A list of `Tensor` objects of type `int64`.
+    indices: A list of `Tensor` objects with type `int64`.
       2-D.  Indices of each input `SparseTensor`.
     values: A list of `Tensor` objects with types from: `int64`, `string`.
       1-D.   values of each `SparseTensor`.
-    shapes: A list with the same number of `Tensor` objects as `indices` of `Tensor` objects of type `int64`.
+    shapes: A list with the same length as `indices` of `Tensor` objects with type `int64`.
       1-D.   Shapes of each `SparseTensor`.
     dense: A list of `Tensor` objects with types from: `int64`, `string`.
       2-D.    Columns represented by dense `Tensor`.
@@ -163,213 +208,257 @@ def sparse_feature_cross_v2(indices, values, shapes, dense, hashed_output,
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  Indices of the concatenated `SparseTensor`.
     output_values: A `Tensor` of type `out_type`. 1-D.  Non-empty values of the concatenated or hashed
       `SparseTensor`.
     output_shape: A `Tensor` of type `int64`. 1-D.  Shape of the concatenated `SparseTensor`.
   """
-  result = _op_def_lib.apply_op("SparseFeatureCrossV2", indices=indices,
-                                values=values, shapes=shapes, dense=dense,
-                                hashed_output=hashed_output,
-                                num_buckets=num_buckets, hash_key=hash_key,
-                                out_type=out_type,
-                                internal_type=internal_type, name=name)
-  return _SparseFeatureCrossV2Output._make(result)
-
+  if not isinstance(indices, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'indices' argument to "
+        "'sparse_feature_cross_v2' Op, not %r." % indices)
+  _attr_N = len(indices)
+  if not isinstance(shapes, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'shapes' argument to "
+        "'sparse_feature_cross_v2' Op, not %r." % shapes)
+  if len(shapes) != _attr_N:
+    raise ValueError(
+        "List argument 'shapes' to 'sparse_feature_cross_v2' Op with length %d "
+        "must match length %d of argument 'indices'." %
+        (len(shapes), _attr_N))
+  hashed_output = _execute.make_bool(hashed_output, "hashed_output")
+  num_buckets = _execute.make_int(num_buckets, "num_buckets")
+  hash_key = _execute.make_int(hash_key, "hash_key")
+  out_type = _execute.make_type(out_type, "out_type")
+  internal_type = _execute.make_type(internal_type, "internal_type")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseFeatureCrossV2", indices=indices, values=values, shapes=shapes,
+        dense=dense, hashed_output=hashed_output, num_buckets=num_buckets,
+        hash_key=hash_key, out_type=out_type, internal_type=internal_type,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("N", _op.get_attr("N"), "hashed_output",
+              _op.get_attr("hashed_output"), "num_buckets",
+              _op.get_attr("num_buckets"), "hash_key",
+              _op.get_attr("hash_key"), "sparse_types",
+              _op.get_attr("sparse_types"), "dense_types",
+              _op.get_attr("dense_types"), "out_type",
+              _op.get_attr("out_type"), "internal_type",
+              _op.get_attr("internal_type"))
+  else:
+    _attr_sparse_types, values = _execute.convert_to_mixed_eager_tensors(values, _ctx)
+    _attr_sparse_types = [_t.as_datatype_enum for _t in _attr_sparse_types]
+    _attr_dense_types, dense = _execute.convert_to_mixed_eager_tensors(dense, _ctx)
+    _attr_dense_types = [_t.as_datatype_enum for _t in _attr_dense_types]
+    indices = _ops.convert_n_to_tensor(indices, _dtypes.int64)
+    shapes = _ops.convert_n_to_tensor(shapes, _dtypes.int64)
+    _inputs_flat = list(indices) + list(values) + list(shapes) + list(dense)
+    _attrs = ("N", _attr_N, "hashed_output", hashed_output, "num_buckets",
+              num_buckets, "hash_key", hash_key, "sparse_types",
+              _attr_sparse_types, "dense_types", _attr_dense_types,
+              "out_type", out_type, "internal_type", internal_type)
+    _result = _execute.execute(b"SparseFeatureCrossV2", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "SparseFeatureCrossV2", _inputs_flat, _attrs, _result, name)
+  _result = _SparseFeatureCrossV2Output._make(_result)
+  return _result
 
 _ops.RegisterShape("SparseFeatureCrossV2")(None)
-def _InitOpDefLibrary():
+
+def _InitOpDefLibrary(op_list_proto_bytes):
   op_list = _op_def_pb2.OpList()
-  _text_format.Merge(_InitOpDefLibrary.op_list_ascii, op_list)
+  op_list.ParseFromString(op_list_proto_bytes)
   _op_def_registry.register_op_list(op_list)
   op_def_lib = _op_def_library.OpDefLibrary()
   op_def_lib.add_op_list(op_list)
   return op_def_lib
-
-
-_InitOpDefLibrary.op_list_ascii = """op {
-  name: "SparseFeatureCross"
-  input_arg {
-    name: "indices"
-    type: DT_INT64
-    number_attr: "N"
-  }
-  input_arg {
-    name: "values"
-    type_list_attr: "sparse_types"
-  }
-  input_arg {
-    name: "shapes"
-    type: DT_INT64
-    number_attr: "N"
-  }
-  input_arg {
-    name: "dense"
-    type_list_attr: "dense_types"
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "out_type"
-  }
-  output_arg {
-    name: "output_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "N"
-    type: "int"
-    has_minimum: true
-  }
-  attr {
-    name: "hashed_output"
-    type: "bool"
-  }
-  attr {
-    name: "num_buckets"
-    type: "int"
-    has_minimum: true
-  }
-  attr {
-    name: "sparse_types"
-    type: "list(type)"
-    has_minimum: true
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-  attr {
-    name: "dense_types"
-    type: "list(type)"
-    has_minimum: true
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-  attr {
-    name: "out_type"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-  attr {
-    name: "internal_type"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-}
-op {
-  name: "SparseFeatureCrossV2"
-  input_arg {
-    name: "indices"
-    type: DT_INT64
-    number_attr: "N"
-  }
-  input_arg {
-    name: "values"
-    type_list_attr: "sparse_types"
-  }
-  input_arg {
-    name: "shapes"
-    type: DT_INT64
-    number_attr: "N"
-  }
-  input_arg {
-    name: "dense"
-    type_list_attr: "dense_types"
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "out_type"
-  }
-  output_arg {
-    name: "output_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "N"
-    type: "int"
-    has_minimum: true
-  }
-  attr {
-    name: "hashed_output"
-    type: "bool"
-  }
-  attr {
-    name: "num_buckets"
-    type: "int"
-    has_minimum: true
-  }
-  attr {
-    name: "hash_key"
-    type: "int"
-  }
-  attr {
-    name: "sparse_types"
-    type: "list(type)"
-    has_minimum: true
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-  attr {
-    name: "dense_types"
-    type: "list(type)"
-    has_minimum: true
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-  attr {
-    name: "out_type"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-  attr {
-    name: "internal_type"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_INT64
-        type: DT_STRING
-      }
-    }
-  }
-}
-"""
-
-
-_op_def_lib = _InitOpDefLibrary()
+# op {
+#   name: "SparseFeatureCross"
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "values"
+#     type_list_attr: "sparse_types"
+#   }
+#   input_arg {
+#     name: "shapes"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "dense"
+#     type_list_attr: "dense_types"
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "out_type"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "N"
+#     type: "int"
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "hashed_output"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "num_buckets"
+#     type: "int"
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "sparse_types"
+#     type: "list(type)"
+#     has_minimum: true
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "dense_types"
+#     type: "list(type)"
+#     has_minimum: true
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "out_type"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "internal_type"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseFeatureCrossV2"
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "values"
+#     type_list_attr: "sparse_types"
+#   }
+#   input_arg {
+#     name: "shapes"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "dense"
+#     type_list_attr: "dense_types"
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "out_type"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "N"
+#     type: "int"
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "hashed_output"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "num_buckets"
+#     type: "int"
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "hash_key"
+#     type: "int"
+#   }
+#   attr {
+#     name: "sparse_types"
+#     type: "list(type)"
+#     has_minimum: true
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "dense_types"
+#     type: "list(type)"
+#     has_minimum: true
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "out_type"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "internal_type"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+# }
+_op_def_lib = _InitOpDefLibrary(b"\n\337\002\n\022SparseFeatureCross\022\016\n\007indices\030\t*\001N\022\026\n\006values2\014sparse_types\022\r\n\006shapes\030\t*\001N\022\024\n\005dense2\013dense_types\032\022\n\016output_indices\030\t\032\031\n\routput_values\"\010out_type\032\020\n\014output_shape\030\t\"\n\n\001N\022\003int(\001\"\025\n\rhashed_output\022\004bool\"\024\n\013num_buckets\022\003int(\001\"$\n\014sparse_types\022\nlist(type)(\001:\006\n\0042\002\t\007\"#\n\013dense_types\022\nlist(type)(\001:\006\n\0042\002\t\007\"\030\n\010out_type\022\004type:\006\n\0042\002\t\007\"\035\n\rinternal_type\022\004type:\006\n\0042\002\t\007\n\362\002\n\024SparseFeatureCrossV2\022\016\n\007indices\030\t*\001N\022\026\n\006values2\014sparse_types\022\r\n\006shapes\030\t*\001N\022\024\n\005dense2\013dense_types\032\022\n\016output_indices\030\t\032\031\n\routput_values\"\010out_type\032\020\n\014output_shape\030\t\"\n\n\001N\022\003int(\001\"\025\n\rhashed_output\022\004bool\"\024\n\013num_buckets\022\003int(\001\"\017\n\010hash_key\022\003int\"$\n\014sparse_types\022\nlist(type)(\001:\006\n\0042\002\t\007\"#\n\013dense_types\022\nlist(type)(\001:\006\n\0042\002\t\007\"\030\n\010out_type\022\004type:\006\n\0042\002\t\007\"\035\n\rinternal_type\022\004type:\006\n\0042\002\t\007")

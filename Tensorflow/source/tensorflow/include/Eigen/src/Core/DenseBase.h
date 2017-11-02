@@ -296,7 +296,7 @@ template<typename Derived> class DenseBase
     EIGEN_DEVICE_FUNC
     Derived& operator=(const ReturnByValue<OtherDerived>& func);
 
-    /** \ínternal
+    /** \internal
       * Copies \a other into *this without evaluating other. \returns a reference to *this.
       * \deprecated */
     template<typename OtherDerived>
@@ -463,7 +463,17 @@ template<typename Derived> class DenseBase
     EIGEN_DEVICE_FUNC
     void visit(Visitor& func) const;
 
-    inline const WithFormat<Derived> format(const IOFormat& fmt) const;
+    /** \returns a WithFormat proxy object allowing to print a matrix the with given
+      * format \a fmt.
+      *
+      * See class IOFormat for some examples.
+      *
+      * \sa class IOFormat, class WithFormat
+      */
+    inline const WithFormat<Derived> format(const IOFormat& fmt) const
+    {
+      return WithFormat<Derived>(derived(), fmt);
+    }
 
     /** \returns the unique coefficient of a 1x1 expression */
     EIGEN_DEVICE_FUNC
@@ -474,9 +484,9 @@ template<typename Derived> class DenseBase
       return derived().coeff(0,0);
     }
 
-    bool all() const;
-    bool any() const;
-    Index count() const;
+    EIGEN_DEVICE_FUNC bool all() const;
+    EIGEN_DEVICE_FUNC bool any() const;
+    EIGEN_DEVICE_FUNC Index count() const;
 
     typedef VectorwiseOp<Derived, Horizontal> RowwiseReturnType;
     typedef const VectorwiseOp<const Derived, Horizontal> ConstRowwiseReturnType;
@@ -560,13 +570,17 @@ template<typename Derived> class DenseBase
 #define EIGEN_CURRENT_STORAGE_BASE_CLASS Eigen::DenseBase
 #define EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
 #define EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(COND)
+#define EIGEN_DOC_UNARY_ADDONS(X,Y)
+#   include "../plugins/CommonCwiseUnaryOps.h"
 #   include "../plugins/BlockMethods.h"
+#   include "../plugins/IndexedViewMethods.h"
 #   ifdef EIGEN_DENSEBASE_PLUGIN
 #     include EIGEN_DENSEBASE_PLUGIN
 #   endif
 #undef EIGEN_CURRENT_STORAGE_BASE_CLASS
 #undef EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
 #undef EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF
+#undef EIGEN_DOC_UNARY_ADDONS
 
     // disable the use of evalTo for dense objects with a nice compilation error
     template<typename Dest>

@@ -46,11 +46,6 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/wire_format_lite.h>
 
-// Do UTF-8 validation on string type in Debug build only
-#ifndef NDEBUG
-#define GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
-#endif
-
 namespace google {
 namespace protobuf {
   namespace io {
@@ -327,6 +322,9 @@ inline void WireFormat::VerifyUTF8StringNamedField(
 #ifdef GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
   WireFormatLite::VerifyUtf8String(
       data, size, static_cast<WireFormatLite::Operation>(op), field_name);
+#else
+  // Avoid the compiler warning about unused variables.
+  (void)data; (void)size; (void)op; (void)field_name;
 #endif
 }
 

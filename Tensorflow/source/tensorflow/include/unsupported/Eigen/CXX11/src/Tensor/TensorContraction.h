@@ -64,9 +64,9 @@ void pack_simple(Scalar * dst, const Scalar * src, Index cols, Index rows, Index
 template<typename LhsScalar, typename RhsScalar, typename Scalar>
   struct libxsmm_wrapper {
     libxsmm_wrapper() {}
-    libxsmm_wrapper(int flags, int m, int n, int k, int lda, int ldb, int ldc, float alpha, float beta, int prefetch) {}
-    void operator()(const LhsScalar* a, const RhsScalar* b, Scalar* c) {}
-    void operator()(const LhsScalar* a, const RhsScalar* b, Scalar* c, const LhsScalar* ap, const RhsScalar* bp, const Scalar* cp) {}
+    libxsmm_wrapper(int, int, int, int, int, int, int, float, float, int) {}
+    void operator()(const LhsScalar*, const RhsScalar*, Scalar*) {}
+    void operator()(const LhsScalar*, const RhsScalar*, Scalar*, const LhsScalar*, const RhsScalar*, const Scalar*) {}
   };
 
   template<>
@@ -104,6 +104,8 @@ struct traits<TensorContractionOp<Dimensions, LhsXprType, RhsXprType> >
   // From NumDims below.
   static const int NumDimensions = traits<RhsXprType>::NumDimensions + traits<RhsXprType>::NumDimensions - 2 * array_size<Dimensions>::value;
   static const int Layout = traits<LhsXprType>::Layout;
+  typedef typename conditional<Pointer_type_promotion<typename LhsXprType::Scalar, Scalar>::val,
+  typename traits<LhsXprType>::PointerType, typename traits<RhsXprType>::PointerType>::type PointerType;
 
   enum {
     Flags = 0
@@ -220,7 +222,7 @@ struct TensorContractionEvaluatorBase
     m_rightImpl(choose(Cond<static_cast<int>(Layout) == static_cast<int>(ColMajor)>(),
                           op.rhsExpression(), op.lhsExpression()), device),
         m_device(device),
-        m_result(NULL), m_expr_indices(op.indices()) {
+        m_result(NULL) {
     EIGEN_STATIC_ASSERT((static_cast<int>(TensorEvaluator<LeftArgType, Device>::Layout) ==
          static_cast<int>(TensorEvaluator<RightArgType, Device>::Layout)),
                         YOU_MADE_A_PROGRAMMING_MISTAKE);
@@ -609,7 +611,7 @@ struct TensorContractionEvaluatorBase
     return internal::ploadt<PacketReturnType, LoadMode>(m_result + index);
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar* data() const { return m_result; }
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename Eigen::internal::traits<XprType>::PointerType data() const { return m_result; }
 
 protected:
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void EnableXSMMIfPossible(const array<IndexPair<Index>, ContractDims>& eval_op_indices) {
@@ -682,7 +684,9 @@ protected:
     }
 
     m_can_use_xsmm = true;
-    #endif
+#else
+    EIGEN_UNUSED_VARIABLE(eval_op_indices);
+#endif
   }
 
 #if defined(EIGEN_VECTORIZE_AVX) && defined(EIGEN_USE_LIBXSMM)
@@ -720,23 +724,19 @@ protected:
     const LhsScalar* leftData = m_leftImpl.data();
     const RhsScalar* rightData = m_rightImpl.data();
 
-    libxsmm_blasint stride_A = static_cast<libxsmm_blasint>(transposeA ? k : m);
-    libxsmm_blasint stride_B = static_cast<libxsmm_blasint>(transposeB ? n : k);
-    libxsmm_blasint stride_C = static_cast<libxsmm_blasint>(m);
+    const libxsmm_blasint stride_A = static_cast<libxsmm_blasint>(transposeA ? k : m);
+    const libxsmm_blasint stride_B = static_cast<libxsmm_blasint>(transposeB ? n : k);
+    const libxsmm_blasint stride_C = static_cast<libxsmm_blasint>(m);
 
-    libxsmm_blasint stride_blockA = static_cast<libxsmm_blasint>(mc);
+    const libxsmm_blasint stride_blockA = static_cast<libxsmm_blasint>(mc);
     // Use bigger stride to avoid hitting same cache line too often.
     // This consistently gives +~0.5 Gflops.
-    libxsmm_blasint stride_panelB = static_cast<libxsmm_blasint>(
+    const libxsmm_blasint stride_panelB = static_cast<libxsmm_blasint>(
         kc % 32 == 0 ? kc + 16 : kc
     );
 
     // Kernel for the general case (not edges)
     internal::libxsmm_wrapper<LhsScalar, RhsScalar, Scalar> kernel;
-
-    const LhsScalar *ap;
-    const RhsScalar *bp;
-    const Scalar *cp;
 
     LhsScalar* blockA = NULL;
     RhsScalar* panelB = NULL;
@@ -748,8 +748,8 @@ protected:
       panelB = static_cast<RhsScalar*>(this->m_device.allocate(nc_outer * stride_panelB * sizeof(RhsScalar)));
     }
 
-    Index kernel_stride_A = copyA ? stride_blockA : stride_A;
-    Index kernel_stride_B = copyB ? stride_panelB : stride_B;
+    const Index kernel_stride_A = copyA ? stride_blockA : stride_A;
+    const Index kernel_stride_B = copyB ? stride_panelB : stride_B;
     kernel = internal::libxsmm_wrapper<LhsScalar, RhsScalar, Scalar>(0, mc, nc, kc, kernel_stride_A, kernel_stride_B, stride_C, 1, 1, blocking.prefetch());
 
     // Outer blocking
@@ -763,6 +763,7 @@ protected:
           // Inner blocking
           for (Index ki = ki_outer; ki < mini(ki_outer+kc_outer, k); ki += kc) {
             const Index actual_kc = mini(ki_outer+kc_outer, mini(ki+kc, k)) - ki;
+            const float beta = ki == 0 ? 0 : 1;
 
             if (copyB) {
               if (transposeB) {
@@ -775,8 +776,8 @@ protected:
             for (Index mi = mi_outer; mi < mini(mi_outer+mc_outer, m); mi += mc) {
               const Index actual_mc = mini(mi_outer+mc_outer, mini(mi+mc, m)) - mi;
 
-              const LhsScalar * a = transposeA ? leftData + mi*stride_A + ki :
-                                                 leftData + ki*stride_A + mi;
+              const LhsScalar* a = transposeA ? leftData + mi*stride_A + ki :
+                                                leftData + ki*stride_A + mi;
 
               if (copyA) {
                 if (transposeA) {
@@ -785,30 +786,24 @@ protected:
                   internal::pack_simple<LhsScalar, Index>(blockA, a, actual_kc, actual_mc, stride_blockA, stride_A);
                 }
               }
+              const LhsScalar* actual_a = copyA ? blockA : a;
 
               for (Index ni = ni_outer; ni < mini(ni_outer+nc_outer, n); ni += nc) {
                 const Index actual_nc = mini(ni_outer+nc_outer, mini(ni+nc, n)) - ni;
 
-                const RhsScalar * b = rightData + ni*stride_B + ki;
-                Scalar * c = buffer + ni*stride_C + mi;
-                cp = c + nc*stride_C;
+                const RhsScalar* b = rightData + ni*stride_B + ki;
+                Scalar* c = buffer + ni*stride_C + mi;
+                const Scalar* cp = c + nc*stride_C;
 
-                const LhsScalar * actual_a = copyA ? blockA : a;
-                const Index actual_lda = copyA ? stride_blockA : stride_A;
-                ap = copyA ? blockA : a;
-
-                const RhsScalar * actual_b = copyB ? panelB + (ni-ni_outer)*stride_panelB : b;
-                const Index actual_ldb = copyB ? stride_panelB : stride_B;
-                bp = copyB ? panelB + nc*stride_panelB : b + nc*stride_B;
-
-                float beta = ki == 0 ? 0 : 1;
+                const RhsScalar* actual_b = copyB ? panelB + (ni-ni_outer)*stride_panelB : b;
+                const RhsScalar* bp = copyB ? panelB + nc*stride_panelB : b + nc*stride_B;
 
                 if (actual_mc == mc && actual_kc == kc && actual_nc == nc && beta == 1) {
                   // Most used, cached kernel.
-                  kernel(actual_a, actual_b, c, ap, bp, cp);
+                  kernel(actual_a, actual_b, c, actual_a, bp, cp);
                 } else {
                   // Edges - use libxsmm kernel cache.
-                  internal::libxsmm_wrapper<LhsScalar, RhsScalar, Scalar>(0, actual_mc, actual_nc, actual_kc, actual_lda, actual_ldb, stride_C, 1, beta, blocking.prefetch())(actual_a, actual_b, c, ap, bp, cp);
+                  internal::libxsmm_wrapper<LhsScalar, RhsScalar, Scalar>(0, actual_mc, actual_nc, actual_kc, kernel_stride_A, kernel_stride_B, stride_C, 1, beta, blocking.prefetch())(actual_a, actual_b, c, actual_a, bp, cp);
                 }
               }
             }
@@ -851,9 +846,6 @@ protected:
   TensorEvaluator<EvalRightArgType, Device> m_rightImpl;
   const Device& m_device;
   Scalar* m_result;
-  /// required for sycl
-  const Indices m_expr_indices;
-
   bool m_can_use_xsmm;
 };
 

@@ -25,7 +25,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n%tensorflow/core/framework/graph.proto\x12\ntensorflow\x1a(tensorflow/core/framework/node_def.proto\x1a(tensorflow/core/framework/function.proto\x1a(tensorflow/core/framework/versions.proto\"\x9d\x01\n\x08GraphDef\x12!\n\x04node\x18\x01 \x03(\x0b\x32\x13.tensorflow.NodeDef\x12(\n\x08versions\x18\x04 \x01(\x0b\x32\x16.tensorflow.VersionDef\x12\x13\n\x07version\x18\x03 \x01(\x05\x42\x02\x18\x01\x12/\n\x07library\x18\x02 \x01(\x0b\x32\x1e.tensorflow.FunctionDefLibraryB,\n\x18org.tensorflow.frameworkB\x0bGraphProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_node__def__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_function__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_versions__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -85,6 +84,7 @@ _GRAPHDEF.fields_by_name['node'].message_type = tensorflow_dot_core_dot_framewor
 _GRAPHDEF.fields_by_name['versions'].message_type = tensorflow_dot_core_dot_framework_dot_versions__pb2._VERSIONDEF
 _GRAPHDEF.fields_by_name['library'].message_type = tensorflow_dot_core_dot_framework_dot_function__pb2._FUNCTIONDEFLIBRARY
 DESCRIPTOR.message_types_by_name['GraphDef'] = _GRAPHDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 GraphDef = _reflection.GeneratedProtocolMessageType('GraphDef', (_message.Message,), dict(
   DESCRIPTOR = _GRAPHDEF,

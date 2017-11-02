@@ -1,4 +1,4 @@
-# Copyright 2011 OpenStack LLC.
+# Copyright 2011 OpenStack Foundation
 # Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 # All Rights Reserved.
 #
@@ -100,6 +100,10 @@ def parse_requirements(requirements_files=None, strip_markers=False):
     for line in get_reqs_from_files(requirements_files):
         # Ignore comments
         if (not line.strip()) or line.startswith('#'):
+            continue
+
+        # Ignore index URL lines
+        if re.match(r'^\s*(-i|--index-url|--extra-index-url).*', line):
             continue
 
         # Handle nested requirements files such as:
@@ -225,6 +229,25 @@ class LocalRPMVersion(setuptools.Command):
         pass
 
 
+class LocalDebVersion(setuptools.Command):
+    __doc__ = """Output the deb *compatible* version string of this package"""
+    description = __doc__
+
+    user_options = []
+    command_name = "deb_version"
+
+    def run(self):
+        log.info("[pbr] Extracting deb version")
+        name = self.distribution.get_name()
+        print(version.VersionInfo(name).semantic_version().debian_string())
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+
 def have_testr():
     return testr_command.have_testr
 
@@ -263,12 +286,15 @@ if __name__ == "__main__":
     import wsgiref.simple_server as wss
 
     my_ip = socket.gethostbyname(socket.gethostname())
+
     parser = argparse.ArgumentParser(
         description=%(import_target)s.__doc__,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        usage='%%(prog)s [-h] [--port PORT] -- [passed options]')
+        usage='%%(prog)s [-h] [--port PORT] [--host IP] -- [passed options]')
     parser.add_argument('--port', '-p', type=int, default=8000,
                         help='TCP port to listen on')
+    parser.add_argument('--host', '-b', default='',
+                        help='IP to bind the server to')
     parser.add_argument('args',
                         nargs=argparse.REMAINDER,
                         metavar='-- [passed options]',
@@ -282,11 +308,11 @@ if __name__ == "__main__":
         else:
             parser.error("unrecognized arguments: %%s" %% ' '.join(args.args))
     sys.argv[1:] = args.args
-    server = wss.make_server('', args.port, %(invoke_target)s())
+    server = wss.make_server(args.host, args.port, %(invoke_target)s())
 
     print("*" * 80)
     print("STARTING test server %(module_name)s.%(invoke_target)s")
-    url = "http://%%s:%%d/" %% (my_ip, server.server_port)
+    url = "http://%%s:%%d/" %% (server.server_name, server.server_port)
     print("Available at %%s" %% url)
     print("DANGER! For testing only, do not use in production")
     print("*" * 80)
@@ -517,11 +543,9 @@ try:
     # Import the symbols from their new home so the package API stays
     # compatible.
     LocalBuildDoc = builddoc.LocalBuildDoc
-    LocalBuildLatex = builddoc.LocalBuildLatex
 except ImportError:
     _have_sphinx = False
     LocalBuildDoc = None
-    LocalBuildLatex = None
 
 
 def have_sphinx():
@@ -724,7 +748,11 @@ def get_version(package_name, pre_version=None):
         return version
     raise Exception("Versioning for this project requires either an sdist"
                     " tarball, or access to an upstream git repository."
-                    " Are you sure that git is installed?")
+                    " It's also possible that there is a mismatch between"
+                    " the package name in setup.cfg and the argument given"
+                    " to pbr.version.VersionInfo. Project name {name} was"
+                    " given, but was not able to be found.".format(
+                        name=package_name))
 
 
 # This is added because pbr uses pbr to install itself. That means that

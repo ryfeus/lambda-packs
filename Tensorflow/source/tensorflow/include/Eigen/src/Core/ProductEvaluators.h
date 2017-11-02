@@ -207,6 +207,12 @@ struct evaluator_assume_aliasing<CwiseBinaryOp<internal::scalar_sum_op<typename 
   static const bool value = true;
 };
 
+template<typename OtherXpr, typename Lhs, typename Rhs>
+struct evaluator_assume_aliasing<CwiseBinaryOp<internal::scalar_difference_op<typename OtherXpr::Scalar,typename Product<Lhs,Rhs,DefaultProduct>::Scalar>, const OtherXpr,
+                                               const Product<Lhs,Rhs,DefaultProduct> >, DenseShape > {
+  static const bool value = true;
+};
+
 template<typename DstXprType, typename OtherXpr, typename ProductType, typename Func1, typename Func2>
 struct assignment_from_xpr_op_product
 {
@@ -845,7 +851,7 @@ struct product_evaluator<Product<Lhs, Rhs, ProductKind>, ProductTag, DiagonalSha
     return m_diagImpl.coeff(row) * m_matImpl.coeff(row, col);
   }
   
-#ifndef __CUDACC__
+#ifndef EIGEN_CUDACC
   template<int LoadMode,typename PacketType>
   EIGEN_STRONG_INLINE PacketType packet(Index row, Index col) const
   {
@@ -889,7 +895,7 @@ struct product_evaluator<Product<Lhs, Rhs, ProductKind>, ProductTag, DenseShape,
     return m_matImpl.coeff(row, col) * m_diagImpl.coeff(col);
   }
   
-#ifndef __CUDACC__
+#ifndef EIGEN_CUDACC
   template<int LoadMode,typename PacketType>
   EIGEN_STRONG_INLINE PacketType packet(Index row, Index col) const
   {

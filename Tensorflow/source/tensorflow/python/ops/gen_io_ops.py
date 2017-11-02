@@ -1,32 +1,37 @@
-"""Python wrappers around Brain.
+"""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
+Original C++ source file: io_ops.cc
 """
 
 import collections as _collections
 
-from google.protobuf import text_format as _text_format
+from tensorflow.python.eager import execute as _execute
+from tensorflow.python.eager import context as _context
+from tensorflow.python.eager import core as _core
+from tensorflow.python.framework import dtypes as _dtypes
+from tensorflow.python.framework import tensor_shape as _tensor_shape
 
 from tensorflow.core.framework import op_def_pb2 as _op_def_pb2
-
 # Needed to trigger the call to _set_call_cpp_shape_fn.
 from tensorflow.python.framework import common_shapes as _common_shapes
-
 from tensorflow.python.framework import op_def_registry as _op_def_registry
 from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import op_def_library as _op_def_library
-__fixed_length_record_reader_outputs = ["reader_handle"]
 
 
-def _fixed_length_record_reader(record_bytes, header_bytes=None,
-                                footer_bytes=None, container=None,
-                                shared_name=None, name=None):
+def _fixed_length_record_reader(record_bytes, header_bytes=0, footer_bytes=0, hop_bytes=0, container="", shared_name="", name=None):
   r"""A Reader that outputs fixed-length records from a file.
 
   Args:
-    record_bytes: An `int`.
+    record_bytes: An `int`. Number of bytes in the record.
     header_bytes: An optional `int`. Defaults to `0`.
+      Number of bytes in the header, defaults to 0.
     footer_bytes: An optional `int`. Defaults to `0`.
+      Number of bytes in the footer, defaults to 0.
+    hop_bytes: An optional `int`. Defaults to `0`.
+      Number of bytes to hop before each read. Default of 0 means using
+      record_bytes.
     container: An optional `string`. Defaults to `""`.
       If non-empty, this reader is placed in the given container.
       Otherwise, a default container is used.
@@ -38,51 +43,123 @@ def _fixed_length_record_reader(record_bytes, header_bytes=None,
   Returns:
     A `Tensor` of type mutable `string`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("FixedLengthRecordReader",
-                                record_bytes=record_bytes,
-                                header_bytes=header_bytes,
-                                footer_bytes=footer_bytes,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return result
+  record_bytes = _execute.make_int(record_bytes, "record_bytes")
+  if header_bytes is None:
+    header_bytes = 0
+  header_bytes = _execute.make_int(header_bytes, "header_bytes")
+  if footer_bytes is None:
+    footer_bytes = 0
+  footer_bytes = _execute.make_int(footer_bytes, "footer_bytes")
+  if hop_bytes is None:
+    hop_bytes = 0
+  hop_bytes = _execute.make_int(hop_bytes, "hop_bytes")
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "FixedLengthRecordReader", record_bytes=record_bytes,
+        header_bytes=header_bytes, footer_bytes=footer_bytes,
+        hop_bytes=hop_bytes, container=container, shared_name=shared_name,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("header_bytes", _op.get_attr("header_bytes"), "record_bytes",
+              _op.get_attr("record_bytes"), "footer_bytes",
+              _op.get_attr("footer_bytes"), "hop_bytes",
+              _op.get_attr("hop_bytes"), "container",
+              _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    raise RuntimeError(
+        "fixed_length_record_reader op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "FixedLengthRecordReader", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__fixed_length_record_reader_v2_outputs = ["reader_handle"]
-
-
-def _fixed_length_record_reader_v2(record_bytes, header_bytes=None,
-                                   footer_bytes=None, container=None,
-                                   shared_name=None, name=None):
+def _fixed_length_record_reader_v2(record_bytes, header_bytes=0, footer_bytes=0, hop_bytes=0, container="", shared_name="", encoding="", name=None):
   r"""A Reader that outputs fixed-length records from a file.
 
   Args:
-    record_bytes: An `int`.
+    record_bytes: An `int`. Number of bytes in the record.
     header_bytes: An optional `int`. Defaults to `0`.
+      Number of bytes in the header, defaults to 0.
     footer_bytes: An optional `int`. Defaults to `0`.
+      Number of bytes in the footer, defaults to 0.
+    hop_bytes: An optional `int`. Defaults to `0`.
+      Number of bytes to hop before each read. Default of 0 means using
+      record_bytes.
     container: An optional `string`. Defaults to `""`.
       If non-empty, this reader is placed in the given container.
       Otherwise, a default container is used.
     shared_name: An optional `string`. Defaults to `""`.
       If non-empty, this reader is named in the given bucket
       with this shared_name. Otherwise, the node name is used instead.
+    encoding: An optional `string`. Defaults to `""`.
+      The type of encoding for the file. Currently ZLIB and GZIP
+      are supported. Defaults to none.
     name: A name for the operation (optional).
 
   Returns:
     A `Tensor` of type `resource`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("FixedLengthRecordReaderV2",
-                                record_bytes=record_bytes,
-                                header_bytes=header_bytes,
-                                footer_bytes=footer_bytes,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return result
+  record_bytes = _execute.make_int(record_bytes, "record_bytes")
+  if header_bytes is None:
+    header_bytes = 0
+  header_bytes = _execute.make_int(header_bytes, "header_bytes")
+  if footer_bytes is None:
+    footer_bytes = 0
+  footer_bytes = _execute.make_int(footer_bytes, "footer_bytes")
+  if hop_bytes is None:
+    hop_bytes = 0
+  hop_bytes = _execute.make_int(hop_bytes, "hop_bytes")
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  if encoding is None:
+    encoding = ""
+  encoding = _execute.make_str(encoding, "encoding")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "FixedLengthRecordReaderV2", record_bytes=record_bytes,
+        header_bytes=header_bytes, footer_bytes=footer_bytes,
+        hop_bytes=hop_bytes, container=container, shared_name=shared_name,
+        encoding=encoding, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("header_bytes", _op.get_attr("header_bytes"), "record_bytes",
+              _op.get_attr("record_bytes"), "footer_bytes",
+              _op.get_attr("footer_bytes"), "hop_bytes",
+              _op.get_attr("hop_bytes"), "container",
+              _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"), "encoding",
+              _op.get_attr("encoding"))
+  else:
+    _inputs_flat = []
+    _attrs = ("header_bytes", header_bytes, "record_bytes", record_bytes,
+              "footer_bytes", footer_bytes, "hop_bytes", hop_bytes,
+              "container", container, "shared_name", shared_name, "encoding",
+              encoding)
+    _result = _execute.execute(b"FixedLengthRecordReaderV2", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "FixedLengthRecordReaderV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__identity_reader_outputs = ["reader_handle"]
-
-
-def _identity_reader(container=None, shared_name=None, name=None):
+def _identity_reader(container="", shared_name="", name=None):
   r"""A Reader that outputs the queued work as both the key and value.
 
   To use, enqueue strings in a Queue.  ReaderRead will take the front
@@ -100,15 +177,31 @@ def _identity_reader(container=None, shared_name=None, name=None):
   Returns:
     A `Tensor` of type mutable `string`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("IdentityReader", container=container,
-                                shared_name=shared_name, name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "IdentityReader", container=container, shared_name=shared_name,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    raise RuntimeError(
+        "identity_reader op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "IdentityReader", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__identity_reader_v2_outputs = ["reader_handle"]
-
-
-def _identity_reader_v2(container=None, shared_name=None, name=None):
+def _identity_reader_v2(container="", shared_name="", name=None):
   r"""A Reader that outputs the queued work as both the key and value.
 
   To use, enqueue strings in a Queue.  ReaderRead will take the front
@@ -126,36 +219,104 @@ def _identity_reader_v2(container=None, shared_name=None, name=None):
   Returns:
     A `Tensor` of type `resource`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("IdentityReaderV2", container=container,
-                                shared_name=shared_name, name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "IdentityReaderV2", container=container, shared_name=shared_name,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    _inputs_flat = []
+    _attrs = ("container", container, "shared_name", shared_name)
+    _result = _execute.execute(b"IdentityReaderV2", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "IdentityReaderV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-_matching_files_outputs = ["filenames"]
+def _lmdb_reader(container="", shared_name="", name=None):
+  r"""A Reader that outputs the records from a LMDB file.
+
+  Args:
+    container: An optional `string`. Defaults to `""`.
+      If non-empty, this reader is placed in the given container.
+      Otherwise, a default container is used.
+    shared_name: An optional `string`. Defaults to `""`.
+      If non-empty, this reader is named in the given bucket
+      with this shared_name. Otherwise, the node name is used instead.
+    name: A name for the operation (optional).
+
+  Returns:
+    A `Tensor` of type mutable `string`. The handle to reference the Reader.
+  """
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "LMDBReader", container=container, shared_name=shared_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    raise RuntimeError(
+        "lmdb_reader op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "LMDBReader", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def matching_files(pattern, name=None):
-  r"""Returns the set of files matching a pattern.
+  r"""Returns the set of files matching one or more glob patterns.
 
   Note that this routine only supports wildcard characters in the
   basename portion of the pattern, not in the directory portion.
 
   Args:
-    pattern: A `Tensor` of type `string`. A (scalar) shell wildcard pattern.
+    pattern: A `Tensor` of type `string`.
+      Shell wildcard pattern(s). Scalar or vector of type string.
     name: A name for the operation (optional).
 
   Returns:
     A `Tensor` of type `string`. A vector of matching filenames.
   """
-  result = _op_def_lib.apply_op("MatchingFiles", pattern=pattern, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "MatchingFiles", pattern=pattern, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    pattern = _ops.convert_to_tensor(pattern, _dtypes.string)
+    _inputs_flat = [pattern]
+    _attrs = None
+    _result = _execute.execute(b"MatchingFiles", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "MatchingFiles", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-_merge_v2_checkpoints_outputs = [""]
-
-
-def merge_v2_checkpoints(checkpoint_prefixes, destination_prefix,
-                         delete_old_dirs=None, name=None):
+def merge_v2_checkpoints(checkpoint_prefixes, destination_prefix, delete_old_dirs=True, name=None):
   r"""V2 format specific: merges the metadata files of sharded checkpoints.  The
 
   result is one logical checkpoint, with one physical metadata file and renamed
@@ -179,14 +340,24 @@ def merge_v2_checkpoints(checkpoint_prefixes, destination_prefix,
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("MergeV2Checkpoints",
-                                checkpoint_prefixes=checkpoint_prefixes,
-                                destination_prefix=destination_prefix,
-                                delete_old_dirs=delete_old_dirs, name=name)
-  return result
-
-
-_read_file_outputs = ["contents"]
+  if delete_old_dirs is None:
+    delete_old_dirs = True
+  delete_old_dirs = _execute.make_bool(delete_old_dirs, "delete_old_dirs")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "MergeV2Checkpoints", checkpoint_prefixes=checkpoint_prefixes,
+        destination_prefix=destination_prefix,
+        delete_old_dirs=delete_old_dirs, name=name)
+    return _op
+  else:
+    checkpoint_prefixes = _ops.convert_to_tensor(checkpoint_prefixes, _dtypes.string)
+    destination_prefix = _ops.convert_to_tensor(destination_prefix, _dtypes.string)
+    _inputs_flat = [checkpoint_prefixes, destination_prefix]
+    _attrs = ("delete_old_dirs", delete_old_dirs)
+    _result = _execute.execute(b"MergeV2Checkpoints", 0, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  return _result
 
 
 def read_file(filename, name=None):
@@ -199,11 +370,23 @@ def read_file(filename, name=None):
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("ReadFile", filename=filename, name=name)
-  return result
-
-
-__reader_num_records_produced_outputs = ["records_produced"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReadFile", filename=filename, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    filename = _ops.convert_to_tensor(filename, _dtypes.string)
+    _inputs_flat = [filename]
+    _attrs = None
+    _result = _execute.execute(b"ReadFile", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ReadFile", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _reader_num_records_produced(reader_handle, name=None):
@@ -219,12 +402,20 @@ def _reader_num_records_produced(reader_handle, name=None):
   Returns:
     A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("ReaderNumRecordsProduced",
-                                reader_handle=reader_handle, name=name)
-  return result
-
-
-__reader_num_records_produced_v2_outputs = ["records_produced"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderNumRecordsProduced", reader_handle=reader_handle, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    raise RuntimeError(
+        "reader_num_records_produced op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "ReaderNumRecordsProduced", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _reader_num_records_produced_v2(reader_handle, name=None):
@@ -240,12 +431,24 @@ def _reader_num_records_produced_v2(reader_handle, name=None):
   Returns:
     A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("ReaderNumRecordsProducedV2",
-                                reader_handle=reader_handle, name=name)
-  return result
-
-
-__reader_num_work_units_completed_outputs = ["units_completed"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderNumRecordsProducedV2", reader_handle=reader_handle, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    _inputs_flat = [reader_handle]
+    _attrs = None
+    _result = _execute.execute(b"ReaderNumRecordsProducedV2", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "ReaderNumRecordsProducedV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _reader_num_work_units_completed(reader_handle, name=None):
@@ -258,12 +461,20 @@ def _reader_num_work_units_completed(reader_handle, name=None):
   Returns:
     A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("ReaderNumWorkUnitsCompleted",
-                                reader_handle=reader_handle, name=name)
-  return result
-
-
-__reader_num_work_units_completed_v2_outputs = ["units_completed"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderNumWorkUnitsCompleted", reader_handle=reader_handle, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    raise RuntimeError(
+        "reader_num_work_units_completed op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "ReaderNumWorkUnitsCompleted", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _reader_num_work_units_completed_v2(reader_handle, name=None):
@@ -276,16 +487,30 @@ def _reader_num_work_units_completed_v2(reader_handle, name=None):
   Returns:
     A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("ReaderNumWorkUnitsCompletedV2",
-                                reader_handle=reader_handle, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderNumWorkUnitsCompletedV2", reader_handle=reader_handle,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    _inputs_flat = [reader_handle]
+    _attrs = None
+    _result = _execute.execute(b"ReaderNumWorkUnitsCompletedV2", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "ReaderNumWorkUnitsCompletedV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 __reader_read_outputs = ["key", "value"]
-
-
-_ReaderReadOutput = _collections.namedtuple("ReaderRead",
-                                            __reader_read_outputs)
+_ReaderReadOutput = _collections.namedtuple(
+    "ReaderRead", __reader_read_outputs)
 
 
 def _reader_read(reader_handle, queue_handle, name=None):
@@ -303,19 +528,30 @@ def _reader_read(reader_handle, queue_handle, name=None):
 
   Returns:
     A tuple of `Tensor` objects (key, value).
+
     key: A `Tensor` of type `string`. A scalar.
     value: A `Tensor` of type `string`. A scalar.
   """
-  result = _op_def_lib.apply_op("ReaderRead", reader_handle=reader_handle,
-                                queue_handle=queue_handle, name=name)
-  return _ReaderReadOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderRead", reader_handle=reader_handle, queue_handle=queue_handle,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    raise RuntimeError(
+        "reader_read op does not support eager execution. Arg 'queue_handle'' is a ref.")
+  _execute.record_gradient(
+      "ReaderRead", _inputs_flat, _attrs, _result, name)
+  _result = _ReaderReadOutput._make(_result)
+  return _result
 
 
 __reader_read_up_to_outputs = ["keys", "values"]
-
-
-_ReaderReadUpToOutput = _collections.namedtuple("ReaderReadUpTo",
-                                                __reader_read_up_to_outputs)
+_ReaderReadUpToOutput = _collections.namedtuple(
+    "ReaderReadUpTo", __reader_read_up_to_outputs)
 
 
 def _reader_read_up_to(reader_handle, queue_handle, num_records, name=None):
@@ -336,24 +572,33 @@ def _reader_read_up_to(reader_handle, queue_handle, num_records, name=None):
 
   Returns:
     A tuple of `Tensor` objects (keys, values).
+
     keys: A `Tensor` of type `string`. A 1-D tensor.
     values: A `Tensor` of type `string`. A 1-D tensor.
   """
-  result = _op_def_lib.apply_op("ReaderReadUpTo", reader_handle=reader_handle,
-                                queue_handle=queue_handle,
-                                num_records=num_records, name=name)
-  return _ReaderReadUpToOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderReadUpTo", reader_handle=reader_handle,
+        queue_handle=queue_handle, num_records=num_records, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    raise RuntimeError(
+        "reader_read_up_to op does not support eager execution. Arg 'queue_handle'' is a ref.")
+  _execute.record_gradient(
+      "ReaderReadUpTo", _inputs_flat, _attrs, _result, name)
+  _result = _ReaderReadUpToOutput._make(_result)
+  return _result
 
 
 __reader_read_up_to_v2_outputs = ["keys", "values"]
+_ReaderReadUpToV2Output = _collections.namedtuple(
+    "ReaderReadUpToV2", __reader_read_up_to_v2_outputs)
 
 
-_ReaderReadUpToV2Output = _collections.namedtuple("ReaderReadUpToV2",
-                                                  __reader_read_up_to_v2_outputs)
-
-
-def _reader_read_up_to_v2(reader_handle, queue_handle, num_records,
-                          name=None):
+def _reader_read_up_to_v2(reader_handle, queue_handle, num_records, name=None):
   r"""Returns up to `num_records` (key, value) pairs produced by a Reader.
 
   Will dequeue from the input queue if necessary (e.g. when the
@@ -371,21 +616,35 @@ def _reader_read_up_to_v2(reader_handle, queue_handle, num_records,
 
   Returns:
     A tuple of `Tensor` objects (keys, values).
+
     keys: A `Tensor` of type `string`. A 1-D tensor.
     values: A `Tensor` of type `string`. A 1-D tensor.
   """
-  result = _op_def_lib.apply_op("ReaderReadUpToV2",
-                                reader_handle=reader_handle,
-                                queue_handle=queue_handle,
-                                num_records=num_records, name=name)
-  return _ReaderReadUpToV2Output._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderReadUpToV2", reader_handle=reader_handle,
+        queue_handle=queue_handle, num_records=num_records, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    queue_handle = _ops.convert_to_tensor(queue_handle, _dtypes.resource)
+    num_records = _ops.convert_to_tensor(num_records, _dtypes.int64)
+    _inputs_flat = [reader_handle, queue_handle, num_records]
+    _attrs = None
+    _result = _execute.execute(b"ReaderReadUpToV2", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ReaderReadUpToV2", _inputs_flat, _attrs, _result, name)
+  _result = _ReaderReadUpToV2Output._make(_result)
+  return _result
 
 
 __reader_read_v2_outputs = ["key", "value"]
-
-
-_ReaderReadV2Output = _collections.namedtuple("ReaderReadV2",
-                                              __reader_read_v2_outputs)
+_ReaderReadV2Output = _collections.namedtuple(
+    "ReaderReadV2", __reader_read_v2_outputs)
 
 
 def _reader_read_v2(reader_handle, queue_handle, name=None):
@@ -403,15 +662,29 @@ def _reader_read_v2(reader_handle, queue_handle, name=None):
 
   Returns:
     A tuple of `Tensor` objects (key, value).
+
     key: A `Tensor` of type `string`. A scalar.
     value: A `Tensor` of type `string`. A scalar.
   """
-  result = _op_def_lib.apply_op("ReaderReadV2", reader_handle=reader_handle,
-                                queue_handle=queue_handle, name=name)
-  return _ReaderReadV2Output._make(result)
-
-
-__reader_reset_outputs = [""]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderReadV2", reader_handle=reader_handle,
+        queue_handle=queue_handle, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    queue_handle = _ops.convert_to_tensor(queue_handle, _dtypes.resource)
+    _inputs_flat = [reader_handle, queue_handle]
+    _attrs = None
+    _result = _execute.execute(b"ReaderReadV2", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ReaderReadV2", _inputs_flat, _attrs, _result, name)
+  _result = _ReaderReadV2Output._make(_result)
+  return _result
 
 
 def _reader_reset(reader_handle, name=None):
@@ -424,12 +697,15 @@ def _reader_reset(reader_handle, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("ReaderReset", reader_handle=reader_handle,
-                                name=name)
-  return result
-
-
-__reader_reset_v2_outputs = [""]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderReset", reader_handle=reader_handle, name=name)
+    return _op
+  else:
+    raise RuntimeError(
+        "reader_reset op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  return _result
 
 
 def _reader_reset_v2(reader_handle, name=None):
@@ -442,12 +718,18 @@ def _reader_reset_v2(reader_handle, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("ReaderResetV2", reader_handle=reader_handle,
-                                name=name)
-  return result
-
-
-__reader_restore_state_outputs = [""]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderResetV2", reader_handle=reader_handle, name=name)
+    return _op
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    _inputs_flat = [reader_handle]
+    _attrs = None
+    _result = _execute.execute(b"ReaderResetV2", 0, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  return _result
 
 
 def _reader_restore_state(reader_handle, state, name=None):
@@ -466,13 +748,16 @@ def _reader_restore_state(reader_handle, state, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("ReaderRestoreState",
-                                reader_handle=reader_handle, state=state,
-                                name=name)
-  return result
-
-
-__reader_restore_state_v2_outputs = [""]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderRestoreState", reader_handle=reader_handle, state=state,
+        name=name)
+    return _op
+  else:
+    raise RuntimeError(
+        "reader_restore_state op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  return _result
 
 
 def _reader_restore_state_v2(reader_handle, state, name=None):
@@ -491,13 +776,21 @@ def _reader_restore_state_v2(reader_handle, state, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("ReaderRestoreStateV2",
-                                reader_handle=reader_handle, state=state,
-                                name=name)
-  return result
-
-
-__reader_serialize_state_outputs = ["state"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderRestoreStateV2", reader_handle=reader_handle, state=state,
+        name=name)
+    return _op
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    state = _ops.convert_to_tensor(state, _dtypes.string)
+    _inputs_flat = [reader_handle, state]
+    _attrs = None
+    _result = _execute.execute(b"ReaderRestoreStateV2", 0,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  return _result
 
 
 def _reader_serialize_state(reader_handle, name=None):
@@ -513,12 +806,20 @@ def _reader_serialize_state(reader_handle, name=None):
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("ReaderSerializeState",
-                                reader_handle=reader_handle, name=name)
-  return result
-
-
-__reader_serialize_state_v2_outputs = ["state"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderSerializeState", reader_handle=reader_handle, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    raise RuntimeError(
+        "reader_serialize_state op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "ReaderSerializeState", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _reader_serialize_state_v2(reader_handle, name=None):
@@ -534,15 +835,27 @@ def _reader_serialize_state_v2(reader_handle, name=None):
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("ReaderSerializeStateV2",
-                                reader_handle=reader_handle, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ReaderSerializeStateV2", reader_handle=reader_handle, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    reader_handle = _ops.convert_to_tensor(reader_handle, _dtypes.resource)
+    _inputs_flat = [reader_handle]
+    _attrs = None
+    _result = _execute.execute(b"ReaderSerializeStateV2", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "ReaderSerializeStateV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__restore_outputs = ["tensor"]
-
-
-def _restore(file_pattern, tensor_name, dt, preferred_shard=None, name=None):
+def _restore(file_pattern, tensor_name, dt, preferred_shard=-1, name=None):
   r"""Restores a tensor from checkpoint files.
 
   Reads a tensor stored in one or several files. If there are several files (for
@@ -578,17 +891,33 @@ def _restore(file_pattern, tensor_name, dt, preferred_shard=None, name=None):
   Returns:
     A `Tensor` of type `dt`. The restored tensor.
   """
-  result = _op_def_lib.apply_op("Restore", file_pattern=file_pattern,
-                                tensor_name=tensor_name, dt=dt,
-                                preferred_shard=preferred_shard, name=name)
-  return result
+  dt = _execute.make_type(dt, "dt")
+  if preferred_shard is None:
+    preferred_shard = -1
+  preferred_shard = _execute.make_int(preferred_shard, "preferred_shard")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "Restore", file_pattern=file_pattern, tensor_name=tensor_name, dt=dt,
+        preferred_shard=preferred_shard, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("dt", _op.get_attr("dt"), "preferred_shard",
+              _op.get_attr("preferred_shard"))
+  else:
+    file_pattern = _ops.convert_to_tensor(file_pattern, _dtypes.string)
+    tensor_name = _ops.convert_to_tensor(tensor_name, _dtypes.string)
+    _inputs_flat = [file_pattern, tensor_name]
+    _attrs = ("dt", dt, "preferred_shard", preferred_shard)
+    _result = _execute.execute(b"Restore", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "Restore", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__restore_slice_outputs = ["tensor"]
-
-
-def _restore_slice(file_pattern, tensor_name, shape_and_slice, dt,
-                   preferred_shard=None, name=None):
+def _restore_slice(file_pattern, tensor_name, shape_and_slice, dt, preferred_shard=-1, name=None):
   r"""Restores a tensor from checkpoint files.
 
   This is like `Restore` except that restored tensor can be listed as filling
@@ -617,14 +946,32 @@ def _restore_slice(file_pattern, tensor_name, shape_and_slice, dt,
   Returns:
     A `Tensor` of type `dt`. The restored tensor.
   """
-  result = _op_def_lib.apply_op("RestoreSlice", file_pattern=file_pattern,
-                                tensor_name=tensor_name,
-                                shape_and_slice=shape_and_slice, dt=dt,
-                                preferred_shard=preferred_shard, name=name)
-  return result
-
-
-_restore_v2_outputs = ["tensors"]
+  dt = _execute.make_type(dt, "dt")
+  if preferred_shard is None:
+    preferred_shard = -1
+  preferred_shard = _execute.make_int(preferred_shard, "preferred_shard")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "RestoreSlice", file_pattern=file_pattern, tensor_name=tensor_name,
+        shape_and_slice=shape_and_slice, dt=dt,
+        preferred_shard=preferred_shard, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("dt", _op.get_attr("dt"), "preferred_shard",
+              _op.get_attr("preferred_shard"))
+  else:
+    file_pattern = _ops.convert_to_tensor(file_pattern, _dtypes.string)
+    tensor_name = _ops.convert_to_tensor(tensor_name, _dtypes.string)
+    shape_and_slice = _ops.convert_to_tensor(shape_and_slice, _dtypes.string)
+    _inputs_flat = [file_pattern, tensor_name, shape_and_slice]
+    _attrs = ("dt", dt, "preferred_shard", preferred_shard)
+    _result = _execute.execute(b"RestoreSlice", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "RestoreSlice", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def restore_v2(prefix, tensor_names, shape_and_slices, dtypes, name=None):
@@ -662,14 +1009,32 @@ def restore_v2(prefix, tensor_names, shape_and_slices, dtypes, name=None):
     shape {N}.  The restored tensors, whose shapes are read from the
     checkpoint directly.
   """
-  result = _op_def_lib.apply_op("RestoreV2", prefix=prefix,
-                                tensor_names=tensor_names,
-                                shape_and_slices=shape_and_slices,
-                                dtypes=dtypes, name=name)
-  return result
-
-
-__save_outputs = [""]
+  if not isinstance(dtypes, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'dtypes' argument to "
+        "'restore_v2' Op, not %r." % dtypes)
+  dtypes = [_execute.make_type(_t, "dtypes") for _t in dtypes]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "RestoreV2", prefix=prefix, tensor_names=tensor_names,
+        shape_and_slices=shape_and_slices, dtypes=dtypes, name=name)
+    _result = _op.outputs[:]
+    if not _result:
+      return _op
+    _inputs_flat = _op.inputs
+    _attrs = ("dtypes", _op.get_attr("dtypes"))
+  else:
+    prefix = _ops.convert_to_tensor(prefix, _dtypes.string)
+    tensor_names = _ops.convert_to_tensor(tensor_names, _dtypes.string)
+    shape_and_slices = _ops.convert_to_tensor(shape_and_slices, _dtypes.string)
+    _inputs_flat = [prefix, tensor_names, shape_and_slices]
+    _attrs = ("dtypes", dtypes)
+    _result = _execute.execute(b"RestoreV2", len(dtypes), inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "RestoreV2", _inputs_flat, _attrs, _result, name)
+  return _result
 
 
 def _save(filename, tensor_names, data, name=None):
@@ -692,13 +1057,22 @@ def _save(filename, tensor_names, data, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("Save", filename=filename,
-                                tensor_names=tensor_names, data=data,
-                                name=name)
-  return result
-
-
-__save_slices_outputs = [""]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "Save", filename=filename, tensor_names=tensor_names, data=data,
+        name=name)
+    return _op
+  else:
+    _attr_T, data = _execute.convert_to_mixed_eager_tensors(data, _ctx)
+    _attr_T = [_t.as_datatype_enum for _t in _attr_T]
+    filename = _ops.convert_to_tensor(filename, _dtypes.string)
+    tensor_names = _ops.convert_to_tensor(tensor_names, _dtypes.string)
+    _inputs_flat = [filename, tensor_names] + list(data)
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"Save", 0, inputs=_inputs_flat, attrs=_attrs,
+                               ctx=_ctx, name=name)
+  return _result
 
 
 def _save_slices(filename, tensor_names, shapes_and_slices, data, name=None):
@@ -741,14 +1115,23 @@ def _save_slices(filename, tensor_names, shapes_and_slices, data, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("SaveSlices", filename=filename,
-                                tensor_names=tensor_names,
-                                shapes_and_slices=shapes_and_slices,
-                                data=data, name=name)
-  return result
-
-
-_save_v2_outputs = [""]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SaveSlices", filename=filename, tensor_names=tensor_names,
+        shapes_and_slices=shapes_and_slices, data=data, name=name)
+    return _op
+  else:
+    _attr_T, data = _execute.convert_to_mixed_eager_tensors(data, _ctx)
+    _attr_T = [_t.as_datatype_enum for _t in _attr_T]
+    filename = _ops.convert_to_tensor(filename, _dtypes.string)
+    tensor_names = _ops.convert_to_tensor(tensor_names, _dtypes.string)
+    shapes_and_slices = _ops.convert_to_tensor(shapes_and_slices, _dtypes.string)
+    _inputs_flat = [filename, tensor_names, shapes_and_slices] + list(data)
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SaveSlices", 0, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  return _result
 
 
 def save_v2(prefix, tensor_names, shape_and_slices, tensors, name=None):
@@ -773,14 +1156,23 @@ def save_v2(prefix, tensor_names, shape_and_slices, tensors, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("SaveV2", prefix=prefix,
-                                tensor_names=tensor_names,
-                                shape_and_slices=shape_and_slices,
-                                tensors=tensors, name=name)
-  return result
-
-
-__sharded_filename_outputs = ["filename"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SaveV2", prefix=prefix, tensor_names=tensor_names,
+        shape_and_slices=shape_and_slices, tensors=tensors, name=name)
+    return _op
+  else:
+    _attr_dtypes, tensors = _execute.convert_to_mixed_eager_tensors(tensors, _ctx)
+    _attr_dtypes = [_t.as_datatype_enum for _t in _attr_dtypes]
+    prefix = _ops.convert_to_tensor(prefix, _dtypes.string)
+    tensor_names = _ops.convert_to_tensor(tensor_names, _dtypes.string)
+    shape_and_slices = _ops.convert_to_tensor(shape_and_slices, _dtypes.string)
+    _inputs_flat = [prefix, tensor_names, shape_and_slices] + list(tensors)
+    _attrs = ("dtypes", _attr_dtypes)
+    _result = _execute.execute(b"SaveV2", 0, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  return _result
 
 
 def _sharded_filename(basename, shard, num_shards, name=None):
@@ -797,12 +1189,26 @@ def _sharded_filename(basename, shard, num_shards, name=None):
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("ShardedFilename", basename=basename,
-                                shard=shard, num_shards=num_shards, name=name)
-  return result
-
-
-__sharded_filespec_outputs = ["filename"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ShardedFilename", basename=basename, shard=shard,
+        num_shards=num_shards, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    basename = _ops.convert_to_tensor(basename, _dtypes.string)
+    shard = _ops.convert_to_tensor(shard, _dtypes.int32)
+    num_shards = _ops.convert_to_tensor(num_shards, _dtypes.int32)
+    _inputs_flat = [basename, shard, num_shards]
+    _attrs = None
+    _result = _execute.execute(b"ShardedFilename", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ShardedFilename", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _sharded_filespec(basename, num_shards, name=None):
@@ -816,16 +1222,28 @@ def _sharded_filespec(basename, num_shards, name=None):
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("ShardedFilespec", basename=basename,
-                                num_shards=num_shards, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "ShardedFilespec", basename=basename, num_shards=num_shards,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    basename = _ops.convert_to_tensor(basename, _dtypes.string)
+    num_shards = _ops.convert_to_tensor(num_shards, _dtypes.int32)
+    _inputs_flat = [basename, num_shards]
+    _attrs = None
+    _result = _execute.execute(b"ShardedFilespec", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "ShardedFilespec", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__tf_record_reader_outputs = ["reader_handle"]
-
-
-def _tf_record_reader(container=None, shared_name=None, compression_type=None,
-                      name=None):
+def _tf_record_reader(container="", shared_name="", compression_type="", name=None):
   r"""A Reader that outputs the records from a TensorFlow Records file.
 
   Args:
@@ -841,17 +1259,35 @@ def _tf_record_reader(container=None, shared_name=None, compression_type=None,
   Returns:
     A `Tensor` of type mutable `string`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("TFRecordReader", container=container,
-                                shared_name=shared_name,
-                                compression_type=compression_type, name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  if compression_type is None:
+    compression_type = ""
+  compression_type = _execute.make_str(compression_type, "compression_type")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TFRecordReader", container=container, shared_name=shared_name,
+        compression_type=compression_type, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"), "compression_type",
+              _op.get_attr("compression_type"))
+  else:
+    raise RuntimeError(
+        "tf_record_reader op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "TFRecordReader", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__tf_record_reader_v2_outputs = ["reader_handle"]
-
-
-def _tf_record_reader_v2(container=None, shared_name=None,
-                         compression_type=None, name=None):
+def _tf_record_reader_v2(container="", shared_name="", compression_type="", name=None):
   r"""A Reader that outputs the records from a TensorFlow Records file.
 
   Args:
@@ -867,17 +1303,38 @@ def _tf_record_reader_v2(container=None, shared_name=None,
   Returns:
     A `Tensor` of type `resource`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("TFRecordReaderV2", container=container,
-                                shared_name=shared_name,
-                                compression_type=compression_type, name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  if compression_type is None:
+    compression_type = ""
+  compression_type = _execute.make_str(compression_type, "compression_type")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TFRecordReaderV2", container=container, shared_name=shared_name,
+        compression_type=compression_type, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"), "compression_type",
+              _op.get_attr("compression_type"))
+  else:
+    _inputs_flat = []
+    _attrs = ("container", container, "shared_name", shared_name,
+              "compression_type", compression_type)
+    _result = _execute.execute(b"TFRecordReaderV2", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "TFRecordReaderV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__text_line_reader_outputs = ["reader_handle"]
-
-
-def _text_line_reader(skip_header_lines=None, container=None,
-                      shared_name=None, name=None):
+def _text_line_reader(skip_header_lines=0, container="", shared_name="", name=None):
   r"""A Reader that outputs the lines of a file delimited by '\n'.
 
   Args:
@@ -894,18 +1351,35 @@ def _text_line_reader(skip_header_lines=None, container=None,
   Returns:
     A `Tensor` of type mutable `string`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("TextLineReader",
-                                skip_header_lines=skip_header_lines,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return result
+  if skip_header_lines is None:
+    skip_header_lines = 0
+  skip_header_lines = _execute.make_int(skip_header_lines, "skip_header_lines")
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TextLineReader", skip_header_lines=skip_header_lines,
+        container=container, shared_name=shared_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("skip_header_lines", _op.get_attr("skip_header_lines"),
+              "container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    raise RuntimeError(
+        "text_line_reader op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "TextLineReader", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__text_line_reader_v2_outputs = ["reader_handle"]
-
-
-def _text_line_reader_v2(skip_header_lines=None, container=None,
-                         shared_name=None, name=None):
+def _text_line_reader_v2(skip_header_lines=0, container="", shared_name="", name=None):
   r"""A Reader that outputs the lines of a file delimited by '\n'.
 
   Args:
@@ -922,17 +1396,38 @@ def _text_line_reader_v2(skip_header_lines=None, container=None,
   Returns:
     A `Tensor` of type `resource`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("TextLineReaderV2",
-                                skip_header_lines=skip_header_lines,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return result
+  if skip_header_lines is None:
+    skip_header_lines = 0
+  skip_header_lines = _execute.make_int(skip_header_lines, "skip_header_lines")
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TextLineReaderV2", skip_header_lines=skip_header_lines,
+        container=container, shared_name=shared_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("skip_header_lines", _op.get_attr("skip_header_lines"),
+              "container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    _inputs_flat = []
+    _attrs = ("skip_header_lines", skip_header_lines, "container", container,
+              "shared_name", shared_name)
+    _result = _execute.execute(b"TextLineReaderV2", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "TextLineReaderV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__whole_file_reader_outputs = ["reader_handle"]
-
-
-def _whole_file_reader(container=None, shared_name=None, name=None):
+def _whole_file_reader(container="", shared_name="", name=None):
   r"""A Reader that outputs the entire contents of a file as a value.
 
   To use, enqueue filenames in a Queue.  The output of ReaderRead will
@@ -950,15 +1445,31 @@ def _whole_file_reader(container=None, shared_name=None, name=None):
   Returns:
     A `Tensor` of type mutable `string`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("WholeFileReader", container=container,
-                                shared_name=shared_name, name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "WholeFileReader", container=container, shared_name=shared_name,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    raise RuntimeError(
+        "whole_file_reader op does not support eager execution. Arg 'reader_handle'' is a ref.")
+  _execute.record_gradient(
+      "WholeFileReader", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__whole_file_reader_v2_outputs = ["reader_handle"]
-
-
-def _whole_file_reader_v2(container=None, shared_name=None, name=None):
+def _whole_file_reader_v2(container="", shared_name="", name=None):
   r"""A Reader that outputs the entire contents of a file as a value.
 
   To use, enqueue filenames in a Queue.  The output of ReaderRead will
@@ -976,16 +1487,36 @@ def _whole_file_reader_v2(container=None, shared_name=None, name=None):
   Returns:
     A `Tensor` of type `resource`. The handle to reference the Reader.
   """
-  result = _op_def_lib.apply_op("WholeFileReaderV2", container=container,
-                                shared_name=shared_name, name=name)
-  return result
-
-
-_write_file_outputs = [""]
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "WholeFileReaderV2", container=container, shared_name=shared_name,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("container", _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    _inputs_flat = []
+    _attrs = ("container", container, "shared_name", shared_name)
+    _result = _execute.execute(b"WholeFileReaderV2", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "WholeFileReaderV2", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def write_file(filename, contents, name=None):
-  r"""Writes contents to the file at input filename. Creates file if not existing.
+  r"""Writes contents to the file at input filename. Creates file and recursively
+
+  creates directory if not existing.
 
   Args:
     filename: A `Tensor` of type `string`.
@@ -997,742 +1528,804 @@ def write_file(filename, contents, name=None):
   Returns:
     The created Operation.
   """
-  result = _op_def_lib.apply_op("WriteFile", filename=filename,
-                                contents=contents, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "WriteFile", filename=filename, contents=contents, name=name)
+    return _op
+  else:
+    filename = _ops.convert_to_tensor(filename, _dtypes.string)
+    contents = _ops.convert_to_tensor(contents, _dtypes.string)
+    _inputs_flat = [filename, contents]
+    _attrs = None
+    _result = _execute.execute(b"WriteFile", 0, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  return _result
 
-
-def _InitOpDefLibrary():
+def _InitOpDefLibrary(op_list_proto_bytes):
   op_list = _op_def_pb2.OpList()
-  _text_format.Merge(_InitOpDefLibrary.op_list_ascii, op_list)
+  op_list.ParseFromString(op_list_proto_bytes)
   _op_def_registry.register_op_list(op_list)
   op_def_lib = _op_def_library.OpDefLibrary()
   op_def_lib.add_op_list(op_list)
   return op_def_lib
-
-
-_InitOpDefLibrary.op_list_ascii = """op {
-  name: "FixedLengthRecordReader"
-  output_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  attr {
-    name: "header_bytes"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "record_bytes"
-    type: "int"
-  }
-  attr {
-    name: "footer_bytes"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "FixedLengthRecordReaderV2"
-  output_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  attr {
-    name: "header_bytes"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "record_bytes"
-    type: "int"
-  }
-  attr {
-    name: "footer_bytes"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "IdentityReader"
-  output_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "IdentityReaderV2"
-  output_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "MatchingFiles"
-  input_arg {
-    name: "pattern"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "filenames"
-    type: DT_STRING
-  }
-}
-op {
-  name: "MergeV2Checkpoints"
-  input_arg {
-    name: "checkpoint_prefixes"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "destination_prefix"
-    type: DT_STRING
-  }
-  attr {
-    name: "delete_old_dirs"
-    type: "bool"
-    default_value {
-      b: true
-    }
-  }
-}
-op {
-  name: "ReadFile"
-  input_arg {
-    name: "filename"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "contents"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderNumRecordsProduced"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  output_arg {
-    name: "records_produced"
-    type: DT_INT64
-  }
-}
-op {
-  name: "ReaderNumRecordsProducedV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  output_arg {
-    name: "records_produced"
-    type: DT_INT64
-  }
-}
-op {
-  name: "ReaderNumWorkUnitsCompleted"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  output_arg {
-    name: "units_completed"
-    type: DT_INT64
-  }
-}
-op {
-  name: "ReaderNumWorkUnitsCompletedV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  output_arg {
-    name: "units_completed"
-    type: DT_INT64
-  }
-}
-op {
-  name: "ReaderRead"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  input_arg {
-    name: "queue_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  output_arg {
-    name: "key"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "value"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderReadUpTo"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  input_arg {
-    name: "queue_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  input_arg {
-    name: "num_records"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "keys"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "values"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderReadUpToV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  input_arg {
-    name: "queue_handle"
-    type: DT_RESOURCE
-  }
-  input_arg {
-    name: "num_records"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "keys"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "values"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderReadV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  input_arg {
-    name: "queue_handle"
-    type: DT_RESOURCE
-  }
-  output_arg {
-    name: "key"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "value"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderReset"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-}
-op {
-  name: "ReaderResetV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-}
-op {
-  name: "ReaderRestoreState"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  input_arg {
-    name: "state"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderRestoreStateV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  input_arg {
-    name: "state"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderSerializeState"
-  input_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  output_arg {
-    name: "state"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ReaderSerializeStateV2"
-  input_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  output_arg {
-    name: "state"
-    type: DT_STRING
-  }
-}
-op {
-  name: "Restore"
-  input_arg {
-    name: "file_pattern"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor_name"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "tensor"
-    type_attr: "dt"
-  }
-  attr {
-    name: "dt"
-    type: "type"
-  }
-  attr {
-    name: "preferred_shard"
-    type: "int"
-    default_value {
-      i: -1
-    }
-  }
-}
-op {
-  name: "RestoreSlice"
-  input_arg {
-    name: "file_pattern"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor_name"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "shape_and_slice"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "tensor"
-    type_attr: "dt"
-  }
-  attr {
-    name: "dt"
-    type: "type"
-  }
-  attr {
-    name: "preferred_shard"
-    type: "int"
-    default_value {
-      i: -1
-    }
-  }
-}
-op {
-  name: "RestoreV2"
-  input_arg {
-    name: "prefix"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor_names"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "shape_and_slices"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "tensors"
-    type_list_attr: "dtypes"
-  }
-  attr {
-    name: "dtypes"
-    type: "list(type)"
-    has_minimum: true
-    minimum: 1
-  }
-}
-op {
-  name: "Save"
-  input_arg {
-    name: "filename"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor_names"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "data"
-    type_list_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "list(type)"
-    has_minimum: true
-    minimum: 1
-  }
-}
-op {
-  name: "SaveSlices"
-  input_arg {
-    name: "filename"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor_names"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "shapes_and_slices"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "data"
-    type_list_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "list(type)"
-    has_minimum: true
-    minimum: 1
-  }
-}
-op {
-  name: "SaveV2"
-  input_arg {
-    name: "prefix"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensor_names"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "shape_and_slices"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "tensors"
-    type_list_attr: "dtypes"
-  }
-  attr {
-    name: "dtypes"
-    type: "list(type)"
-    has_minimum: true
-    minimum: 1
-  }
-}
-op {
-  name: "ShardedFilename"
-  input_arg {
-    name: "basename"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "shard"
-    type: DT_INT32
-  }
-  input_arg {
-    name: "num_shards"
-    type: DT_INT32
-  }
-  output_arg {
-    name: "filename"
-    type: DT_STRING
-  }
-}
-op {
-  name: "ShardedFilespec"
-  input_arg {
-    name: "basename"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "num_shards"
-    type: DT_INT32
-  }
-  output_arg {
-    name: "filename"
-    type: DT_STRING
-  }
-}
-op {
-  name: "TFRecordReader"
-  output_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "compression_type"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "TFRecordReaderV2"
-  output_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "compression_type"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "TextLineReader"
-  output_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  attr {
-    name: "skip_header_lines"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "TextLineReaderV2"
-  output_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  attr {
-    name: "skip_header_lines"
-    type: "int"
-    default_value {
-      i: 0
-    }
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "WholeFileReader"
-  output_arg {
-    name: "reader_handle"
-    type: DT_STRING
-    is_ref: true
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "WholeFileReaderV2"
-  output_arg {
-    name: "reader_handle"
-    type: DT_RESOURCE
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "WriteFile"
-  input_arg {
-    name: "filename"
-    type: DT_STRING
-  }
-  input_arg {
-    name: "contents"
-    type: DT_STRING
-  }
-}
-"""
-
-
-_op_def_lib = _InitOpDefLibrary()
+# op {
+#   name: "FixedLengthRecordReader"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   attr {
+#     name: "header_bytes"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "record_bytes"
+#     type: "int"
+#   }
+#   attr {
+#     name: "footer_bytes"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "hop_bytes"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "FixedLengthRecordReaderV2"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   attr {
+#     name: "header_bytes"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "record_bytes"
+#     type: "int"
+#   }
+#   attr {
+#     name: "footer_bytes"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "hop_bytes"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "encoding"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "IdentityReader"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "IdentityReaderV2"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "LMDBReader"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "MatchingFiles"
+#   input_arg {
+#     name: "pattern"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "filenames"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "MergeV2Checkpoints"
+#   input_arg {
+#     name: "checkpoint_prefixes"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "destination_prefix"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "delete_old_dirs"
+#     type: "bool"
+#     default_value {
+#       b: true
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReadFile"
+#   input_arg {
+#     name: "filename"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "contents"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "ReaderNumRecordsProduced"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   output_arg {
+#     name: "records_produced"
+#     type: DT_INT64
+#   }
+# }
+# op {
+#   name: "ReaderNumRecordsProducedV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   output_arg {
+#     name: "records_produced"
+#     type: DT_INT64
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReaderNumWorkUnitsCompleted"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   output_arg {
+#     name: "units_completed"
+#     type: DT_INT64
+#   }
+# }
+# op {
+#   name: "ReaderNumWorkUnitsCompletedV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   output_arg {
+#     name: "units_completed"
+#     type: DT_INT64
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReaderRead"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   input_arg {
+#     name: "queue_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   output_arg {
+#     name: "key"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "value"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "ReaderReadUpTo"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   input_arg {
+#     name: "queue_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   input_arg {
+#     name: "num_records"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "keys"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "values"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "ReaderReadUpToV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   input_arg {
+#     name: "queue_handle"
+#     type: DT_RESOURCE
+#   }
+#   input_arg {
+#     name: "num_records"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "keys"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "values"
+#     type: DT_STRING
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReaderReadV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   input_arg {
+#     name: "queue_handle"
+#     type: DT_RESOURCE
+#   }
+#   output_arg {
+#     name: "key"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "value"
+#     type: DT_STRING
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReaderReset"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+# }
+# op {
+#   name: "ReaderResetV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReaderRestoreState"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   input_arg {
+#     name: "state"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "ReaderRestoreStateV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   input_arg {
+#     name: "state"
+#     type: DT_STRING
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ReaderSerializeState"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   output_arg {
+#     name: "state"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "ReaderSerializeStateV2"
+#   input_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   output_arg {
+#     name: "state"
+#     type: DT_STRING
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "Restore"
+#   input_arg {
+#     name: "file_pattern"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor_name"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "tensor"
+#     type_attr: "dt"
+#   }
+#   attr {
+#     name: "dt"
+#     type: "type"
+#   }
+#   attr {
+#     name: "preferred_shard"
+#     type: "int"
+#     default_value {
+#       i: -1
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "RestoreSlice"
+#   input_arg {
+#     name: "file_pattern"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor_name"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "shape_and_slice"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "tensor"
+#     type_attr: "dt"
+#   }
+#   attr {
+#     name: "dt"
+#     type: "type"
+#   }
+#   attr {
+#     name: "preferred_shard"
+#     type: "int"
+#     default_value {
+#       i: -1
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "RestoreV2"
+#   input_arg {
+#     name: "prefix"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor_names"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "shape_and_slices"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "tensors"
+#     type_list_attr: "dtypes"
+#   }
+#   attr {
+#     name: "dtypes"
+#     type: "list(type)"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "Save"
+#   input_arg {
+#     name: "filename"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor_names"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "data"
+#     type_list_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "list(type)"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "SaveSlices"
+#   input_arg {
+#     name: "filename"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor_names"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "shapes_and_slices"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "data"
+#     type_list_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "list(type)"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "SaveV2"
+#   input_arg {
+#     name: "prefix"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensor_names"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "shape_and_slices"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "tensors"
+#     type_list_attr: "dtypes"
+#   }
+#   attr {
+#     name: "dtypes"
+#     type: "list(type)"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "ShardedFilename"
+#   input_arg {
+#     name: "basename"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "shard"
+#     type: DT_INT32
+#   }
+#   input_arg {
+#     name: "num_shards"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "filename"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "ShardedFilespec"
+#   input_arg {
+#     name: "basename"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "num_shards"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "filename"
+#     type: DT_STRING
+#   }
+# }
+# op {
+#   name: "TFRecordReader"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "compression_type"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "TFRecordReaderV2"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "compression_type"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "TextLineReader"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   attr {
+#     name: "skip_header_lines"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "TextLineReaderV2"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   attr {
+#     name: "skip_header_lines"
+#     type: "int"
+#     default_value {
+#       i: 0
+#     }
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "WholeFileReader"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_STRING
+#     is_ref: true
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "WholeFileReaderV2"
+#   output_arg {
+#     name: "reader_handle"
+#     type: DT_RESOURCE
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "WriteFile"
+#   input_arg {
+#     name: "filename"
+#     type: DT_STRING
+#   }
+#   input_arg {
+#     name: "contents"
+#     type: DT_STRING
+#   }
+# }
+_op_def_lib = _InitOpDefLibrary(b"\n\303\001\n\027FixedLengthRecordReader\032\024\n\rreader_handle\030\007\200\001\001\"\027\n\014header_bytes\022\003int\032\002\030\000\"\023\n\014record_bytes\022\003int\"\027\n\014footer_bytes\022\003int\032\002\030\000\"\024\n\thop_bytes\022\003int\032\002\030\000\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n\332\001\n\031FixedLengthRecordReaderV2\032\021\n\rreader_handle\030\024\"\027\n\014header_bytes\022\003int\032\002\030\000\"\023\n\014record_bytes\022\003int\"\027\n\014footer_bytes\022\003int\032\002\030\000\"\024\n\thop_bytes\022\003int\032\002\030\000\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\"\026\n\010encoding\022\006string\032\002\022\000\210\001\001\n]\n\016IdentityReader\032\024\n\rreader_handle\030\007\200\001\001\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n\\\n\020IdentityReaderV2\032\021\n\rreader_handle\030\024\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\nY\n\nLMDBReader\032\024\n\rreader_handle\030\007\200\001\001\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n+\n\rMatchingFiles\022\013\n\007pattern\030\007\032\r\n\tfilenames\030\007\ne\n\022MergeV2Checkpoints\022\027\n\023checkpoint_prefixes\030\007\022\026\n\022destination_prefix\030\007\"\033\n\017delete_old_dirs\022\004bool\032\002(\001\210\001\001\n&\n\010ReadFile\022\014\n\010filename\030\007\032\014\n\010contents\030\007\nF\n\030ReaderNumRecordsProduced\022\024\n\rreader_handle\030\007\200\001\001\032\024\n\020records_produced\030\t\nH\n\032ReaderNumRecordsProducedV2\022\021\n\rreader_handle\030\024\032\024\n\020records_produced\030\t\210\001\001\nH\n\033ReaderNumWorkUnitsCompleted\022\024\n\rreader_handle\030\007\200\001\001\032\023\n\017units_completed\030\t\nJ\n\035ReaderNumWorkUnitsCompletedV2\022\021\n\rreader_handle\030\024\032\023\n\017units_completed\030\t\210\001\001\nK\n\nReaderRead\022\024\n\rreader_handle\030\007\200\001\001\022\023\n\014queue_handle\030\007\200\001\001\032\007\n\003key\030\007\032\t\n\005value\030\007\nb\n\016ReaderReadUpTo\022\024\n\rreader_handle\030\007\200\001\001\022\023\n\014queue_handle\030\007\200\001\001\022\017\n\013num_records\030\t\032\010\n\004keys\030\007\032\n\n\006values\030\007\na\n\020ReaderReadUpToV2\022\021\n\rreader_handle\030\024\022\020\n\014queue_handle\030\024\022\017\n\013num_records\030\t\032\010\n\004keys\030\007\032\n\n\006values\030\007\210\001\001\nJ\n\014ReaderReadV2\022\021\n\rreader_handle\030\024\022\020\n\014queue_handle\030\024\032\007\n\003key\030\007\032\t\n\005value\030\007\210\001\001\n#\n\013ReaderReset\022\024\n\rreader_handle\030\007\200\001\001\n%\n\rReaderResetV2\022\021\n\rreader_handle\030\024\210\001\001\n5\n\022ReaderRestoreState\022\024\n\rreader_handle\030\007\200\001\001\022\t\n\005state\030\007\n7\n\024ReaderRestoreStateV2\022\021\n\rreader_handle\030\024\022\t\n\005state\030\007\210\001\001\n7\n\024ReaderSerializeState\022\024\n\rreader_handle\030\007\200\001\001\032\t\n\005state\030\007\n9\n\026ReaderSerializeStateV2\022\021\n\rreader_handle\030\024\032\t\n\005state\030\007\210\001\001\nn\n\007Restore\022\020\n\014file_pattern\030\007\022\017\n\013tensor_name\030\007\032\014\n\006tensor\"\002dt\"\n\n\002dt\022\004type\"#\n\017preferred_shard\022\003int\032\013\030\377\377\377\377\377\377\377\377\377\001\210\001\001\n\210\001\n\014RestoreSlice\022\020\n\014file_pattern\030\007\022\017\n\013tensor_name\030\007\022\023\n\017shape_and_slice\030\007\032\014\n\006tensor\"\002dt\"\n\n\002dt\022\004type\"#\n\017preferred_shard\022\003int\032\013\030\377\377\377\377\377\377\377\377\377\001\210\001\001\no\n\tRestoreV2\022\n\n\006prefix\030\007\022\020\n\014tensor_names\030\007\022\024\n\020shape_and_slices\030\007\032\021\n\007tensors2\006dtypes\"\030\n\006dtypes\022\nlist(type)(\0010\001\210\001\001\nI\n\004Save\022\014\n\010filename\030\007\022\020\n\014tensor_names\030\007\022\t\n\004data2\001T\"\023\n\001T\022\nlist(type)(\0010\001\210\001\001\nf\n\nSaveSlices\022\014\n\010filename\030\007\022\020\n\014tensor_names\030\007\022\025\n\021shapes_and_slices\030\007\022\t\n\004data2\001T\"\023\n\001T\022\nlist(type)(\0010\001\210\001\001\nl\n\006SaveV2\022\n\n\006prefix\030\007\022\020\n\014tensor_names\030\007\022\024\n\020shape_and_slices\030\007\022\021\n\007tensors2\006dtypes\"\030\n\006dtypes\022\nlist(type)(\0010\001\210\001\001\nH\n\017ShardedFilename\022\014\n\010basename\030\007\022\t\n\005shard\030\003\022\016\n\nnum_shards\030\003\032\014\n\010filename\030\007\n=\n\017ShardedFilespec\022\014\n\010basename\030\007\022\016\n\nnum_shards\030\003\032\014\n\010filename\030\007\n}\n\016TFRecordReader\032\024\n\rreader_handle\030\007\200\001\001\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\"\036\n\020compression_type\022\006string\032\002\022\000\210\001\001\n|\n\020TFRecordReaderV2\032\021\n\rreader_handle\030\024\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\"\036\n\020compression_type\022\006string\032\002\022\000\210\001\001\n{\n\016TextLineReader\032\024\n\rreader_handle\030\007\200\001\001\"\034\n\021skip_header_lines\022\003int\032\002\030\000\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\nz\n\020TextLineReaderV2\032\021\n\rreader_handle\030\024\"\034\n\021skip_header_lines\022\003int\032\002\030\000\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n^\n\017WholeFileReader\032\024\n\rreader_handle\030\007\200\001\001\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n]\n\021WholeFileReaderV2\032\021\n\rreader_handle\030\024\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n\'\n\tWriteFile\022\014\n\010filename\030\007\022\014\n\010contents\030\007")

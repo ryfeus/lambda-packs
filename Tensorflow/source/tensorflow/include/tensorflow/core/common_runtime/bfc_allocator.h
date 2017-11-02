@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_COMMON_RUNTIME_BFC_ALLOCATOR_H_
 #define TENSORFLOW_COMMON_RUNTIME_BFC_ALLOCATOR_H_
 
+#include <array>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -78,7 +79,7 @@ class BFCAllocator : public VisitableAllocator {
 
   // A ChunkHandle is an index into the chunks_ vector in BFCAllocator
   // kInvalidChunkHandle means an invalid chunk
-  typedef int ChunkHandle;
+  typedef size_t ChunkHandle;
   static const int kInvalidChunkHandle = -1;
 
   typedef int BinNum;
@@ -344,6 +345,19 @@ class BFCAllocator : public VisitableAllocator {
 
   Chunk* ChunkFromHandle(ChunkHandle h) EXCLUSIVE_LOCKS_REQUIRED(lock_);
 
+  // Information about a Bin that is useful for debugging.
+  struct BinDebugInfo {
+    size_t total_bytes_in_use = 0;
+    size_t total_bytes_in_bin = 0;
+    size_t total_requested_bytes_in_use = 0;
+    size_t total_chunks_in_use = 0;
+    size_t total_chunks_in_bin = 0;
+  };
+
+  // Computes and returns a BinDebugInfo for each Bin.
+  std::array<BinDebugInfo, kNumBins> get_bin_debug_info()
+      EXCLUSIVE_LOCKS_REQUIRED(lock_);
+
   AllocatorRetry retry_helper_;
 
   // Structures immutable after construction
@@ -411,6 +425,7 @@ class BFCAllocator : public VisitableAllocator {
   // Stats.
   AllocatorStats stats_ GUARDED_BY(lock_);
 
+  friend class GPUBFCAllocatorBinDebugInfoTest;
   TF_DISALLOW_COPY_AND_ASSIGN(BFCAllocator);
 };
 

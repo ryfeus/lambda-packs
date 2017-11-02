@@ -20,12 +20,41 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='tensorflow/core/util/test_log.proto',
   package='tensorflow',
   syntax='proto3',
-  serialized_pb=_b('\n#tensorflow/core/util/test_log.proto\x12\ntensorflow\x1a\x19google/protobuf/any.proto\"D\n\nEntryValue\x12\x16\n\x0c\x64ouble_value\x18\x01 \x01(\x01H\x00\x12\x16\n\x0cstring_value\x18\x02 \x01(\tH\x00\x42\x06\n\x04kind\"\xe5\x01\n\x0e\x42\x65nchmarkEntry\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05iters\x18\x02 \x01(\x03\x12\x10\n\x08\x63pu_time\x18\x03 \x01(\x01\x12\x11\n\twall_time\x18\x04 \x01(\x01\x12\x12\n\nthroughput\x18\x05 \x01(\x01\x12\x36\n\x06\x65xtras\x18\x06 \x03(\x0b\x32&.tensorflow.BenchmarkEntry.ExtrasEntry\x1a\x45\n\x0b\x45xtrasEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.tensorflow.EntryValue:\x02\x38\x01\"=\n\x10\x42\x65nchmarkEntries\x12)\n\x05\x65ntry\x18\x01 \x03(\x0b\x32\x1a.tensorflow.BenchmarkEntry\"B\n\x12\x42uildConfiguration\x12\x0c\n\x04mode\x18\x01 \x01(\t\x12\x10\n\x08\x63\x63_flags\x18\x02 \x03(\t\x12\x0c\n\x04opts\x18\x03 \x03(\t\"J\n\x08\x43ommitId\x12\x14\n\nchangelist\x18\x01 \x01(\x03H\x00\x12\x0e\n\x04hash\x18\x02 \x01(\tH\x00\x12\x10\n\x08snapshot\x18\x03 \x01(\tB\x06\n\x04kind\"\xde\x01\n\x07\x43PUInfo\x12\x11\n\tnum_cores\x18\x01 \x01(\x03\x12\x19\n\x11num_cores_allowed\x18\x02 \x01(\x03\x12\x13\n\x0bmhz_per_cpu\x18\x03 \x01(\x01\x12\x10\n\x08\x63pu_info\x18\x04 \x01(\t\x12\x14\n\x0c\x63pu_governor\x18\x05 \x01(\t\x12\x36\n\ncache_size\x18\x06 \x03(\x0b\x32\".tensorflow.CPUInfo.CacheSizeEntry\x1a\x30\n\x0e\x43\x61\x63heSizeEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\".\n\nMemoryInfo\x12\r\n\x05total\x18\x01 \x01(\x03\x12\x11\n\tavailable\x18\x02 \x01(\x03\"6\n\x07GPUInfo\x12\r\n\x05model\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x0e\n\x06\x62us_id\x18\x03 \x01(\t\"p\n\x0cPlatformInfo\x12\x0c\n\x04\x62its\x18\x01 \x01(\t\x12\x0f\n\x07linkage\x18\x02 \x01(\t\x12\x0f\n\x07machine\x18\x03 \x01(\t\x12\x0f\n\x07release\x18\x04 \x01(\t\x12\x0e\n\x06system\x18\x05 \x01(\t\x12\x0f\n\x07version\x18\x06 \x01(\t\"e\n\x13\x41vailableDeviceInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x14\n\x0cmemory_limit\x18\x03 \x01(\x03\x12\x1c\n\x14physical_description\x18\x04 \x01(\t\"\xb3\x02\n\x14MachineConfiguration\x12\x10\n\x08hostname\x18\x01 \x01(\t\x12\x19\n\x11serial_identifier\x18\x07 \x01(\t\x12/\n\rplatform_info\x18\x02 \x01(\x0b\x32\x18.tensorflow.PlatformInfo\x12%\n\x08\x63pu_info\x18\x03 \x01(\x0b\x32\x13.tensorflow.CPUInfo\x12)\n\x0b\x64\x65vice_info\x18\x04 \x03(\x0b\x32\x14.google.protobuf.Any\x12>\n\x15\x61vailable_device_info\x18\x05 \x03(\x0b\x32\x1f.tensorflow.AvailableDeviceInfo\x12+\n\x0bmemory_info\x18\x06 \x01(\x0b\x32\x16.tensorflow.MemoryInfo\"$\n\x10RunConfiguration\x12\x10\n\x08\x61rgument\x18\x01 \x03(\t\"\xe0\x02\n\x0bTestResults\x12\x0e\n\x06target\x18\x01 \x01(\t\x12-\n\x07\x65ntries\x18\x02 \x01(\x0b\x32\x1c.tensorflow.BenchmarkEntries\x12;\n\x13\x62uild_configuration\x18\x03 \x01(\x0b\x32\x1e.tensorflow.BuildConfiguration\x12\'\n\tcommit_id\x18\x04 \x01(\x0b\x32\x14.tensorflow.CommitId\x12\x12\n\nstart_time\x18\x05 \x01(\x03\x12\x10\n\x08run_time\x18\x06 \x01(\x01\x12?\n\x15machine_configuration\x18\x07 \x01(\x0b\x32 .tensorflow.MachineConfiguration\x12\x37\n\x11run_configuration\x18\x08 \x01(\x0b\x32\x1c.tensorflow.RunConfiguration\x12\x0c\n\x04name\x18\t \x01(\tB1\n\x1borg.tensorflow.util.testlogB\rTestLogProtosP\x01\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n#tensorflow/core/util/test_log.proto\x12\ntensorflow\x1a\x19google/protobuf/any.proto\"D\n\nEntryValue\x12\x16\n\x0c\x64ouble_value\x18\x01 \x01(\x01H\x00\x12\x16\n\x0cstring_value\x18\x02 \x01(\tH\x00\x42\x06\n\x04kind\"\xe5\x01\n\x0e\x42\x65nchmarkEntry\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05iters\x18\x02 \x01(\x03\x12\x10\n\x08\x63pu_time\x18\x03 \x01(\x01\x12\x11\n\twall_time\x18\x04 \x01(\x01\x12\x12\n\nthroughput\x18\x05 \x01(\x01\x12\x36\n\x06\x65xtras\x18\x06 \x03(\x0b\x32&.tensorflow.BenchmarkEntry.ExtrasEntry\x1a\x45\n\x0b\x45xtrasEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.tensorflow.EntryValue:\x02\x38\x01\"=\n\x10\x42\x65nchmarkEntries\x12)\n\x05\x65ntry\x18\x01 \x03(\x0b\x32\x1a.tensorflow.BenchmarkEntry\"B\n\x12\x42uildConfiguration\x12\x0c\n\x04mode\x18\x01 \x01(\t\x12\x10\n\x08\x63\x63_flags\x18\x02 \x03(\t\x12\x0c\n\x04opts\x18\x03 \x03(\t\"J\n\x08\x43ommitId\x12\x14\n\nchangelist\x18\x01 \x01(\x03H\x00\x12\x0e\n\x04hash\x18\x02 \x01(\tH\x00\x12\x10\n\x08snapshot\x18\x03 \x01(\tB\x06\n\x04kind\"\xde\x01\n\x07\x43PUInfo\x12\x11\n\tnum_cores\x18\x01 \x01(\x03\x12\x19\n\x11num_cores_allowed\x18\x02 \x01(\x03\x12\x13\n\x0bmhz_per_cpu\x18\x03 \x01(\x01\x12\x10\n\x08\x63pu_info\x18\x04 \x01(\t\x12\x14\n\x0c\x63pu_governor\x18\x05 \x01(\t\x12\x36\n\ncache_size\x18\x06 \x03(\x0b\x32\".tensorflow.CPUInfo.CacheSizeEntry\x1a\x30\n\x0e\x43\x61\x63heSizeEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\".\n\nMemoryInfo\x12\r\n\x05total\x18\x01 \x01(\x03\x12\x11\n\tavailable\x18\x02 \x01(\x03\"6\n\x07GPUInfo\x12\r\n\x05model\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x0e\n\x06\x62us_id\x18\x03 \x01(\t\"p\n\x0cPlatformInfo\x12\x0c\n\x04\x62its\x18\x01 \x01(\t\x12\x0f\n\x07linkage\x18\x02 \x01(\t\x12\x0f\n\x07machine\x18\x03 \x01(\t\x12\x0f\n\x07release\x18\x04 \x01(\t\x12\x0e\n\x06system\x18\x05 \x01(\t\x12\x0f\n\x07version\x18\x06 \x01(\t\"e\n\x13\x41vailableDeviceInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x14\n\x0cmemory_limit\x18\x03 \x01(\x03\x12\x1c\n\x14physical_description\x18\x04 \x01(\t\"\xb3\x02\n\x14MachineConfiguration\x12\x10\n\x08hostname\x18\x01 \x01(\t\x12\x19\n\x11serial_identifier\x18\x07 \x01(\t\x12/\n\rplatform_info\x18\x02 \x01(\x0b\x32\x18.tensorflow.PlatformInfo\x12%\n\x08\x63pu_info\x18\x03 \x01(\x0b\x32\x13.tensorflow.CPUInfo\x12)\n\x0b\x64\x65vice_info\x18\x04 \x03(\x0b\x32\x14.google.protobuf.Any\x12>\n\x15\x61vailable_device_info\x18\x05 \x03(\x0b\x32\x1f.tensorflow.AvailableDeviceInfo\x12+\n\x0bmemory_info\x18\x06 \x01(\x0b\x32\x16.tensorflow.MemoryInfo\"$\n\x10RunConfiguration\x12\x10\n\x08\x61rgument\x18\x01 \x03(\t\"\x94\x04\n\x0bTestResults\x12\x0e\n\x06target\x18\x01 \x01(\t\x12-\n\x07\x65ntries\x18\x02 \x01(\x0b\x32\x1c.tensorflow.BenchmarkEntries\x12;\n\x13\x62uild_configuration\x18\x03 \x01(\x0b\x32\x1e.tensorflow.BuildConfiguration\x12\'\n\tcommit_id\x18\x04 \x01(\x0b\x32\x14.tensorflow.CommitId\x12\x12\n\nstart_time\x18\x05 \x01(\x03\x12\x10\n\x08run_time\x18\x06 \x01(\x01\x12?\n\x15machine_configuration\x18\x07 \x01(\x0b\x32 .tensorflow.MachineConfiguration\x12\x37\n\x11run_configuration\x18\x08 \x01(\x0b\x32\x1c.tensorflow.RunConfiguration\x12\x0c\n\x04name\x18\t \x01(\t\x12=\n\x0e\x62\x65nchmark_type\x18\n \x01(\x0e\x32%.tensorflow.TestResults.BenchmarkType\x12\x10\n\x08run_mode\x18\x0b \x01(\t\"a\n\rBenchmarkType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x16\n\x12\x43PP_MICROBENCHMARK\x10\x01\x12\x14\n\x10PYTHON_BENCHMARK\x10\x02\x12\x15\n\x11\x41NDROID_BENCHMARK\x10\x03\x42\x31\n\x1borg.tensorflow.util.testlogB\rTestLogProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
+
+_TESTRESULTS_BENCHMARKTYPE = _descriptor.EnumDescriptor(
+  name='BenchmarkType',
+  full_name='tensorflow.TestResults.BenchmarkType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='UNKNOWN', index=0, number=0,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='CPP_MICROBENCHMARK', index=1, number=1,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='PYTHON_BENCHMARK', index=2, number=2,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ANDROID_BENCHMARK', index=3, number=3,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=1917,
+  serialized_end=2014,
+)
+_sym_db.RegisterEnumDescriptor(_TESTRESULTS_BENCHMARKTYPE)
 
 
 _ENTRYVALUE = _descriptor.Descriptor(
@@ -774,11 +803,26 @@ _TESTRESULTS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='benchmark_type', full_name='tensorflow.TestResults.benchmark_type', index=9,
+      number=10, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='run_mode', full_name='tensorflow.TestResults.run_mode', index=10,
+      number=11, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
+    _TESTRESULTS_BENCHMARKTYPE,
   ],
   options=None,
   is_extendable=False,
@@ -787,7 +831,7 @@ _TESTRESULTS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1482,
-  serialized_end=1834,
+  serialized_end=2014,
 )
 
 _ENTRYVALUE.oneofs_by_name['kind'].fields.append(
@@ -818,6 +862,8 @@ _TESTRESULTS.fields_by_name['build_configuration'].message_type = _BUILDCONFIGUR
 _TESTRESULTS.fields_by_name['commit_id'].message_type = _COMMITID
 _TESTRESULTS.fields_by_name['machine_configuration'].message_type = _MACHINECONFIGURATION
 _TESTRESULTS.fields_by_name['run_configuration'].message_type = _RUNCONFIGURATION
+_TESTRESULTS.fields_by_name['benchmark_type'].enum_type = _TESTRESULTS_BENCHMARKTYPE
+_TESTRESULTS_BENCHMARKTYPE.containing_type = _TESTRESULTS
 DESCRIPTOR.message_types_by_name['EntryValue'] = _ENTRYVALUE
 DESCRIPTOR.message_types_by_name['BenchmarkEntry'] = _BENCHMARKENTRY
 DESCRIPTOR.message_types_by_name['BenchmarkEntries'] = _BENCHMARKENTRIES
@@ -831,6 +877,7 @@ DESCRIPTOR.message_types_by_name['AvailableDeviceInfo'] = _AVAILABLEDEVICEINFO
 DESCRIPTOR.message_types_by_name['MachineConfiguration'] = _MACHINECONFIGURATION
 DESCRIPTOR.message_types_by_name['RunConfiguration'] = _RUNCONFIGURATION
 DESCRIPTOR.message_types_by_name['TestResults'] = _TESTRESULTS
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 EntryValue = _reflection.GeneratedProtocolMessageType('EntryValue', (_message.Message,), dict(
   DESCRIPTOR = _ENTRYVALUE,

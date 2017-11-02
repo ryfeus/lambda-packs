@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n6tensorflow/core/framework/allocation_description.proto\x12\ntensorflow\"\xa3\x01\n\x15\x41llocationDescription\x12\x17\n\x0frequested_bytes\x18\x01 \x01(\x03\x12\x17\n\x0f\x61llocated_bytes\x18\x02 \x01(\x03\x12\x16\n\x0e\x61llocator_name\x18\x03 \x01(\t\x12\x15\n\rallocation_id\x18\x04 \x01(\x03\x12\x1c\n\x14has_single_reference\x18\x05 \x01(\x08\x12\x0b\n\x03ptr\x18\x06 \x01(\x04\x42<\n\x18org.tensorflow.frameworkB\x1b\x41llocationDescriptionProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -92,6 +91,7 @@ _ALLOCATIONDESCRIPTION = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['AllocationDescription'] = _ALLOCATIONDESCRIPTION
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 AllocationDescription = _reflection.GeneratedProtocolMessageType('AllocationDescription', (_message.Message,), dict(
   DESCRIPTOR = _ALLOCATIONDESCRIPTION,

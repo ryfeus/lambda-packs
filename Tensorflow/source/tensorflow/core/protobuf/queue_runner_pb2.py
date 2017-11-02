@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n+tensorflow/core/protobuf/queue_runner.proto\x12\ntensorflow\x1a*tensorflow/core/lib/core/error_codes.proto\"\xaa\x01\n\x0eQueueRunnerDef\x12\x12\n\nqueue_name\x18\x01 \x01(\t\x12\x17\n\x0f\x65nqueue_op_name\x18\x02 \x03(\t\x12\x15\n\rclose_op_name\x18\x03 \x01(\t\x12\x16\n\x0e\x63\x61ncel_op_name\x18\x04 \x01(\t\x12<\n\x1cqueue_closed_exception_types\x18\x05 \x03(\x0e\x32\x16.tensorflow.error.CodeB2\n\x18org.tensorflow.frameworkB\x11QueueRunnerProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_lib_dot_core_dot_error__codes__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -88,6 +87,7 @@ _QUEUERUNNERDEF = _descriptor.Descriptor(
 
 _QUEUERUNNERDEF.fields_by_name['queue_closed_exception_types'].enum_type = tensorflow_dot_core_dot_lib_dot_core_dot_error__codes__pb2._CODE
 DESCRIPTOR.message_types_by_name['QueueRunnerDef'] = _QUEUERUNNERDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 QueueRunnerDef = _reflection.GeneratedProtocolMessageType('QueueRunnerDef', (_message.Message,), dict(
   DESCRIPTOR = _QUEUERUNNERDEF,

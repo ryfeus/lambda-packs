@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\nHtensorflow/contrib/tensorboard/graph_explorer/proto/graph_explorer.proto\x12\x0egraph_explorer\"\xf0\x01\n\x04Node\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x35\n\tnode_attr\x18\x02 \x03(\x0b\x32\".graph_explorer.Node.NodeAttrEntry\x12=\n\rmetanode_attr\x18\x03 \x03(\x0b\x32&.graph_explorer.Node.MetanodeAttrEntry\x1a/\n\rNodeAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x33\n\x11MetanodeAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x8e\x01\n\x04\x45\x64ge\x12\x0e\n\x06source\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x35\n\tedge_attr\x18\x03 \x03(\x0b\x32\".graph_explorer.Edge.EdgeAttrEntry\x1a/\n\rEdgeAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x82\x04\n\x05Graph\x12\"\n\x04node\x18\x01 \x03(\x0b\x32\x14.graph_explorer.Node\x12\"\n\x04\x65\x64ge\x18\x02 \x03(\x0b\x32\x14.graph_explorer.Edge\x12\x36\n\tnode_attr\x18\x03 \x03(\x0b\x32#.graph_explorer.Graph.NodeAttrEntry\x12>\n\rmetanode_attr\x18\x04 \x03(\x0b\x32\'.graph_explorer.Graph.MetanodeAttrEntry\x12\x36\n\tedge_attr\x18\x05 \x03(\x0b\x32#.graph_explorer.Graph.EdgeAttrEntry\x12\x38\n\ngraph_attr\x18\x06 \x03(\x0b\x32$.graph_explorer.Graph.GraphAttrEntry\x1a/\n\rNodeAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x33\n\x11MetanodeAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rEdgeAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x30\n\x0eGraphAttrEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -459,6 +458,7 @@ _GRAPH.fields_by_name['graph_attr'].message_type = _GRAPH_GRAPHATTRENTRY
 DESCRIPTOR.message_types_by_name['Node'] = _NODE
 DESCRIPTOR.message_types_by_name['Edge'] = _EDGE
 DESCRIPTOR.message_types_by_name['Graph'] = _GRAPH
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Node = _reflection.GeneratedProtocolMessageType('Node', (_message.Message,), dict(
 

@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n,google/protobuf/unittest_import_public.proto\x12\x18protobuf_unittest_import\" \n\x13PublicImportMessage\x12\t\n\x01\x65\x18\x01 \x01(\x05\x42\x1a\n\x18\x63om.google.protobuf.test')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -57,6 +56,7 @@ _PUBLICIMPORTMESSAGE = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['PublicImportMessage'] = _PUBLICIMPORTMESSAGE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 PublicImportMessage = _reflection.GeneratedProtocolMessageType('PublicImportMessage', (_message.Message,), dict(
   DESCRIPTOR = _PUBLICIMPORTMESSAGE,

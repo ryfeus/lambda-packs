@@ -51,24 +51,14 @@ this file*.
 __author__ = 'robinson@google.com (Will Robinson)'
 
 from io import BytesIO
-import sys
 import struct
+import sys
 import weakref
 
 import six
-try:
-  import six.moves.copyreg as copyreg
-except ImportError:
-  # On some platforms, for example gMac, we run native Python because there is
-  # nothing like hermetic Python. This means lesser control on the system and
-  # the six.moves package may be missing (is missing on 20150321 on gMac). Be
-  # extra conservative and try to load the old replacement if it fails.
-  try:
-    import copy_reg as copyreg  #PY26
-  except ImportError:
-    import copyreg
 
 # We use "as" to avoid name collisions with variables.
+from google.protobuf.internal import api_implementation
 from google.protobuf.internal import containers
 from google.protobuf.internal import decoder
 from google.protobuf.internal import encoder
@@ -162,12 +152,10 @@ class GeneratedProtocolMessageType(type):
     """
     descriptor = dictionary[GeneratedProtocolMessageType._DESCRIPTOR_KEY]
     cls._decoders_by_tag = {}
-    cls._extensions_by_name = {}
-    cls._extensions_by_number = {}
     if (descriptor.has_options and
         descriptor.GetOptions().message_set_wire_format):
       cls._decoders_by_tag[decoder.MESSAGE_SET_ITEM_TAG] = (
-          decoder.MessageSetItemDecoder(cls._extensions_by_number), None)
+          decoder.MessageSetItemDecoder(descriptor), None)
 
     # Attach stuff to each FieldDescriptor for quick lookup later on.
     for field in descriptor.fields:
@@ -181,7 +169,6 @@ class GeneratedProtocolMessageType(type):
     _AddStaticMethods(cls)
     _AddMessageMethods(descriptor, cls)
     _AddPrivateHelperMethods(descriptor, cls)
-    copyreg.pickle(cls, lambda obj: (cls, (), obj.__getstate__()))
 
     superclass = super(GeneratedProtocolMessageType, cls)
     superclass.__init__(name, bases, dictionary)
@@ -302,7 +289,8 @@ def _AttachFieldHelpers(cls, field_descriptor):
 
   if is_map_entry:
     field_encoder = encoder.MapEncoder(field_descriptor)
-    sizer = encoder.MapSizer(field_descriptor)
+    sizer = encoder.MapSizer(field_descriptor,
+                             _IsMessageMapField(field_descriptor))
   elif _IsMessageSetExtension(field_descriptor):
     field_encoder = encoder.MessageSetItemEncoder(field_descriptor.number)
     sizer = encoder.MessageSetItemSizer(field_descriptor.number)
@@ -747,32 +735,21 @@ def _AddPropertiesForExtensions(descriptor, cls):
     constant_name = extension_name.upper() + "_FIELD_NUMBER"
     setattr(cls, constant_name, extension_field.number)
 
+  # TODO(amauryfa): Migrate all users of these attributes to functions like
+  #   pool.FindExtensionByNumber(descriptor).
+  if descriptor.file is not None:
+    # TODO(amauryfa): Use cls.MESSAGE_FACTORY.pool when available.
+    pool = descriptor.file.pool
+    cls._extensions_by_number = pool._extensions_by_number[descriptor]
+    cls._extensions_by_name = pool._extensions_by_name[descriptor]
 
 def _AddStaticMethods(cls):
   # TODO(robinson): This probably needs to be thread-safe(?)
   def RegisterExtension(extension_handle):
     extension_handle.containing_type = cls.DESCRIPTOR
+    # TODO(amauryfa): Use cls.MESSAGE_FACTORY.pool when available.
+    cls.DESCRIPTOR.file.pool.AddExtensionDescriptor(extension_handle)
     _AttachFieldHelpers(cls, extension_handle)
-
-    # Try to insert our extension, failing if an extension with the same number
-    # already exists.
-    actual_handle = cls._extensions_by_number.setdefault(
-        extension_handle.number, extension_handle)
-    if actual_handle is not extension_handle:
-      raise AssertionError(
-          'Extensions "%s" and "%s" both try to extend message type "%s" with '
-          'field number %d.' %
-          (extension_handle.full_name, actual_handle.full_name,
-           cls.DESCRIPTOR.full_name, extension_handle.number))
-
-    cls._extensions_by_name[extension_handle.full_name] = extension_handle
-
-    handle = extension_handle  # avoid line wrapping
-    if _IsMessageSetExtension(handle):
-      # MessageSet extension.  Also register under type name.
-      cls._extensions_by_name[
-          extension_handle.message_type.full_name] = extension_handle
-
   cls.RegisterExtension = staticmethod(RegisterExtension)
 
   def FromString(s):
@@ -916,7 +893,7 @@ def _AddHasExtensionMethod(cls):
 def _InternalUnpackAny(msg):
   """Unpacks Any message and returns the unpacked message.
 
-  This internal method is differnt from public Any Unpack method which takes
+  This internal method is different from public Any Unpack method which takes
   the target message as argument. _InternalUnpackAny method does not have
   target message type and need to find the message type in descriptor pool.
 
@@ -1050,29 +1027,34 @@ def _AddByteSizeMethod(message_descriptor, cls):
 def _AddSerializeToStringMethod(message_descriptor, cls):
   """Helper for _AddMessageMethods()."""
 
-  def SerializeToString(self):
+  def SerializeToString(self, **kwargs):
     # Check if the message has all of its required fields set.
     errors = []
     if not self.IsInitialized():
       raise message_mod.EncodeError(
           'Message %s is missing required fields: %s' % (
           self.DESCRIPTOR.full_name, ','.join(self.FindInitializationErrors())))
-    return self.SerializePartialToString()
+    return self.SerializePartialToString(**kwargs)
   cls.SerializeToString = SerializeToString
 
 
 def _AddSerializePartialToStringMethod(message_descriptor, cls):
   """Helper for _AddMessageMethods()."""
 
-  def SerializePartialToString(self):
+  def SerializePartialToString(self, **kwargs):
     out = BytesIO()
-    self._InternalSerialize(out.write)
+    self._InternalSerialize(out.write, **kwargs)
     return out.getvalue()
   cls.SerializePartialToString = SerializePartialToString
 
-  def InternalSerialize(self, write_bytes):
+  def InternalSerialize(self, write_bytes, deterministic=None):
+    if deterministic is None:
+      deterministic = (
+          api_implementation.IsPythonDefaultSerializationDeterministic())
+    else:
+      deterministic = bool(deterministic)
     for field_descriptor, field_value in self.ListFields():
-      field_descriptor._encoder(write_bytes, field_value)
+      field_descriptor._encoder(write_bytes, field_value, deterministic)
     for tag_bytes, value_bytes in self._unknown_fields:
       write_bytes(tag_bytes)
       write_bytes(value_bytes)
@@ -1230,7 +1212,7 @@ def _AddMergeFromMethod(cls):
     if not isinstance(msg, cls):
       raise TypeError(
           "Parameter to MergeFrom() must be instance of same class: "
-          "expected %s got %s." % (cls.__name__, type(msg).__name__))
+          'expected %s got %s.' % (cls.__name__, msg.__class__.__name__))
 
     assert msg is not self
     self._Modified()
@@ -1284,6 +1266,12 @@ def _AddWhichOneofMethod(message_descriptor, cls):
   cls.WhichOneof = WhichOneof
 
 
+def _AddReduceMethod(cls):
+  def __reduce__(self):  # pylint: disable=invalid-name
+    return (type(self), (), self.__getstate__())
+  cls.__reduce__ = __reduce__
+
+
 def _Clear(self):
   # Clear fields.
   self._fields = {}
@@ -1329,6 +1317,7 @@ def _AddMessageMethods(message_descriptor, cls):
   _AddIsInitializedMethod(message_descriptor, cls)
   _AddMergeFromMethod(cls)
   _AddWhichOneofMethod(message_descriptor, cls)
+  _AddReduceMethod(cls)
   # Adds methods which do not depend on cls.
   cls.Clear = _Clear
   cls.DiscardUnknownFields = _DiscardUnknownFields

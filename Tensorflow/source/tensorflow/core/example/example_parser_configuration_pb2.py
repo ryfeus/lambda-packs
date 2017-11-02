@@ -25,7 +25,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n:tensorflow/core/example/example_parser_configuration.proto\x12\ntensorflow\x1a,tensorflow/core/framework/tensor_shape.proto\x1a&tensorflow/core/framework/tensor.proto\x1a%tensorflow/core/framework/types.proto\"\xa3\x01\n\x12VarLenFeatureProto\x12#\n\x05\x64type\x18\x01 \x01(\x0e\x32\x14.tensorflow.DataType\x12!\n\x19values_output_tensor_name\x18\x02 \x01(\t\x12\"\n\x1aindices_output_tensor_name\x18\x03 \x01(\t\x12!\n\x19shapes_output_tensor_name\x18\x04 \x01(\t\"\xbb\x01\n\x14\x46ixedLenFeatureProto\x12#\n\x05\x64type\x18\x01 \x01(\x0e\x32\x14.tensorflow.DataType\x12+\n\x05shape\x18\x02 \x01(\x0b\x32\x1c.tensorflow.TensorShapeProto\x12.\n\rdefault_value\x18\x03 \x01(\x0b\x32\x17.tensorflow.TensorProto\x12!\n\x19values_output_tensor_name\x18\x04 \x01(\t\"\x9a\x01\n\x14\x46\x65\x61tureConfiguration\x12=\n\x11\x66ixed_len_feature\x18\x01 \x01(\x0b\x32 .tensorflow.FixedLenFeatureProtoH\x00\x12\x39\n\x0fvar_len_feature\x18\x02 \x01(\x0b\x32\x1e.tensorflow.VarLenFeatureProtoH\x00\x42\x08\n\x06\x63onfig\"\xbe\x01\n\x1a\x45xampleParserConfiguration\x12K\n\x0b\x66\x65\x61ture_map\x18\x01 \x03(\x0b\x32\x36.tensorflow.ExampleParserConfiguration.FeatureMapEntry\x1aS\n\x0f\x46\x65\x61tureMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12/\n\x05value\x18\x02 \x01(\x0b\x32 .tensorflow.FeatureConfiguration:\x02\x38\x01\x42?\n\x16org.tensorflow.exampleB ExampleParserConfigurationProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_tensor__shape__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_tensor__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_types__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -261,6 +260,7 @@ DESCRIPTOR.message_types_by_name['VarLenFeatureProto'] = _VARLENFEATUREPROTO
 DESCRIPTOR.message_types_by_name['FixedLenFeatureProto'] = _FIXEDLENFEATUREPROTO
 DESCRIPTOR.message_types_by_name['FeatureConfiguration'] = _FEATURECONFIGURATION
 DESCRIPTOR.message_types_by_name['ExampleParserConfiguration'] = _EXAMPLEPARSERCONFIGURATION
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 VarLenFeatureProto = _reflection.GeneratedProtocolMessageType('VarLenFeatureProto', (_message.Message,), dict(
   DESCRIPTOR = _VARLENFEATUREPROTO,

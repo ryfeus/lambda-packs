@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n\x1egoogle/protobuf/any_test.proto\x12\x11protobuf_unittest\x1a\x19google/protobuf/any.proto\"y\n\x07TestAny\x12\x13\n\x0bint32_value\x18\x01 \x01(\x05\x12\'\n\tany_value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\x12\x30\n\x12repeated_any_value\x18\x03 \x03(\x0b\x32\x14.google.protobuf.Anyb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -75,6 +74,7 @@ _TESTANY = _descriptor.Descriptor(
 _TESTANY.fields_by_name['any_value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _TESTANY.fields_by_name['repeated_any_value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 DESCRIPTOR.message_types_by_name['TestAny'] = _TESTANY
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestAny = _reflection.GeneratedProtocolMessageType('TestAny', (_message.Message,), dict(
   DESCRIPTOR = _TESTANY,

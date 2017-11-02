@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n1tensorflow/python/training/checkpoint_state.proto\x12\ntensorflow\"T\n\x0f\x43heckpointState\x12\x1d\n\x15model_checkpoint_path\x18\x01 \x01(\t\x12\"\n\x1a\x61ll_model_checkpoint_paths\x18\x02 \x03(\tB\x03\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -64,6 +63,7 @@ _CHECKPOINTSTATE = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['CheckpointState'] = _CHECKPOINTSTATE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CheckpointState = _reflection.GeneratedProtocolMessageType('CheckpointState', (_message.Message,), dict(
   DESCRIPTOR = _CHECKPOINTSTATE,

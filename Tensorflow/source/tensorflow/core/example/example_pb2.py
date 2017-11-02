@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n%tensorflow/core/example/example.proto\x12\ntensorflow\x1a%tensorflow/core/example/feature.proto\"1\n\x07\x45xample\x12&\n\x08\x66\x65\x61tures\x18\x01 \x01(\x0b\x32\x14.tensorflow.Features\"i\n\x0fSequenceExample\x12%\n\x07\x63ontext\x18\x01 \x01(\x0b\x32\x14.tensorflow.Features\x12/\n\rfeature_lists\x18\x02 \x01(\x0b\x32\x18.tensorflow.FeatureListsB,\n\x16org.tensorflow.exampleB\rExampleProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_example_dot_feature__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -101,6 +100,7 @@ _SEQUENCEEXAMPLE.fields_by_name['context'].message_type = tensorflow_dot_core_do
 _SEQUENCEEXAMPLE.fields_by_name['feature_lists'].message_type = tensorflow_dot_core_dot_example_dot_feature__pb2._FEATURELISTS
 DESCRIPTOR.message_types_by_name['Example'] = _EXAMPLE
 DESCRIPTOR.message_types_by_name['SequenceExample'] = _SEQUENCEEXAMPLE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Example = _reflection.GeneratedProtocolMessageType('Example', (_message.Message,), dict(
   DESCRIPTOR = _EXAMPLE,

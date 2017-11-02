@@ -22,7 +22,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n,google/protobuf/internal/factory_test1.proto\x12\x1fgoogle.protobuf.python.internal\"\xd5\x03\n\x0f\x46\x61\x63tory1Message\x12\x45\n\x0e\x66\x61\x63tory_1_enum\x18\x01 \x01(\x0e\x32-.google.protobuf.python.internal.Factory1Enum\x12\x62\n\x15nested_factory_1_enum\x18\x02 \x01(\x0e\x32\x43.google.protobuf.python.internal.Factory1Message.NestedFactory1Enum\x12h\n\x18nested_factory_1_message\x18\x03 \x01(\x0b\x32\x46.google.protobuf.python.internal.Factory1Message.NestedFactory1Message\x12\x14\n\x0cscalar_value\x18\x04 \x01(\x05\x12\x12\n\nlist_value\x18\x05 \x03(\t\x1a&\n\x15NestedFactory1Message\x12\r\n\x05value\x18\x01 \x01(\t\"P\n\x12NestedFactory1Enum\x12\x1c\n\x18NESTED_FACTORY_1_VALUE_0\x10\x00\x12\x1c\n\x18NESTED_FACTORY_1_VALUE_1\x10\x01*\t\x08\xe8\x07\x10\x80\x80\x80\x80\x02*<\n\x0c\x46\x61\x63tory1Enum\x12\x15\n\x11\x46\x41\x43TORY_1_VALUE_0\x10\x00\x12\x15\n\x11\x46\x41\x43TORY_1_VALUE_1\x10\x01')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _FACTORY1ENUM = _descriptor.EnumDescriptor(
   name='Factory1Enum',
@@ -170,6 +169,7 @@ _FACTORY1MESSAGE.fields_by_name['nested_factory_1_message'].message_type = _FACT
 _FACTORY1MESSAGE_NESTEDFACTORY1ENUM.containing_type = _FACTORY1MESSAGE
 DESCRIPTOR.message_types_by_name['Factory1Message'] = _FACTORY1MESSAGE
 DESCRIPTOR.enum_types_by_name['Factory1Enum'] = _FACTORY1ENUM
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Factory1Message = _reflection.GeneratedProtocolMessageType('Factory1Message', (_message.Message,), dict(
 

@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n tensorflow/core/util/event.proto\x12\ntensorflow\x1a\'tensorflow/core/framework/summary.proto\"\xbb\x02\n\x05\x45vent\x12\x11\n\twall_time\x18\x01 \x01(\x01\x12\x0c\n\x04step\x18\x02 \x01(\x03\x12\x16\n\x0c\x66ile_version\x18\x03 \x01(\tH\x00\x12\x13\n\tgraph_def\x18\x04 \x01(\x0cH\x00\x12&\n\x07summary\x18\x05 \x01(\x0b\x32\x13.tensorflow.SummaryH\x00\x12-\n\x0blog_message\x18\x06 \x01(\x0b\x32\x16.tensorflow.LogMessageH\x00\x12-\n\x0bsession_log\x18\x07 \x01(\x0b\x32\x16.tensorflow.SessionLogH\x00\x12<\n\x13tagged_run_metadata\x18\x08 \x01(\x0b\x32\x1d.tensorflow.TaggedRunMetadataH\x00\x12\x18\n\x0emeta_graph_def\x18\t \x01(\x0cH\x00\x42\x06\n\x04what\"\x99\x01\n\nLogMessage\x12+\n\x05level\x18\x01 \x01(\x0e\x32\x1c.tensorflow.LogMessage.Level\x12\x0f\n\x07message\x18\x02 \x01(\t\"M\n\x05Level\x12\x0b\n\x07UNKNOWN\x10\x00\x12\r\n\tDEBUGGING\x10\n\x12\x08\n\x04INFO\x10\x14\x12\x08\n\x04WARN\x10\x1e\x12\t\n\x05\x45RROR\x10(\x12\t\n\x05\x46\x41TAL\x10\x32\"\xb6\x01\n\nSessionLog\x12\x34\n\x06status\x18\x01 \x01(\x0e\x32$.tensorflow.SessionLog.SessionStatus\x12\x17\n\x0f\x63heckpoint_path\x18\x02 \x01(\t\x12\x0b\n\x03msg\x18\x03 \x01(\t\"L\n\rSessionStatus\x12\x16\n\x12STATUS_UNSPECIFIED\x10\x00\x12\t\n\x05START\x10\x01\x12\x08\n\x04STOP\x10\x02\x12\x0e\n\nCHECKPOINT\x10\x03\"6\n\x11TaggedRunMetadata\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x14\n\x0crun_metadata\x18\x02 \x01(\x0c\x42\'\n\x13org.tensorflow.utilB\x0b\x45ventProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_summary__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -341,6 +340,7 @@ DESCRIPTOR.message_types_by_name['Event'] = _EVENT
 DESCRIPTOR.message_types_by_name['LogMessage'] = _LOGMESSAGE
 DESCRIPTOR.message_types_by_name['SessionLog'] = _SESSIONLOG
 DESCRIPTOR.message_types_by_name['TaggedRunMetadata'] = _TAGGEDRUNMETADATA
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Event = _reflection.GeneratedProtocolMessageType('Event', (_message.Message,), dict(
   DESCRIPTOR = _EVENT,

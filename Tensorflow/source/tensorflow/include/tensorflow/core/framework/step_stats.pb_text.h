@@ -29,6 +29,16 @@ bool ProtoParseFromString(
     ::tensorflow::NodeOutput* msg)
         TF_MUST_USE_RESULT;
 
+// Message-text conversion for tensorflow.MemoryStats
+string ProtoDebugString(
+    const ::tensorflow::MemoryStats& msg);
+string ProtoShortDebugString(
+    const ::tensorflow::MemoryStats& msg);
+bool ProtoParseFromString(
+    const string& s,
+    ::tensorflow::MemoryStats* msg)
+        TF_MUST_USE_RESULT;
+
 // Message-text conversion for tensorflow.NodeExecStats
 string ProtoDebugString(
     const ::tensorflow::NodeExecStats& msg);

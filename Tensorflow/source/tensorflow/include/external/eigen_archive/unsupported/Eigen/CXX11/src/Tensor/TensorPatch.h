@@ -31,6 +31,7 @@ struct traits<TensorPatchOp<PatchDim, XprType> > : public traits<XprType>
   typedef typename remove_reference<Nested>::type _Nested;
   static const int NumDimensions = XprTraits::NumDimensions + 1;
   static const int Layout = XprTraits::Layout;
+  typedef typename XprTraits::PointerType PointerType;
 };
 
 template<typename PatchDim, typename XprType>
@@ -100,6 +101,9 @@ struct TensorEvaluator<const TensorPatchOp<PatchDim, ArgType>, Device>
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorEvaluator(const XprType& op, const Device& device)
       : m_impl(op.expression(), device)
+#ifdef EIGEN_USE_SYCL
+      , m_patch_dims(op.patch_dims())
+#endif
   {
     Index num_patches = 1;
     const typename TensorEvaluator<ArgType, Device>::Dimensions& input_dims = m_impl.dimensions();
@@ -253,7 +257,12 @@ struct TensorEvaluator<const TensorPatchOp<PatchDim, ArgType>, Device>
            TensorOpCost(0, 0, compute_cost, vectorized, PacketSize);
   }
 
-  EIGEN_DEVICE_FUNC Scalar* data() const { return NULL; }
+  EIGEN_DEVICE_FUNC typename Eigen::internal::traits<XprType>::PointerType data() const { return NULL; }
+
+#ifdef EIGEN_USE_SYCL
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const TensorEvaluator<ArgType, Device>& impl() const { return m_impl; }
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const PatchDim& functor() const { return m_patch_dims; }
+#endif
 
  protected:
   Dimensions m_dimensions;
@@ -262,6 +271,10 @@ struct TensorEvaluator<const TensorPatchOp<PatchDim, ArgType>, Device>
   array<Index, NumDims-1> m_patchStrides;
 
   TensorEvaluator<ArgType, Device> m_impl;
+
+#ifdef EIGEN_USE_SYCL
+  const PatchDim m_patch_dims;
+#endif
 };
 
 } // end namespace Eigen

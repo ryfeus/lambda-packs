@@ -134,19 +134,19 @@ private:
 // this helper permits to completely eliminate m_outerStride if it is known at compiletime.
 template<typename Scalar,int OuterStride> class plainobjectbase_evaluator_data {
 public:
-  plainobjectbase_evaluator_data(const Scalar* ptr, Index outerStride) : data(ptr)
+  EIGEN_DEVICE_FUNC plainobjectbase_evaluator_data(const Scalar* ptr, Index outerStride) : data(ptr)
   {
     EIGEN_ONLY_USED_FOR_DEBUG(outerStride);
     eigen_internal_assert(outerStride==OuterStride);
   }
-  Index outerStride() const { return OuterStride; }
+  EIGEN_DEVICE_FUNC Index outerStride() const { return OuterStride; }
   const Scalar *data;
 };
 
 template<typename Scalar> class plainobjectbase_evaluator_data<Scalar,Dynamic> {
 public:
-  plainobjectbase_evaluator_data(const Scalar* ptr, Index outerStride) : data(ptr), m_outerStride(outerStride) {}
-  Index outerStride() const { return m_outerStride; }
+  EIGEN_DEVICE_FUNC plainobjectbase_evaluator_data(const Scalar* ptr, Index outerStride) : data(ptr), m_outerStride(outerStride) {}
+  EIGEN_DEVICE_FUNC Index outerStride() const { return m_outerStride; }
   const Scalar *data;
 protected:
   Index m_outerStride;
@@ -1613,9 +1613,7 @@ struct evaluator<Diagonal<ArgType, DiagIndex> >
   { }
  
   typedef typename XprType::Scalar Scalar;
-  // FIXME having to check whether ArgType is sparse here i not very nice.
-  typedef typename internal::conditional<!internal::is_same<typename ArgType::StorageKind,Sparse>::value,
-                                         typename XprType::CoeffReturnType,Scalar>::type CoeffReturnType;
+  typedef typename XprType::CoeffReturnType CoeffReturnType;
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   CoeffReturnType coeff(Index row, Index) const

@@ -21,10 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='tensorflow/core/framework/cost_graph.proto',
   package='tensorflow',
   syntax='proto3',
-  serialized_pb=_b('\n*tensorflow/core/framework/cost_graph.proto\x12\ntensorflow\x1a,tensorflow/core/framework/tensor_shape.proto\x1a%tensorflow/core/framework/types.proto\"\x8e\x04\n\x0c\x43ostGraphDef\x12+\n\x04node\x18\x01 \x03(\x0b\x32\x1d.tensorflow.CostGraphDef.Node\x1a\xd0\x03\n\x04Node\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x05\x12;\n\ninput_info\x18\x04 \x03(\x0b\x32\'.tensorflow.CostGraphDef.Node.InputInfo\x12=\n\x0boutput_info\x18\x05 \x03(\x0b\x32(.tensorflow.CostGraphDef.Node.OutputInfo\x12\x1d\n\x15temporary_memory_size\x18\x06 \x01(\x03\x12\x14\n\x0c\x63ompute_cost\x18\t \x01(\x03\x12\x10\n\x08is_final\x18\x07 \x01(\x08\x12\x15\n\rcontrol_input\x18\x08 \x03(\x05\x1a;\n\tInputInfo\x12\x16\n\x0epreceding_node\x18\x01 \x01(\x05\x12\x16\n\x0epreceding_port\x18\x02 \x01(\x05\x1a\x86\x01\n\nOutputInfo\x12\x0c\n\x04size\x18\x01 \x01(\x03\x12\x18\n\x10\x61lias_input_port\x18\x02 \x01(\x03\x12+\n\x05shape\x18\x03 \x01(\x0b\x32\x1c.tensorflow.TensorShapeProto\x12#\n\x05\x64type\x18\x04 \x01(\x0e\x32\x14.tensorflow.DataTypeB0\n\x18org.tensorflow.frameworkB\x0f\x43ostGraphProtosP\x01\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n*tensorflow/core/framework/cost_graph.proto\x12\ntensorflow\x1a,tensorflow/core/framework/tensor_shape.proto\x1a%tensorflow/core/framework/types.proto\"\xc5\x05\n\x0c\x43ostGraphDef\x12+\n\x04node\x18\x01 \x03(\x0b\x32\x1d.tensorflow.CostGraphDef.Node\x1a\x87\x05\n\x04Node\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x05\x12;\n\ninput_info\x18\x04 \x03(\x0b\x32\'.tensorflow.CostGraphDef.Node.InputInfo\x12=\n\x0boutput_info\x18\x05 \x03(\x0b\x32(.tensorflow.CostGraphDef.Node.OutputInfo\x12\x1d\n\x15temporary_memory_size\x18\x06 \x01(\x03\x12\x1d\n\x15host_temp_memory_size\x18\n \x01(\x03\x12\x1f\n\x17\x64\x65vice_temp_memory_size\x18\x0b \x01(\x03\x12#\n\x1bhost_persistent_memory_size\x18\x0c \x01(\x03\x12%\n\x1d\x64\x65vice_persistent_memory_size\x18\x10 \x01(\x03\x12\x14\n\x0c\x63ompute_cost\x18\t \x01(\x03\x12\x14\n\x0c\x63ompute_time\x18\x0e \x01(\x03\x12\x13\n\x0bmemory_time\x18\x0f \x01(\x03\x12\x10\n\x08is_final\x18\x07 \x01(\x08\x12\x15\n\rcontrol_input\x18\x08 \x03(\x05\x1a;\n\tInputInfo\x12\x16\n\x0epreceding_node\x18\x01 \x01(\x05\x12\x16\n\x0epreceding_port\x18\x02 \x01(\x05\x1a\x86\x01\n\nOutputInfo\x12\x0c\n\x04size\x18\x01 \x01(\x03\x12\x18\n\x10\x61lias_input_port\x18\x02 \x01(\x03\x12+\n\x05shape\x18\x03 \x01(\x0b\x32\x1c.tensorflow.TensorShapeProto\x12#\n\x05\x64type\x18\x04 \x01(\x0e\x32\x14.tensorflow.DataTypeB0\n\x18org.tensorflow.frameworkB\x0f\x43ostGraphProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_tensor__shape__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_types__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -62,8 +61,8 @@ _COSTGRAPHDEF_NODE_INPUTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=474,
-  serialized_end=533,
+  serialized_start=657,
+  serialized_end=716,
 )
 
 _COSTGRAPHDEF_NODE_OUTPUTINFO = _descriptor.Descriptor(
@@ -113,8 +112,8 @@ _COSTGRAPHDEF_NODE_OUTPUTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=536,
-  serialized_end=670,
+  serialized_start=719,
+  serialized_end=853,
 )
 
 _COSTGRAPHDEF_NODE = _descriptor.Descriptor(
@@ -167,21 +166,63 @@ _COSTGRAPHDEF_NODE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='compute_cost', full_name='tensorflow.CostGraphDef.Node.compute_cost', index=6,
+      name='host_temp_memory_size', full_name='tensorflow.CostGraphDef.Node.host_temp_memory_size', index=6,
+      number=10, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='device_temp_memory_size', full_name='tensorflow.CostGraphDef.Node.device_temp_memory_size', index=7,
+      number=11, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='host_persistent_memory_size', full_name='tensorflow.CostGraphDef.Node.host_persistent_memory_size', index=8,
+      number=12, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='device_persistent_memory_size', full_name='tensorflow.CostGraphDef.Node.device_persistent_memory_size', index=9,
+      number=16, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='compute_cost', full_name='tensorflow.CostGraphDef.Node.compute_cost', index=10,
       number=9, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='is_final', full_name='tensorflow.CostGraphDef.Node.is_final', index=7,
+      name='compute_time', full_name='tensorflow.CostGraphDef.Node.compute_time', index=11,
+      number=14, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='memory_time', full_name='tensorflow.CostGraphDef.Node.memory_time', index=12,
+      number=15, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='is_final', full_name='tensorflow.CostGraphDef.Node.is_final', index=13,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='control_input', full_name='tensorflow.CostGraphDef.Node.control_input', index=8,
+      name='control_input', full_name='tensorflow.CostGraphDef.Node.control_input', index=14,
       number=8, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -200,7 +241,7 @@ _COSTGRAPHDEF_NODE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=206,
-  serialized_end=670,
+  serialized_end=853,
 )
 
 _COSTGRAPHDEF = _descriptor.Descriptor(
@@ -230,7 +271,7 @@ _COSTGRAPHDEF = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=144,
-  serialized_end=670,
+  serialized_end=853,
 )
 
 _COSTGRAPHDEF_NODE_INPUTINFO.containing_type = _COSTGRAPHDEF_NODE
@@ -242,6 +283,7 @@ _COSTGRAPHDEF_NODE.fields_by_name['output_info'].message_type = _COSTGRAPHDEF_NO
 _COSTGRAPHDEF_NODE.containing_type = _COSTGRAPHDEF
 _COSTGRAPHDEF.fields_by_name['node'].message_type = _COSTGRAPHDEF_NODE
 DESCRIPTOR.message_types_by_name['CostGraphDef'] = _COSTGRAPHDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CostGraphDef = _reflection.GeneratedProtocolMessageType('CostGraphDef', (_message.Message,), dict(
 

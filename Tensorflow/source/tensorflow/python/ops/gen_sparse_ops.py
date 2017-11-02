@@ -1,26 +1,26 @@
-"""Python wrappers around Brain.
+"""Python wrappers around TensorFlow ops.
 
 This file is MACHINE GENERATED! Do not edit.
+Original C++ source file: sparse_ops.cc
 """
 
 import collections as _collections
 
-from google.protobuf import text_format as _text_format
+from tensorflow.python.eager import execute as _execute
+from tensorflow.python.eager import context as _context
+from tensorflow.python.eager import core as _core
+from tensorflow.python.framework import dtypes as _dtypes
+from tensorflow.python.framework import tensor_shape as _tensor_shape
 
 from tensorflow.core.framework import op_def_pb2 as _op_def_pb2
-
 # Needed to trigger the call to _set_call_cpp_shape_fn.
 from tensorflow.python.framework import common_shapes as _common_shapes
-
 from tensorflow.python.framework import op_def_registry as _op_def_registry
 from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import op_def_library as _op_def_library
-__add_many_sparse_to_tensors_map_outputs = ["sparse_handles"]
 
 
-def _add_many_sparse_to_tensors_map(sparse_indices, sparse_values,
-                                    sparse_shape, container=None,
-                                    shared_name=None, name=None):
+def _add_many_sparse_to_tensors_map(sparse_indices, sparse_values, sparse_shape, container="", shared_name="", name=None):
   r"""Add an `N`-minibatch `SparseTensor` to a `SparseTensorsMap`, return `N` handles.
 
   A `SparseTensor` of rank `R` is represented by three tensors: `sparse_indices`,
@@ -67,20 +67,40 @@ def _add_many_sparse_to_tensors_map(sparse_indices, sparse_values,
     1-D.  The handles of the `SparseTensor` now stored in the
     `SparseTensorsMap`.  Shape: `[N]`.
   """
-  result = _op_def_lib.apply_op("AddManySparseToTensorsMap",
-                                sparse_indices=sparse_indices,
-                                sparse_values=sparse_values,
-                                sparse_shape=sparse_shape,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "AddManySparseToTensorsMap", sparse_indices=sparse_indices,
+        sparse_values=sparse_values, sparse_shape=sparse_shape,
+        container=container, shared_name=shared_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "container", _op.get_attr("container"),
+              "shared_name", _op.get_attr("shared_name"))
+  else:
+    _attr_T, (sparse_values,) = _execute.args_to_matching_eager([sparse_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    sparse_indices = _ops.convert_to_tensor(sparse_indices, _dtypes.int64)
+    sparse_shape = _ops.convert_to_tensor(sparse_shape, _dtypes.int64)
+    _inputs_flat = [sparse_indices, sparse_values, sparse_shape]
+    _attrs = ("T", _attr_T, "container", container, "shared_name",
+              shared_name)
+    _result = _execute.execute(b"AddManySparseToTensorsMap", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "AddManySparseToTensorsMap", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__add_sparse_to_tensors_map_outputs = ["sparse_handle"]
-
-
-def _add_sparse_to_tensors_map(sparse_indices, sparse_values, sparse_shape,
-                               container=None, shared_name=None, name=None):
+def _add_sparse_to_tensors_map(sparse_indices, sparse_values, sparse_shape, container="", shared_name="", name=None):
   r"""Add a `SparseTensor` to a `SparseTensorsMap` return its handle.
 
   A `SparseTensor` is represented by three tensors: `sparse_indices`,
@@ -116,21 +136,43 @@ def _add_sparse_to_tensors_map(sparse_indices, sparse_values, sparse_shape,
     0-D.  The handle of the `SparseTensor` now stored in the
     `SparseTensorsMap`.
   """
-  result = _op_def_lib.apply_op("AddSparseToTensorsMap",
-                                sparse_indices=sparse_indices,
-                                sparse_values=sparse_values,
-                                sparse_shape=sparse_shape,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return result
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "AddSparseToTensorsMap", sparse_indices=sparse_indices,
+        sparse_values=sparse_values, sparse_shape=sparse_shape,
+        container=container, shared_name=shared_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "container", _op.get_attr("container"),
+              "shared_name", _op.get_attr("shared_name"))
+  else:
+    _attr_T, (sparse_values,) = _execute.args_to_matching_eager([sparse_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    sparse_indices = _ops.convert_to_tensor(sparse_indices, _dtypes.int64)
+    sparse_shape = _ops.convert_to_tensor(sparse_shape, _dtypes.int64)
+    _inputs_flat = [sparse_indices, sparse_values, sparse_shape]
+    _attrs = ("T", _attr_T, "container", container, "shared_name",
+              shared_name)
+    _result = _execute.execute(b"AddSparseToTensorsMap", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "AddSparseToTensorsMap", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 __deserialize_many_sparse_outputs = ["sparse_indices", "sparse_values",
                                     "sparse_shape"]
-
-
-_DeserializeManySparseOutput = _collections.namedtuple("DeserializeManySparse",
-                                                       __deserialize_many_sparse_outputs)
+_DeserializeManySparseOutput = _collections.namedtuple(
+    "DeserializeManySparse", __deserialize_many_sparse_outputs)
 
 
 def _deserialize_many_sparse(serialized_sparse, dtype, name=None):
@@ -187,21 +229,34 @@ def _deserialize_many_sparse(serialized_sparse, dtype, name=None):
 
   Returns:
     A tuple of `Tensor` objects (sparse_indices, sparse_values, sparse_shape).
+
     sparse_indices: A `Tensor` of type `int64`.
     sparse_values: A `Tensor` of type `dtype`.
     sparse_shape: A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("DeserializeManySparse",
-                                serialized_sparse=serialized_sparse,
-                                dtype=dtype, name=name)
-  return _DeserializeManySparseOutput._make(result)
+  dtype = _execute.make_type(dtype, "dtype")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "DeserializeManySparse", serialized_sparse=serialized_sparse,
+        dtype=dtype, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("dtype", _op.get_attr("dtype"))
+  else:
+    serialized_sparse = _ops.convert_to_tensor(serialized_sparse, _dtypes.string)
+    _inputs_flat = [serialized_sparse]
+    _attrs = ("dtype", dtype)
+    _result = _execute.execute(b"DeserializeManySparse", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "DeserializeManySparse", _inputs_flat, _attrs, _result, name)
+  _result = _DeserializeManySparseOutput._make(_result)
+  return _result
 
 
-__serialize_many_sparse_outputs = ["serialized_sparse"]
-
-
-def _serialize_many_sparse(sparse_indices, sparse_values, sparse_shape,
-                           name=None):
+def _serialize_many_sparse(sparse_indices, sparse_values, sparse_shape, name=None):
   r"""Serialize an `N`-minibatch `SparseTensor` into an `[N, 3]` string `Tensor`.
 
   The `SparseTensor` must have rank `R` greater than 1, and the first dimension
@@ -224,14 +279,27 @@ def _serialize_many_sparse(sparse_indices, sparse_values, sparse_shape,
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("SerializeManySparse",
-                                sparse_indices=sparse_indices,
-                                sparse_values=sparse_values,
-                                sparse_shape=sparse_shape, name=name)
-  return result
-
-
-__serialize_sparse_outputs = ["serialized_sparse"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SerializeManySparse", sparse_indices=sparse_indices,
+        sparse_values=sparse_values, sparse_shape=sparse_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (sparse_values,) = _execute.args_to_matching_eager([sparse_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    sparse_indices = _ops.convert_to_tensor(sparse_indices, _dtypes.int64)
+    sparse_shape = _ops.convert_to_tensor(sparse_shape, _dtypes.int64)
+    _inputs_flat = [sparse_indices, sparse_values, sparse_shape]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SerializeManySparse", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SerializeManySparse", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def _serialize_sparse(sparse_indices, sparse_values, sparse_shape, name=None):
@@ -248,21 +316,35 @@ def _serialize_sparse(sparse_indices, sparse_values, sparse_shape, name=None):
   Returns:
     A `Tensor` of type `string`.
   """
-  result = _op_def_lib.apply_op("SerializeSparse",
-                                sparse_indices=sparse_indices,
-                                sparse_values=sparse_values,
-                                sparse_shape=sparse_shape, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SerializeSparse", sparse_indices=sparse_indices,
+        sparse_values=sparse_values, sparse_shape=sparse_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (sparse_values,) = _execute.args_to_matching_eager([sparse_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    sparse_indices = _ops.convert_to_tensor(sparse_indices, _dtypes.int64)
+    sparse_shape = _ops.convert_to_tensor(sparse_shape, _dtypes.int64)
+    _inputs_flat = [sparse_indices, sparse_values, sparse_shape]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SerializeSparse", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SerializeSparse", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 __sparse_add_outputs = ["sum_indices", "sum_values", "sum_shape"]
+_SparseAddOutput = _collections.namedtuple(
+    "SparseAdd", __sparse_add_outputs)
 
 
-_SparseAddOutput = _collections.namedtuple("SparseAdd", __sparse_add_outputs)
-
-
-def _sparse_add(a_indices, a_values, a_shape, b_indices, b_values, b_shape,
-                thresh, name=None):
+def _sparse_add(a_indices, a_values, a_shape, b_indices, b_values, b_shape, thresh, name=None):
   r"""Adds two `SparseTensor` objects to produce another `SparseTensor`.
 
   The input `SparseTensor` objects' indices are assumed ordered in standard
@@ -299,26 +381,46 @@ def _sparse_add(a_indices, a_values, a_shape, b_indices, b_values, b_shape,
 
   Returns:
     A tuple of `Tensor` objects (sum_indices, sum_values, sum_shape).
+
     sum_indices: A `Tensor` of type `int64`.
     sum_values: A `Tensor`. Has the same type as `a_values`.
     sum_shape: A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("SparseAdd", a_indices=a_indices,
-                                a_values=a_values, a_shape=a_shape,
-                                b_indices=b_indices, b_values=b_values,
-                                b_shape=b_shape, thresh=thresh, name=name)
-  return _SparseAddOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseAdd", a_indices=a_indices, a_values=a_values, a_shape=a_shape,
+        b_indices=b_indices, b_values=b_values, b_shape=b_shape,
+        thresh=thresh, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "Treal", _op.get_attr("Treal"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([a_values, b_values], _ctx)
+    (a_values, b_values) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    _attr_Treal, (thresh,) = _execute.args_to_matching_eager([thresh], _ctx)
+    _attr_Treal = _attr_Treal.as_datatype_enum
+    a_indices = _ops.convert_to_tensor(a_indices, _dtypes.int64)
+    a_shape = _ops.convert_to_tensor(a_shape, _dtypes.int64)
+    b_indices = _ops.convert_to_tensor(b_indices, _dtypes.int64)
+    b_shape = _ops.convert_to_tensor(b_shape, _dtypes.int64)
+    _inputs_flat = [a_indices, a_values, a_shape, b_indices, b_values, b_shape, thresh]
+    _attrs = ("T", _attr_T, "Treal", _attr_Treal)
+    _result = _execute.execute(b"SparseAdd", 3, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseAdd", _inputs_flat, _attrs, _result, name)
+  _result = _SparseAddOutput._make(_result)
+  return _result
 
 
 __sparse_add_grad_outputs = ["a_val_grad", "b_val_grad"]
+_SparseAddGradOutput = _collections.namedtuple(
+    "SparseAddGrad", __sparse_add_grad_outputs)
 
 
-_SparseAddGradOutput = _collections.namedtuple("SparseAddGrad",
-                                               __sparse_add_grad_outputs)
-
-
-def _sparse_add_grad(backprop_val_grad, a_indices, b_indices, sum_indices,
-                     name=None):
+def _sparse_add_grad(backprop_val_grad, a_indices, b_indices, sum_indices, name=None):
   r"""The gradient operator for the SparseAdd op.
 
   The SparseAdd op calculates A + B, where A, B, and the sum are all represented
@@ -341,23 +443,40 @@ def _sparse_add_grad(backprop_val_grad, a_indices, b_indices, sum_indices,
 
   Returns:
     A tuple of `Tensor` objects (a_val_grad, b_val_grad).
+
     a_val_grad: A `Tensor`. Has the same type as `backprop_val_grad`. 1-D with shape `[nnz(A)]`. The gradient with respect to the
       non-empty values of A.
     b_val_grad: A `Tensor`. Has the same type as `backprop_val_grad`. 1-D with shape `[nnz(B)]`. The gradient with respect to the
       non-empty values of B.
   """
-  result = _op_def_lib.apply_op("SparseAddGrad",
-                                backprop_val_grad=backprop_val_grad,
-                                a_indices=a_indices, b_indices=b_indices,
-                                sum_indices=sum_indices, name=name)
-  return _SparseAddGradOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseAddGrad", backprop_val_grad=backprop_val_grad,
+        a_indices=a_indices, b_indices=b_indices, sum_indices=sum_indices,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (backprop_val_grad,) = _execute.args_to_matching_eager([backprop_val_grad], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    a_indices = _ops.convert_to_tensor(a_indices, _dtypes.int64)
+    b_indices = _ops.convert_to_tensor(b_indices, _dtypes.int64)
+    sum_indices = _ops.convert_to_tensor(sum_indices, _dtypes.int64)
+    _inputs_flat = [backprop_val_grad, a_indices, b_indices, sum_indices]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseAddGrad", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseAddGrad", _inputs_flat, _attrs, _result, name)
+  _result = _SparseAddGradOutput._make(_result)
+  return _result
 
 
 __sparse_concat_outputs = ["output_indices", "output_values", "output_shape"]
-
-
-_SparseConcatOutput = _collections.namedtuple("SparseConcat",
-                                              __sparse_concat_outputs)
+_SparseConcatOutput = _collections.namedtuple(
+    "SparseConcat", __sparse_concat_outputs)
 
 
 def _sparse_concat(indices, values, shapes, concat_dim, name=None):
@@ -406,11 +525,11 @@ def _sparse_concat(indices, values, shapes, concat_dim, name=None):
       [b c  ]        [       ]   [b c          ]
 
   Args:
-    indices: A list of at least 2 `Tensor` objects of type `int64`.
+    indices: A list of at least 2 `Tensor` objects with type `int64`.
       2-D.  Indices of each input `SparseTensor`.
-    values: A list with the same number of `Tensor` objects as `indices` of `Tensor` objects of the same type.
+    values: A list with the same length as `indices` of `Tensor` objects with the same type.
       1-D.  Non-empty values of each `SparseTensor`.
-    shapes: A list with the same number of `Tensor` objects as `indices` of `Tensor` objects of type `int64`.
+    shapes: A list with the same length as `indices` of `Tensor` objects with type `int64`.
       1-D.  Shapes of each `SparseTensor`.
     concat_dim: An `int`.
       Dimension to concatenate along. Must be in range [-rank, rank),
@@ -419,17 +538,187 @@ def _sparse_concat(indices, values, shapes, concat_dim, name=None):
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  Indices of the concatenated `SparseTensor`.
     output_values: A `Tensor`. Has the same type as `values`. 1-D.  Non-empty values of the concatenated `SparseTensor`.
     output_shape: A `Tensor` of type `int64`. 1-D.  Shape of the concatenated `SparseTensor`.
   """
-  result = _op_def_lib.apply_op("SparseConcat", indices=indices,
-                                values=values, shapes=shapes,
-                                concat_dim=concat_dim, name=name)
-  return _SparseConcatOutput._make(result)
+  if not isinstance(indices, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'indices' argument to "
+        "'sparse_concat' Op, not %r." % indices)
+  _attr_N = len(indices)
+  if not isinstance(values, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'values' argument to "
+        "'sparse_concat' Op, not %r." % values)
+  if len(values) != _attr_N:
+    raise ValueError(
+        "List argument 'values' to 'sparse_concat' Op with length %d "
+        "must match length %d of argument 'indices'." %
+        (len(values), _attr_N))
+  if not isinstance(shapes, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'shapes' argument to "
+        "'sparse_concat' Op, not %r." % shapes)
+  if len(shapes) != _attr_N:
+    raise ValueError(
+        "List argument 'shapes' to 'sparse_concat' Op with length %d "
+        "must match length %d of argument 'indices'." %
+        (len(shapes), _attr_N))
+  concat_dim = _execute.make_int(concat_dim, "concat_dim")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseConcat", indices=indices, values=values, shapes=shapes,
+        concat_dim=concat_dim, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("concat_dim", _op.get_attr("concat_dim"), "N",
+              _op.get_attr("N"), "T", _op.get_attr("T"))
+  else:
+    _attr_T, values = _execute.args_to_matching_eager(list(values), _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    indices = _ops.convert_n_to_tensor(indices, _dtypes.int64)
+    shapes = _ops.convert_n_to_tensor(shapes, _dtypes.int64)
+    _inputs_flat = list(indices) + list(values) + list(shapes)
+    _attrs = ("concat_dim", concat_dim, "N", _attr_N, "T", _attr_T)
+    _result = _execute.execute(b"SparseConcat", 3, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseConcat", _inputs_flat, _attrs, _result, name)
+  _result = _SparseConcatOutput._make(_result)
+  return _result
 
 
-_sparse_dense_cwise_add_outputs = ["output"]
+__sparse_cross_outputs = ["output_indices", "output_values", "output_shape"]
+_SparseCrossOutput = _collections.namedtuple(
+    "SparseCross", __sparse_cross_outputs)
+
+
+def _sparse_cross(indices, values, shapes, dense_inputs, hashed_output, num_buckets, hash_key, out_type, internal_type, name=None):
+  r"""Generates sparse cross from a list of sparse and dense tensors.
+
+  The op takes two lists, one of 2D `SparseTensor` and one of 2D `Tensor`, each
+  representing features of one feature column. It outputs a 2D `SparseTensor` with
+  the batchwise crosses of these features.
+
+  For example, if the inputs are
+
+      inputs[0]: SparseTensor with shape = [2, 2]
+      [0, 0]: "a"
+      [1, 0]: "b"
+      [1, 1]: "c"
+
+      inputs[1]: SparseTensor with shape = [2, 1]
+      [0, 0]: "d"
+      [1, 0]: "e"
+
+      inputs[2]: Tensor [["f"], ["g"]]
+
+  then the output will be
+
+      shape = [2, 2]
+      [0, 0]: "a_X_d_X_f"
+      [1, 0]: "b_X_e_X_g"
+      [1, 1]: "c_X_e_X_g"
+
+  if hashed_output=true then the output will be
+
+      shape = [2, 2]
+      [0, 0]: FingerprintCat64(
+                  Fingerprint64("f"), FingerprintCat64(
+                      Fingerprint64("d"), Fingerprint64("a")))
+      [1, 0]: FingerprintCat64(
+                  Fingerprint64("g"), FingerprintCat64(
+                      Fingerprint64("e"), Fingerprint64("b")))
+      [1, 1]: FingerprintCat64(
+                  Fingerprint64("g"), FingerprintCat64(
+                      Fingerprint64("e"), Fingerprint64("c")))
+
+  Args:
+    indices: A list of `Tensor` objects with type `int64`.
+      2-D.  Indices of each input `SparseTensor`.
+    values: A list of `Tensor` objects with types from: `int64`, `string`.
+      1-D.   values of each `SparseTensor`.
+    shapes: A list with the same length as `indices` of `Tensor` objects with type `int64`.
+      1-D.   Shapes of each `SparseTensor`.
+    dense_inputs: A list of `Tensor` objects with types from: `int64`, `string`.
+      2-D.    Columns represented by dense `Tensor`.
+    hashed_output: A `bool`.
+      If true, returns the hash of the cross instead of the string.
+      This will allow us avoiding string manipulations.
+    num_buckets: An `int` that is `>= 0`. It is used if hashed_output is true.
+      output = hashed_value%num_buckets if num_buckets > 0 else hashed_value.
+    hash_key: An `int`.
+      Specify the hash_key that will be used by the `FingerprintCat64`
+      function to combine the crosses fingerprints.
+    out_type: A `tf.DType` from: `tf.int64, tf.string`.
+    internal_type: A `tf.DType` from: `tf.int64, tf.string`.
+    name: A name for the operation (optional).
+
+  Returns:
+    A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
+    output_indices: A `Tensor` of type `int64`. 2-D.  Indices of the concatenated `SparseTensor`.
+    output_values: A `Tensor` of type `out_type`. 1-D.  Non-empty values of the concatenated or hashed
+      `SparseTensor`.
+    output_shape: A `Tensor` of type `int64`. 1-D.  Shape of the concatenated `SparseTensor`.
+  """
+  if not isinstance(indices, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'indices' argument to "
+        "'sparse_cross' Op, not %r." % indices)
+  _attr_N = len(indices)
+  if not isinstance(shapes, (list, tuple)):
+    raise TypeError(
+        "Expected list for 'shapes' argument to "
+        "'sparse_cross' Op, not %r." % shapes)
+  if len(shapes) != _attr_N:
+    raise ValueError(
+        "List argument 'shapes' to 'sparse_cross' Op with length %d "
+        "must match length %d of argument 'indices'." %
+        (len(shapes), _attr_N))
+  hashed_output = _execute.make_bool(hashed_output, "hashed_output")
+  num_buckets = _execute.make_int(num_buckets, "num_buckets")
+  hash_key = _execute.make_int(hash_key, "hash_key")
+  out_type = _execute.make_type(out_type, "out_type")
+  internal_type = _execute.make_type(internal_type, "internal_type")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseCross", indices=indices, values=values, shapes=shapes,
+        dense_inputs=dense_inputs, hashed_output=hashed_output,
+        num_buckets=num_buckets, hash_key=hash_key, out_type=out_type,
+        internal_type=internal_type, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("N", _op.get_attr("N"), "hashed_output",
+              _op.get_attr("hashed_output"), "num_buckets",
+              _op.get_attr("num_buckets"), "hash_key",
+              _op.get_attr("hash_key"), "sparse_types",
+              _op.get_attr("sparse_types"), "dense_types",
+              _op.get_attr("dense_types"), "out_type",
+              _op.get_attr("out_type"), "internal_type",
+              _op.get_attr("internal_type"))
+  else:
+    _attr_sparse_types, values = _execute.convert_to_mixed_eager_tensors(values, _ctx)
+    _attr_sparse_types = [_t.as_datatype_enum for _t in _attr_sparse_types]
+    _attr_dense_types, dense_inputs = _execute.convert_to_mixed_eager_tensors(dense_inputs, _ctx)
+    _attr_dense_types = [_t.as_datatype_enum for _t in _attr_dense_types]
+    indices = _ops.convert_n_to_tensor(indices, _dtypes.int64)
+    shapes = _ops.convert_n_to_tensor(shapes, _dtypes.int64)
+    _inputs_flat = list(indices) + list(values) + list(shapes) + list(dense_inputs)
+    _attrs = ("N", _attr_N, "hashed_output", hashed_output, "num_buckets",
+              num_buckets, "hash_key", hash_key, "sparse_types",
+              _attr_sparse_types, "dense_types", _attr_dense_types,
+              "out_type", out_type, "internal_type", internal_type)
+    _result = _execute.execute(b"SparseCross", 3, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseCross", _inputs_flat, _attrs, _result, name)
+  _result = _SparseCrossOutput._make(_result)
+  return _result
 
 
 def sparse_dense_cwise_add(sp_indices, sp_values, sp_shape, dense, name=None):
@@ -460,13 +749,28 @@ def sparse_dense_cwise_add(sp_indices, sp_values, sp_shape, dense, name=None):
     A `Tensor`. Has the same type as `sp_values`.
     1-D.  The `N` values that are operated on.
   """
-  result = _op_def_lib.apply_op("SparseDenseCwiseAdd", sp_indices=sp_indices,
-                                sp_values=sp_values, sp_shape=sp_shape,
-                                dense=dense, name=name)
-  return result
-
-
-_sparse_dense_cwise_div_outputs = ["output"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseDenseCwiseAdd", sp_indices=sp_indices, sp_values=sp_values,
+        sp_shape=sp_shape, dense=dense, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([sp_values, dense], _ctx)
+    (sp_values, dense) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    sp_indices = _ops.convert_to_tensor(sp_indices, _dtypes.int64)
+    sp_shape = _ops.convert_to_tensor(sp_shape, _dtypes.int64)
+    _inputs_flat = [sp_indices, sp_values, sp_shape, dense]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseDenseCwiseAdd", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseDenseCwiseAdd", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def sparse_dense_cwise_div(sp_indices, sp_values, sp_shape, dense, name=None):
@@ -491,13 +795,28 @@ def sparse_dense_cwise_div(sp_indices, sp_values, sp_shape, dense, name=None):
     A `Tensor`. Has the same type as `sp_values`.
     1-D.  The `N` values that are operated on.
   """
-  result = _op_def_lib.apply_op("SparseDenseCwiseDiv", sp_indices=sp_indices,
-                                sp_values=sp_values, sp_shape=sp_shape,
-                                dense=dense, name=name)
-  return result
-
-
-_sparse_dense_cwise_mul_outputs = ["output"]
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseDenseCwiseDiv", sp_indices=sp_indices, sp_values=sp_values,
+        sp_shape=sp_shape, dense=dense, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([sp_values, dense], _ctx)
+    (sp_values, dense) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    sp_indices = _ops.convert_to_tensor(sp_indices, _dtypes.int64)
+    sp_shape = _ops.convert_to_tensor(sp_shape, _dtypes.int64)
+    _inputs_flat = [sp_indices, sp_values, sp_shape, dense]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseDenseCwiseDiv", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseDenseCwiseDiv", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 def sparse_dense_cwise_mul(sp_indices, sp_values, sp_shape, dense, name=None):
@@ -526,17 +845,308 @@ def sparse_dense_cwise_mul(sp_indices, sp_values, sp_shape, dense, name=None):
     A `Tensor`. Has the same type as `sp_values`.
     1-D.  The `N` values that are operated on.
   """
-  result = _op_def_lib.apply_op("SparseDenseCwiseMul", sp_indices=sp_indices,
-                                sp_values=sp_values, sp_shape=sp_shape,
-                                dense=dense, name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseDenseCwiseMul", sp_indices=sp_indices, sp_values=sp_values,
+        sp_shape=sp_shape, dense=dense, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([sp_values, dense], _ctx)
+    (sp_values, dense) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    sp_indices = _ops.convert_to_tensor(sp_indices, _dtypes.int64)
+    sp_shape = _ops.convert_to_tensor(sp_shape, _dtypes.int64)
+    _inputs_flat = [sp_indices, sp_values, sp_shape, dense]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseDenseCwiseMul", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseDenseCwiseMul", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-_sparse_reduce_sum_outputs = ["output"]
+__sparse_fill_empty_rows_outputs = ["output_indices", "output_values",
+                                   "empty_row_indicator", "reverse_index_map"]
+_SparseFillEmptyRowsOutput = _collections.namedtuple(
+    "SparseFillEmptyRows", __sparse_fill_empty_rows_outputs)
 
 
-def sparse_reduce_sum(input_indices, input_values, input_shape,
-                      reduction_axes, keep_dims=None, name=None):
+def _sparse_fill_empty_rows(indices, values, dense_shape, default_value, name=None):
+  r"""Fills empty rows in the input 2-D `SparseTensor` with a default value.
+
+  The input `SparseTensor` is represented via the tuple of inputs
+  (`indices`, `values`, `dense_shape`).  The output `SparseTensor` has the
+  same `dense_shape` but with indices `output_indices` and values
+  `output_values`.
+
+  This op inserts a single entry for every row that doesn't have any values.
+  The index is created as `[row, 0, ..., 0]` and the inserted value
+  is `default_value`.
+
+  For example, suppose `sp_input` has shape `[5, 6]` and non-empty values:
+
+      [0, 1]: a
+      [0, 3]: b
+      [2, 0]: c
+      [3, 1]: d
+
+  Rows 1 and 4 are empty, so the output will be of shape `[5, 6]` with values:
+
+      [0, 1]: a
+      [0, 3]: b
+      [1, 0]: default_value
+      [2, 0]: c
+      [3, 1]: d
+      [4, 0]: default_value
+
+  The output `SparseTensor` will be in row-major order and will have the
+  same shape as the input.
+
+  This op also returns an indicator vector shaped `[dense_shape[0]]` such that
+
+      empty_row_indicator[i] = True iff row i was an empty row.
+
+  And a reverse index map vector shaped `[indices.shape[0]]` that is used during
+  backpropagation,
+
+      reverse_index_map[j] = out_j s.t. indices[j, :] == output_indices[out_j, :]
+
+  Args:
+    indices: A `Tensor` of type `int64`.
+      2-D. the indices of the sparse tensor.
+    values: A `Tensor`. 1-D. the values of the sparse tensor.
+    dense_shape: A `Tensor` of type `int64`.
+      1-D. the shape of the sparse tensor.
+    default_value: A `Tensor`. Must have the same type as `values`.
+      0-D. default value to insert into location `[row, 0, ..., 0]`
+        for rows missing from the input sparse tensor.
+      output indices: 2-D. the indices of the filled sparse tensor.
+    name: A name for the operation (optional).
+
+  Returns:
+    A tuple of `Tensor` objects (output_indices, output_values, empty_row_indicator, reverse_index_map).
+
+    output_indices: A `Tensor` of type `int64`.
+    output_values: A `Tensor`. Has the same type as `values`. 1-D. the values of the filled sparse tensor.
+    empty_row_indicator: A `Tensor` of type `bool`. 1-D. whether the dense row was missing in the
+      input sparse tensor.
+    reverse_index_map: A `Tensor` of type `int64`. 1-D. a map from the input indices to the output indices.
+  """
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseFillEmptyRows", indices=indices, values=values,
+        dense_shape=dense_shape, default_value=default_value, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([values, default_value], _ctx)
+    (values, default_value) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    indices = _ops.convert_to_tensor(indices, _dtypes.int64)
+    dense_shape = _ops.convert_to_tensor(dense_shape, _dtypes.int64)
+    _inputs_flat = [indices, values, dense_shape, default_value]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseFillEmptyRows", 4, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseFillEmptyRows", _inputs_flat, _attrs, _result, name)
+  _result = _SparseFillEmptyRowsOutput._make(_result)
+  return _result
+
+
+__sparse_fill_empty_rows_grad_outputs = ["d_values", "d_default_value"]
+_SparseFillEmptyRowsGradOutput = _collections.namedtuple(
+    "SparseFillEmptyRowsGrad", __sparse_fill_empty_rows_grad_outputs)
+
+
+def _sparse_fill_empty_rows_grad(reverse_index_map, grad_values, name=None):
+  r"""The gradient of SparseFillEmptyRows.
+
+  Takes vectors reverse_index_map, shaped `[N]`, and grad_values,
+  shaped `[N_full]`, where `N_full >= N` and copies data into either
+  `d_values` or `d_default_value`.  Here `d_values` is shaped `[N]` and
+  `d_default_value` is a scalar.
+
+    d_values[j] = grad_values[reverse_index_map[j]]
+    d_default_value = sum_{k : 0 .. N_full - 1} (
+       grad_values[k] * 1{k not in reverse_index_map})
+
+  Args:
+    reverse_index_map: A `Tensor` of type `int64`.
+      1-D.  The reverse index map from SparseFillEmptyRows.
+    grad_values: A `Tensor`. 1-D.  The gradients from backprop.
+    name: A name for the operation (optional).
+
+  Returns:
+    A tuple of `Tensor` objects (d_values, d_default_value).
+
+    d_values: A `Tensor`. Has the same type as `grad_values`. 1-D.  The backprop into values.
+    d_default_value: A `Tensor`. Has the same type as `grad_values`. 0-D.  The backprop into default_value.
+  """
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseFillEmptyRowsGrad", reverse_index_map=reverse_index_map,
+        grad_values=grad_values, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (grad_values,) = _execute.args_to_matching_eager([grad_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    reverse_index_map = _ops.convert_to_tensor(reverse_index_map, _dtypes.int64)
+    _inputs_flat = [reverse_index_map, grad_values]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseFillEmptyRowsGrad", 2,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "SparseFillEmptyRowsGrad", _inputs_flat, _attrs, _result, name)
+  _result = _SparseFillEmptyRowsGradOutput._make(_result)
+  return _result
+
+
+def sparse_reduce_max(input_indices, input_values, input_shape, reduction_axes, keep_dims=False, name=None):
+  r"""Computes the max of elements across dimensions of a SparseTensor.
+
+  This Op takes a SparseTensor and is the sparse counterpart to
+  `tf.reduce_max()`.  In particular, this Op also returns a dense `Tensor`
+  instead of a sparse one.
+
+  Reduces `sp_input` along the dimensions given in `reduction_axes`.  Unless
+  `keep_dims` is true, the rank of the tensor is reduced by 1 for each entry in
+  `reduction_axes`. If `keep_dims` is true, the reduced dimensions are retained
+  with length 1.
+
+  If `reduction_axes` has no entries, all dimensions are reduced, and a tensor
+  with a single element is returned.  Additionally, the axes can be negative,
+  which are interpreted according to the indexing rules in Python.
+
+  Args:
+    input_indices: A `Tensor` of type `int64`.
+      2-D.  `N x R` matrix with the indices of non-empty values in a
+      SparseTensor, possibly not in canonical ordering.
+    input_values: A `Tensor`. Must be one of the following types: `float32`, `float64`, `int32`, `int64`, `uint8`, `int16`, `int8`, `uint16`, `half`.
+      1-D.  `N` non-empty values corresponding to `input_indices`.
+    input_shape: A `Tensor` of type `int64`.
+      1-D.  Shape of the input SparseTensor.
+    reduction_axes: A `Tensor` of type `int32`.
+      1-D.  Length-`K` vector containing the reduction axes.
+    keep_dims: An optional `bool`. Defaults to `False`.
+      If true, retain reduced dimensions with length 1.
+    name: A name for the operation (optional).
+
+  Returns:
+    A `Tensor`. Has the same type as `input_values`.
+    `R-K`-D.  The reduced Tensor.
+  """
+  if keep_dims is None:
+    keep_dims = False
+  keep_dims = _execute.make_bool(keep_dims, "keep_dims")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseReduceMax", input_indices=input_indices,
+        input_values=input_values, input_shape=input_shape,
+        reduction_axes=reduction_axes, keep_dims=keep_dims, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("keep_dims", _op.get_attr("keep_dims"), "T", _op.get_attr("T"))
+  else:
+    _attr_T, (input_values,) = _execute.args_to_matching_eager([input_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    input_indices = _ops.convert_to_tensor(input_indices, _dtypes.int64)
+    input_shape = _ops.convert_to_tensor(input_shape, _dtypes.int64)
+    reduction_axes = _ops.convert_to_tensor(reduction_axes, _dtypes.int32)
+    _inputs_flat = [input_indices, input_values, input_shape, reduction_axes]
+    _attrs = ("keep_dims", keep_dims, "T", _attr_T)
+    _result = _execute.execute(b"SparseReduceMax", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseReduceMax", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
+
+
+_sparse_reduce_max_sparse_outputs = ["output_indices", "output_values",
+                                    "output_shape"]
+_SparseReduceMaxSparseOutput = _collections.namedtuple(
+    "SparseReduceMaxSparse", _sparse_reduce_max_sparse_outputs)
+
+
+def sparse_reduce_max_sparse(input_indices, input_values, input_shape, reduction_axes, keep_dims=False, name=None):
+  r"""Computes the max of elements across dimensions of a SparseTensor.
+
+  This Op takes a SparseTensor and is the sparse counterpart to
+  `tf.reduce_max()`.  In contrast to SparseReduceMax, this Op returns a
+  SparseTensor.
+
+  Reduces `sp_input` along the dimensions given in `reduction_axes`.  Unless
+  `keep_dims` is true, the rank of the tensor is reduced by 1 for each entry in
+  `reduction_axes`. If `keep_dims` is true, the reduced dimensions are retained
+  with length 1.
+
+  If `reduction_axes` has no entries, all dimensions are reduced, and a tensor
+  with a single element is returned.  Additionally, the axes can be negative,
+  which are interpreted according to the indexing rules in Python.
+
+  Args:
+    input_indices: A `Tensor` of type `int64`.
+      2-D.  `N x R` matrix with the indices of non-empty values in a
+      SparseTensor, possibly not in canonical ordering.
+    input_values: A `Tensor`. Must be one of the following types: `float32`, `float64`, `int32`, `int64`, `uint8`, `int16`, `int8`, `uint16`, `half`.
+      1-D.  `N` non-empty values corresponding to `input_indices`.
+    input_shape: A `Tensor` of type `int64`.
+      1-D.  Shape of the input SparseTensor.
+    reduction_axes: A `Tensor` of type `int32`.
+      1-D.  Length-`K` vector containing the reduction axes.
+    keep_dims: An optional `bool`. Defaults to `False`.
+      If true, retain reduced dimensions with length 1.
+    name: A name for the operation (optional).
+
+  Returns:
+    A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
+    output_indices: A `Tensor` of type `int64`.
+    output_values: A `Tensor`. Has the same type as `input_values`.
+    output_shape: A `Tensor` of type `int64`.
+  """
+  if keep_dims is None:
+    keep_dims = False
+  keep_dims = _execute.make_bool(keep_dims, "keep_dims")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseReduceMaxSparse", input_indices=input_indices,
+        input_values=input_values, input_shape=input_shape,
+        reduction_axes=reduction_axes, keep_dims=keep_dims, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("keep_dims", _op.get_attr("keep_dims"), "T", _op.get_attr("T"))
+  else:
+    _attr_T, (input_values,) = _execute.args_to_matching_eager([input_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    input_indices = _ops.convert_to_tensor(input_indices, _dtypes.int64)
+    input_shape = _ops.convert_to_tensor(input_shape, _dtypes.int64)
+    reduction_axes = _ops.convert_to_tensor(reduction_axes, _dtypes.int32)
+    _inputs_flat = [input_indices, input_values, input_shape, reduction_axes]
+    _attrs = ("keep_dims", keep_dims, "T", _attr_T)
+    _result = _execute.execute(b"SparseReduceMaxSparse", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "SparseReduceMaxSparse", _inputs_flat, _attrs, _result, name)
+  _result = _SparseReduceMaxSparseOutput._make(_result)
+  return _result
+
+
+def sparse_reduce_sum(input_indices, input_values, input_shape, reduction_axes, keep_dims=False, name=None):
   r"""Computes the sum of elements across dimensions of a SparseTensor.
 
   This Op takes a SparseTensor and is the sparse counterpart to
@@ -570,25 +1180,41 @@ def sparse_reduce_sum(input_indices, input_values, input_shape,
     A `Tensor`. Has the same type as `input_values`.
     `R-K`-D.  The reduced Tensor.
   """
-  result = _op_def_lib.apply_op("SparseReduceSum",
-                                input_indices=input_indices,
-                                input_values=input_values,
-                                input_shape=input_shape,
-                                reduction_axes=reduction_axes,
-                                keep_dims=keep_dims, name=name)
-  return result
+  if keep_dims is None:
+    keep_dims = False
+  keep_dims = _execute.make_bool(keep_dims, "keep_dims")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseReduceSum", input_indices=input_indices,
+        input_values=input_values, input_shape=input_shape,
+        reduction_axes=reduction_axes, keep_dims=keep_dims, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("keep_dims", _op.get_attr("keep_dims"), "T", _op.get_attr("T"))
+  else:
+    _attr_T, (input_values,) = _execute.args_to_matching_eager([input_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    input_indices = _ops.convert_to_tensor(input_indices, _dtypes.int64)
+    input_shape = _ops.convert_to_tensor(input_shape, _dtypes.int64)
+    reduction_axes = _ops.convert_to_tensor(reduction_axes, _dtypes.int32)
+    _inputs_flat = [input_indices, input_values, input_shape, reduction_axes]
+    _attrs = ("keep_dims", keep_dims, "T", _attr_T)
+    _result = _execute.execute(b"SparseReduceSum", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseReduceSum", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 _sparse_reduce_sum_sparse_outputs = ["output_indices", "output_values",
                                     "output_shape"]
+_SparseReduceSumSparseOutput = _collections.namedtuple(
+    "SparseReduceSumSparse", _sparse_reduce_sum_sparse_outputs)
 
 
-_SparseReduceSumSparseOutput = _collections.namedtuple("SparseReduceSumSparse",
-                                                       _sparse_reduce_sum_sparse_outputs)
-
-
-def sparse_reduce_sum_sparse(input_indices, input_values, input_shape,
-                             reduction_axes, keep_dims=None, name=None):
+def sparse_reduce_sum_sparse(input_indices, input_values, input_shape, reduction_axes, keep_dims=False, name=None):
   r"""Computes the sum of elements across dimensions of a SparseTensor.
 
   This Op takes a SparseTensor and is the sparse counterpart to
@@ -620,24 +1246,43 @@ def sparse_reduce_sum_sparse(input_indices, input_values, input_shape,
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
     output_indices: A `Tensor` of type `int64`.
     output_values: A `Tensor`. Has the same type as `input_values`.
     output_shape: A `Tensor` of type `int64`.
   """
-  result = _op_def_lib.apply_op("SparseReduceSumSparse",
-                                input_indices=input_indices,
-                                input_values=input_values,
-                                input_shape=input_shape,
-                                reduction_axes=reduction_axes,
-                                keep_dims=keep_dims, name=name)
-  return _SparseReduceSumSparseOutput._make(result)
+  if keep_dims is None:
+    keep_dims = False
+  keep_dims = _execute.make_bool(keep_dims, "keep_dims")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseReduceSumSparse", input_indices=input_indices,
+        input_values=input_values, input_shape=input_shape,
+        reduction_axes=reduction_axes, keep_dims=keep_dims, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("keep_dims", _op.get_attr("keep_dims"), "T", _op.get_attr("T"))
+  else:
+    _attr_T, (input_values,) = _execute.args_to_matching_eager([input_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    input_indices = _ops.convert_to_tensor(input_indices, _dtypes.int64)
+    input_shape = _ops.convert_to_tensor(input_shape, _dtypes.int64)
+    reduction_axes = _ops.convert_to_tensor(reduction_axes, _dtypes.int32)
+    _inputs_flat = [input_indices, input_values, input_shape, reduction_axes]
+    _attrs = ("keep_dims", keep_dims, "T", _attr_T)
+    _result = _execute.execute(b"SparseReduceSumSparse", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "SparseReduceSumSparse", _inputs_flat, _attrs, _result, name)
+  _result = _SparseReduceSumSparseOutput._make(_result)
+  return _result
 
 
 __sparse_reorder_outputs = ["output_indices", "output_values"]
-
-
-_SparseReorderOutput = _collections.namedtuple("SparseReorder",
-                                               __sparse_reorder_outputs)
+_SparseReorderOutput = _collections.namedtuple(
+    "SparseReorder", __sparse_reorder_outputs)
 
 
 def _sparse_reorder(input_indices, input_values, input_shape, name=None):
@@ -664,21 +1309,37 @@ def _sparse_reorder(input_indices, input_values, input_shape, name=None):
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  `N x R` matrix with the same indices as input_indices, but
       in canonical row-major ordering.
     output_values: A `Tensor`. Has the same type as `input_values`. 1-D.  `N` non-empty values corresponding to `output_indices`.
   """
-  result = _op_def_lib.apply_op("SparseReorder", input_indices=input_indices,
-                                input_values=input_values,
-                                input_shape=input_shape, name=name)
-  return _SparseReorderOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseReorder", input_indices=input_indices,
+        input_values=input_values, input_shape=input_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (input_values,) = _execute.args_to_matching_eager([input_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    input_indices = _ops.convert_to_tensor(input_indices, _dtypes.int64)
+    input_shape = _ops.convert_to_tensor(input_shape, _dtypes.int64)
+    _inputs_flat = [input_indices, input_values, input_shape]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseReorder", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseReorder", _inputs_flat, _attrs, _result, name)
+  _result = _SparseReorderOutput._make(_result)
+  return _result
 
 
 __sparse_reshape_outputs = ["output_indices", "output_shape"]
-
-
-_SparseReshapeOutput = _collections.namedtuple("SparseReshape",
-                                               __sparse_reshape_outputs)
+_SparseReshapeOutput = _collections.namedtuple(
+    "SparseReshape", __sparse_reshape_outputs)
 
 
 def _sparse_reshape(input_indices, input_shape, new_shape, name=None):
@@ -712,19 +1373,105 @@ def _sparse_reshape(input_indices, input_shape, new_shape, name=None):
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_shape).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  `N x R_out` matrix with the updated indices of non-empty
       values in the output SparseTensor.
     output_shape: A `Tensor` of type `int64`. 1-D.  `R_out` vector with the full dense shape of the output
       SparseTensor.  This is the same as `new_shape` but with any -1 dimensions
       filled in.
   """
-  result = _op_def_lib.apply_op("SparseReshape", input_indices=input_indices,
-                                input_shape=input_shape, new_shape=new_shape,
-                                name=name)
-  return _SparseReshapeOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseReshape", input_indices=input_indices, input_shape=input_shape,
+        new_shape=new_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = None
+  else:
+    input_indices = _ops.convert_to_tensor(input_indices, _dtypes.int64)
+    input_shape = _ops.convert_to_tensor(input_shape, _dtypes.int64)
+    new_shape = _ops.convert_to_tensor(new_shape, _dtypes.int64)
+    _inputs_flat = [input_indices, input_shape, new_shape]
+    _attrs = None
+    _result = _execute.execute(b"SparseReshape", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseReshape", _inputs_flat, _attrs, _result, name)
+  _result = _SparseReshapeOutput._make(_result)
+  return _result
 
 
-_sparse_softmax_outputs = ["output"]
+_sparse_slice_outputs = ["output_indices", "output_values", "output_shape"]
+_SparseSliceOutput = _collections.namedtuple(
+    "SparseSlice", _sparse_slice_outputs)
+
+
+def sparse_slice(indices, values, shape, start, size, name=None):
+  r"""Slice a `SparseTensor` based on the `start` and `size`.
+
+  For example, if the input is
+
+      input_tensor = shape = [2, 7]
+      [    a   d e  ]
+      [b c          ]
+
+  Graphically the output tensors are:
+
+      sparse_slice([0, 0], [2, 4]) = shape = [2, 4]
+      [    a  ]
+      [b c    ]
+
+      sparse_slice([0, 4], [2, 3]) = shape = [2, 3]
+      [ d e  ]
+      [      ]
+
+  Args:
+    indices: A `Tensor` of type `int64`.
+      2-D tensor represents the indices of the sparse tensor.
+    values: A `Tensor`. 1-D tensor represents the values of the sparse tensor.
+    shape: A `Tensor` of type `int64`.
+      1-D. tensor represents the shape of the sparse tensor.
+    start: A `Tensor` of type `int64`.
+      1-D. tensor represents the start of the slice.
+    size: A `Tensor` of type `int64`.
+      1-D. tensor represents the size of the slice.
+      output indices: A list of 1-D tensors represents the indices of the output
+      sparse tensors.
+    name: A name for the operation (optional).
+
+  Returns:
+    A tuple of `Tensor` objects (output_indices, output_values, output_shape).
+
+    output_indices: A `Tensor` of type `int64`.
+    output_values: A `Tensor`. Has the same type as `values`. A list of 1-D tensors represents the values of the output sparse
+      tensors.
+    output_shape: A `Tensor` of type `int64`. A list of 1-D tensors represents the shape of the output sparse
+      tensors.
+  """
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseSlice", indices=indices, values=values, shape=shape,
+        start=start, size=size, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (values,) = _execute.args_to_matching_eager([values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    indices = _ops.convert_to_tensor(indices, _dtypes.int64)
+    shape = _ops.convert_to_tensor(shape, _dtypes.int64)
+    start = _ops.convert_to_tensor(start, _dtypes.int64)
+    size = _ops.convert_to_tensor(size, _dtypes.int64)
+    _inputs_flat = [indices, values, shape, start, size]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseSlice", 3, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseSlice", _inputs_flat, _attrs, _result, name)
+  _result = _SparseSliceOutput._make(_result)
+  return _result
 
 
 def sparse_softmax(sp_indices, sp_values, sp_shape, name=None):
@@ -760,21 +1507,35 @@ def sparse_softmax(sp_indices, sp_values, sp_shape, name=None):
     A `Tensor`. Has the same type as `sp_values`.
     1-D.  The `NNZ` values for the result `SparseTensor`.
   """
-  result = _op_def_lib.apply_op("SparseSoftmax", sp_indices=sp_indices,
-                                sp_values=sp_values, sp_shape=sp_shape,
-                                name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseSoftmax", sp_indices=sp_indices, sp_values=sp_values,
+        sp_shape=sp_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, (sp_values,) = _execute.args_to_matching_eager([sp_values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    sp_indices = _ops.convert_to_tensor(sp_indices, _dtypes.int64)
+    sp_shape = _ops.convert_to_tensor(sp_shape, _dtypes.int64)
+    _inputs_flat = [sp_indices, sp_values, sp_shape]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseSoftmax", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseSoftmax", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 _sparse_sparse_maximum_outputs = ["output_indices", "output_values"]
+_SparseSparseMaximumOutput = _collections.namedtuple(
+    "SparseSparseMaximum", _sparse_sparse_maximum_outputs)
 
 
-_SparseSparseMaximumOutput = _collections.namedtuple("SparseSparseMaximum",
-                                                     _sparse_sparse_maximum_outputs)
-
-
-def sparse_sparse_maximum(a_indices, a_values, a_shape, b_indices, b_values,
-                          b_shape, name=None):
+def sparse_sparse_maximum(a_indices, a_values, a_shape, b_indices, b_values, b_shape, name=None):
   r"""Returns the element-wise max of two SparseTensors.
 
   Assumes the two SparseTensors have the same shape, i.e., no broadcasting.
@@ -797,25 +1558,43 @@ def sparse_sparse_maximum(a_indices, a_values, a_shape, b_indices, b_values,
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  The indices of the output SparseTensor.
     output_values: A `Tensor`. Has the same type as `a_values`. 1-D.  The values of the output SparseTensor.
   """
-  result = _op_def_lib.apply_op("SparseSparseMaximum", a_indices=a_indices,
-                                a_values=a_values, a_shape=a_shape,
-                                b_indices=b_indices, b_values=b_values,
-                                b_shape=b_shape, name=name)
-  return _SparseSparseMaximumOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseSparseMaximum", a_indices=a_indices, a_values=a_values,
+        a_shape=a_shape, b_indices=b_indices, b_values=b_values,
+        b_shape=b_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([a_values, b_values], _ctx)
+    (a_values, b_values) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    a_indices = _ops.convert_to_tensor(a_indices, _dtypes.int64)
+    a_shape = _ops.convert_to_tensor(a_shape, _dtypes.int64)
+    b_indices = _ops.convert_to_tensor(b_indices, _dtypes.int64)
+    b_shape = _ops.convert_to_tensor(b_shape, _dtypes.int64)
+    _inputs_flat = [a_indices, a_values, a_shape, b_indices, b_values, b_shape]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseSparseMaximum", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseSparseMaximum", _inputs_flat, _attrs, _result, name)
+  _result = _SparseSparseMaximumOutput._make(_result)
+  return _result
 
 
 _sparse_sparse_minimum_outputs = ["output_indices", "output_values"]
+_SparseSparseMinimumOutput = _collections.namedtuple(
+    "SparseSparseMinimum", _sparse_sparse_minimum_outputs)
 
 
-_SparseSparseMinimumOutput = _collections.namedtuple("SparseSparseMinimum",
-                                                     _sparse_sparse_minimum_outputs)
-
-
-def sparse_sparse_minimum(a_indices, a_values, a_shape, b_indices, b_values,
-                          b_shape, name=None):
+def sparse_sparse_minimum(a_indices, a_values, a_shape, b_indices, b_values, b_shape, name=None):
   r"""Returns the element-wise min of two SparseTensors.
 
   Assumes the two SparseTensors have the same shape, i.e., no broadcasting.
@@ -838,21 +1617,40 @@ def sparse_sparse_minimum(a_indices, a_values, a_shape, b_indices, b_values,
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values).
+
     output_indices: A `Tensor` of type `int64`. 2-D.  The indices of the output SparseTensor.
     output_values: A `Tensor`. Has the same type as `a_values`. 1-D.  The values of the output SparseTensor.
   """
-  result = _op_def_lib.apply_op("SparseSparseMinimum", a_indices=a_indices,
-                                a_values=a_values, a_shape=a_shape,
-                                b_indices=b_indices, b_values=b_values,
-                                b_shape=b_shape, name=name)
-  return _SparseSparseMinimumOutput._make(result)
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseSparseMinimum", a_indices=a_indices, a_values=a_values,
+        a_shape=a_shape, b_indices=b_indices, b_values=b_values,
+        b_shape=b_shape, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([a_values, b_values], _ctx)
+    (a_values, b_values) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    a_indices = _ops.convert_to_tensor(a_indices, _dtypes.int64)
+    a_shape = _ops.convert_to_tensor(a_shape, _dtypes.int64)
+    b_indices = _ops.convert_to_tensor(b_indices, _dtypes.int64)
+    b_shape = _ops.convert_to_tensor(b_shape, _dtypes.int64)
+    _inputs_flat = [a_indices, a_values, a_shape, b_indices, b_values, b_shape]
+    _attrs = ("T", _attr_T)
+    _result = _execute.execute(b"SparseSparseMinimum", 2, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseSparseMinimum", _inputs_flat, _attrs, _result, name)
+  _result = _SparseSparseMinimumOutput._make(_result)
+  return _result
 
 
 __sparse_split_outputs = ["output_indices", "output_values", "output_shape"]
-
-
-_SparseSplitOutput = _collections.namedtuple("SparseSplit",
-                                             __sparse_split_outputs)
+_SparseSplitOutput = _collections.namedtuple(
+    "SparseSplit", __sparse_split_outputs)
 
 
 def _sparse_split(split_dim, indices, values, shape, num_split, name=None):
@@ -892,19 +1690,40 @@ def _sparse_split(split_dim, indices, values, shape, num_split, name=None):
 
   Returns:
     A tuple of `Tensor` objects (output_indices, output_values, output_shape).
-    output_indices: A list of `num_split` `Tensor` objects of type `int64`.
-    output_values: A list of `num_split` `Tensor` objects of the same type as values. A list of 1-D tensors represents the values of the output sparse
+
+    output_indices: A list of `num_split` `Tensor` objects with type `int64`.
+    output_values: A list of `num_split` `Tensor` objects with the same type as `values`. A list of 1-D tensors represents the values of the output sparse
       tensors.
-    output_shape: A list of `num_split` `Tensor` objects of type `int64`. A list of 1-D tensors represents the shape of the output sparse
+    output_shape: A list of `num_split` `Tensor` objects with type `int64`. A list of 1-D tensors represents the shape of the output sparse
       tensors.
   """
-  result = _op_def_lib.apply_op("SparseSplit", split_dim=split_dim,
-                                indices=indices, values=values, shape=shape,
-                                num_split=num_split, name=name)
-  return _SparseSplitOutput._make(result)
-
-
-__sparse_tensor_dense_add_outputs = ["output"]
+  num_split = _execute.make_int(num_split, "num_split")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseSplit", split_dim=split_dim, indices=indices, values=values,
+        shape=shape, num_split=num_split, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("num_split", _op.get_attr("num_split"), "T", _op.get_attr("T"))
+  else:
+    _attr_T, (values,) = _execute.args_to_matching_eager([values], _ctx)
+    _attr_T = _attr_T.as_datatype_enum
+    split_dim = _ops.convert_to_tensor(split_dim, _dtypes.int64)
+    indices = _ops.convert_to_tensor(indices, _dtypes.int64)
+    shape = _ops.convert_to_tensor(shape, _dtypes.int64)
+    _inputs_flat = [split_dim, indices, values, shape]
+    _attrs = ("num_split", num_split, "T", _attr_T)
+    _result = _execute.execute(b"SparseSplit", num_split + num_split +
+                               num_split, inputs=_inputs_flat, attrs=_attrs,
+                               ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseSplit", _inputs_flat, _attrs, _result, name)
+  _result = [_result[:num_split]] + _result[num_split:]
+  _result = _result[:1] + [_result[1:1 + num_split]] + _result[1 + num_split:]
+  _result = _result[:2] + [_result[2:]]
+  _result = _SparseSplitOutput._make(_result)
+  return _result
 
 
 def _sparse_tensor_dense_add(a_indices, a_values, a_shape, b, name=None):
@@ -926,17 +1745,33 @@ def _sparse_tensor_dense_add(a_indices, a_values, a_shape, b, name=None):
   Returns:
     A `Tensor`. Has the same type as `a_values`.
   """
-  result = _op_def_lib.apply_op("SparseTensorDenseAdd", a_indices=a_indices,
-                                a_values=a_values, a_shape=a_shape, b=b,
-                                name=name)
-  return result
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseTensorDenseAdd", a_indices=a_indices, a_values=a_values,
+        a_shape=a_shape, b=b, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "Tindices", _op.get_attr("Tindices"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([a_values, b], _ctx)
+    (a_values, b) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    _attr_Tindices, _inputs_Tindices = _execute.args_to_matching_eager([a_indices, a_shape], _ctx)
+    (a_indices, a_shape) = _inputs_Tindices
+    _attr_Tindices = _attr_Tindices.as_datatype_enum
+    _inputs_flat = [a_indices, a_values, a_shape, b]
+    _attrs = ("T", _attr_T, "Tindices", _attr_Tindices)
+    _result = _execute.execute(b"SparseTensorDenseAdd", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "SparseTensorDenseAdd", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__sparse_tensor_dense_mat_mul_outputs = ["product"]
-
-
-def _sparse_tensor_dense_mat_mul(a_indices, a_values, a_shape, b,
-                                 adjoint_a=None, adjoint_b=None, name=None):
+def _sparse_tensor_dense_mat_mul(a_indices, a_values, a_shape, b, adjoint_a=False, adjoint_b=False, name=None):
   r"""Multiply SparseTensor (of rank 2) "A" by dense matrix "B".
 
   No validity checking is performed on the indices of A.  However, the following
@@ -950,7 +1785,7 @@ def _sparse_tensor_dense_mat_mul(a_indices, a_values, a_shape, b,
     order instead of "row major" order).
 
   Args:
-    a_indices: A `Tensor` of type `int64`.
+    a_indices: A `Tensor`. Must be one of the following types: `int32`, `int64`.
       2-D.  The `indices` of the `SparseTensor`, size `[nnz, 2]` Matrix.
     a_values: A `Tensor`.
       1-D.  The `values` of the `SparseTensor`, size `[nnz]` Vector.
@@ -969,23 +1804,48 @@ def _sparse_tensor_dense_mat_mul(a_indices, a_values, a_shape, b,
   Returns:
     A `Tensor`. Has the same type as `a_values`.
   """
-  result = _op_def_lib.apply_op("SparseTensorDenseMatMul",
-                                a_indices=a_indices, a_values=a_values,
-                                a_shape=a_shape, b=b, adjoint_a=adjoint_a,
-                                adjoint_b=adjoint_b, name=name)
-  return result
+  if adjoint_a is None:
+    adjoint_a = False
+  adjoint_a = _execute.make_bool(adjoint_a, "adjoint_a")
+  if adjoint_b is None:
+    adjoint_b = False
+  adjoint_b = _execute.make_bool(adjoint_b, "adjoint_b")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseTensorDenseMatMul", a_indices=a_indices, a_values=a_values,
+        a_shape=a_shape, b=b, adjoint_a=adjoint_a, adjoint_b=adjoint_b,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("T", _op.get_attr("T"), "Tindices", _op.get_attr("Tindices"),
+              "adjoint_a", _op.get_attr("adjoint_a"), "adjoint_b",
+              _op.get_attr("adjoint_b"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([a_values, b], _ctx)
+    (a_values, b) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    _attr_Tindices, (a_indices,) = _execute.args_to_matching_eager([a_indices], _ctx, _dtypes.int64)
+    _attr_Tindices = _attr_Tindices.as_datatype_enum
+    a_shape = _ops.convert_to_tensor(a_shape, _dtypes.int64)
+    _inputs_flat = [a_indices, a_values, a_shape, b]
+    _attrs = ("T", _attr_T, "Tindices", _attr_Tindices, "adjoint_a",
+              adjoint_a, "adjoint_b", adjoint_b)
+    _result = _execute.execute(b"SparseTensorDenseMatMul", 1,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "SparseTensorDenseMatMul", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
-__sparse_to_dense_outputs = ["dense"]
-
-
-def _sparse_to_dense(sparse_indices, output_shape, sparse_values,
-                     default_value, validate_indices=None, name=None):
+def _sparse_to_dense(sparse_indices, output_shape, sparse_values, default_value, validate_indices=True, name=None):
   r"""Converts a sparse representation into a dense tensor.
 
   Builds an array `dense` with shape `output_shape` such that
 
-  ```prettyprint
+  ```
   # If sparse_indices is scalar
   dense[i] = (i == sparse_indices ? sparse_values : default_value)
 
@@ -1024,25 +1884,46 @@ def _sparse_to_dense(sparse_indices, output_shape, sparse_values,
     A `Tensor`. Has the same type as `sparse_values`.
     Dense output tensor of shape `output_shape`.
   """
-  result = _op_def_lib.apply_op("SparseToDense",
-                                sparse_indices=sparse_indices,
-                                output_shape=output_shape,
-                                sparse_values=sparse_values,
-                                default_value=default_value,
-                                validate_indices=validate_indices, name=name)
-  return result
+  if validate_indices is None:
+    validate_indices = True
+  validate_indices = _execute.make_bool(validate_indices, "validate_indices")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "SparseToDense", sparse_indices=sparse_indices,
+        output_shape=output_shape, sparse_values=sparse_values,
+        default_value=default_value, validate_indices=validate_indices,
+        name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("validate_indices", _op.get_attr("validate_indices"), "T",
+              _op.get_attr("T"), "Tindices", _op.get_attr("Tindices"))
+  else:
+    _attr_T, _inputs_T = _execute.args_to_matching_eager([sparse_values, default_value], _ctx)
+    (sparse_values, default_value) = _inputs_T
+    _attr_T = _attr_T.as_datatype_enum
+    _attr_Tindices, _inputs_Tindices = _execute.args_to_matching_eager([sparse_indices, output_shape], _ctx)
+    (sparse_indices, output_shape) = _inputs_Tindices
+    _attr_Tindices = _attr_Tindices.as_datatype_enum
+    _inputs_flat = [sparse_indices, output_shape, sparse_values, default_value]
+    _attrs = ("validate_indices", validate_indices, "T", _attr_T, "Tindices",
+              _attr_Tindices)
+    _result = _execute.execute(b"SparseToDense", 1, inputs=_inputs_flat,
+                               attrs=_attrs, ctx=_ctx, name=name)
+  _execute.record_gradient(
+      "SparseToDense", _inputs_flat, _attrs, _result, name)
+  _result, = _result
+  return _result
 
 
 __take_many_sparse_from_tensors_map_outputs = ["sparse_indices",
                                               "sparse_values", "sparse_shape"]
+_TakeManySparseFromTensorsMapOutput = _collections.namedtuple(
+    "TakeManySparseFromTensorsMap",
+    __take_many_sparse_from_tensors_map_outputs)
 
 
-_TakeManySparseFromTensorsMapOutput = _collections.namedtuple("TakeManySparseFromTensorsMap",
-                                                              __take_many_sparse_from_tensors_map_outputs)
-
-
-def _take_many_sparse_from_tensors_map(sparse_handles, dtype, container=None,
-                                       shared_name=None, name=None):
+def _take_many_sparse_from_tensors_map(sparse_handles, dtype, container="", shared_name="", name=None):
   r"""Read `SparseTensors` from a `SparseTensorsMap` and concatenate them.
 
   The input `sparse_handles` must be an `int64` matrix of shape `[N, 1]` where
@@ -1111,1004 +1992,1332 @@ def _take_many_sparse_from_tensors_map(sparse_handles, dtype, container=None,
 
   Returns:
     A tuple of `Tensor` objects (sparse_indices, sparse_values, sparse_shape).
+
     sparse_indices: A `Tensor` of type `int64`. 2-D.  The `indices` of the minibatch `SparseTensor`.
     sparse_values: A `Tensor` of type `dtype`. 1-D.  The `values` of the minibatch `SparseTensor`.
     sparse_shape: A `Tensor` of type `int64`. 1-D.  The `shape` of the minibatch `SparseTensor`.
   """
-  result = _op_def_lib.apply_op("TakeManySparseFromTensorsMap",
-                                sparse_handles=sparse_handles, dtype=dtype,
-                                container=container, shared_name=shared_name,
-                                name=name)
-  return _TakeManySparseFromTensorsMapOutput._make(result)
+  dtype = _execute.make_type(dtype, "dtype")
+  if container is None:
+    container = ""
+  container = _execute.make_str(container, "container")
+  if shared_name is None:
+    shared_name = ""
+  shared_name = _execute.make_str(shared_name, "shared_name")
+  _ctx = _context.context()
+  if _ctx.in_graph_mode():
+    _, _, _op = _op_def_lib._apply_op_helper(
+        "TakeManySparseFromTensorsMap", sparse_handles=sparse_handles,
+        dtype=dtype, container=container, shared_name=shared_name, name=name)
+    _result = _op.outputs[:]
+    _inputs_flat = _op.inputs
+    _attrs = ("dtype", _op.get_attr("dtype"), "container",
+              _op.get_attr("container"), "shared_name",
+              _op.get_attr("shared_name"))
+  else:
+    sparse_handles = _ops.convert_to_tensor(sparse_handles, _dtypes.int64)
+    _inputs_flat = [sparse_handles]
+    _attrs = ("dtype", dtype, "container", container, "shared_name",
+              shared_name)
+    _result = _execute.execute(b"TakeManySparseFromTensorsMap", 3,
+                               inputs=_inputs_flat, attrs=_attrs, ctx=_ctx,
+                               name=name)
+  _execute.record_gradient(
+      "TakeManySparseFromTensorsMap", _inputs_flat, _attrs, _result, name)
+  _result = _TakeManySparseFromTensorsMapOutput._make(_result)
+  return _result
 
-
-def _InitOpDefLibrary():
+def _InitOpDefLibrary(op_list_proto_bytes):
   op_list = _op_def_pb2.OpList()
-  _text_format.Merge(_InitOpDefLibrary.op_list_ascii, op_list)
+  op_list.ParseFromString(op_list_proto_bytes)
   _op_def_registry.register_op_list(op_list)
   op_def_lib = _op_def_library.OpDefLibrary()
   op_def_lib.add_op_list(op_list)
   return op_def_lib
-
-
-_InitOpDefLibrary.op_list_ascii = """op {
-  name: "AddManySparseToTensorsMap"
-  input_arg {
-    name: "sparse_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sparse_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sparse_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sparse_handles"
-    type: DT_INT64
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "AddSparseToTensorsMap"
-  input_arg {
-    name: "sparse_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sparse_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sparse_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sparse_handle"
-    type: DT_INT64
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-op {
-  name: "DeserializeManySparse"
-  input_arg {
-    name: "serialized_sparse"
-    type: DT_STRING
-  }
-  output_arg {
-    name: "sparse_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sparse_values"
-    type_attr: "dtype"
-  }
-  output_arg {
-    name: "sparse_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "dtype"
-    type: "type"
-  }
-}
-op {
-  name: "SerializeManySparse"
-  input_arg {
-    name: "sparse_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sparse_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sparse_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "serialized_sparse"
-    type: DT_STRING
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-}
-op {
-  name: "SerializeSparse"
-  input_arg {
-    name: "sparse_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sparse_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sparse_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "serialized_sparse"
-    type: DT_STRING
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-}
-op {
-  name: "SparseAdd"
-  input_arg {
-    name: "a_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "a_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "a_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "b_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "thresh"
-    type_attr: "Treal"
-  }
-  output_arg {
-    name: "sum_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sum_values"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "sum_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-  attr {
-    name: "Treal"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT32
-        type: DT_INT64
-        type: DT_UINT8
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_UINT16
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseAddGrad"
-  input_arg {
-    name: "backprop_val_grad"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "a_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sum_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "a_val_grad"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "b_val_grad"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseConcat"
-  input_arg {
-    name: "indices"
-    type: DT_INT64
-    number_attr: "N"
-  }
-  input_arg {
-    name: "values"
-    type_attr: "T"
-    number_attr: "N"
-  }
-  input_arg {
-    name: "shapes"
-    type: DT_INT64
-    number_attr: "N"
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "output_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "concat_dim"
-    type: "int"
-  }
-  attr {
-    name: "N"
-    type: "int"
-    has_minimum: true
-    minimum: 2
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-}
-op {
-  name: "SparseDenseCwiseAdd"
-  input_arg {
-    name: "sp_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sp_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sp_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "dense"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseDenseCwiseDiv"
-  input_arg {
-    name: "sp_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sp_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sp_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "dense"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseDenseCwiseMul"
-  input_arg {
-    name: "sp_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sp_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sp_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "dense"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseReduceSum"
-  input_arg {
-    name: "input_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "input_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "input_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "reduction_axes"
-    type: DT_INT32
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "keep_dims"
-    type: "bool"
-    default_value {
-      b: false
-    }
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseReduceSumSparse"
-  input_arg {
-    name: "input_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "input_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "input_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "reduction_axes"
-    type: DT_INT32
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "output_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "keep_dims"
-    type: "bool"
-    default_value {
-      b: false
-    }
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseReorder"
-  input_arg {
-    name: "input_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "input_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "input_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-}
-op {
-  name: "SparseReshape"
-  input_arg {
-    name: "input_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "input_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "new_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_shape"
-    type: DT_INT64
-  }
-}
-op {
-  name: "SparseSoftmax"
-  input_arg {
-    name: "sp_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "sp_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "sp_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-      }
-    }
-  }
-}
-op {
-  name: "SparseSparseMaximum"
-  input_arg {
-    name: "a_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "a_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "a_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "b_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT32
-        type: DT_INT64
-        type: DT_UINT8
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_UINT16
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseSparseMinimum"
-  input_arg {
-    name: "a_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "a_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "a_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "b_shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-}
-op {
-  name: "SparseSplit"
-  input_arg {
-    name: "split_dim"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "shape"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "output_indices"
-    type: DT_INT64
-    number_attr: "num_split"
-  }
-  output_arg {
-    name: "output_values"
-    type_attr: "T"
-    number_attr: "num_split"
-  }
-  output_arg {
-    name: "output_shape"
-    type: DT_INT64
-    number_attr: "num_split"
-  }
-  attr {
-    name: "num_split"
-    type: "int"
-    has_minimum: true
-    minimum: 1
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-}
-op {
-  name: "SparseTensorDenseAdd"
-  input_arg {
-    name: "a_indices"
-    type_attr: "Tindices"
-  }
-  input_arg {
-    name: "a_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "a_shape"
-    type_attr: "Tindices"
-  }
-  input_arg {
-    name: "b"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "output"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_FLOAT
-        type: DT_DOUBLE
-        type: DT_INT64
-        type: DT_INT32
-        type: DT_UINT8
-        type: DT_UINT16
-        type: DT_INT16
-        type: DT_INT8
-        type: DT_COMPLEX64
-        type: DT_COMPLEX128
-        type: DT_QINT8
-        type: DT_QUINT8
-        type: DT_QINT32
-        type: DT_HALF
-      }
-    }
-  }
-  attr {
-    name: "Tindices"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_INT32
-        type: DT_INT64
-      }
-    }
-  }
-}
-op {
-  name: "SparseTensorDenseMatMul"
-  input_arg {
-    name: "a_indices"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "a_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "a_shape"
-    type: DT_INT64
-  }
-  input_arg {
-    name: "b"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "product"
-    type_attr: "T"
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-  attr {
-    name: "adjoint_a"
-    type: "bool"
-    default_value {
-      b: false
-    }
-  }
-  attr {
-    name: "adjoint_b"
-    type: "bool"
-    default_value {
-      b: false
-    }
-  }
-}
-op {
-  name: "SparseToDense"
-  input_arg {
-    name: "sparse_indices"
-    type_attr: "Tindices"
-  }
-  input_arg {
-    name: "output_shape"
-    type_attr: "Tindices"
-  }
-  input_arg {
-    name: "sparse_values"
-    type_attr: "T"
-  }
-  input_arg {
-    name: "default_value"
-    type_attr: "T"
-  }
-  output_arg {
-    name: "dense"
-    type_attr: "T"
-  }
-  attr {
-    name: "validate_indices"
-    type: "bool"
-    default_value {
-      b: true
-    }
-  }
-  attr {
-    name: "T"
-    type: "type"
-  }
-  attr {
-    name: "Tindices"
-    type: "type"
-    allowed_values {
-      list {
-        type: DT_INT32
-        type: DT_INT64
-      }
-    }
-  }
-}
-op {
-  name: "TakeManySparseFromTensorsMap"
-  input_arg {
-    name: "sparse_handles"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sparse_indices"
-    type: DT_INT64
-  }
-  output_arg {
-    name: "sparse_values"
-    type_attr: "dtype"
-  }
-  output_arg {
-    name: "sparse_shape"
-    type: DT_INT64
-  }
-  attr {
-    name: "dtype"
-    type: "type"
-  }
-  attr {
-    name: "container"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  attr {
-    name: "shared_name"
-    type: "string"
-    default_value {
-      s: ""
-    }
-  }
-  is_stateful: true
-}
-"""
-
-
-_op_def_lib = _InitOpDefLibrary()
+# op {
+#   name: "AddManySparseToTensorsMap"
+#   input_arg {
+#     name: "sparse_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sparse_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sparse_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sparse_handles"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "AddSparseToTensorsMap"
+#   input_arg {
+#     name: "sparse_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sparse_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sparse_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sparse_handle"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+# op {
+#   name: "DeserializeManySparse"
+#   input_arg {
+#     name: "serialized_sparse"
+#     type: DT_STRING
+#   }
+#   output_arg {
+#     name: "sparse_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sparse_values"
+#     type_attr: "dtype"
+#   }
+#   output_arg {
+#     name: "sparse_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "dtype"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SerializeManySparse"
+#   input_arg {
+#     name: "sparse_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sparse_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sparse_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "serialized_sparse"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SerializeSparse"
+#   input_arg {
+#     name: "sparse_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sparse_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sparse_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "serialized_sparse"
+#     type: DT_STRING
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseAdd"
+#   input_arg {
+#     name: "a_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "a_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "a_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "b_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "thresh"
+#     type_attr: "Treal"
+#   }
+#   output_arg {
+#     name: "sum_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sum_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "sum_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+#   attr {
+#     name: "Treal"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT32
+#         type: DT_INT64
+#         type: DT_UINT8
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_UINT16
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseAddGrad"
+#   input_arg {
+#     name: "backprop_val_grad"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "a_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sum_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "a_val_grad"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "b_val_grad"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseConcat"
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "values"
+#     type_attr: "T"
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "shapes"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "concat_dim"
+#     type: "int"
+#   }
+#   attr {
+#     name: "N"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 2
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseCross"
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "values"
+#     type_list_attr: "sparse_types"
+#   }
+#   input_arg {
+#     name: "shapes"
+#     type: DT_INT64
+#     number_attr: "N"
+#   }
+#   input_arg {
+#     name: "dense_inputs"
+#     type_list_attr: "dense_types"
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "out_type"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "N"
+#     type: "int"
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "hashed_output"
+#     type: "bool"
+#   }
+#   attr {
+#     name: "num_buckets"
+#     type: "int"
+#     has_minimum: true
+#   }
+#   attr {
+#     name: "hash_key"
+#     type: "int"
+#   }
+#   attr {
+#     name: "sparse_types"
+#     type: "list(type)"
+#     has_minimum: true
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "dense_types"
+#     type: "list(type)"
+#     has_minimum: true
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "out_type"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+#   attr {
+#     name: "internal_type"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT64
+#         type: DT_STRING
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseDenseCwiseAdd"
+#   input_arg {
+#     name: "sp_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sp_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sp_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "dense"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseDenseCwiseDiv"
+#   input_arg {
+#     name: "sp_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sp_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sp_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "dense"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseDenseCwiseMul"
+#   input_arg {
+#     name: "sp_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sp_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sp_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "dense"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseFillEmptyRows"
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "dense_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "default_value"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "empty_row_indicator"
+#     type: DT_BOOL
+#   }
+#   output_arg {
+#     name: "reverse_index_map"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseFillEmptyRowsGrad"
+#   input_arg {
+#     name: "reverse_index_map"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "grad_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "d_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "d_default_value"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseReduceMax"
+#   input_arg {
+#     name: "input_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "input_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "input_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "reduction_axes"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "keep_dims"
+#     type: "bool"
+#     default_value {
+#       b: false
+#     }
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT32
+#         type: DT_INT64
+#         type: DT_UINT8
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_UINT16
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseReduceMaxSparse"
+#   input_arg {
+#     name: "input_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "input_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "input_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "reduction_axes"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "keep_dims"
+#     type: "bool"
+#     default_value {
+#       b: false
+#     }
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT32
+#         type: DT_INT64
+#         type: DT_UINT8
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_UINT16
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseReduceSum"
+#   input_arg {
+#     name: "input_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "input_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "input_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "reduction_axes"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "keep_dims"
+#     type: "bool"
+#     default_value {
+#       b: false
+#     }
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseReduceSumSparse"
+#   input_arg {
+#     name: "input_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "input_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "input_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "reduction_axes"
+#     type: DT_INT32
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "keep_dims"
+#     type: "bool"
+#     default_value {
+#       b: false
+#     }
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseReorder"
+#   input_arg {
+#     name: "input_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "input_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "input_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseReshape"
+#   input_arg {
+#     name: "input_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "input_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "new_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+# }
+# op {
+#   name: "SparseSlice"
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "start"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "size"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseSoftmax"
+#   input_arg {
+#     name: "sp_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "sp_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "sp_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseSparseMaximum"
+#   input_arg {
+#     name: "a_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "a_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "a_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "b_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT32
+#         type: DT_INT64
+#         type: DT_UINT8
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_UINT16
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseSparseMinimum"
+#   input_arg {
+#     name: "a_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "a_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "a_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "b_shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseSplit"
+#   input_arg {
+#     name: "split_dim"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "indices"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "shape"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "output_indices"
+#     type: DT_INT64
+#     number_attr: "num_split"
+#   }
+#   output_arg {
+#     name: "output_values"
+#     type_attr: "T"
+#     number_attr: "num_split"
+#   }
+#   output_arg {
+#     name: "output_shape"
+#     type: DT_INT64
+#     number_attr: "num_split"
+#   }
+#   attr {
+#     name: "num_split"
+#     type: "int"
+#     has_minimum: true
+#     minimum: 1
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+# }
+# op {
+#   name: "SparseTensorDenseAdd"
+#   input_arg {
+#     name: "a_indices"
+#     type_attr: "Tindices"
+#   }
+#   input_arg {
+#     name: "a_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "a_shape"
+#     type_attr: "Tindices"
+#   }
+#   input_arg {
+#     name: "b"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "output"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_FLOAT
+#         type: DT_DOUBLE
+#         type: DT_INT64
+#         type: DT_INT32
+#         type: DT_UINT8
+#         type: DT_UINT16
+#         type: DT_INT16
+#         type: DT_INT8
+#         type: DT_COMPLEX64
+#         type: DT_COMPLEX128
+#         type: DT_QINT8
+#         type: DT_QUINT8
+#         type: DT_QINT32
+#         type: DT_HALF
+#       }
+#     }
+#   }
+#   attr {
+#     name: "Tindices"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT32
+#         type: DT_INT64
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "SparseTensorDenseMatMul"
+#   input_arg {
+#     name: "a_indices"
+#     type_attr: "Tindices"
+#   }
+#   input_arg {
+#     name: "a_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "a_shape"
+#     type: DT_INT64
+#   }
+#   input_arg {
+#     name: "b"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "product"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+#   attr {
+#     name: "Tindices"
+#     type: "type"
+#     default_value {
+#       type: DT_INT64
+#     }
+#     allowed_values {
+#       list {
+#         type: DT_INT32
+#         type: DT_INT64
+#       }
+#     }
+#   }
+#   attr {
+#     name: "adjoint_a"
+#     type: "bool"
+#     default_value {
+#       b: false
+#     }
+#   }
+#   attr {
+#     name: "adjoint_b"
+#     type: "bool"
+#     default_value {
+#       b: false
+#     }
+#   }
+# }
+# op {
+#   name: "SparseToDense"
+#   input_arg {
+#     name: "sparse_indices"
+#     type_attr: "Tindices"
+#   }
+#   input_arg {
+#     name: "output_shape"
+#     type_attr: "Tindices"
+#   }
+#   input_arg {
+#     name: "sparse_values"
+#     type_attr: "T"
+#   }
+#   input_arg {
+#     name: "default_value"
+#     type_attr: "T"
+#   }
+#   output_arg {
+#     name: "dense"
+#     type_attr: "T"
+#   }
+#   attr {
+#     name: "validate_indices"
+#     type: "bool"
+#     default_value {
+#       b: true
+#     }
+#   }
+#   attr {
+#     name: "T"
+#     type: "type"
+#   }
+#   attr {
+#     name: "Tindices"
+#     type: "type"
+#     allowed_values {
+#       list {
+#         type: DT_INT32
+#         type: DT_INT64
+#       }
+#     }
+#   }
+# }
+# op {
+#   name: "TakeManySparseFromTensorsMap"
+#   input_arg {
+#     name: "sparse_handles"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sparse_indices"
+#     type: DT_INT64
+#   }
+#   output_arg {
+#     name: "sparse_values"
+#     type_attr: "dtype"
+#   }
+#   output_arg {
+#     name: "sparse_shape"
+#     type: DT_INT64
+#   }
+#   attr {
+#     name: "dtype"
+#     type: "type"
+#   }
+#   attr {
+#     name: "container"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   attr {
+#     name: "shared_name"
+#     type: "string"
+#     default_value {
+#       s: ""
+#     }
+#   }
+#   is_stateful: true
+# }
+_op_def_lib = _InitOpDefLibrary(b"\n\253\001\n\031AddManySparseToTensorsMap\022\022\n\016sparse_indices\030\t\022\022\n\rsparse_values\"\001T\022\020\n\014sparse_shape\030\t\032\022\n\016sparse_handles\030\t\"\t\n\001T\022\004type\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n\246\001\n\025AddSparseToTensorsMap\022\022\n\016sparse_indices\030\t\022\022\n\rsparse_values\"\001T\022\020\n\014sparse_shape\030\t\032\021\n\rsparse_handle\030\t\"\t\n\001T\022\004type\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001\n{\n\025DeserializeManySparse\022\025\n\021serialized_sparse\030\007\032\022\n\016sparse_indices\030\t\032\026\n\rsparse_values\"\005dtype\032\020\n\014sparse_shape\030\t\"\r\n\005dtype\022\004type\nq\n\023SerializeManySparse\022\022\n\016sparse_indices\030\t\022\022\n\rsparse_values\"\001T\022\020\n\014sparse_shape\030\t\032\025\n\021serialized_sparse\030\007\"\t\n\001T\022\004type\nm\n\017SerializeSparse\022\022\n\016sparse_indices\030\t\022\022\n\rsparse_values\"\001T\022\020\n\014sparse_shape\030\t\032\025\n\021serialized_sparse\030\007\"\t\n\001T\022\004type\n\340\001\n\tSparseAdd\022\r\n\ta_indices\030\t\022\r\n\010a_values\"\001T\022\013\n\007a_shape\030\t\022\r\n\tb_indices\030\t\022\r\n\010b_values\"\001T\022\013\n\007b_shape\030\t\022\017\n\006thresh\"\005Treal\032\017\n\013sum_indices\030\t\032\017\n\nsum_values\"\001T\032\r\n\tsum_shape\030\t\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\"\034\n\005Treal\022\004type:\r\n\0132\t\001\002\003\t\004\005\006\021\023\n\227\001\n\rSparseAddGrad\022\026\n\021backprop_val_grad\"\001T\022\r\n\ta_indices\030\t\022\r\n\tb_indices\030\t\022\017\n\013sum_indices\030\t\032\017\n\na_val_grad\"\001T\032\017\n\nb_val_grad\"\001T\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\n\243\001\n\014SparseConcat\022\016\n\007indices\030\t*\001N\022\016\n\006values\"\001T*\001N\022\r\n\006shapes\030\t*\001N\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\032\020\n\014output_shape\030\t\"\021\n\nconcat_dim\022\003int\"\014\n\001N\022\003int(\0010\002\"\t\n\001T\022\004type\n\360\002\n\013SparseCross\022\016\n\007indices\030\t*\001N\022\026\n\006values2\014sparse_types\022\r\n\006shapes\030\t*\001N\022\033\n\014dense_inputs2\013dense_types\032\022\n\016output_indices\030\t\032\031\n\routput_values\"\010out_type\032\020\n\014output_shape\030\t\"\n\n\001N\022\003int(\001\"\025\n\rhashed_output\022\004bool\"\024\n\013num_buckets\022\003int(\001\"\017\n\010hash_key\022\003int\"$\n\014sparse_types\022\nlist(type)(\001:\006\n\0042\002\t\007\"#\n\013dense_types\022\nlist(type)(\001:\006\n\0042\002\t\007\"\030\n\010out_type\022\004type:\006\n\0042\002\t\007\"\035\n\rinternal_type\022\004type:\006\n\0042\002\t\007\n{\n\023SparseDenseCwiseAdd\022\016\n\nsp_indices\030\t\022\016\n\tsp_values\"\001T\022\014\n\010sp_shape\030\t\022\n\n\005dense\"\001T\032\013\n\006output\"\001T\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\n{\n\023SparseDenseCwiseDiv\022\016\n\nsp_indices\030\t\022\016\n\tsp_values\"\001T\022\014\n\010sp_shape\030\t\022\n\n\005dense\"\001T\032\013\n\006output\"\001T\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\n{\n\023SparseDenseCwiseMul\022\016\n\nsp_indices\030\t\022\016\n\tsp_values\"\001T\022\014\n\010sp_shape\030\t\022\n\n\005dense\"\001T\032\013\n\006output\"\001T\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\n\267\001\n\023SparseFillEmptyRows\022\013\n\007indices\030\t\022\013\n\006values\"\001T\022\017\n\013dense_shape\030\t\022\022\n\rdefault_value\"\001T\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\032\027\n\023empty_row_indicator\030\n\032\025\n\021reverse_index_map\030\t\"\t\n\001T\022\004type\nr\n\027SparseFillEmptyRowsGrad\022\025\n\021reverse_index_map\030\t\022\020\n\013grad_values\"\001T\032\r\n\010d_values\"\001T\032\024\n\017d_default_value\"\001T\"\t\n\001T\022\004type\n\232\001\n\017SparseReduceMax\022\021\n\rinput_indices\030\t\022\021\n\014input_values\"\001T\022\017\n\013input_shape\030\t\022\022\n\016reduction_axes\030\003\032\013\n\006output\"\001T\"\025\n\tkeep_dims\022\004bool\032\002(\000\"\030\n\001T\022\004type:\r\n\0132\t\001\002\003\t\004\005\006\021\023\n\315\001\n\025SparseReduceMaxSparse\022\021\n\rinput_indices\030\t\022\021\n\014input_values\"\001T\022\017\n\013input_shape\030\t\022\022\n\016reduction_axes\030\003\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\032\020\n\014output_shape\030\t\"\025\n\tkeep_dims\022\004bool\032\002(\000\"\030\n\001T\022\004type:\r\n\0132\t\001\002\003\t\004\005\006\021\023\n\237\001\n\017SparseReduceSum\022\021\n\rinput_indices\030\t\022\021\n\014input_values\"\001T\022\017\n\013input_shape\030\t\022\022\n\016reduction_axes\030\003\032\013\n\006output\"\001T\"\025\n\tkeep_dims\022\004bool\032\002(\000\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\n\322\001\n\025SparseReduceSumSparse\022\021\n\rinput_indices\030\t\022\021\n\014input_values\"\001T\022\017\n\013input_shape\030\t\022\022\n\016reduction_axes\030\003\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\032\020\n\014output_shape\030\t\"\025\n\tkeep_dims\022\004bool\032\002(\000\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\ny\n\rSparseReorder\022\021\n\rinput_indices\030\t\022\021\n\014input_values\"\001T\022\017\n\013input_shape\030\t\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\"\t\n\001T\022\004type\nh\n\rSparseReshape\022\021\n\rinput_indices\030\t\022\017\n\013input_shape\030\t\022\r\n\tnew_shape\030\t\032\022\n\016output_indices\030\t\032\020\n\014output_shape\030\t\n\214\001\n\013SparseSlice\022\013\n\007indices\030\t\022\013\n\006values\"\001T\022\t\n\005shape\030\t\022\t\n\005start\030\t\022\010\n\004size\030\t\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\032\020\n\014output_shape\030\t\"\t\n\001T\022\004type\n]\n\rSparseSoftmax\022\016\n\nsp_indices\030\t\022\016\n\tsp_values\"\001T\022\014\n\010sp_shape\030\t\032\013\n\006output\"\001T\"\021\n\001T\022\004type:\006\n\0042\002\001\002\n\255\001\n\023SparseSparseMaximum\022\r\n\ta_indices\030\t\022\r\n\010a_values\"\001T\022\013\n\007a_shape\030\t\022\r\n\tb_indices\030\t\022\r\n\010b_values\"\001T\022\013\n\007b_shape\030\t\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\"\030\n\001T\022\004type:\r\n\0132\t\001\002\003\t\004\005\006\021\023\n\262\001\n\023SparseSparseMinimum\022\r\n\ta_indices\030\t\022\r\n\010a_values\"\001T\022\013\n\007a_shape\030\t\022\r\n\tb_indices\030\t\022\r\n\010b_values\"\001T\022\013\n\007b_shape\030\t\032\022\n\016output_indices\030\t\032\022\n\routput_values\"\001T\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\n\275\001\n\013SparseSplit\022\r\n\tsplit_dim\030\t\022\013\n\007indices\030\t\022\013\n\006values\"\001T\022\t\n\005shape\030\t\032\035\n\016output_indices\030\t*\tnum_split\032\035\n\routput_values\"\001T*\tnum_split\032\033\n\014output_shape\030\t*\tnum_split\"\024\n\tnum_split\022\003int(\0010\001\"\t\n\001T\022\004type\n\237\001\n\024SparseTensorDenseAdd\022\025\n\ta_indices\"\010Tindices\022\r\n\010a_values\"\001T\022\023\n\007a_shape\"\010Tindices\022\006\n\001b\"\001T\032\013\n\006output\"\001T\"\035\n\001T\022\004type:\022\n\0202\016\001\002\t\003\004\021\005\006\010\022\013\014\r\023\"\030\n\010Tindices\022\004type:\006\n\0042\002\003\t\n\271\001\n\027SparseTensorDenseMatMul\022\025\n\ta_indices\"\010Tindices\022\r\n\010a_values\"\001T\022\013\n\007a_shape\030\t\022\006\n\001b\"\001T\032\014\n\007product\"\001T\"\t\n\001T\022\004type\"\034\n\010Tindices\022\004type\032\0020\t:\006\n\0042\002\003\t\"\025\n\tadjoint_a\022\004bool\032\002(\000\"\025\n\tadjoint_b\022\004bool\032\002(\000\n\274\001\n\rSparseToDense\022\032\n\016sparse_indices\"\010Tindices\022\030\n\014output_shape\"\010Tindices\022\022\n\rsparse_values\"\001T\022\022\n\rdefault_value\"\001T\032\n\n\005dense\"\001T\"\034\n\020validate_indices\022\004bool\032\002(\001\"\t\n\001T\022\004type\"\030\n\010Tindices\022\004type:\006\n\0042\002\003\t\n\266\001\n\034TakeManySparseFromTensorsMap\022\022\n\016sparse_handles\030\t\032\022\n\016sparse_indices\030\t\032\026\n\rsparse_values\"\005dtype\032\020\n\014sparse_shape\030\t\"\r\n\005dtype\022\004type\"\027\n\tcontainer\022\006string\032\002\022\000\"\031\n\013shared_name\022\006string\032\002\022\000\210\001\001")

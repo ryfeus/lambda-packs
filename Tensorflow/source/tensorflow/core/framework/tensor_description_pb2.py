@@ -25,7 +25,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n2tensorflow/core/framework/tensor_description.proto\x12\ntensorflow\x1a%tensorflow/core/framework/types.proto\x1a,tensorflow/core/framework/tensor_shape.proto\x1a\x36tensorflow/core/framework/allocation_description.proto\"\xa8\x01\n\x11TensorDescription\x12#\n\x05\x64type\x18\x01 \x01(\x0e\x32\x14.tensorflow.DataType\x12+\n\x05shape\x18\x02 \x01(\x0b\x32\x1c.tensorflow.TensorShapeProto\x12\x41\n\x16\x61llocation_description\x18\x04 \x01(\x0b\x32!.tensorflow.AllocationDescriptionB8\n\x18org.tensorflow.frameworkB\x17TensorDescriptionProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_framework_dot_types__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_tensor__shape__pb2.DESCRIPTOR,tensorflow_dot_core_dot_framework_dot_allocation__description__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -78,6 +77,7 @@ _TENSORDESCRIPTION.fields_by_name['dtype'].enum_type = tensorflow_dot_core_dot_f
 _TENSORDESCRIPTION.fields_by_name['shape'].message_type = tensorflow_dot_core_dot_framework_dot_tensor__shape__pb2._TENSORSHAPEPROTO
 _TENSORDESCRIPTION.fields_by_name['allocation_description'].message_type = tensorflow_dot_core_dot_framework_dot_allocation__description__pb2._ALLOCATIONDESCRIPTION
 DESCRIPTOR.message_types_by_name['TensorDescription'] = _TENSORDESCRIPTION
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TensorDescription = _reflection.GeneratedProtocolMessageType('TensorDescription', (_message.Message,), dict(
   DESCRIPTOR = _TENSORDESCRIPTION,

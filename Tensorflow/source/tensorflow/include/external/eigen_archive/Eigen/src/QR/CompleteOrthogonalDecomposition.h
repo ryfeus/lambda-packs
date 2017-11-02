@@ -138,7 +138,7 @@ class CompleteOrthogonalDecomposition {
    * problem \f[\mathrm{minimize} \|A X - B\|, \f] where \b A is the matrix of
    * which \c *this is the complete orthogonal decomposition.
    *
-   * \param B the right-hand sides of the problem to solve.
+   * \param b the right-hand sides of the problem to solve.
    *
    * \returns a solution.
    *
@@ -367,7 +367,7 @@ class CompleteOrthogonalDecomposition {
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   template <typename RhsType, typename DstType>
-  EIGEN_DEVICE_FUNC void _solve_impl(const RhsType& rhs, DstType& dst) const;
+  void _solve_impl(const RhsType& rhs, DstType& dst) const;
 #endif
 
  protected:

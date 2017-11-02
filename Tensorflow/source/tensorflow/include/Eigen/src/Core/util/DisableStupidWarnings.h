@@ -55,6 +55,7 @@
 #endif
 
 #if defined __NVCC__
+  #pragma diag_suppress boolean_controlling_expr_is_constant
   // Disable the "statement is unreachable" message
   #pragma diag_suppress code_is_unreachable
   // Disable the "dynamic initialization in unreachable code" message
@@ -72,6 +73,7 @@
   #pragma diag_suppress 2671
   #pragma diag_suppress 2735
   #pragma diag_suppress 2737
+  #pragma diag_suppress 2739
 #endif
 
 #endif // not EIGEN_WARNINGS_DISABLED

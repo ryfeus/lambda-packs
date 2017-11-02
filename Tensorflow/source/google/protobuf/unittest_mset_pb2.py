@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n#google/protobuf/unittest_mset.proto\x12\x11protobuf_unittest\x1a/google/protobuf/unittest_mset_wire_format.proto\"Z\n\x17TestMessageSetContainer\x12?\n\x0bmessage_set\x18\x01 \x01(\x0b\x32*.proto2_wireformat_unittest.TestMessageSet\"\x9f\x01\n\x18TestMessageSetExtension1\x12\t\n\x01i\x18\x0f \x01(\x05\x32x\n\x15message_set_extension\x12*.proto2_wireformat_unittest.TestMessageSet\x18\xb0\xa6^ \x01(\x0b\x32+.protobuf_unittest.TestMessageSetExtension1\"\xa1\x01\n\x18TestMessageSetExtension2\x12\x0b\n\x03str\x18\x19 \x01(\t2x\n\x15message_set_extension\x12*.proto2_wireformat_unittest.TestMessageSet\x18\xf9\xbb^ \x01(\x0b\x32+.protobuf_unittest.TestMessageSetExtension2\"n\n\rRawMessageSet\x12\x33\n\x04item\x18\x01 \x03(\n2%.protobuf_unittest.RawMessageSet.Item\x1a(\n\x04Item\x12\x0f\n\x07type_id\x18\x02 \x02(\x05\x12\x0f\n\x07message\x18\x03 \x02(\x0c\x42\x05H\x01\xf8\x01\x01')
   ,
   dependencies=[google_dot_protobuf_dot_unittest__mset__wire__format__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -209,6 +208,7 @@ DESCRIPTOR.message_types_by_name['TestMessageSetContainer'] = _TESTMESSAGESETCON
 DESCRIPTOR.message_types_by_name['TestMessageSetExtension1'] = _TESTMESSAGESETEXTENSION1
 DESCRIPTOR.message_types_by_name['TestMessageSetExtension2'] = _TESTMESSAGESETEXTENSION2
 DESCRIPTOR.message_types_by_name['RawMessageSet'] = _RAWMESSAGESET
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestMessageSetContainer = _reflection.GeneratedProtocolMessageType('TestMessageSetContainer', (_message.Message,), dict(
   DESCRIPTOR = _TESTMESSAGESETCONTAINER,

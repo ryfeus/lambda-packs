@@ -19,9 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='tensorflow/core/protobuf/control_flow.proto',
   package='tensorflow',
   syntax='proto3',
-  serialized_pb=_b('\n+tensorflow/core/protobuf/control_flow.proto\x12\ntensorflow\"\x96\x01\n\tValuesDef\x12\x0e\n\x06values\x18\x01 \x03(\t\x12\x42\n\x0f\x65xternal_values\x18\x02 \x03(\x0b\x32).tensorflow.ValuesDef.ExternalValuesEntry\x1a\x35\n\x13\x45xternalValuesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x88\x01\n\x0e\x43ondContextDef\x12\x14\n\x0c\x63ontext_name\x18\x01 \x01(\t\x12\x11\n\tpred_name\x18\x02 \x01(\t\x12\x12\n\npivot_name\x18\x03 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x04 \x01(\x05\x12)\n\nvalues_def\x18\x05 \x01(\x0b\x32\x15.tensorflow.ValuesDef\"\xfe\x01\n\x0fWhileContextDef\x12\x14\n\x0c\x63ontext_name\x18\x01 \x01(\t\x12\x1b\n\x13parallel_iterations\x18\x02 \x01(\x05\x12\x11\n\tback_prop\x18\x03 \x01(\x08\x12\x13\n\x0bswap_memory\x18\x04 \x01(\x08\x12\x12\n\npivot_name\x18\x05 \x01(\t\x12\x1b\n\x13pivot_for_pred_name\x18\x06 \x01(\t\x12\x1b\n\x13pivot_for_body_name\x18\x07 \x01(\t\x12\x17\n\x0floop_exit_names\x18\x08 \x03(\t\x12)\n\nvalues_def\x18\t \x01(\x0b\x32\x15.tensorflow.ValuesDefB2\n\x18org.tensorflow.frameworkB\x11\x43ontrolFlowProtosP\x01\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n+tensorflow/core/protobuf/control_flow.proto\x12\ntensorflow\"\x96\x01\n\tValuesDef\x12\x0e\n\x06values\x18\x01 \x03(\t\x12\x42\n\x0f\x65xternal_values\x18\x02 \x03(\x0b\x32).tensorflow.ValuesDef.ExternalValuesEntry\x1a\x35\n\x13\x45xternalValuesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x88\x01\n\x0e\x43ondContextDef\x12\x14\n\x0c\x63ontext_name\x18\x01 \x01(\t\x12\x11\n\tpred_name\x18\x02 \x01(\t\x12\x12\n\npivot_name\x18\x03 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x04 \x01(\x05\x12)\n\nvalues_def\x18\x05 \x01(\x0b\x32\x15.tensorflow.ValuesDef\"\x98\x02\n\x0fWhileContextDef\x12\x14\n\x0c\x63ontext_name\x18\x01 \x01(\t\x12\x1b\n\x13parallel_iterations\x18\x02 \x01(\x05\x12\x11\n\tback_prop\x18\x03 \x01(\x08\x12\x13\n\x0bswap_memory\x18\x04 \x01(\x08\x12\x12\n\npivot_name\x18\x05 \x01(\t\x12\x1b\n\x13pivot_for_pred_name\x18\x06 \x01(\t\x12\x1b\n\x13pivot_for_body_name\x18\x07 \x01(\t\x12\x17\n\x0floop_exit_names\x18\x08 \x03(\t\x12\x18\n\x10loop_enter_names\x18\n \x03(\t\x12)\n\nvalues_def\x18\t \x01(\x0b\x32\x15.tensorflow.ValuesDefB2\n\x18org.tensorflow.frameworkB\x11\x43ontrolFlowProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -224,7 +223,14 @@ _WHILECONTEXTDEF = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='values_def', full_name='tensorflow.WhileContextDef.values_def', index=8,
+      name='loop_enter_names', full_name='tensorflow.WhileContextDef.loop_enter_names', index=8,
+      number=10, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='values_def', full_name='tensorflow.WhileContextDef.values_def', index=9,
       number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -243,7 +249,7 @@ _WHILECONTEXTDEF = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=352,
-  serialized_end=606,
+  serialized_end=632,
 )
 
 _VALUESDEF_EXTERNALVALUESENTRY.containing_type = _VALUESDEF
@@ -253,6 +259,7 @@ _WHILECONTEXTDEF.fields_by_name['values_def'].message_type = _VALUESDEF
 DESCRIPTOR.message_types_by_name['ValuesDef'] = _VALUESDEF
 DESCRIPTOR.message_types_by_name['CondContextDef'] = _CONDCONTEXTDEF
 DESCRIPTOR.message_types_by_name['WhileContextDef'] = _WHILECONTEXTDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ValuesDef = _reflection.GeneratedProtocolMessageType('ValuesDef', (_message.Message,), dict(
 

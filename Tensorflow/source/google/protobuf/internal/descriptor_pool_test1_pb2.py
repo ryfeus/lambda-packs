@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n4google/protobuf/internal/descriptor_pool_test1.proto\x12\x1fgoogle.protobuf.python.internal\"\xfb\x05\n\x13\x44\x65scriptorPoolTest1\x12Z\n\x0bnested_enum\x18\x01 \x01(\x0e\x32?.google.protobuf.python.internal.DescriptorPoolTest1.NestedEnum:\x04\x42\x45TA\x12Z\n\x0enested_message\x18\x02 \x01(\x0b\x32\x42.google.protobuf.python.internal.DescriptorPoolTest1.NestedMessage\x1a\xfd\x03\n\rNestedMessage\x12h\n\x0bnested_enum\x18\x01 \x01(\x0e\x32M.google.protobuf.python.internal.DescriptorPoolTest1.NestedMessage.NestedEnum:\x04ZETA\x12\x1a\n\x0cnested_field\x18\x02 \x01(\t:\x04\x62\x65ta\x12q\n\x13\x64\x65\x65p_nested_message\x18\x03 \x01(\x0b\x32T.google.protobuf.python.internal.DescriptorPoolTest1.NestedMessage.DeepNestedMessage\x1a\xcd\x01\n\x11\x44\x65\x65pNestedMessage\x12y\n\x0bnested_enum\x18\x01 \x01(\x0e\x32_.google.protobuf.python.internal.DescriptorPoolTest1.NestedMessage.DeepNestedMessage.NestedEnum:\x03\x45TA\x12\x1b\n\x0cnested_field\x18\x02 \x01(\t:\x05theta\" \n\nNestedEnum\x12\x07\n\x03\x45TA\x10\x07\x12\t\n\x05THETA\x10\x08\"#\n\nNestedEnum\x12\x0b\n\x07\x45PSILON\x10\x05\x12\x08\n\x04ZETA\x10\x06\"!\n\nNestedEnum\x12\t\n\x05\x41LPHA\x10\x01\x12\x08\n\x04\x42\x45TA\x10\x02*\t\x08\xe8\x07\x10\x80\x80\x80\x80\x02\"\xf1\x05\n\x13\x44\x65scriptorPoolTest2\x12[\n\x0bnested_enum\x18\x01 \x01(\x0e\x32?.google.protobuf.python.internal.DescriptorPoolTest2.NestedEnum:\x05GAMMA\x12Z\n\x0enested_message\x18\x02 \x01(\x0b\x32\x42.google.protobuf.python.internal.DescriptorPoolTest2.NestedMessage\x1a\xfc\x03\n\rNestedMessage\x12h\n\x0bnested_enum\x18\x01 \x01(\x0e\x32M.google.protobuf.python.internal.DescriptorPoolTest2.NestedMessage.NestedEnum:\x04IOTA\x12\x1b\n\x0cnested_field\x18\x02 \x01(\t:\x05\x64\x65lta\x12q\n\x13\x64\x65\x65p_nested_message\x18\x03 \x01(\x0b\x32T.google.protobuf.python.internal.DescriptorPoolTest2.NestedMessage.DeepNestedMessage\x1a\xcd\x01\n\x11\x44\x65\x65pNestedMessage\x12x\n\x0bnested_enum\x18\x01 \x01(\x0e\x32_.google.protobuf.python.internal.DescriptorPoolTest2.NestedMessage.DeepNestedMessage.NestedEnum:\x02MU\x12\x1c\n\x0cnested_field\x18\x02 \x01(\t:\x06lambda\" \n\nNestedEnum\x12\n\n\x06LAMBDA\x10\x0b\x12\x06\n\x02MU\x10\x0c\"!\n\nNestedEnum\x12\x08\n\x04IOTA\x10\t\x12\t\n\x05KAPPA\x10\n\"\"\n\nNestedEnum\x12\t\n\x05GAMMA\x10\x03\x12\t\n\x05\x44\x45LTA\x10\x04')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -423,6 +422,7 @@ _DESCRIPTORPOOLTEST2.fields_by_name['nested_message'].message_type = _DESCRIPTOR
 _DESCRIPTORPOOLTEST2_NESTEDENUM.containing_type = _DESCRIPTORPOOLTEST2
 DESCRIPTOR.message_types_by_name['DescriptorPoolTest1'] = _DESCRIPTORPOOLTEST1
 DESCRIPTOR.message_types_by_name['DescriptorPoolTest2'] = _DESCRIPTORPOOLTEST2
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DescriptorPoolTest1 = _reflection.GeneratedProtocolMessageType('DescriptorPoolTest1', (_message.Message,), dict(
 

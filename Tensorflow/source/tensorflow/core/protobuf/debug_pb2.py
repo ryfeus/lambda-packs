@@ -19,9 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='tensorflow/core/protobuf/debug.proto',
   package='tensorflow',
   syntax='proto3',
-  serialized_pb=_b('\n$tensorflow/core/protobuf/debug.proto\x12\ntensorflow\"a\n\x10\x44\x65\x62ugTensorWatch\x12\x11\n\tnode_name\x18\x01 \x01(\t\x12\x13\n\x0boutput_slot\x18\x02 \x01(\x05\x12\x11\n\tdebug_ops\x18\x03 \x03(\t\x12\x12\n\ndebug_urls\x18\x04 \x03(\t\"M\n\x0c\x44\x65\x62ugOptions\x12=\n\x17\x64\x65\x62ug_tensor_watch_opts\x18\x04 \x03(\x0b\x32\x1c.tensorflow.DebugTensorWatchB,\n\x18org.tensorflow.frameworkB\x0b\x44\x65\x62ugProtosP\x01\xf8\x01\x01\x62\x06proto3')
+  serialized_pb=_b('\n$tensorflow/core/protobuf/debug.proto\x12\ntensorflow\"\x8e\x01\n\x10\x44\x65\x62ugTensorWatch\x12\x11\n\tnode_name\x18\x01 \x01(\t\x12\x13\n\x0boutput_slot\x18\x02 \x01(\x05\x12\x11\n\tdebug_ops\x18\x03 \x03(\t\x12\x12\n\ndebug_urls\x18\x04 \x03(\t\x12+\n#tolerate_debug_op_creation_failures\x18\x05 \x01(\x08\"b\n\x0c\x44\x65\x62ugOptions\x12=\n\x17\x64\x65\x62ug_tensor_watch_opts\x18\x04 \x03(\x0b\x32\x1c.tensorflow.DebugTensorWatch\x12\x13\n\x0bglobal_step\x18\n \x01(\x03\x42,\n\x18org.tensorflow.frameworkB\x0b\x44\x65\x62ugProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -61,6 +60,13 @@ _DEBUGTENSORWATCH = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='tolerate_debug_op_creation_failures', full_name='tensorflow.DebugTensorWatch.tolerate_debug_op_creation_failures', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -73,8 +79,8 @@ _DEBUGTENSORWATCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=52,
-  serialized_end=149,
+  serialized_start=53,
+  serialized_end=195,
 )
 
 
@@ -92,6 +98,13 @@ _DEBUGOPTIONS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='global_step', full_name='tensorflow.DebugOptions.global_step', index=1,
+      number=10, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -104,13 +117,14 @@ _DEBUGOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=151,
-  serialized_end=228,
+  serialized_start=197,
+  serialized_end=295,
 )
 
 _DEBUGOPTIONS.fields_by_name['debug_tensor_watch_opts'].message_type = _DEBUGTENSORWATCH
 DESCRIPTOR.message_types_by_name['DebugTensorWatch'] = _DEBUGTENSORWATCH
 DESCRIPTOR.message_types_by_name['DebugOptions'] = _DEBUGOPTIONS
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DebugTensorWatch = _reflection.GeneratedProtocolMessageType('DebugTensorWatch', (_message.Message,), dict(
   DESCRIPTOR = _DEBUGTENSORWATCH,

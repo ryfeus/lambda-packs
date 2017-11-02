@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n$tensorflow/core/protobuf/saver.proto\x12\ntensorflow\"\x9e\x02\n\x08SaverDef\x12\x1c\n\x14\x66ilename_tensor_name\x18\x01 \x01(\t\x12\x18\n\x10save_tensor_name\x18\x02 \x01(\t\x12\x17\n\x0frestore_op_name\x18\x03 \x01(\t\x12\x13\n\x0bmax_to_keep\x18\x04 \x01(\x05\x12\x0f\n\x07sharded\x18\x05 \x01(\x08\x12%\n\x1dkeep_checkpoint_every_n_hours\x18\x06 \x01(\x02\x12=\n\x07version\x18\x07 \x01(\x0e\x32,.tensorflow.SaverDef.CheckpointFormatVersion\"5\n\x17\x43heckpointFormatVersion\x12\n\n\x06LEGACY\x10\x00\x12\x06\n\x02V1\x10\x01\x12\x06\n\x02V2\x10\x02\x42\'\n\x13org.tensorflow.utilB\x0bSaverProtosP\x01\xf8\x01\x01\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -128,6 +127,7 @@ _SAVERDEF = _descriptor.Descriptor(
 _SAVERDEF.fields_by_name['version'].enum_type = _SAVERDEF_CHECKPOINTFORMATVERSION
 _SAVERDEF_CHECKPOINTFORMATVERSION.containing_type = _SAVERDEF
 DESCRIPTOR.message_types_by_name['SaverDef'] = _SAVERDEF
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SaverDef = _reflection.GeneratedProtocolMessageType('SaverDef', (_message.Message,), dict(
   DESCRIPTOR = _SAVERDEF,

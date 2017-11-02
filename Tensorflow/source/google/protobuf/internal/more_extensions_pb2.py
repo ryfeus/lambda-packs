@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n.google/protobuf/internal/more_extensions.proto\x12\x18google.protobuf.internal\"P\n\x0fTopLevelMessage\x12=\n\nsubmessage\x18\x01 \x01(\x0b\x32).google.protobuf.internal.ExtendedMessage\"\x1b\n\x0f\x45xtendedMessage*\x08\x08\x01\x10\x80\x80\x80\x80\x02\"-\n\x0e\x46oreignMessage\x12\x1b\n\x13\x66oreign_message_int\x18\x01 \x01(\x05:I\n\x16optional_int_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x01 \x01(\x05:w\n\x1aoptional_message_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x02 \x01(\x0b\x32(.google.protobuf.internal.ForeignMessage:I\n\x16repeated_int_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x03 \x03(\x05:w\n\x1arepeated_message_extension\x12).google.protobuf.internal.ExtendedMessage\x18\x04 \x03(\x0b\x32(.google.protobuf.internal.ForeignMessage')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 OPTIONAL_INT_EXTENSION_FIELD_NUMBER = 1
@@ -151,6 +150,7 @@ DESCRIPTOR.extensions_by_name['optional_int_extension'] = optional_int_extension
 DESCRIPTOR.extensions_by_name['optional_message_extension'] = optional_message_extension
 DESCRIPTOR.extensions_by_name['repeated_int_extension'] = repeated_int_extension
 DESCRIPTOR.extensions_by_name['repeated_message_extension'] = repeated_message_extension
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TopLevelMessage = _reflection.GeneratedProtocolMessageType('TopLevelMessage', (_message.Message,), dict(
   DESCRIPTOR = _TOPLEVELMESSAGE,

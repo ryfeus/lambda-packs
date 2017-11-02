@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\nGtensorflow/contrib/tensorboard/plugins/projector/projector_config.proto\x12\ntensorflow\">\n\x0eSpriteMetadata\x12\x12\n\nimage_path\x18\x01 \x01(\t\x12\x18\n\x10single_image_dim\x18\x02 \x03(\r\"\xaa\x01\n\rEmbeddingInfo\x12\x13\n\x0btensor_name\x18\x01 \x01(\t\x12\x15\n\rmetadata_path\x18\x02 \x01(\t\x12\x16\n\x0e\x62ookmarks_path\x18\x03 \x01(\t\x12\x14\n\x0ctensor_shape\x18\x04 \x03(\r\x12*\n\x06sprite\x18\x05 \x01(\x0b\x32\x1a.tensorflow.SpriteMetadata\x12\x13\n\x0btensor_path\x18\x06 \x01(\t\"}\n\x0fProjectorConfig\x12\x1d\n\x15model_checkpoint_path\x18\x01 \x01(\t\x12-\n\nembeddings\x18\x02 \x03(\x0b\x32\x19.tensorflow.EmbeddingInfo\x12\x1c\n\x14model_checkpoint_dir\x18\x03 \x01(\tb\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -179,6 +178,7 @@ _PROJECTORCONFIG.fields_by_name['embeddings'].message_type = _EMBEDDINGINFO
 DESCRIPTOR.message_types_by_name['SpriteMetadata'] = _SPRITEMETADATA
 DESCRIPTOR.message_types_by_name['EmbeddingInfo'] = _EMBEDDINGINFO
 DESCRIPTOR.message_types_by_name['ProjectorConfig'] = _PROJECTORCONFIG
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SpriteMetadata = _reflection.GeneratedProtocolMessageType('SpriteMetadata', (_message.Message,), dict(
   DESCRIPTOR = _SPRITEMETADATA,

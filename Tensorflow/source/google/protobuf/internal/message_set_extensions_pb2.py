@@ -21,7 +21,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n5google/protobuf/internal/message_set_extensions.proto\x12\x18google.protobuf.internal\"\x1e\n\x0eTestMessageSet*\x08\x08\x04\x10\xff\xff\xff\xff\x07:\x02\x08\x01\"\xa5\x01\n\x18TestMessageSetExtension1\x12\t\n\x01i\x18\x0f \x01(\x05\x32~\n\x15message_set_extension\x12(.google.protobuf.internal.TestMessageSet\x18\xab\xff\xf6. \x01(\x0b\x32\x32.google.protobuf.internal.TestMessageSetExtension1\"\xa7\x01\n\x18TestMessageSetExtension2\x12\x0b\n\x03str\x18\x19 \x01(\t2~\n\x15message_set_extension\x12(.google.protobuf.internal.TestMessageSet\x18\xca\xff\xf6. \x01(\x0b\x32\x32.google.protobuf.internal.TestMessageSetExtension2\"(\n\x18TestMessageSetExtension3\x12\x0c\n\x04text\x18# \x01(\t:\x7f\n\x16message_set_extension3\x12(.google.protobuf.internal.TestMessageSet\x18\xdf\xff\xf6. \x01(\x0b\x32\x32.google.protobuf.internal.TestMessageSetExtension3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 MESSAGE_SET_EXTENSION3_FIELD_NUMBER = 98418655
@@ -169,6 +168,7 @@ DESCRIPTOR.message_types_by_name['TestMessageSetExtension1'] = _TESTMESSAGESETEX
 DESCRIPTOR.message_types_by_name['TestMessageSetExtension2'] = _TESTMESSAGESETEXTENSION2
 DESCRIPTOR.message_types_by_name['TestMessageSetExtension3'] = _TESTMESSAGESETEXTENSION3
 DESCRIPTOR.extensions_by_name['message_set_extension3'] = message_set_extension3
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestMessageSet = _reflection.GeneratedProtocolMessageType('TestMessageSet', (_message.Message,), dict(
   DESCRIPTOR = _TESTMESSAGESET,

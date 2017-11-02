@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_pb=_b('\n3google/protobuf/internal/test_bad_identifiers.proto\x12\x11protobuf_unittest\"\x1e\n\x12TestBadIdentifiers*\x08\x08\x64\x10\x80\x80\x80\x80\x02\"\x10\n\x0e\x41notherMessage2\x10\n\x0e\x41notherService:;\n\x07message\x12%.protobuf_unittest.TestBadIdentifiers\x18\x64 \x01(\t:\x03\x66oo:>\n\ndescriptor\x12%.protobuf_unittest.TestBadIdentifiers\x18\x65 \x01(\t:\x03\x62\x61r:>\n\nreflection\x12%.protobuf_unittest.TestBadIdentifiers\x18\x66 \x01(\t:\x03\x62\x61z:;\n\x07service\x12%.protobuf_unittest.TestBadIdentifiers\x18g \x01(\t:\x03quxB\x03\x90\x01\x01')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 MESSAGE_FIELD_NUMBER = 100
@@ -113,6 +112,7 @@ DESCRIPTOR.extensions_by_name['message'] = message
 DESCRIPTOR.extensions_by_name['descriptor'] = descriptor
 DESCRIPTOR.extensions_by_name['reflection'] = reflection
 DESCRIPTOR.extensions_by_name['service'] = service
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TestBadIdentifiers = _reflection.GeneratedProtocolMessageType('TestBadIdentifiers', (_message.Message,), dict(
   DESCRIPTOR = _TESTBADIDENTIFIERS,
@@ -146,6 +146,9 @@ _ANOTHERSERVICE = _descriptor.ServiceDescriptor(
   serialized_end=140,
   methods=[
 ])
+_sym_db.RegisterServiceDescriptor(_ANOTHERSERVICE)
+
+DESCRIPTOR.services_by_name['AnotherService'] = _ANOTHERSERVICE
 
 AnotherService = service_reflection.GeneratedServiceType('AnotherService', (_service.Service,), dict(
   DESCRIPTOR = _ANOTHERSERVICE,

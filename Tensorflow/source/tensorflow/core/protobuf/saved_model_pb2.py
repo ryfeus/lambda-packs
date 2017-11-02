@@ -23,7 +23,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n*tensorflow/core/protobuf/saved_model.proto\x12\ntensorflow\x1a)tensorflow/core/protobuf/meta_graph.proto\"_\n\nSavedModel\x12\"\n\x1asaved_model_schema_version\x18\x01 \x01(\x03\x12-\n\x0bmeta_graphs\x18\x02 \x03(\x0b\x32\x18.tensorflow.MetaGraphDefB1\n\x18org.tensorflow.frameworkB\x10SavedModelProtosP\x01\xf8\x01\x01\x62\x06proto3')
   ,
   dependencies=[tensorflow_dot_core_dot_protobuf_dot_meta__graph__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -67,6 +66,7 @@ _SAVEDMODEL = _descriptor.Descriptor(
 
 _SAVEDMODEL.fields_by_name['meta_graphs'].message_type = tensorflow_dot_core_dot_protobuf_dot_meta__graph__pb2._METAGRAPHDEF
 DESCRIPTOR.message_types_by_name['SavedModel'] = _SAVEDMODEL
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SavedModel = _reflection.GeneratedProtocolMessageType('SavedModel', (_message.Message,), dict(
   DESCRIPTOR = _SAVEDMODEL,
