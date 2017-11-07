@@ -6,7 +6,7 @@ Precompiled packages for AWS lambda
 
 1. https://aws.amazon.com/lambda/ and create/sign in into account
 2. Lambda > Functions - Create lambda function
-3. Black function
+3. Blank function
 4. Configure triggers - Next
 5. Configure function
   - Runtime - Python 2.7
