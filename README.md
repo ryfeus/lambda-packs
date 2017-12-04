@@ -133,8 +133,8 @@ serverless invoke --function main --log
 #### Build pack
 
 ```
-wget https://github.com/ryfeus/lambda-packs/blob/master/tensorflow/buildPack.sh
-wget https://github.com/ryfeus/lambda-packs/blob/master/tensorflow/index.py
+wget https://raw.githubusercontent.com/ryfeus/lambda-packs/master/Tensorflow/buildPack.sh
+wget https://raw.githubusercontent.com/ryfeus/lambda-packs/master/Tensorflow/index.py
 docker pull amazonlinux:latest
 docker run -v $(pwd):/outputs --name lambdapackgen -d amazonlinux:latest tail -f /dev/null
 docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack.sh
