@@ -132,13 +132,27 @@ serverless invoke --function main --log
 
 #### Build pack
 
-```
+for Python2:
+
+```bash
 wget https://raw.githubusercontent.com/ryfeus/lambda-packs/master/Tensorflow/buildPack.sh
 wget https://raw.githubusercontent.com/ryfeus/lambda-packs/master/Tensorflow/index.py
 docker pull amazonlinux:latest
 docker run -v $(pwd):/outputs --name lambdapackgen -d amazonlinux:latest tail -f /dev/null
 docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack.sh
 ```
+
+for Python3:
+
+```bash
+wget https://raw.githubusercontent.com/ryfeus/lambda-packs/master/Tensorflow/buildPack_py3.sh
+wget https://raw.githubusercontent.com/ryfeus/lambda-packs/master/Tensorflow/index_py3.py
+docker pull amazonlinux:latest
+docker run -v $(pwd):/outputs --name lambdapackgen -d amazonlinux:latest tail -f /dev/null
+docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack_py3.sh
+```
+
+> Note: Remember You should set `python3.6` for AWS Lambda function environment.
 
 ---
 ### Sklearn
