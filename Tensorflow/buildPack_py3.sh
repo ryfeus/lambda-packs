@@ -36,7 +36,7 @@ gather_pack () {
 
     cp -R /home/env/lib/python3.6/site-packages/* .
     cp -R /home/env/lib64/python3.6/site-packages/* .
-    cp /outputs/index.py /home/lambdapack/index.py
+    cp /outputs/index_py3.py /home/lambdapack/index_py3.py
     echo "original size $(du -sh /home/lambdapack | cut -f1)"
 
     # cleaning libs
