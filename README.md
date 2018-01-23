@@ -177,6 +177,8 @@ http://scikit-learn.org/
 
 Package of image processing tools, and not only to style image, but also a large set of computer vision algorithms.
 
+There are currently two zipped packs available, Pack.zip and Pack_nomatplotlib.zip, you probably want to use Pack_nomatplotlib.zip. See https://github.com/ryfeus/lambda-packs/issues/5 for more information.
+
 #### Tools
 
 Scikit-image 0.12.3
