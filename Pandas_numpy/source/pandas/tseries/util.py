@@ -2,9 +2,9 @@ import warnings
 
 from pandas.compat import lrange
 import numpy as np
-from pandas.types.common import _ensure_platform_int
+from pandas.core.dtypes.common import _ensure_platform_int
 from pandas.core.frame import DataFrame
-import pandas.core.nanops as nanops
+import pandas.core.algorithms as algorithms
 
 
 def pivot_annual(series, freq=None):
@@ -16,7 +16,7 @@ def pivot_annual(series, freq=None):
     The output has as many rows as distinct years in the original series,
     and as many columns as the length of a leap year in the units corresponding
     to the original frequency (366 for daily frequency, 366*24 for hourly...).
-    The fist column of the output corresponds to Jan. 1st, 00:00:00,
+    The first column of the output corresponds to Jan. 1st, 00:00:00,
     while the last column corresponds to Dec, 31st, 23:59:59.
     Entries corresponding to Feb. 29th are masked for non-leap years.
 
@@ -45,7 +45,7 @@ def pivot_annual(series, freq=None):
 
     index = series.index
     year = index.year
-    years = nanops.unique1d(year)
+    years = algorithms.unique1d(year)
 
     if freq is not None:
         freq = freq.upper()
@@ -54,7 +54,7 @@ def pivot_annual(series, freq=None):
 
     if freq == 'D':
         width = 366
-        offset = index.dayofyear - 1
+        offset = np.asarray(index.dayofyear) - 1
 
         # adjust for leap year
         offset[(~isleapyear(year)) & (offset >= 59)] += 1
@@ -63,7 +63,7 @@ def pivot_annual(series, freq=None):
         # todo: strings like 1/1, 1/25, etc.?
     elif freq in ('M', 'BM'):
         width = 12
-        offset = index.month - 1
+        offset = np.asarray(index.month) - 1
         columns = lrange(1, 13)
     elif freq == 'H':
         width = 8784

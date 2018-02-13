@@ -65,7 +65,7 @@ fft
 polynomial
     Polynomial tools
 testing
-    Numpy testing tools
+    NumPy testing tools
 f2py
     Fortran to Python Interface Generator.
 distutils
@@ -83,7 +83,7 @@ dual
 matlib
     Make everything matrices.
 __version__
-    Numpy version string
+    NumPy version string
 
 Viewing documentation using IPython
 -----------------------------------
@@ -148,9 +148,12 @@ else:
 
     # We don't actually use this ourselves anymore, but I'm not 100% sure that
     # no-one else in the world is using it (though I hope not)
-    from .testing import Tester
-    test = testing.nosetester._numpy_tester().test
-    bench = testing.nosetester._numpy_tester().bench
+    from .testing import Tester, _numpy_tester
+    test = _numpy_tester().test
+    bench = _numpy_tester().bench
+
+    # Allow distributors to run custom init code
+    from . import _distributor_init
 
     from . import core
     from .core import *

@@ -612,6 +612,12 @@ NPY_NO_EXPORT  void * PyDataMem_NEW_ZEROED \
        (size_t, size_t);
 NPY_NO_EXPORT NPY_GCC_NONNULL(1) int PyArray_CheckAnyScalarExact \
        (PyObject *);
+NPY_NO_EXPORT  PyObject * PyArray_MapIterArrayCopyIfOverlap \
+       (PyArrayObject *, PyObject *, int, PyArrayObject *);
+NPY_NO_EXPORT  int PyArray_ResolveWritebackIfCopy \
+       (PyArrayObject *);
+NPY_NO_EXPORT  int PyArray_SetWritebackIfCopyBase \
+       (PyArrayObject *, PyArrayObject *);
 
 #else
 
@@ -1442,6 +1448,15 @@ static void **PyArray_API=NULL;
 #define PyArray_CheckAnyScalarExact \
         (*(int (*)(PyObject *)) \
          PyArray_API[300])
+#define PyArray_MapIterArrayCopyIfOverlap \
+        (*(PyObject * (*)(PyArrayObject *, PyObject *, int, PyArrayObject *)) \
+         PyArray_API[301])
+#define PyArray_ResolveWritebackIfCopy \
+        (*(int (*)(PyArrayObject *)) \
+         PyArray_API[302])
+#define PyArray_SetWritebackIfCopyBase \
+        (*(int (*)(PyArrayObject *, PyArrayObject *)) \
+         PyArray_API[303])
 
 #if !defined(NO_IMPORT_ARRAY) && !defined(NO_IMPORT)
 static int

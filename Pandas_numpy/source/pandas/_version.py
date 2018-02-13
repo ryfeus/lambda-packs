@@ -4,15 +4,17 @@
 # unpacked source archive. Distribution tarballs contain a pre-generated copy
 # of this file.
 
-import json
+from warnings import catch_warnings
+with catch_warnings(record=True):
+    import json
 import sys
 
 version_json = '''
 {
  "dirty": false,
  "error": null,
- "full-revisionid": "b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0",
- "version": "0.19.0"
+ "full-revisionid": "a00154dcfe5057cb3fd86653172e74b6893e337d",
+ "version": "0.22.0"
 }
 '''  # END VERSION_JSON
 

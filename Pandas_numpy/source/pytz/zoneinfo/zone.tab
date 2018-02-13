@@ -142,6 +142,7 @@ CH	+4723+00832	Europe/Zurich
 CI	+0519-00402	Africa/Abidjan
 CK	-2114-15946	Pacific/Rarotonga
 CL	-3327-07040	America/Santiago	Chile (most areas)
+CL	-5309-07055	America/Punta_Arenas	Region of Magallanes
 CL	-2709-10926	Pacific/Easter	Easter Island
 CM	+0403+00942	Africa/Douala
 CN	+3114+12128	Asia/Shanghai	Beijing Time
@@ -185,7 +186,7 @@ GB	+513030-0000731	Europe/London
 GD	+1203-06145	America/Grenada
 GE	+4143+04449	Asia/Tbilisi
 GF	+0456-05220	America/Cayenne
-GG	+4927-00232	Europe/Guernsey
+GG	+492717-0023210	Europe/Guernsey
 GH	+0533-00013	Africa/Accra
 GI	+3608-00521	Europe/Gibraltar
 GL	+6411-05144	America/Godthab	Greenland (most areas)
@@ -220,7 +221,7 @@ IQ	+3321+04425	Asia/Baghdad
 IR	+3540+05126	Asia/Tehran
 IS	+6409-02151	Atlantic/Reykjavik
 IT	+4154+01229	Europe/Rome
-JE	+4912-00207	Europe/Jersey
+JE	+491101-0020624	Europe/Jersey
 JM	+175805-0764736	America/Jamaica
 JO	+3157+03556	Asia/Amman
 JP	+353916+1394441	Asia/Tokyo
@@ -371,7 +372,7 @@ SM	+4355+01228	Europe/San_Marino
 SN	+1440-01726	Africa/Dakar
 SO	+0204+04522	Africa/Mogadishu
 SR	+0550-05510	America/Paramaribo
-SS	+0451+03136	Africa/Juba
+SS	+0451+03137	Africa/Juba
 ST	+0020+00644	Africa/Sao_Tome
 SV	+1342-08912	America/El_Salvador
 SX	+180305-0630250	America/Lower_Princes
@@ -397,7 +398,6 @@ UA	+5026+03031	Europe/Kiev	Ukraine (most areas)
 UA	+4837+02218	Europe/Uzhgorod	Ruthenia
 UA	+4750+03510	Europe/Zaporozhye	Zaporozh'ye/Zaporizhia; Lugansk/Luhansk (east)
 UG	+0019+03225	Africa/Kampala
-UM	+1645-16931	Pacific/Johnston	Johnston Atoll
 UM	+2813-17722	Pacific/Midway	Midway Islands
 UM	+1917+16637	Pacific/Wake	Wake Island
 US	+404251-0740023	America/New_York	Eastern (most areas)

@@ -2,10 +2,10 @@ import os
 import socket
 import atexit
 import re
+import functools
 
-from setuptools.extern.six.moves import urllib, http_client, map
+from setuptools.extern.six.moves import urllib, http_client, map, filter
 
-import pkg_resources
 from pkg_resources import ResolutionError, ExtractionError
 
 try:
@@ -186,9 +186,14 @@ class VerifyingHTTPSConn(HTTPSConnection):
         else:
             actual_host = self.host
 
-        self.sock = ssl.wrap_socket(
-            sock, cert_reqs=ssl.CERT_REQUIRED, ca_certs=self.ca_bundle
-        )
+        if hasattr(ssl, 'create_default_context'):
+            ctx = ssl.create_default_context(cafile=self.ca_bundle)
+            self.sock = ctx.wrap_socket(sock, server_hostname=actual_host)
+        else:
+            # This is for python < 2.7.9 and < 3.4?
+            self.sock = ssl.wrap_socket(
+                sock, cert_reqs=ssl.CERT_REQUIRED, ca_certs=self.ca_bundle
+            )
         try:
             match_hostname(self.sock.getpeercert(), actual_host)
         except CertificateError:
@@ -204,47 +209,52 @@ def opener_for(ca_bundle=None):
     ).open
 
 
-_wincerts = None
+# from jaraco.functools
+def once(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        if not hasattr(func, 'always_returns'):
+            func.always_returns = func(*args, **kwargs)
+        return func.always_returns
+    return wrapper
 
 
+@once
 def get_win_certfile():
-    global _wincerts
-    if _wincerts is not None:
-        return _wincerts.name
-
     try:
-        from wincertstore import CertFile
+        import wincertstore
     except ImportError:
         return None
 
-    class MyCertFile(CertFile):
-        def __init__(self, stores=(), certs=()):
-            CertFile.__init__(self)
-            for store in stores:
-                self.addstore(store)
-            self.addcerts(certs)
+    class CertFile(wincertstore.CertFile):
+        def __init__(self):
+            super(CertFile, self).__init__()
             atexit.register(self.close)
 
         def close(self):
             try:
-                super(MyCertFile, self).close()
+                super(CertFile, self).close()
             except OSError:
                 pass
 
-    _wincerts = MyCertFile(stores=['CA', 'ROOT'])
+    _wincerts = CertFile()
+    _wincerts.addstore('CA')
+    _wincerts.addstore('ROOT')
     return _wincerts.name
 
 
 def find_ca_bundle():
     """Return an existing CA bundle path, or None"""
-    if os.name == 'nt':
-        return get_win_certfile()
-    else:
-        for cert_path in cert_paths:
-            if os.path.isfile(cert_path):
-                return cert_path
+    extant_cert_paths = filter(os.path.isfile, cert_paths)
+    return (
+        get_win_certfile()
+        or next(extant_cert_paths, None)
+        or _certifi_where()
+    )
+
+
+def _certifi_where():
     try:
-        import certifi
-        return certifi.where()
+        return __import__('certifi').where()
     except (ImportError, ResolutionError, ExtractionError):
-        return None
+        pass

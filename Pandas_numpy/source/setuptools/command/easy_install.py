@@ -46,19 +46,21 @@ from setuptools.extern.six.moves import configparser, map
 from setuptools import Command
 from setuptools.sandbox import run_setup
 from setuptools.py31compat import get_path, get_config_vars
+from setuptools.py27compat import rmtree_safe
 from setuptools.command import setopt
 from setuptools.archive_util import unpack_archive
 from setuptools.package_index import (
     PackageIndex, parse_requirement_arg, URL_SCHEME,
 )
 from setuptools.command import bdist_egg, egg_info
+from setuptools.wheel import Wheel
 from pkg_resources import (
     yield_lines, normalize_path, resource_string, ensure_directory,
     get_distribution, find_distributions, Environment, Requirement,
     Distribution, PathMetadata, EggMetadata, WorkingSet, DistributionNotFound,
     VersionConflict, DEVELOP_DIST,
 )
-import pkg_resources
+import pkg_resources.py31compat
 
 # Turn on PEP440Warnings
 warnings.filterwarnings("default", category=pkg_resources.PEP440Warning)
@@ -473,8 +475,7 @@ class easy_install(Command):
         else:
             self.pth_file = None
 
-        PYTHONPATH = os.environ.get('PYTHONPATH', '').split(os.pathsep)
-        if instdir not in map(normalize_path, filter(None, PYTHONPATH)):
+        if instdir not in map(normalize_path, _pythonpath()):
             # only PYTHONPATH dirs need a site.py, so pretend it's there
             self.sitepy_installed = True
         elif self.multi_version and not os.path.exists(pth_file):
@@ -544,8 +545,7 @@ class easy_install(Command):
             if ok_exists:
                 os.unlink(ok_file)
             dirname = os.path.dirname(ok_file)
-            if not os.path.exists(dirname):
-                os.makedirs(dirname)
+            pkg_resources.py31compat.makedirs(dirname, exist_ok=True)
             f = open(pth_file, 'w')
         except (OSError, IOError):
             self.cant_write_to_target()
@@ -627,12 +627,20 @@ class easy_install(Command):
                 (spec.key, self.build_directory)
             )
 
+    @contextlib.contextmanager
+    def _tmpdir(self):
+        tmpdir = tempfile.mkdtemp(prefix=six.u("easy_install-"))
+        try:
+            # cast to str as workaround for #709 and #710 and #712
+            yield str(tmpdir)
+        finally:
+            os.path.exists(tmpdir) and rmtree(rmtree_safe(tmpdir))
+
     def easy_install(self, spec, deps=False):
-        tmpdir = tempfile.mkdtemp(prefix="easy_install-")
         if not self.editable:
             self.install_site_py()
 
-        try:
+        with self._tmpdir() as tmpdir:
             if not isinstance(spec, Requirement):
                 if URL_SCHEME(spec):
                     # It's a url, download it to tmpdir and process
@@ -663,10 +671,6 @@ class easy_install(Command):
                 return dist
             else:
                 return self.install_item(spec, dist.location, tmpdir, deps)
-
-        finally:
-            if os.path.exists(tmpdir):
-                rmtree(tmpdir)
 
     def install_item(self, spec, download, tmpdir, deps, install_needed=False):
 
@@ -824,14 +828,16 @@ class easy_install(Command):
         target = os.path.join(self.script_dir, script_name)
         self.add_output(target)
 
+        if self.dry_run:
+            return
+
         mask = current_umask()
-        if not self.dry_run:
-            ensure_directory(target)
-            if os.path.exists(target):
-                os.unlink(target)
-            with open(target, "w" + mode) as f:
-                f.write(contents)
-            chmod(target, 0o777 - mask)
+        ensure_directory(target)
+        if os.path.exists(target):
+            os.unlink(target)
+        with open(target, "w" + mode) as f:
+            f.write(contents)
+        chmod(target, 0o777 - mask)
 
     def install_eggs(self, spec, dist_filename, tmpdir):
         # .egg dirs or files are already built, so just return them
@@ -839,6 +845,8 @@ class easy_install(Command):
             return [self.install_egg(dist_filename, tmpdir)]
         elif dist_filename.lower().endswith('.exe'):
             return [self.install_exe(dist_filename, tmpdir)]
+        elif dist_filename.lower().endswith('.whl'):
+            return [self.install_wheel(dist_filename, tmpdir)]
 
         # Anything else, try to extract and build
         setup_base = tmpdir
@@ -1035,6 +1043,35 @@ class easy_install(Command):
                     f.write('\n'.join(locals()[name]) + '\n')
                     f.close()
 
+    def install_wheel(self, wheel_path, tmpdir):
+        wheel = Wheel(wheel_path)
+        assert wheel.is_compatible()
+        destination = os.path.join(self.install_dir, wheel.egg_name())
+        destination = os.path.abspath(destination)
+        if not self.dry_run:
+            ensure_directory(destination)
+        if os.path.isdir(destination) and not os.path.islink(destination):
+            dir_util.remove_tree(destination, dry_run=self.dry_run)
+        elif os.path.exists(destination):
+            self.execute(
+                os.unlink,
+                (destination,),
+                "Removing " + destination,
+            )
+        try:
+            self.execute(
+                wheel.install_as_egg,
+                (destination,),
+                ("Installing %s to %s") % (
+                    os.path.basename(wheel_path),
+                    os.path.dirname(destination)
+                ),
+            )
+        finally:
+            update_dist_caches(destination, fix_zipimporter_caches=False)
+        self.add_output(destination)
+        return self.egg_distribution(destination)
+
     __mv_warning = textwrap.dedent("""
         Because this distribution was installed --multi-version, before you can
         import modules from this package in an application, you will need to
@@ -1213,7 +1250,6 @@ class easy_install(Command):
 
     def byte_compile(self, to_compile):
         if sys.dont_write_bytecode:
-            self.warn('byte-compiling is disabled, skipping.')
             return
 
         from distutils.util import byte_compile
@@ -1343,10 +1379,21 @@ class easy_install(Command):
                 setattr(self, attr, val)
 
 
+def _pythonpath():
+    items = os.environ.get('PYTHONPATH', '').split(os.pathsep)
+    return filter(None, items)
+
+
 def get_site_dirs():
-    # return a list of 'site' dirs
-    sitedirs = [_f for _f in os.environ.get('PYTHONPATH',
-                                            '').split(os.pathsep) if _f]
+    """
+    Return a list of 'site' dirs
+    """
+
+    sitedirs = []
+
+    # start with PYTHONPATH
+    sitedirs.extend(_pythonpath())
+
     prefixes = [sys.prefix]
     if sys.exec_prefix != sys.prefix:
         prefixes.append(sys.exec_prefix)
@@ -1670,7 +1717,7 @@ def _first_line_re():
 
 
 def auto_chmod(func, arg, exc):
-    if func is os.remove and os.name == 'nt':
+    if func in [os.unlink, os.remove] and os.name == 'nt':
         chmod(arg, stat.S_IWRITE)
         return func(arg)
     et, ev, _ = sys.exc_info()
@@ -1803,7 +1850,7 @@ def _update_zipimporter_cache(normalized_path, cache, updater=None):
         #    get/del patterns instead. For more detailed information see the
         #    following links:
         #      https://github.com/pypa/setuptools/issues/202#issuecomment-202913420
-        #      https://bitbucket.org/pypy/pypy/src/dd07756a34a41f674c0cacfbc8ae1d4cc9ea2ae4/pypy/module/zipimport/interp_zipimport.py#cl-99
+        #      http://bit.ly/2h9itJX
         old_entry = cache[p]
         del cache[p]
         new_entry = updater and updater(p, old_entry)
@@ -2008,7 +2055,7 @@ class ScriptWriter(object):
     gui apps.
     """
 
-    template = textwrap.dedent("""
+    template = textwrap.dedent(r"""
         # EASY-INSTALL-ENTRY-SCRIPT: %(spec)r,%(group)r,%(name)r
         __requires__ = %(spec)r
         import re
