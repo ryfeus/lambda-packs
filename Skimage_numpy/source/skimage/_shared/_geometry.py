@@ -1,10 +1,9 @@
 __all__ = ['polygon_clip', 'polygon_area']
 
 import numpy as np
-from matplotlib import _path, path, transforms
-
 
 def polygon_clip(rp, cp, r0, c0, r1, c1):
+    from matplotlib import _path, path, transforms
     """Clip a polygon to the given bounding box.
 
     Parameters
