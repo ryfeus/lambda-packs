@@ -13,7 +13,7 @@ def handler(event, context):
     try:
         imgfilepath = '/tmp/imgres.png'
         jsonfilepath = '/tmp/result'
-        urllib.urlretrieve("https://www.dropbox.com/s/zol1inds6s3bs5a/imgres.png?dl=1", imgfilepath)
+        urllib.urlretrieve("https://www.dropbox.com/s/krvjt61fbvosjlz/imgres.png?dl=1", imgfilepath)
         command = 'LD_LIBRARY_PATH={} TESSDATA_PREFIX={} ./tesseract {} {}'.format(
             LIB_DIR,
             SCRIPT_DIR,
@@ -23,12 +23,17 @@ def handler(event, context):
         print(command)
 
         try:
+            print('Start')
             output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+            print('Finish')
+            print(output)
             f = open(jsonfilepath+'.txt')
             print(f.read())
         except subprocess.CalledProcessError as e:
+            print('Error')
             print(e.output)
     except Exception as e:
+        print('Error e')
         print(e)
         raise e
     return 0 
