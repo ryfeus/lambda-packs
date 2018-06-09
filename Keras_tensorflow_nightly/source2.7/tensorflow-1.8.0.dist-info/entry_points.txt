@@ -1,0 +1,7 @@
+[console_scripts]
+freeze_graph = tensorflow.python.tools.freeze_graph:run_main
+saved_model_cli = tensorflow.python.tools.saved_model_cli:main
+tensorboard = tensorboard.main:run_main
+toco = tensorflow.contrib.lite.toco.python.toco_wrapper:main
+toco_from_protos = tensorflow.contrib.lite.toco.python.toco_from_protos:main
+

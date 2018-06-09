@@ -1,0 +1,11 @@
+backports/__init__.py,sha256=5SSoKLY4W2gvilk10vXT_dwIYHgnP6UKvYvQ9SRyfQc,121
+backports/weakref.py,sha256=JDEevYXbZI3vihsJetC1jQATHJtpafJyilcbWg9hMaM,5238
+backports.weakref-1.0.post1.dist-info/DESCRIPTION.rst,sha256=0lW2D7q4vDu4UUeuVPRUjL2u9dlEg5qNCHTR_WCIjTw,1340
+backports.weakref-1.0.post1.dist-info/METADATA,sha256=2bvwdO1w2aOrG4-JUyC5NnaCmwZ3X1uZgRAtbkirHg8,2275
+backports.weakref-1.0.post1.dist-info/RECORD,,
+backports.weakref-1.0.post1.dist-info/WHEEL,sha256=kdsN-5OJAZIiHN-iO4Rhl82KyS0bDWf4uBwMbkNafr8,110
+backports.weakref-1.0.post1.dist-info/metadata.json,sha256=-xz7gACLNV7zGBVOQqvE0Jmvxx8YMuTlTJM2CUeMUC0,1044
+backports.weakref-1.0.post1.dist-info/top_level.txt,sha256=cGjaLMOoBR1FK0ApojtzWVmViTtJ7JGIK_HwXiEsvtU,10
+backports.weakref-1.0.post1.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+backports/__init__.pyc,,
+backports/weakref.pyc,,

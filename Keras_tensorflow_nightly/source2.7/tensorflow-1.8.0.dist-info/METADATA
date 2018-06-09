@@ -1,0 +1,45 @@
+Metadata-Version: 2.0
+Name: tensorflow
+Version: 1.8.0
+Summary: TensorFlow helps the tensors flow
+Home-page: https://www.tensorflow.org/
+Author: Google Inc.
+Author-email: opensource@google.com
+License: Apache 2.0
+Description-Content-Type: UNKNOWN
+Keywords: tensorflow tensor machine learning
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: absl-py (>=0.1.6)
+Requires-Dist: astor (>=0.6.0)
+Requires-Dist: gast (>=0.2.0)
+Requires-Dist: numpy (>=1.13.3)
+Requires-Dist: six (>=1.10.0)
+Requires-Dist: protobuf (>=3.4.0)
+Requires-Dist: tensorboard (<1.9.0,>=1.8.0)
+Requires-Dist: termcolor (>=1.1.0)
+Requires-Dist: grpcio (>=1.8.6)
+Requires-Dist: wheel
+Requires-Dist: mock (>=2.0.0)
+Requires-Dist: backports.weakref (>=1.0rc1)
+Requires-Dist: enum34 (>=1.1.6)
+
+UNKNOWN
+
+
