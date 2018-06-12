@@ -1,0 +1,37 @@
+Metadata-Version: 2.1
+Name: murmurhash
+Version: 0.28.0
+Summary: Cython bindings for MurmurHash2
+Home-page: https://github.com/explosion/murmurhash
+Author: Matthew Honnibal
+Author-email: matt@explosion.ai
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Cython
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Scientific/Engineering
+
+Cython bindings for MurmurHash2
+*******************************
+
+.. image:: https://travis-ci.org/explosion/murmurhash.svg?branch=master
+    :target: https://travis-ci.org/explosion/murmurhash
+    :alt: Build Status
+
+.. image:: https://img.shields.io/pypi/v/murmurhash.svg   
+    :target: https://pypi.python.org/pypi/murmurhash
+    :alt: pypi Version
+
+

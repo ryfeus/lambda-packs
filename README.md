@@ -121,6 +121,12 @@ Tensorflow 1.4.0
 
 https://www.tensorflow.org/tutorials/image_recognition
 
+#### Nightly version
+
+Nightly version archive is more than 50 MB in size but it is still eligible for using with AWS Lambda (though you need to upload pack through S3). For more read here:
+
+https://hackernoon.com/exploring-the-aws-lambda-deployment-limits-9a8384b0bec3
+
 #### Serverless start
 
 ```
@@ -221,7 +227,34 @@ Pandas 0.19.0
 http://pandas.pydata.org/
 
 ---
+### Spacy
+
+#### Intro
+
+Opensource library for Natural Language Processing in python.
+
+#### Tools
+
+1. Spacy 2.0.11
+
+#### Documentation
+
+https://spacy.io/
+
+#### Example
+
+Example code loads language model from S3 and uses it to analyze sentence.
+
+---
 ### Tesseract
+
+#### Intro
+
+OCR (optical character recognition) library for text recognition from the image.
+
+#### Documentation
+
+https://github.com/tesseract-ocr/tesseract
 
 ---
 
