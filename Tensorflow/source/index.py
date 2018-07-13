@@ -13,6 +13,9 @@ import os.path
 import re
 import sys
 import urllib
+import json
+
+SESSION = None
 
 def downloadFromS3(strBucket,strKey,strFile):
     s3_client = boto3.client('s3')
@@ -81,14 +84,18 @@ def create_graph():
         _ = tf.import_graph_def(graph_def, name='')
 
 def run_inference_on_image(image):
+    global SESSION
     if not tf.gfile.Exists(image):
         tf.logging.fatal('File does not exist %s', image)
     image_data = tf.gfile.FastGFile(image, 'rb').read()
 
   # Creates graph from saved GraphDef.
-    create_graph()
+    # create_graph()
+    if SESSION is None:
+        SESSION = tf.InteractiveSession()
+        create_graph()
 
-    with tf.Session() as sess:
+    # with tf.Session() as sess:
         # Some useful tensors:
         # 'softmax:0': A tensor containing the normalized prediction across
         #   1000 labels.
@@ -97,20 +104,20 @@ def run_inference_on_image(image):
         # 'DecodeJpeg/contents:0': A tensor containing a string providing JPEG
         #   encoding of the image.
         # Runs the softmax tensor by feeding the image_data as input to the graph.
-        softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
-        predictions = sess.run(softmax_tensor,
-                               {'DecodeJpeg/contents:0': image_data})
-        predictions = np.squeeze(predictions)
+    softmax_tensor = tf.get_default_graph().get_tensor_by_name('softmax:0')
+    predictions = SESSION.run(softmax_tensor,
+                           {'DecodeJpeg/contents:0': image_data})
+    predictions = np.squeeze(predictions)
 
-        # Creates node ID --> English string lookup.
-        node_lookup = NodeLookup()
+    # Creates node ID --> English string lookup.
+    node_lookup = NodeLookup()
 
-        top_k = predictions.argsort()[-5:][::-1]
-        strResult = '%s (score = %.5f)' % (node_lookup.id_to_string(top_k[0]), predictions[top_k[0]])
-        for node_id in top_k:
-            human_string = node_lookup.id_to_string(node_id)
-            score = predictions[node_id]
-            print('%s (score = %.5f)' % (human_string, score))
+    top_k = predictions.argsort()[-5:][::-1]
+    strResult = '%s (score = %.5f)' % (node_lookup.id_to_string(top_k[0]), predictions[top_k[0]])
+    for node_id in top_k:
+        human_string = node_lookup.id_to_string(node_id)
+        score = predictions[node_id]
+        print('%s (score = %.5f)' % (human_string, score))
     return strResult
 
 def handler(event, context):
@@ -178,4 +185,9 @@ def handler(event, context):
     FLAGS, unparsed = parser.parse_known_args()
     image = os.path.join('/tmp/imagenet/', 'inputimage.jpg')
     strResult = run_inference_on_image(image)
-    return strResult
+
+    objRet =  {
+        'statusCode': 200,
+        'body': json.dumps({ "return":strResult })
+    }    
+    return objRet
