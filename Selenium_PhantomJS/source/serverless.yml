@@ -6,8 +6,12 @@ provider:
   name: aws
   runtime: python2.7
   memorySize: 1536
-  timeout: 600
+  timeout: 300
 
 functions:
   main:
     handler: service.handler
+    events:
+      - http:
+          path: /fetch
+          method: get

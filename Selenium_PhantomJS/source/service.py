@@ -27,4 +27,16 @@ def handler(event, context):
 	browser.get('https://en.wikipedia.org/wiki/Special:Random')
 	line = browser.find_element_by_class_name('firstHeading').text
 	print(line)
-	return line
+
+	body = {
+		"message": "Your lambda function executed successfully!",
+		"event": line
+	}
+
+	response = {
+		"statusCode": 200,
+		"body": json.dumps(body)
+	}
+
+	return response
+
