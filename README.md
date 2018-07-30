@@ -44,8 +44,8 @@ Current demo opens random page from wiki (https://en.wikipedia.org/wiki/Special:
 #### Serverless start
 
 ```
-serverless install -u https://github.com/ryfeus/lambda-packs/tree/master/Selenium_PhantomJS/source -n selenium-requests
-cd selenium-requests
+git clone https://github.com/ryfeus/lambda-packs.git
+cd lambda-packs/Selenium_PhantomJS/source/
 serverless deploy
 serverless invoke --function main --log
 
