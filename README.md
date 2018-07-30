@@ -41,6 +41,16 @@ Useful for web testing and scraping.
 
 Current demo opens random page from wiki (https://en.wikipedia.org/wiki/Special:Random) and prints title.
 
+#### Serverless start
+
+```
+git clone https://github.com/ryfeus/lambda-packs.git
+cd lambda-packs/Selenium_PhantomJS/source/
+serverless deploy
+serverless invoke --function main --log
+
+You can also see the results from the API Gateway endpoint in a web browser.
+
 #### Documentation
 
 https://selenium-python.readthedocs.io/
