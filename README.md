@@ -48,6 +48,7 @@ git clone https://github.com/ryfeus/lambda-packs.git
 cd lambda-packs/Selenium_PhantomJS/source/
 serverless deploy
 serverless invoke --function main --log
+```
 
 You can also see the results from the API Gateway endpoint in a web browser.
 
