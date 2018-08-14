@@ -1,0 +1,31 @@
+Metadata-Version: 2.1
+Name: netCDF4
+Version: 1.4.1
+Summary: Provides an object-oriented python interface to the netCDF version 4 library.
+Home-page: http://github.com/Unidata/netcdf4-python
+Author: Jeff Whitaker
+Author-email: jeffrey.s.whitaker@noaa.gov
+License: OSI Approved
+Download-URL: http://python.org/pypi/netCDF4
+Keywords: numpy,netcdf,data,science,network,oceanography,meteorology,climate
+Platform: any
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Archiving :: Compression
+Classifier: Operating System :: OS Independent
+Requires-Dist: numpy (>=1.7)
+Requires-Dist: cftime
+
+netCDF version 4 has many features not found in earlier versions of the library, such as hierarchical groups, zlib compression, multiple unlimited dimensions, and new data types.  It is implemented on top of HDF5.  This module implements most of the new features, and can read and write netCDF files compatible with older versions of the library.  The API is modelled after Scientific.IO.NetCDF, and should be familiar to users of that module.
+
+This project is hosted on a `GitHub repository <https://github.com/Unidata/netcdf4-python>`_ where you may access the most up-to-date source.
+

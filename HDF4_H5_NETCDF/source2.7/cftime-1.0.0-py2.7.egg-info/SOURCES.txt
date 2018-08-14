@@ -1,0 +1,17 @@
+COPYING
+MANIFEST.in
+README.md
+pip-delete-this-directory.txt
+requirements-dev.txt
+requirements.txt
+setup.cfg
+setup.py
+cftime/__init__.py
+cftime/_cftime.c
+cftime/_cftime.pyx
+cftime.egg-info/PKG-INFO
+cftime.egg-info/SOURCES.txt
+cftime.egg-info/dependency_links.txt
+cftime.egg-info/requires.txt
+cftime.egg-info/top_level.txt
+test/test_cftime.py
