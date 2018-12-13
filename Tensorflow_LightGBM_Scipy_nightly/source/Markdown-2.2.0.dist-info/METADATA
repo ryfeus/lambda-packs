@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: Markdown
+Version: 2.2.0
+Summary: Python implementation of Markdown.
+Home-page: http://packages.python.org/Markdown/
+Author: Manfred Stienstra, Yuri takhteyev and Waylan limberg
+Author-email: markdown [at] freewisdom.org
+Maintainer: Waylan Limberg
+Maintainer-email: waylan [at] gmail.com
+License: BSD License
+Download-URL: http://pypi.python.org/packages/source/M/Markdown/Markdown-2.2.0.tar.gz
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.4
+Classifier: Programming Language :: Python :: 2.5
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.1
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Topic :: Communications :: Email :: Filters
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries
+Classifier: Topic :: Internet :: WWW/HTTP :: Site Management
+Classifier: Topic :: Software Development :: Documentation
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Text Processing :: Filters
+Classifier: Topic :: Text Processing :: Markup :: HTML
+
+UNKNOWN
+
+

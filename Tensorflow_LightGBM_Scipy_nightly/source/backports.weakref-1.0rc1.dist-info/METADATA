@@ -1,0 +1,22 @@
+Metadata-Version: 2.0
+Name: backports.weakref
+Version: 1.0rc1
+Summary: Backport of new features in Python's weakref module
+Home-page: https://github.com/pjdelport/backports.weakref
+Author: Piët Delport
+Author-email: pjdelport@gmail.com
+License: Python Software Foundation License
+Platform: UNKNOWN
+Classifier: Development Status :: 6 - Mature
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Python Software Foundation License
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+
+UNKNOWN
+
+
