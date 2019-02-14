@@ -300,3 +300,28 @@ AWS Lambda pack in Python for processing satellite imagery. Basically it enables
 - Pyproj (https://github.com/jswhit/pyproj)
 - Shapely (https://github.com/Toblerity/Shapely)
 - PIL (https://pillow.readthedocs.io/)
+
+---
+
+### PyTorch
+
+Python 3.6 based PyTorch
+
+#### Tools
+
+- PyTorch 1.0.1 (CPU)
+- torchvision 0.2.1
+
+#### Installed Packages (deps)
+
+- numpy-1.16.1 
+- pillow-5.4.1 
+- six-1.12.0 
+- torchvision-0.2.1
+
+#### Build Pack
+
+```bash
+# You need `docker` before run
+./build-with-docker.sh
+```
