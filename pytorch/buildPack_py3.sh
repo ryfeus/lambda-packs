@@ -42,8 +42,8 @@ gather_pack () {
     find . -type d -name "tests" -exec rm -rf {} +
 
     # cleaning
-    find -name "*.so" | xargs strip
-    find -name "*.so.*" | xargs strip
+    find -name "*.so" -not -path "*/PIL/*" | xargs strip
+    find -name "*.so.*" -not -path "*/PIL/*" | xargs strip
     # find . -name tests -type d -print0|xargs -0 rm -r --
     # find . -name test -type d -print0|xargs -0 rm -r --    
     rm -r pip
