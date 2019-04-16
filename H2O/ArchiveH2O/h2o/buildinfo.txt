@@ -1,0 +1,1 @@
+versionFromGradle='3.22.1',projectVersion='3.22.1.3',branch='rel-xu',lastCommitHash='5abc201281739cf13de2b40e5d4c4c3d5c3584a1',gitDescribe='jenkins-3.22.1.2-16-g5abc201',compiledOn='2019-01-25 19:51:14',compiledBy='jenkins'
