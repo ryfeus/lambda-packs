@@ -171,6 +171,10 @@ docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack_py3.sh
 
 > Note: Remember You should set `python3.6` for AWS Lambda function environment.
 
+#### Layer ARN
+
+arn:aws:lambda:us-east-1:339543757547:layer:tensorflow-pack
+
 ---
 ### Sklearn
 
