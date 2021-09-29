@@ -127,7 +127,7 @@ def load_dataset(data_dir, url, batch_size):
   #   2. parsing the subsequent lines; (.map(parse))
   #   3. shuffling the data; (.shuffle(...))
   #   3. grouping the data into padded batches (.padded_batch(...)).
-  dataset = tf.data.TextLineDataset(path).skip(1).map(parse).shuffle(
+  dataset = tf.data.TextLineDataset(path).skip(1).map(parse,num_parallel_calls=tf.data.experimental.AUTOTUNE).shuffle(
       buffer_size=10000).padded_batch(
           batch_size, padded_shapes=([None], [None, None], []))
   return dataset

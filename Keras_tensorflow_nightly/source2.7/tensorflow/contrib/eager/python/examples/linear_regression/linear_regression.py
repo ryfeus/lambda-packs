@@ -115,7 +115,7 @@ def synthetic_dataset_helper(w, b, num_features, noise_level, batch_size,
     return x, y
 
   with tf.device("/device:CPU:0"):
-    return tf.data.Dataset.range(num_batches).map(batch)
+    return tf.data.Dataset.range(num_batches).map(batch,num_parallel_calls=tf.data.experimental.AUTOTUNE)
 
 
 def main(_):
