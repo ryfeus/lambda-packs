@@ -1,0 +1,3 @@
+[console_scripts]
+onnxruntime_test = onnxruntime.tools.onnxruntime_test:main
+
