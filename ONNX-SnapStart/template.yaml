@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Onnx SnapStart example
+
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  OnnxSnapStartFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: OnnxSnapstartFunction
+      Handler: onnxsnapstart.App::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 1769
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        OnnxAPI:
+          Type: Api
+          Properties:
+            Path: /onnx
+            Method: get
+
+Outputs:
+  OnnxSnapStartApi:
+    Description: "API Gateway endpoint URL for Prod stage for Onnx Snap Start function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/onnx/"
+  OnnxSnapStartFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt OnnxSnapStartFunction.Arn
+  OnnxSnapStartFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt OnnxSnapStartFunctionRole.Arn
